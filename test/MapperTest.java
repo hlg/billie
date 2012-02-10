@@ -47,8 +47,7 @@ public class MapperTest extends MappingTestCase {
                     protected void configure() {
                         graphObject.setWidth(data.a);
                     }
-                },
-                DataElement.class, VisFactory.Rectangle.class
+                }
         );
         test.map();
         assertEquals(1, scene.parts.size());

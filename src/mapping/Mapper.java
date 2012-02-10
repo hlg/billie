@@ -13,10 +13,9 @@ public class Mapper {
     public VisBuilder visBuilder;
     // TODO: collect and keep a map of already mapped objects
 
-    public <S, T extends VisFactory.GraphObject> void addMapping(PropertyMap<S, T> propertyMap, Class<S> sourceClass, Class<T> targetClass) {
-        // TODO: find a way to get the sourceclass from the Propertymap or use generics for propertymap matching
-        propertyMap.with(visFactory.getProvider(targetClass));
-        propertyMaps.addPropertyMap(sourceClass, propertyMap);
+    public <S, T extends VisFactory.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
+        propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
+        propertyMaps.addPropertyMap(propertyMap.dataClass, propertyMap);
     }
 
     public void map() throws TargetCreationException {
