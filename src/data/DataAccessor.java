@@ -1,6 +1,7 @@
-import java.util.Collection;
+package data;
+
 import java.util.Iterator;
 
-interface DataAccessor<S> {
+public interface DataAccessor<S> {
     public Iterator iterator();
 }

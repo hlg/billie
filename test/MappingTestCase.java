@@ -1,3 +1,5 @@
+import visualization.VisFactory;
+
 public class MappingTestCase {
     DataElement d;
 
@@ -12,7 +14,7 @@ public class MappingTestCase {
         String b;
     }
 
-    static class VisElement {
+    public static class VisElement implements VisFactory.GraphObject {
         public VisElement(){}
         int with;
         String label;

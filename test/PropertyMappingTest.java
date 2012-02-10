@@ -1,3 +1,5 @@
+import mapping.PropertyMap;
+import mapping.TargetCreationException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,10 +15,10 @@ public class PropertyMappingTest extends MappingTestCase {
         propertyMap = new PropertyMap<DataElement, VisElement>() {
             @Override
             protected void configure() {
-                target.with = source.a;
-                target.label = source.b;
-                // builder.createLabel(0,0,source.b);
-                // builder.createRectangle(0,0,source.a,10);
+                graphObject.with = data.a;
+                graphObject.label = data.b;
+                // factory.createLabel(0,0,data.b);
+                // factory.createRectangle(0,0,data.a,10);
                 // this would create more than one element per mapping ???
             }
         };
@@ -32,8 +34,7 @@ public class PropertyMappingTest extends MappingTestCase {
 
     @Test
     public void testReflection() throws InstantiationException, IllegalAccessException {
-        propertyMap.map(d, VisElement.class);
-        VisElement result = propertyMap.target;
+        VisElement result = propertyMap.map(d, VisElement.class);
         assertEquals(5, result.with);
         assertEquals("hello", result.label);
     }
@@ -45,8 +46,7 @@ public class PropertyMappingTest extends MappingTestCase {
                 return new VisElement();
             }
         });
-        propertyMap.map(d);
-        VisElement result = propertyMap.target;
+        VisElement result = propertyMap.map(d);
         assertEquals(5, result.with);
         assertEquals("hello", result.label);
     }
