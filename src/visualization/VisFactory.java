@@ -24,12 +24,20 @@ public abstract class VisFactory {
         return provMap.get(elementClass);
     }
 
-    public interface GraphObject {}
+    public interface GraphObject {
+    }
     public interface Rectangle extends GraphObject {
-        void setWidth(int a);
+        void setLeft(int X);
+        void setTop(int Y);
+        void setHeight(int height);
+        void setWidth(int width);
     }
 
-    protected interface Label{}
+    public interface Label extends GraphObject {
+        void setLeft(int X);
+        void setTop(int Y);
+        void setText(String text);
+    }
 
     class TypeMap extends HashMap<Class, PropertyMap.Provider> {
         

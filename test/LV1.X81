@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GXML Toolbox V3.11 R20091211;  http://www.gaeb-toolbox.de/ 
+ gtcConverter.dll used version 2011.05.06  -->
+<GAEB xmlns="http://www.gaeb.de/GAEB_DA_XML/200407">
+ <GAEBInfo>
+  <Version>3.1</Version>
+  <VersDate>2009-12</VersDate>
+  <Date>2011-09-09</Date>
+  <Time>09:47:45</Time>
+  <ProgSystem>/ GXML Toolbox V3.11 R20091211</ProgSystem>
+  <ProgName>iTWO_64_beta V2.3.371</ProgName>
+ </GAEBInfo>
+ <PrjInfo>
+  <NamePrj>MF_000</NamePrj>
+  <LblPrj>Mefisto - Hochhaus - Angebot</LblPrj>
+  <Cur>EUR</Cur>
+  <CurLbl>Euro</CurLbl>
+  <AlterBidPerm>Yes</AlterBidPerm>
+ </PrjInfo>
+ <Award>
+  <DP>81</DP>
+  <AwardInfo>
+   <Cur>EUR</Cur>
+   <CurLbl>Euro</CurLbl>
+   <CashDiscount>
+    <CashDiscDays Days="18"/>
+    <DiscountPcnt>0.00</DiscountPcnt>
+   </CashDiscount>
+  </AwardInfo>
+  <BoQ ID="IKHFAAAA">
+   <BoQInfo>
+    <Name>1</Name>
+    <LblBoQ>Bauherren-LV</LblBoQ>
+    <Date>2011-07-12</Date>
+    <OutlCompl>AllTxt</OutlCompl>
+    <BoQBkdn>
+     <Type>Lot</Type>
+     <LblBoQBkdn>Los</LblBoQBkdn>
+     <Length>2</Length>
+     <Num>Yes</Num>
+    </BoQBkdn>
+    <BoQBkdn>
+     <Type>BoQLevel</Type>
+     <LblBoQBkdn>Abschnitt</LblBoQBkdn>
+     <Length>2</Length>
+     <Num>Yes</Num>
+    </BoQBkdn>
+    <BoQBkdn>
+     <Type>Item</Type>
+     <Length>4</Length>
+     <Num>Yes</Num>
+    </BoQBkdn>
+    <BoQBkdn>
+     <Type>Index</Type>
+     <Length>1</Length>
+     <Num>No</Num>
+     <Alignment>left</Alignment>
+    </BoQBkdn>
+    <NoUPComps>4</NoUPComps>
+    <LblUPComp1>Löhne</LblUPComp1>
+    <LblUPComp2>Stoffe</LblUPComp2>
+    <LblUPComp3>Geräte</LblUPComp3>
+    <LblUPComp4>Sonstiges</LblUPComp4>
+    <LblTime>Stunden</LblTime>
+    <Totals>
+     <Total>9270064.78</Total>
+     <VAT>19.00</VAT>
+     <TotalGross>11031377.09</TotalGross>
+    </Totals>
+   </BoQInfo>
+   <BoQBody>
+    <BoQCtgy ID="IKHGAAAA" RNoPart="1">
+     <LblTx>
+      <p>
+       <span>Los 1</span>
+      </p>
+     </LblTx>
+     <BoQBody>
+      <BoQCtgy ID="IKHGHAAA" RNoPart="1">
+       <LblTx>
+        <p>
+         <span>Beton- und Stahlbetonarbeiten</span>
+        </p>
+       </LblTx>
+       <BoQBody>
+        <Itemlist>
+         <Item ID="IKHGAGJI" RNoPart="10">
+          <Qty>2668.248</Qty>
+          <PredQty>2668.248</PredQty>
+          <QU>m2</QU>
+          <UP>87.630</UP>
+          <IT>233818.57</IT>
+          <TimeQu>0.80</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Schalung für Rundstützen fachgerecht herstellen für d=60cm und H=2,35m und Betongüteklasse C30/37 </span>
+              </p>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">keine weiteren Sichtbetonanforderungen </span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Schalung Stützen d=60cm</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGBAAA" RNoPart="20">
+          <Qty>109.350</Qty>
+          <PredQty>109.350</PredQty>
+          <QU>t</QU>
+          <UP>5104.320</UP>
+          <IT>558157.39</IT>
+          <TimeQu>50.00</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Betonstabstahl DIN 488 - BSt 500 S, alle Nenndurchmesser und in allen Längen bzw. als Lagermatten, für alle Stützen bis d=60cm, H=2,35m, Bewehrungsgehalt 275 kg/m³, liefern, schneiden, biegen und fachgerecht einbauen</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Bewehrung Stützen d=60cm</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGDHGA" RNoPart="30">
+          <Qty>397.458</Qty>
+          <PredQty>397.458</PredQty>
+          <QU>m3</QU>
+          <UP>318.780</UP>
+          <IT>126701.66</IT>
+          <TimeQu>2.00</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Beton (Ortbeton) herstellen, liefern und fachgerecht einbauen für alle Rundstützen mit Expositionsklasse XC 1,  Festigkeitsklasse C30/37, bis d=60cm und H=2,35m</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Beton Stützen d=60cm</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGBFKA" RNoPart="40">
+          <Qty>131.274</Qty>
+          <PredQty>131.274</PredQty>
+          <QU>m2</QU>
+          <UP>87.630</UP>
+          <IT>11503.54</IT>
+          <TimeQu>0.80</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Schalung für Rundstützen fachgerecht herstellen für d=70cm und H=2,35m und Betongüteklasse C30/37 </span>
+              </p>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">keine weiteren Sichtbetonanforderungen </span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Schalung Stützen d=70cm</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGBLEA" RNoPart="50">
+          <Qty>6.246</Qty>
+          <PredQty>6.246</PredQty>
+          <QU>t</QU>
+          <UP>5104.320</UP>
+          <IT>31881.58</IT>
+          <TimeQu>50.00</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Betonstabstahl DIN 488 - BSt 500 S, alle Nenndurchmesser und in allen Längen bzw. als Lagermatten, für alle Stützen bis d=70cm, H=2,35m, Bewehrungsgehalt 275 kg/m³, liefern, schneiden, biegen und fachgerecht einbauen</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Bewehrung Stützen d=70cm</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGCAOA" RNoPart="60">
+          <Qty>22.734</Qty>
+          <PredQty>22.734</PredQty>
+          <QU>m3</QU>
+          <UP>318.780</UP>
+          <IT>7247.14</IT>
+          <TimeQu>2.00</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Beton (Ortbeton) herstellen, liefern und fachgerecht einbauen für alle Rundstützen mit Expositionsklasse XC 1,  Festigkeitsklasse C30/37, bis d=70cm und H=2,35m</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Beton Stützen d=70cm</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGCGIA" RNoPart="70">
+          <Qty>138.996</Qty>
+          <PredQty>138.996</PredQty>
+          <QU>m2</QU>
+          <UP>87.630</UP>
+          <IT>12180.22</IT>
+          <TimeQu>0.80</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Schalung für Rundstützen fachgerecht herstellen für d=75cm und H=2,35m und Betongüteklasse C30/37 </span>
+              </p>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">keine weiteren Sichtbetonanforderungen </span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Schalung Stützen d=75cm</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGCMCA" RNoPart="80">
+          <Qty>7.164</Qty>
+          <PredQty>7.164</PredQty>
+          <QU>t</QU>
+          <UP>5104.320</UP>
+          <IT>36567.35</IT>
+          <TimeQu>50.00</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Betonstabstahl DIN 488 - BSt 500 S, alle Nenndurchmesser und in allen Längen bzw. als Lagermatten, für alle Stützen bis d=75cm, H=2,35m, Bewehrungsgehalt 275 kg/m³, liefern, schneiden, biegen und fachgerecht einbauen</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Bewehrung Stützen d=75cm</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGDBMA" RNoPart="90">
+          <Qty>26.064</Qty>
+          <PredQty>26.064</PredQty>
+          <QU>m3</QU>
+          <UP>318.780</UP>
+          <IT>8308.68</IT>
+          <TimeQu>2.00</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Beton (Ortbeton) herstellen, liefern und fachgerecht einbauen für alle Rundstützen mit Expositionsklasse XC 1,  Festigkeitsklasse C30/37, bis d=75cm und H=2,35m</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Beton Stützen 75cm</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGDNAA" RNoPart="100">
+          <Qty>0.000</Qty>
+          <PredQty>0.000</PredQty>
+          <QU>m</QU>
+          <UP>75.120</UP>
+          <IT>0.00</IT>
+          <TimeQu>1.00</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Zuschlag für Blitzschutz bei  allen Aussenstüzen für d=60cm und H=2,35m und Betongüteklasse C30/37</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Zuschlag für Blitzschutz</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGECKA" RNoPart="110">
+          <Qty>18927.052</Qty>
+          <PredQty>18927.052</PredQty>
+          <QU>m2</QU>
+          <UP>41.860</UP>
+          <IT>792286.40</IT>
+          <TimeQu>0.43</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Schalung für alle Innenwände fachgerecht herstellen bis H=3m und d=50cm</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Schalung Innenwände</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGEIEA" RNoPart="120">
+          <Qty>304.937</Qty>
+          <PredQty>304.937</PredQty>
+          <QU>t</QU>
+          <UP>1239.960</UP>
+          <IT>378109.68</IT>
+          <TimeQu>0.80</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Betonstabstahl/Betonstahlmatten DIN 488 - BSt 500 S+M,alle Nenndurchmesser und in allen Längen bzw. als Lagermatten, für alle Innenwände, liefern, schneiden, biegen und fachgerecht verlegen. Bewehrungsgehalt: 75 kg/m³</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Bewehrung Innenwände</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGENOA" RNoPart="130">
+          <Qty>4065.221</Qty>
+          <PredQty>4065.221</PredQty>
+          <QU>m3</QU>
+          <UP>217.370</UP>
+          <IT>883657.09</IT>
+          <TimeQu>0.65</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Beton für alle Innenwände fachgerecht herstellen, liefern und einbauen bis H=3m und d=50cm Expositionsklasse XC 1 und Festigkeitsklasse C 30/37</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Beton Innenwände</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGFDIA" RNoPart="140">
+          <Qty>0.000</Qty>
+          <PredQty>0.000</PredQty>
+          <QU>m2</QU>
+          <UP>75.120</UP>
+          <IT>0.00</IT>
+          <TimeQu>1.00</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Zuschlag für alle Kernwände im Treppenhaus mit Sichtbetonanforderung SB 3</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Zuschlag Kernwände  SB 3</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGFJCA" RNoPart="150">
+          <Qty>26269.857</Qty>
+          <PredQty>26269.857</PredQty>
+          <QU>m2</QU>
+          <UP>54.020</UP>
+          <IT>1419097.68</IT>
+          <TimeQu>0.45</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Schalung inkl Unterstellung/Rüstung für alle Decken fachgerecht herstellen bis Deckenstärken d=35cm</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Schalung Decken</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGFOMA" RNoPart="160">
+          <Qty>1149.313</Qty>
+          <PredQty>1149.313</PredQty>
+          <QU>t</QU>
+          <UP>2531.990</UP>
+          <IT>2910049.02</IT>
+          <TimeQu>18.00</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Betonstabstahl/Betonstahlmatten DIN 488 - BSt 500 S+M, alle Nenndurchmesser und in allen Längen bzw. als Lagermatten,</span>
+               <br/>
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">für alle Decken (Ortbeton), liefern, schneiden, biegen und fachgerecht verlegen; Bewehrungsgehalt: 125 kg/m³</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Bewehrung Decken</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IKHGGEGA" RNoPart="170">
+          <Qty>9194.459</Qty>
+          <PredQty>9194.459</PredQty>
+          <QU>m3</QU>
+          <UP>202.350</UP>
+          <IT>1860498.78</IT>
+          <TimeQu>0.45</TimeQu>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="line-height:16px;margin-right:57px;text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Beton für alle Decken fachgerecht herstellen, liefern und einbauen für Deckenstärken bis d=35cm Expositionsklasse XC 1 und Festigkeitsklasse C=30/37</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Beton Decken</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+        </Itemlist>
+       </BoQBody>
+       <Totals>
+        <Total>9270064.78</Total>
+       </Totals>
+      </BoQCtgy>
+     </BoQBody>
+     <Totals>
+      <Total>9270064.78</Total>
+     </Totals>
+    </BoQCtgy>
+   </BoQBody>
+  </BoQ>
+ </Award>
+</GAEB>

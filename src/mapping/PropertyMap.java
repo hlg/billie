@@ -8,6 +8,7 @@ import java.lang.reflect.Type;
 public abstract class PropertyMap<S,T extends VisFactory.GraphObject> {
     protected S data;
     protected T graphObject;
+    protected int index;
 
     Class<S> dataClass;
     Class<T> graphClass;
@@ -20,23 +21,24 @@ public abstract class PropertyMap<S,T extends VisFactory.GraphObject> {
         graphClass = (Class<T>) actualTypeArguments[1];
     }
 
-    public T map(S source, T target){
+    public T map(S source, T target, int i){
+        this.index = i;
         this.data = source;
         this.graphObject = target;
         configure();
         return graphObject;
     }
 
-    public T map(S source, Class<T> targetClass) throws IllegalAccessException, InstantiationException {
+    public T map(S source, Class<T> targetClass, int i) throws IllegalAccessException, InstantiationException {
         T target = targetClass.newInstance();
-        return map(source, target);
+        return map(source, target, i);
     }
 
-    public T map(S source) throws TargetCreationException {
+    public T map(S source, int i) throws TargetCreationException {
         if(provider == null){
             throw new TargetCreationException("missing provider");
         }
-        return map(source, provider.create());
+        return map(source, provider.create(), i);
     }
 
     public void with(Provider<T> provider){

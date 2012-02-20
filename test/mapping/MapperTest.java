@@ -1,7 +1,7 @@
+package mapping;
+
 import data.CollectionAccessor;
-import mapping.Mapper;
-import mapping.PropertyMap;
-import mapping.TargetCreationException;
+import data.DataAccessor;
 import org.junit.Before;
 import org.junit.Test;
 import visualization.VisBuilder;
@@ -21,9 +21,9 @@ public class MapperTest extends MappingTestCase {
 
     @Test
     public void testMapping() throws TargetCreationException {
-        Mapper test = new Mapper();
-        test.visFactory = new VisFactory(){
-
+        DataAccessor data = new CollectionAccessor(Collections.singletonList(d));
+        FakeVisBuilder builder = new FakeVisBuilder();
+        VisFactory factory = new VisFactory(){
             @Override
             protected PropertyMap.Provider<VisFactory.Rectangle> setRectangleProvider() {
                 return new PropertyMap.Provider<Rectangle>() {
@@ -32,15 +32,12 @@ public class MapperTest extends MappingTestCase {
                     }
                 };
             }
-
             @Override
             protected PropertyMap.Provider<VisFactory.Label> setLabelProvider() {
                 return null;
             }
         };
-        test.dataAccessor = new CollectionAccessor(Collections.singletonList(d));
-        FakeVisBuilder scene = new FakeVisBuilder();
-        test.visBuilder = scene;
+        Mapper test = new Mapper(data, factory, builder);
         test.addMapping(
                 new PropertyMap<DataElement, VisFactory.Rectangle>(){
                     @Override
@@ -50,11 +47,11 @@ public class MapperTest extends MappingTestCase {
                 }
         );
         test.map();
-        assertEquals(1, scene.parts.size());
-        assertEquals(d.a, ((FakeRectangle)scene.parts.get(0)).a);
+        assertEquals(1, builder.parts.size());
+        assertEquals(d.a, ((FakeRectangle)builder.parts.get(0)).a);
     }
     
-    public static class FakeVisBuilder implements VisBuilder {
+    public static class FakeVisBuilder implements VisBuilder<VisFactory.GraphObject,Object> {
         List<VisFactory.GraphObject> parts = new ArrayList<VisFactory.GraphObject>();
         
         public void init() {}
@@ -62,12 +59,22 @@ public class MapperTest extends MappingTestCase {
             parts.add(graphicalObject);
         }
         public void finish() {}
+
+        public Object getScene() {
+             return null;
+        }
+
     }
 
     public static class FakeRectangle implements VisFactory.Rectangle {
         protected int a;
-        public void setWidth(int a) {
-            this.a = a;
+
+        public void setLeft(int X) {}
+        public void setTop(int Y) {}
+        public void setHeight(int height) {}
+
+        public void setWidth(int width) {
+            this.a = width;
         }
     }
 }

@@ -1,3 +1,5 @@
+package mapping;
+
 import visualization.VisFactory;
 
 public class MappingTestCase {

@@ -1,5 +1,5 @@
-import mapping.PropertyMap;
-import mapping.TargetCreationException;
+package mapping;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,14 +27,14 @@ public class PropertyMappingTest extends MappingTestCase {
     @Test
     public void testPreconstructed() {
         VisElement result = new VisElement();
-        propertyMap.map(d, result);
+        propertyMap.map(d, result, 0);
         assertEquals(5, result.with);
         assertEquals("hello", result.label);
     }
 
     @Test
     public void testReflection() throws InstantiationException, IllegalAccessException {
-        VisElement result = propertyMap.map(d, VisElement.class);
+        VisElement result = propertyMap.map(d, VisElement.class, 0);
         assertEquals(5, result.with);
         assertEquals("hello", result.label);
     }
@@ -46,7 +46,7 @@ public class PropertyMappingTest extends MappingTestCase {
                 return new VisElement();
             }
         });
-        VisElement result = propertyMap.map(d);
+        VisElement result = propertyMap.map(d, 0);
         assertEquals(5, result.with);
         assertEquals("hello", result.label);
     }
@@ -54,7 +54,7 @@ public class PropertyMappingTest extends MappingTestCase {
     @Test
     public void testProviderMissing() {
         try {
-            propertyMap.map(d);
+            propertyMap.map(d, 0);
         } catch (TargetCreationException e) {
             return;
         }

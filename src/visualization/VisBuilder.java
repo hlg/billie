@@ -1,7 +1,8 @@
 package visualization;
 
-public interface VisBuilder {
+public interface VisBuilder<T extends VisFactory.GraphObject,S> {
     void init();
-    void addPart(VisFactory.GraphObject graphicalObject);
+    void addPart(T graphicalObject);
     void finish();
+    S getScene();
 }

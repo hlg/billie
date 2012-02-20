@@ -3,15 +3,13 @@ package data;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class CollectionAccessor implements DataAccessor<Collection>{
+public class CollectionAccessor extends DataAccessor<Collection,Object> {
 
-    private Collection data;
-
-    public CollectionAccessor(Collection data){
-        this.data = data;
+    public CollectionAccessor(Collection data) {
+        super(data);
     }
 
-    public Iterator iterator() {
+    public Iterator<?> iterator() {
         return data.iterator();
     }
 }
