@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="bimserver-client-lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/cib.lib.bimserverViewer_1.0.0.201201301327/lib/BimserverViewer-0.2.jar!/" />
+      <root url="file://$PROJECT_DIR$/../BimserverViewer/lib/bimserver-client-lib-1.1.0-2012-02-20/dep" />
+      <root url="file://$PROJECT_DIR$/../BimserverViewer/lib/bimserver-client-lib-1.1.0-2012-02-20/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../BimserverViewer/lib/bimserver-client-lib-1.1.0-2012-02-20/dep" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../BimserverViewer/lib/bimserver-client-lib-1.1.0-2012-02-20/dep" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../BimserverViewer/lib/bimserver-client-lib-1.1.0-2012-02-20/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../BimserverViewer/lib/bimserver-client-lib-1.1.0-2012-02-20/dep" recursive="false" type="SOURCES" />
+  </library>
+</component>

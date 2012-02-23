@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="j3d">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../BimserverViewer/lib/j3d" />
+      <root url="file://$PROJECT_DIR$/../BimserverViewer/lib/j3d" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/../BimserverViewer/lib/j3d" recursive="false" />
+  </library>
+</component>

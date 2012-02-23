@@ -1,11 +1,11 @@
 package mapping;
 
-import visualization.VisFactory;
+import visualization.VisFactory2D;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public abstract class PropertyMap<S,T extends VisFactory.GraphObject> {
+public abstract class PropertyMap<S,T extends VisFactory2D.GraphObject> {
     protected S data;
     protected T graphObject;
     protected int index;
@@ -46,6 +46,15 @@ public abstract class PropertyMap<S,T extends VisFactory.GraphObject> {
     }
 
     protected abstract void configure();
+
+    public boolean checkCondition(S source){
+        this.data = source;
+        return condition();
+    }
+
+    protected boolean condition(){
+        return true;
+    }
 
     public interface Provider<T> {
         T create();

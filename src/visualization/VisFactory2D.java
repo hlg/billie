@@ -3,16 +3,17 @@ package visualization;
 import mapping.PropertyMap;
 
 import java.util.HashMap;
+import java.util.List;
 
-public abstract class VisFactory {
+public abstract class VisFactory2D {
 
     public TypeMap provMap = new TypeMap();
 
-    protected VisFactory(){
+    protected VisFactory2D(){
         addProviders();
     }
 
-    private void addProviders(){
+    void addProviders(){
         provMap.put(Rectangle.class, setRectangleProvider());
         provMap.put(Label.class, setLabelProvider());
     }
@@ -40,15 +41,14 @@ public abstract class VisFactory {
     }
 
     class TypeMap extends HashMap<Class, PropertyMap.Provider> {
-        
+
         public <V> void put(Class<V> key, PropertyMap.Provider<V> value){
             super.put(key, value);
         }
-
         @SuppressWarnings("unchecked")
         public <V> PropertyMap.Provider<V> get(Class<V> key){
             return super.get(key);
         }
+
     }
-    
 }

@@ -1,14 +1,9 @@
 package data;
 
+import java.io.InputStream;
 import java.util.Iterator;
 
-public abstract class DataAccessor<S,E> {
+public abstract class DataAccessor<E> implements Iterable<E> {
 
-    S data;
-
-    public DataAccessor(S data){
-        this.data = data;
-    }
-
-    public abstract Iterator<? extends E> iterator();
+    public abstract Iterator<E> iterator();
 }

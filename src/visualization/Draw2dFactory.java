@@ -7,7 +7,7 @@ import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 
-public class Draw2dFactory extends VisFactory {
+public class Draw2dFactory extends VisFactory2D {
 
     private Font defaultFont;
     private Color defaultColor;

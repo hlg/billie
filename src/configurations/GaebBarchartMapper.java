@@ -8,18 +8,14 @@ import mapping.Mapper;
 import mapping.PropertyMap;
 import mapping.TargetCreationException;
 import org.eclipse.draw2d.*;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import visualization.Draw2dBuilder;
 import visualization.Draw2dFactory;
-import visualization.VisFactory;
+import visualization.VisFactory2D;
 
 import java.io.IOException;
 
@@ -28,7 +24,7 @@ public class GaebBarchartMapper {
     private Mapper mapper;
 
     GaebBarchartMapper(Font font) throws IOException {
-        DataAccessor data = new EMFAccessor(this.getClass().getResource("/LV1.X81"));
+        DataAccessor data = new EMFAccessor(this.getClass().getResourceAsStream("/LV1.X81"));
         Draw2dFactory visFactory = new Draw2dFactory(font);
         Draw2dBuilder visBuilder = new Draw2dBuilder();
         mapper = new Mapper(data, visFactory, visBuilder);
@@ -36,7 +32,7 @@ public class GaebBarchartMapper {
 
     public void config(){
         final double factor = 0.3; // TODO: get from some statistical data accessor function
-        mapper.addMapping(new PropertyMap<TgItem, VisFactory.Rectangle>() {
+        mapper.addMapping(new PropertyMap<TgItem, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
                 graphObject.setHeight(15);
@@ -45,14 +41,14 @@ public class GaebBarchartMapper {
                 graphObject.setTop(index * 20); // TODO: alternative to iterator index ? Layoutmanager, dataacessor sorting parameters
             }
         });
-        mapper.addMapping(new PropertyMap<TgItem, VisFactory.Label>() {
+        mapper.addMapping(new PropertyMap<TgItem, VisFactory2D.Label>() {
             @Override
             protected void configure() {
                 EObject container = data.eContainer().eContainer().eContainer();
                 StringBuilder labelText = new StringBuilder(data.getRNoPart());
                 while (container instanceof TgBoQCtgy){
-                    labelText.insert(0,'.');
-                    labelText.insert(0,((TgBoQCtgy) container).getRNoPart());
+                    labelText.insert(0, '.');
+                    labelText.insert(0, ((TgBoQCtgy) container).getRNoPart());
                     container = container.eContainer().eContainer();
                 }
                 graphObject.setText(labelText.toString());

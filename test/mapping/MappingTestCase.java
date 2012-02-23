@@ -1,6 +1,6 @@
 package mapping;
 
-import visualization.VisFactory;
+import visualization.VisFactory2D;
 
 public class MappingTestCase {
     DataElement d;
@@ -16,7 +16,7 @@ public class MappingTestCase {
         String b;
     }
 
-    public static class VisElement implements VisFactory.GraphObject {
+    public static class VisElement implements VisFactory2D.GraphObject {
         public VisElement(){}
         int with;
         String label;

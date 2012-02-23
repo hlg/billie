@@ -5,24 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="67383783-7bb9-40b6-888a-163f1fcce815" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/configurations/GaebBarchartMapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/data/EMFAccessor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/visualization/Draw2dBuilder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/data/EMFAccessorTests.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/visMapping.suml" afterPath="$PROJECT_DIR$/src/visMapping.suml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/bimserver_client_lib.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/j3d.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/log4j.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/configurations/IfcGaebColored3DMapper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/data/EMFIfcAccessor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/visualization/Java3dBuilder.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/visualization/Java3dFactory.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/visualization/VisFactory3D.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/configurations/GaebBarchartMapper.java" afterPath="$PROJECT_DIR$/src/configurations/GaebBarchartMapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/CollectionAccessor.java" afterPath="$PROJECT_DIR$/src/data/CollectionAccessor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/DataAccessor.java" afterPath="$PROJECT_DIR$/src/data/DataAccessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/EMFAccessor.java" afterPath="$PROJECT_DIR$/src/data/EMFAccessor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mapping/Mapper.java" afterPath="$PROJECT_DIR$/src/mapping/Mapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mapping/PropertyMap.java" afterPath="$PROJECT_DIR$/src/mapping/PropertyMap.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/visualization/Draw2dFactory.java" afterPath="$PROJECT_DIR$/src/visualization/Draw2dFactory.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/visualization/VisBuilder.java" afterPath="$PROJECT_DIR$/src/visualization/VisBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/visualization/VisFactory.java" afterPath="$PROJECT_DIR$/src/visualization/VisFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/data/EMFAccessorTests.java" afterPath="$PROJECT_DIR$/test/data/EMFAccessorTests.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/mapping/MapperTest.java" afterPath="$PROJECT_DIR$/test/mapping/MapperTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/mapping/MappingTestCase.java" afterPath="$PROJECT_DIR$/test/mapping/MappingTestCase.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visMapping.iml" afterPath="$PROJECT_DIR$/visMapping.iml" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\test\MapperTest.java" afterPath="$PROJECT_DIR$/test/mapping/MapperTest.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\test\MappingTestCase.java" afterPath="$PROJECT_DIR$/test/mapping/MappingTestCase.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\test\PropertyMappingTest.java" afterPath="$PROJECT_DIR$/test/mapping/PropertyMappingTest.java" />
+      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\src\visualization\VisFactory.java" afterPath="$PROJECT_DIR$/src/visualization/VisFactory2D.java" />
     </list>
     <ignored path="visMapping.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,7 +46,7 @@
   </component>
   <component name="DebuggerManager">
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/configurations/GaebBarchartMapper.java" line="87" class="configurations.GaebBarchartMapper" package="configurations">
+      <breakpoint url="file://$PROJECT_DIR$/src/visualization/Java3dBuilder.java" line="26" class="visualization.Java3dBuilder" package="visualization">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -95,48 +100,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Draw2dBuilder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/visualization/Draw2dBuilder.java">
+      <file leaf-file-name="IfcGaebColored3DMapper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/configurations/IfcGaebColored3DMapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="18" selection-start="570" selection-end="570" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GaebBarchartMapper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/configurations/GaebBarchartMapper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="50" selection-start="2076" selection-end="2076" vertical-scroll-proportion="0.0">
+            <state line="22" column="41" selection-start="653" selection-end="653" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VisBuilder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/visualization/VisBuilder.java">
+      <file leaf-file-name="Java3dFactory.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/visualization/Java3dFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="17" selection-start="41" selection-end="41" vertical-scroll-proportion="0.0">
+            <state line="45" column="80" selection-start="1397" selection-end="1397" vertical-scroll-proportion="1.2823985">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VisFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/visualization/VisFactory.java">
+      <file leaf-file-name="VisFactory3D.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/visualization/VisFactory3D.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="0" selection-start="713" selection-end="713" vertical-scroll-proportion="0.0">
+            <state line="6" column="22" selection-start="99" selection-end="99" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Mapper.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/mapping/Mapper.java">
+      <file leaf-file-name="VisFactory2D.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/visualization/VisFactory2D.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="82" selection-start="1550" selection-end="1550" vertical-scroll-proportion="0.62826085">
+            <state line="7" column="22" selection-start="125" selection-end="125" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -145,45 +139,43 @@
       <file leaf-file-name="Draw2dFactory.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/visualization/Draw2dFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="12" selection-start="341" selection-end="341" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BorderLayout.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/BorderLayout.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="11" selection-start="750" selection-end="750" vertical-scroll-proportion="-3.76">
+            <state line="9" column="13" selection-start="263" selection-end="263" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="XYLayout.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/XYLayout.class">
+      <file leaf-file-name="Mapper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mapping/Mapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="57" selection-start="200" selection-end="200" vertical-scroll-proportion="-2.72">
+            <state line="36" column="0" selection-start="1203" selection-end="1203" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractLayout.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/AbstractLayout.class">
+      <file leaf-file-name="VisBuilder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/visualization/VisBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="74" selection-start="217" selection-end="217" vertical-scroll-proportion="-2.72">
+            <state line="6" column="6" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LayoutManager.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/LayoutManager.class">
+      <file leaf-file-name="Java3dBuilder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/visualization/Java3dBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="17" selection-start="160" selection-end="160" vertical-scroll-proportion="-2.72">
+            <state line="6" column="73" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PropertyMap.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mapping/PropertyMap.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="0" selection-start="794" selection-end="794" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -204,22 +196,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/test/PropertyMappingTest.java" />
-        <option value="$PROJECT_DIR$/test/MappingTestCase.java" />
-        <option value="$PROJECT_DIR$/src/data/CollectionAccessor.java" />
-        <option value="$PROJECT_DIR$/src/data/DataAccessor.java" />
-        <option value="$PROJECT_DIR$/test/data/EMFAccessorTest.java" />
-        <option value="$PROJECT_DIR$/src/data/EMFAccessor.java" />
         <option value="$PROJECT_DIR$/test/data/EMFAccessorTests.java" />
-        <option value="$PROJECT_DIR$/test/mapping/PropertyMappingTest.java" />
+        <option value="$PROJECT_DIR$/src/data/DataAccessor.java" />
+        <option value="$PROJECT_DIR$/src/data/EMFAccessor.java" />
+        <option value="$PROJECT_DIR$/src/data/CollectionAccessor.java" />
         <option value="$PROJECT_DIR$/src/visualization/VisFactory.java" />
-        <option value="$PROJECT_DIR$/test/mapping/MapperTest.java" />
-        <option value="$PROJECT_DIR$/src/mapping/PropertyMap.java" />
-        <option value="$PROJECT_DIR$/src/visualization/VisBuilder.java" />
-        <option value="$PROJECT_DIR$/src/mapping/Mapper.java" />
-        <option value="$PROJECT_DIR$/src/visualization/Draw2dBuilder.java" />
+        <option value="$PROJECT_DIR$/src/visualization/VisFactory2D.java" />
+        <option value="$PROJECT_DIR$/src/visualization/VisFactory3D.java" />
         <option value="$PROJECT_DIR$/src/visualization/Draw2dFactory.java" />
-        <option value="$PROJECT_DIR$/src/configurations/GaebBarchartMapper.java" />
+        <option value="$PROJECT_DIR$/src/visualization/VisBuilder.java" />
+        <option value="$PROJECT_DIR$/src/visualization/Java3dBuilder.java" />
+        <option value="$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/cib.lib.bimserverViewer_1.0.0.201201301327/lib/BimserverViewer-0.2.jar!/cib/lib/bimserverViewer/BimserverViewer.class" />
+        <option value="$PROJECT_DIR$/src/mapping/PropertyMap.java" />
+        <option value="$PROJECT_DIR$/src/mapping/Mapper.java" />
+        <option value="$PROJECT_DIR$/src/data/EMFIfcAccessor.java" />
+        <option value="$PROJECT_DIR$/src/configurations/IfcGaebColored3DMapper.java" />
+        <option value="$PROJECT_DIR$/src/visualization/Java3dFactory.java" />
       </list>
     </option>
   </component>
@@ -264,7 +256,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="PackagesPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -276,7 +268,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -289,36 +280,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visualization" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -329,6 +293,126 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="External Libraries" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="visMapping" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bimserver-client-lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="visMapping" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bimserver-client-lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BimserverViewer-0.2.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="visMapping" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bimserver-client-lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BimserverViewer-0.2.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bimserverViewer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="visMapping" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bimserver-client-lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bimserver-1.1.0-2012-02-20-plugins.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="plugins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="visMapping" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bimserver-client-lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bimserver-1.1.0-2012-02-20-plugins.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="plugins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ifcengine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="visMapping" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bimserver-client-lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bimserver-1.1.0-2012-02-20-plugins.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -401,24 +485,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="mapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping.git" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -461,7 +527,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="project.structure.proportion" value="0.15" />
@@ -469,7 +535,7 @@
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="options.lastSelected" value="project.propCompiler" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="project.structure.side.proportion" value="0.11655012" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
@@ -479,7 +545,12 @@
     <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Nutzer\helga\dev\visMapping.git" />
+    </key>
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="data" />
+      <recent name="visualization" />
       <recent name="" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -487,36 +558,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GaebBarchartMapper">
-    <configuration default="false" name="PropertyMappingTest.testReflection" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" />
-      <module name="visMapping" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="mapping" />
-      <option name="MAIN_CLASS_NAME" value="mapping.PropertyMappingTest" />
-      <option name="METHOD_NAME" value="testReflection" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="49162" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Application.IfcGaebColored3DMapper">
     <configuration default="false" name="MapperTest.testMapping" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false" />
       <module name="visMapping" />
@@ -627,6 +669,29 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="IfcGaebColored3DMapper" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" />
+      <option name="MAIN_CLASS_NAME" value="configurations.IfcGaebColored3DMapper" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="visMapping" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -708,11 +773,11 @@
       </method>
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.PropertyMappingTest.testReflection" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.MapperTest.testMapping" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.All in visMapping" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.EMFAccessorTests.testAccessEMF" />
-      <item index="4" class="java.lang.String" itemvalue="Application.GaebBarchartMapper" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.MapperTest.testMapping" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.All in visMapping" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.EMFAccessorTests.testAccessEMF" />
+      <item index="3" class="java.lang.String" itemvalue="Application.GaebBarchartMapper" />
+      <item index="4" class="java.lang.String" itemvalue="Application.IfcGaebColored3DMapper" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -748,12 +813,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42363435" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41248608" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13489409" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -763,12 +829,11 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25387493" sideWeight="0.56744707" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2485302" sideWeight="0.56744707" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43255296" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16461785" sideWeight="0.6309922" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2485302" sideWeight="0.6309922" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3690078" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2909699" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -829,118 +894,114 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/Figure.class">
+    <entry file="jar://$PROJECT_DIR$/../BimserverViewer/lib/bimserver-client-lib-1.1.0-2012-02-20/lib/bimserver-1.1.0-2012-02-20-emf.jar!/org/bimserver/models/ifc2x3/IfcObjectDefinition.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="284" column="46" selection-start="12858" selection-end="12858" vertical-scroll-proportion="-6.08">
+        <state line="5" column="77" selection-start="229" selection-end="229" vertical-scroll-proportion="-2.72">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/Border.class">
+    <entry file="jar://$PROJECT_DIR$/../BimserverViewer/lib/bimserver-client-lib-1.1.0-2012-02-20/lib/bimserver-1.1.0-2012-02-20-emf.jar!/org/bimserver/emf/IdEObject.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="17" selection-start="160" selection-end="160" vertical-scroll-proportion="-2.72">
+        <state line="5" column="17" selection-start="159" selection-end="159" vertical-scroll-proportion="-2.72">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/AbstractBorder.class">
+    <entry file="jar://$PROJECT_DIR$/../BimserverViewer/lib/bimserver-client-lib-1.1.0-2012-02-20/lib/bimserver-1.1.0-2012-02-20-emf.jar!/org/bimserver/models/ifc2x3/IfcRoot.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="22" selection-start="165" selection-end="165" vertical-scroll-proportion="-2.72">
+        <state line="5" column="56" selection-start="208" selection-end="208" vertical-scroll-proportion="-2.72">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/FocusBorder.class">
+    <entry file="jar://$PROJECT_DIR$/../BimserverViewer/lib/bimserver-client-lib-1.1.0-2012-02-20/lib/bimserver-1.1.0-2012-02-20-emf.jar!/org/bimserver/models/ifc2x3/IfcProduct.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="156" selection-end="156" vertical-scroll-proportion="-2.72">
+        <state line="15" column="57" selection-start="548" selection-end="548" vertical-scroll-proportion="-9.52">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/CompoundBorder.class">
+    <entry file="jar://$PROJECT_DIR$/../BimserverViewer/lib/bimserver-client-lib-1.1.0-2012-02-20/lib/bimserver-1.1.0-2012-02-20-emf.jar!/org/bimserver/models/ifc2x3/IfcBuildingElement.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="156" selection-end="156" vertical-scroll-proportion="-2.72">
+        <state line="5" column="79" selection-start="231" selection-end="231" vertical-scroll-proportion="-2.72">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/MarginBorder.class">
+    <entry file="file://$PROJECT_DIR$/src/data/EMFIfcAccessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="25" selection-start="156" selection-end="168" vertical-scroll-proportion="-2.72">
+        <state line="128" column="0" selection-start="5175" selection-end="5175" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/XYLayout.class">
+    <entry file="file://$PROJECT_DIR$/src/mapping/PropertyMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="57" selection-start="200" selection-end="200" vertical-scroll-proportion="-2.72">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/AbstractLayout.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="74" selection-start="217" selection-end="217" vertical-scroll-proportion="-2.72">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/LayoutManager.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="17" selection-start="160" selection-end="160" vertical-scroll-proportion="-2.72">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar!/org/eclipse/draw2d/BorderLayout.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="11" selection-start="750" selection-end="750" vertical-scroll-proportion="-3.76">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/visualization/Draw2dBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="18" selection-start="570" selection-end="570" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/visualization/Draw2dFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="12" selection-start="341" selection-end="341" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/configurations/GaebBarchartMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="50" selection-start="2076" selection-end="2076" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/visualization/VisBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="17" selection-start="41" selection-end="41" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/visualization/VisFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="713" selection-end="713" vertical-scroll-proportion="0.0">
+        <state line="28" column="0" selection-start="794" selection-end="794" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/mapping/Mapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="82" selection-start="1550" selection-end="1550" vertical-scroll-proportion="0.62826085">
+        <state line="36" column="0" selection-start="1203" selection-end="1203" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../cib_framework/MMAA/build/oldnstable/plugins/cib.lib.bimserverViewer_1.0.0.201201301327/lib/BimserverViewer-0.2.jar!/cib/lib/bimserverViewer/BimserverViewer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="19" selection-start="1105" selection-end="1105" vertical-scroll-proportion="-8.96">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visualization/VisBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="6" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visualization/Java3dBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="73" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visualization/VisFactory2D.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="22" selection-start="125" selection-end="125" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visualization/VisFactory3D.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="22" selection-start="99" selection-end="99" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visualization/Draw2dFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="13" selection-start="263" selection-end="263" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/configurations/IfcGaebColored3DMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="41" selection-start="653" selection-end="653" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visualization/Java3dFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="80" selection-start="1397" selection-end="1397" vertical-scroll-proportion="1.2823985">
           <folding />
         </state>
       </provider>
@@ -966,7 +1027,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.11655012" />
               </list>
             </option>
           </splitter-proportions>
@@ -978,7 +1039,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.11655012" />
               </list>
             </option>
           </splitter-proportions>
@@ -1002,7 +1063,8 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.11655012" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -1022,10 +1084,11 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
+          <last-edited>bimserver-client-lib</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.11655012" />
               </list>
             </option>
           </splitter-proportions>

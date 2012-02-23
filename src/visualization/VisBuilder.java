@@ -1,6 +1,6 @@
 package visualization;
 
-public interface VisBuilder<T extends VisFactory.GraphObject,S> {
+public interface VisBuilder<T extends VisFactory2D.GraphObject,S> {
     void init();
     void addPart(T graphicalObject);
     void finish();
