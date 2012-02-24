@@ -12,7 +12,6 @@ public class Java3dBuilder implements VisBuilder<Java3dFactory.Java3DGraphObject
         buildingTransformGroup = new TransformGroup();
         buildingBranchGroup = new BranchGroup();
         buildingBranchGroup.addChild(buildingTransformGroup);
-
     }
 
     public void addPart(Java3dFactory.Java3DGraphObject graphicalObject) {

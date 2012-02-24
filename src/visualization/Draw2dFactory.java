@@ -21,8 +21,7 @@ public class Draw2dFactory extends VisFactory2D {
     protected PropertyMap.Provider<Rectangle> setRectangleProvider() {
         return new PropertyMap.Provider<Rectangle>() {
             public Rectangle create() {
-                return new Draw2dRectangle() {
-                };
+                return new Draw2dRectangle();
             }
         };
     }
@@ -31,8 +30,7 @@ public class Draw2dFactory extends VisFactory2D {
     protected PropertyMap.Provider<Label> setLabelProvider() {
         return new PropertyMap.Provider<Label>() {
             public Label create() {
-                return new Draw2dLabel() {
-                };
+                return new Draw2dLabel();
             }
         };
     }

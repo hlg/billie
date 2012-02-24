@@ -17,6 +17,7 @@ public abstract class VisFactory3D extends VisFactory2D {
     public interface Polyeder extends GraphObject {
         void setVertizes(List<Float> vertizes);
         void setNormals(List<Float> normals);
+        void setColor(float R, float G, float B);
     }
 
 }

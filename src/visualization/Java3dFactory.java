@@ -6,6 +6,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.draw2d.IFigure;
 
 import javax.media.j3d.*;
+import javax.vecmath.Color3f;
 import java.util.List;
 
 public class Java3dFactory extends VisFactory3D {
@@ -18,12 +19,12 @@ public class Java3dFactory extends VisFactory3D {
 
     @Override
     protected PropertyMap.Provider<Rectangle> setRectangleProvider() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;  //TODO: rectangle on projection area
     }
 
     @Override
     protected PropertyMap.Provider<Label> setLabelProvider() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;  //TODO: label on projection area
     }
 
     @Override
@@ -55,6 +56,19 @@ public class Java3dFactory extends VisFactory3D {
             float[] verts = ArrayUtils.toPrimitive(normals.toArray(new Float[normals.size()]));
             geometry.setNormals(0, verts);
         }
+
+        public void setColor(float R, float G, float B) {
+            Appearance appearance = new Appearance();
+            Color3f color3f = new Color3f(R,G,B);
+            Material material = new Material(color3f, new Color3f(0f, 0f, 0f), color3f, color3f, 10f);
+            material.setLightingEnable(true);
+            appearance.setMaterial(material);
+            PolygonAttributes pa = new PolygonAttributes();
+            pa.setCullFace(PolygonAttributes.CULL_NONE);
+            appearance.setPolygonAttributes(pa);
+            setAppearance(appearance);
+        }
+
 
         private TriangleArray getGeometryWithDefault(int size) {
             TriangleArray geometry = (TriangleArray) getGeometry();

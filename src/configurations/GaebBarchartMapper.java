@@ -3,7 +3,7 @@ package configurations;
 import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
 import cib.lib.gaeb.model.gaeb.TgItem;
 import data.DataAccessor;
-import data.EMFAccessor;
+import data.EMFGaebAccessor;
 import mapping.Mapper;
 import mapping.PropertyMap;
 import mapping.TargetCreationException;
@@ -24,7 +24,7 @@ public class GaebBarchartMapper {
     private Mapper mapper;
 
     GaebBarchartMapper(Font font) throws IOException {
-        DataAccessor data = new EMFAccessor(this.getClass().getResourceAsStream("/LV1.X81"));
+        DataAccessor data = new EMFGaebAccessor(this.getClass().getResourceAsStream("/LV1.X81"));
         Draw2dFactory visFactory = new Draw2dFactory(font);
         Draw2dBuilder visBuilder = new Draw2dBuilder();
         mapper = new Mapper(data, visFactory, visBuilder);

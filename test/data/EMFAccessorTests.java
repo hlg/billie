@@ -18,7 +18,7 @@ public class EMFAccessorTests {
     @Test
     public void testAccessEMF() throws URISyntaxException, IOException {
         URL resourceUrl = this.getClass().getResource("/LV1.X81");
-        DataAccessor<EObject> data = new EMFAccessor(resourceUrl);
+        DataAccessor<EObject> data = new EMFGaebAccessor(resourceUrl);
         Iterator<? extends EObject> iterator = data.iterator();
         assertTrue(iterator.hasNext());
         assertTrue(iterator.next() instanceof TgGAEB);

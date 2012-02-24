@@ -13,7 +13,7 @@ import visualization.*;
 import javax.media.j3d.BranchGroup;
 import java.io.File;
 
-public class IfcGaebColored3DMapper extends BimserverViewer {
+public class Ifc3DMapper extends BimserverViewer {
 
     private Mapper mapper;
     private DataAccessor data;
@@ -48,7 +48,7 @@ public class IfcGaebColored3DMapper extends BimserverViewer {
     }
 
     public static void main(String[] args) throws TargetCreationException {
-        IfcGaebColored3DMapper ifcViewer = new IfcGaebColored3DMapper();
+        Ifc3DMapper ifcViewer = new Ifc3DMapper();
         ifcViewer.setupViews();
         ifcViewer.loadFile();
         ifcViewer.configMapping();
