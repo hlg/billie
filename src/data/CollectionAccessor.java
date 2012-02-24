@@ -1,9 +1,11 @@
 package data;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class CollectionAccessor<T> extends DataAccessor<T> {
+public class CollectionAccessor<T> implements DataAccessor<T> {
 
     private Collection<T> data;
 
@@ -13,5 +15,10 @@ public class CollectionAccessor<T> extends DataAccessor<T> {
 
     public Iterator<T> iterator() {
         return data.iterator();
+    }
+
+    public void setInput(File file) throws IOException {
+        throw new UnsupportedOperationException();
+        // TODO inheritance : FileAccessor, IndexableAccessor ...
     }
 }

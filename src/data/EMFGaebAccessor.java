@@ -6,14 +6,19 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 
-public class EMFGaebAccessor extends DataAccessor<EObject> {
+public class EMFGaebAccessor implements DataAccessor<EObject> {
 
     EObject data;
+
+    public EMFGaebAccessor(){
+
+    }
 
     public EMFGaebAccessor(URL url) throws IOException {
         URI fileUri = URI.createFileURI(url.getPath());
@@ -37,5 +42,12 @@ public class EMFGaebAccessor extends DataAccessor<EObject> {
 
     public Iterator<EObject> iterator() {
         return data.eAllContents();
+    }
+
+    public void setInput(File file) throws IOException {
+        URI fileUri = URI.createFileURI(file.getPath());
+        Resource resource = createResource(fileUri);
+        resource.load(null);
+        data = resource.getContents().get(0);
     }
 }

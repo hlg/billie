@@ -5,9 +5,7 @@ import nl.tue.buildingsmart.emf.BuildingSmartLibrarySchemaPlugin;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.ifc.step.deserializer.IfcStepDeserializerPlugin;
 import org.bimserver.ifcengine.CppIfcEnginePlugin;
-import org.bimserver.models.ifc2x3.IfcBuildingElement;
 import org.bimserver.models.ifc2x3.IfcProduct;
-import org.bimserver.models.ifc2x3.IfcRoot;
 import org.bimserver.plugins.PluginException;
 import org.bimserver.plugins.deserializers.DeserializeException;
 import org.bimserver.plugins.deserializers.DeserializerPlugin;
@@ -17,15 +15,12 @@ import org.bimserver.plugins.schema.SchemaPlugin;
 import org.bimserver.plugins.serializers.IfcModelInterface;
 import org.eclipse.emf.ecore.EObject;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class EMFIfcAccessor extends DataAccessor<EMFIfcAccessor.EngineEObject> {
+public class EMFIfcAccessor implements DataAccessor<EMFIfcAccessor.EngineEObject> {
 
     IfcModelInterface data;
     private IfcEngineModel engineModel;
@@ -36,15 +31,23 @@ public class EMFIfcAccessor extends DataAccessor<EMFIfcAccessor.EngineEObject> {
     private long inputSize;
     private IfcEngine engine;
 
+
+    public EMFIfcAccessor(){
+        init();
+    }
+
     @Override
     protected void finalize() throws Throwable {
         engineModel.close();
         engine.close();
     }
 
-    public EMFIfcAccessor(InputStream inputStream, long size) {
+    public void setInput(InputStream inputStream, long size) {
         this.inputStream = inputStream;
         this.inputSize = size;
+    }
+
+    private void init(){
         File homeDir = new File("bimserverHome");
         File tempDir = new File(homeDir, "tmp");
         if (!tempDir.exists()) tempDir.mkdirs();
@@ -66,7 +69,7 @@ public class EMFIfcAccessor extends DataAccessor<EMFIfcAccessor.EngineEObject> {
     }
 
     private void readStream() throws IfcEngineException, DeserializeException, IOException {
-        engine = enginePlugin.createIfcEngine(); // TODO: close and dispose
+        if(engine == null) engine = enginePlugin.createIfcEngine();
         byte[] bytes = new byte[(int)inputSize];
         inputStream.read(bytes);
         engineModel = engine.openModel(new ByteArrayInputStream(bytes), (int)inputSize);
@@ -75,7 +78,6 @@ public class EMFIfcAccessor extends DataAccessor<EMFIfcAccessor.EngineEObject> {
         data = deserializer.read(new ByteArrayInputStream(bytes), "?", true, 16);
     }
 
-    @Override
     public Iterator<EngineEObject> iterator() {
         if(data==null) try {
             readStream(); // lazy engine creation necessare, cause plugin init is not synched
@@ -87,6 +89,11 @@ public class EMFIfcAccessor extends DataAccessor<EMFIfcAccessor.EngineEObject> {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return new EngineIterator(data.getValues().iterator());
+    }
+
+    public void setInput(File file) throws IOException {
+        this.inputStream = new FileInputStream(file);
+        this.inputSize = file.length();
     }
 
     class EngineIterator implements Iterator<EngineEObject> {

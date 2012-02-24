@@ -73,6 +73,7 @@
     </orderEntry>
     <orderEntry type="library" name="bimserver-client-lib" level="project" />
     <orderEntry type="library" name="j3d" level="project" />
+    <orderEntry type="library" name="MFContainerParser" level="project" />
   </component>
 </module>
 

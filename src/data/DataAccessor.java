@@ -1,9 +1,11 @@
 package data;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
-public abstract class DataAccessor<E> implements Iterable<E> {
+public interface DataAccessor<E> extends Iterable<E> {
 
-    public abstract Iterator<E> iterator();
+    public void setInput(File file) throws IOException;
 }

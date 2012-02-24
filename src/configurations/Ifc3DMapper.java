@@ -2,7 +2,6 @@ package configurations;
 
 import cib.lib.bimserverViewer.BimserverViewer;
 import cib.lib.bimserverViewer.loaders.IfcScene;
-import data.DataAccessor;
 import data.EMFIfcAccessor;
 import mapping.Mapper;
 import mapping.PropertyMap;
@@ -16,7 +15,7 @@ import java.io.File;
 public class Ifc3DMapper extends BimserverViewer {
 
     private Mapper mapper;
-    private DataAccessor data;
+    private EMFIfcAccessor data;
 
     private void configMapping() {
         VisBuilder builder = new Java3dBuilder();
@@ -39,7 +38,8 @@ public class Ifc3DMapper extends BimserverViewer {
 
     private void loadFile() {
         long size = new File(this.getClass().getResource("/carport2.ifc").getFile()).length();
-        data = new EMFIfcAccessor(this.getClass().getResourceAsStream("/carport2.ifc"), size);
+        data = new EMFIfcAccessor();
+        data.setInput(this.getClass().getResourceAsStream("/carport2.ifc"), size);
     }
 
     private void executeMapping() throws TargetCreationException {

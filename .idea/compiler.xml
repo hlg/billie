@@ -16,6 +16,7 @@
       <entry name="?*.ftl" />
       <entry name="?*.X81" />
       <entry name="?*.ifc" />
+      <entry name="?*.zip" />
     </wildcardResourcePatterns>
     <annotationProcessing enabled="false" useClasspath="true" />
   </component>

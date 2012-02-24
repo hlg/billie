@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="MFContainerParser">
+    <CLASSES>
+      <root url="file://$JAVALIBS$/MFContainerParser/de.mefisto.container" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$JAVALIBS$/MFContainerParser/de.mefisto.container" recursive="false" />
+  </library>
+</component>
