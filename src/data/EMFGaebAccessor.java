@@ -1,7 +1,8 @@
 package data;
 
-import cib.lib.gaeb.model.gaeb.GaebPackage;
+import cib.lib.gaeb.model.gaeb.*;
 import cib.lib.gaeb.model.gaeb.util.GaebResourceFactoryImpl;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -10,11 +11,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
-public class EMFGaebAccessor implements DataAccessor<EObject> {
+public class EMFGaebAccessor implements IndexedDataAccessor<EObject> {
 
+    Map<String, TgItem> index;
     EObject data;
+    private String namespace = "";
 
     public EMFGaebAccessor(){
 
@@ -49,5 +54,38 @@ public class EMFGaebAccessor implements DataAccessor<EObject> {
         Resource resource = createResource(fileUri);
         resource.load(null);
         data = resource.getContents().get(0);
+    }
+
+    public void index() {
+        index = collectLookUp(((DocumentRoot)data).getGAEB(), namespace);
+        // alternatively for(EObject object : this){ // collect rNoParts}
+    }
+
+    public void setInput(File file, String namespace) throws IOException {
+        setInput(file);
+        this.namespace = namespace+"::";
+    }
+
+    private Map<String, TgItem> collectLookUp(TgGAEB gaeb, String indexPrefix) {
+        Map<String, TgItem> gaebLookUp = new HashMap<String, TgItem>();
+        traverseAndCollectLookUp(gaeb.getAward().getBoQ().getBoQBody(), 0, indexPrefix, gaebLookUp);
+        return gaebLookUp;
+    }
+
+    private void traverseAndCollectLookUp(TgBoQBody boQBody, int depth, String parentId, Map<String, TgItem> lookup) {
+        EList<TgBoQCtgy> boQCtgys = boQBody.getBoQCtgy();
+        for (TgBoQCtgy ctgy : boQCtgys) {
+            String id = parentId + ctgy.getRNoPart() + ".";
+            traverseAndCollectLookUp(ctgy.getBoQBody(), depth + 1, id, lookup);
+        }
+        TgItemlist itemlist = boQBody.getItemlist();
+        if (itemlist != null)
+            for (TgItem item : itemlist.getItem()) {
+                lookup.put(parentId + item.getRNoPart() + ".", item);
+            }
+    }
+
+    public EObject getIndexed(String objectID) {
+        return index.get(objectID);
     }
 }

@@ -16,13 +16,12 @@ import org.bimserver.plugins.serializers.IfcModelInterface;
 import org.eclipse.emf.ecore.EObject;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-public class EMFIfcAccessor implements DataAccessor<EMFIfcAccessor.EngineEObject> {
+public class EMFIfcAccessor implements IndexedDataAccessor<EMFIfcAccessor.EngineEObject> {
 
     IfcModelInterface data;
+    Map<String, EngineEObject> wrappedData;
     private IfcEngineModel engineModel;
     private IfcEngineGeometry geometry;
     private IfcEnginePlugin enginePlugin;
@@ -30,9 +29,10 @@ public class EMFIfcAccessor implements DataAccessor<EMFIfcAccessor.EngineEObject
     private InputStream inputStream;
     private long inputSize;
     private IfcEngine engine;
+    private String namespace = "";
 
 
-    public EMFIfcAccessor(){
+    public EMFIfcAccessor() {
         init();
     }
 
@@ -47,12 +47,12 @@ public class EMFIfcAccessor implements DataAccessor<EMFIfcAccessor.EngineEObject
         this.inputSize = size;
     }
 
-    private void init(){
+    private void init() {
         File homeDir = new File("bimserverHome");
         File tempDir = new File(homeDir, "tmp");
         if (!tempDir.exists()) tempDir.mkdirs();
 
-        PluginManager pluginManager = new PluginManager(homeDir, ".","D:\\Nutzer\\helga\\dev\\BimserverViewer\\lib\\bimserver-client-lib-1.1.0-2012-02-20\\dep", "D:\\Nutzer\\helga\\dev\\BimserverViewer\\lib\\bimserver-client-lib-1.1.0-2012-02-20\\lib");
+        PluginManager pluginManager = new PluginManager(homeDir, ".", "D:\\Nutzer\\helga\\dev\\BimserverViewer\\lib\\bimserver-client-lib-1.1.0-2012-02-20\\dep", "D:\\Nutzer\\helga\\dev\\BimserverViewer\\lib\\bimserver-client-lib-1.1.0-2012-02-20\\lib");
         try {
             // pluginManager.staticLoadPlugins();
             pluginManager.loadPlugin(DeserializerPlugin.class, null, null, new IfcStepDeserializerPlugin());
@@ -69,17 +69,22 @@ public class EMFIfcAccessor implements DataAccessor<EMFIfcAccessor.EngineEObject
     }
 
     private void readStream() throws IfcEngineException, DeserializeException, IOException {
-        if(engine == null) engine = enginePlugin.createIfcEngine();
-        byte[] bytes = new byte[(int)inputSize];
+        if (engine == null) engine = enginePlugin.createIfcEngine();
+        byte[] bytes = new byte[(int) inputSize];
         inputStream.read(bytes);
-        engineModel = engine.openModel(new ByteArrayInputStream(bytes), (int)inputSize);
+        engineModel = engine.openModel(new ByteArrayInputStream(bytes), (int) inputSize);
         engineModel.setPostProcessing(true);
         geometry = engineModel.finalizeModelling(engineModel.initializeModelling());
         data = deserializer.read(new ByteArrayInputStream(bytes), "?", true, 16);
     }
 
     public Iterator<EngineEObject> iterator() {
-        if(data==null) try {
+        layzLoad();
+        return new EngineIterator(data.getValues().iterator());
+    }
+
+    private void layzLoad() {
+        if (data == null) try {
             readStream(); // lazy engine creation necessare, cause plugin init is not synched
         } catch (IfcEngineException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -88,7 +93,6 @@ public class EMFIfcAccessor implements DataAccessor<EMFIfcAccessor.EngineEObject
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        return new EngineIterator(data.getValues().iterator());
     }
 
     public void setInput(File file) throws IOException {
@@ -96,11 +100,38 @@ public class EMFIfcAccessor implements DataAccessor<EMFIfcAccessor.EngineEObject
         this.inputSize = file.length();
     }
 
+    public void index() {
+        layzLoad();
+        data.indexGuids();
+        wrappedData = new HashMap<String, EngineEObject>();
+    }
+
+    public EngineEObject getIndexed(String objectID) {
+        layzLoad();
+        if (objectID.contains("::")) {
+            String[] idParts = objectID.split("::");
+            assert idParts[0].equals(namespace);
+            objectID = idParts[1];
+        }
+        if (wrappedData.containsKey(objectID))
+            return wrappedData.get(objectID);
+        else {
+            EngineEObject wrapped = new EngineEObject(data.get(objectID));
+            wrappedData.put(objectID, wrapped);
+            return wrapped;
+        }
+    }
+
+    public void setInput(File file, String namespace) throws IOException {
+        setInput(file);
+        this.namespace = namespace + "::";
+    }
+
     class EngineIterator implements Iterator<EngineEObject> {
 
         private Iterator<IdEObject> baseIterator;
 
-        EngineIterator(Iterator<IdEObject> baseIterator){
+        EngineIterator(Iterator<IdEObject> baseIterator) {
             this.baseIterator = baseIterator;
         }
 
@@ -120,11 +151,11 @@ public class EMFIfcAccessor implements DataAccessor<EMFIfcAccessor.EngineEObject
     public class EngineEObject {
         private IdEObject idEObject;
 
-        EngineEObject(IdEObject object){
+        EngineEObject(IdEObject object) {
             this.idEObject = object;
         }
 
-        public EObject getObject(){
+        public EObject getObject() {
             return idEObject;
         }
 
@@ -135,10 +166,10 @@ public class EMFIfcAccessor implements DataAccessor<EMFIfcAccessor.EngineEObject
             try {
                 instance = engineModel.getInstanceFromExpressId((int) idEObject.getOid());
                 IfcEngineInstanceVisualisationProperties visProps = instance.getVisualisationProperties();
-                objectGeometry.vertizes = new ArrayList<Float>(visProps.getPrimitiveCount()*9); // TODO: optimize memory: retain index!
-                objectGeometry.normals = new ArrayList<Float>(visProps.getPrimitiveCount()*9); // TODO: optimize memory: retain index!
-                for(int i = visProps.getStartIndex(); i < visProps.getStartIndex() + visProps.getPrimitiveCount()*3; i++){
-                    int index = geometry.getIndex(i)*3;
+                objectGeometry.vertizes = new ArrayList<Float>(visProps.getPrimitiveCount() * 9); // TODO: optimize memory: retain index!
+                objectGeometry.normals = new ArrayList<Float>(visProps.getPrimitiveCount() * 9); // TODO: optimize memory: retain index!
+                for (int i = visProps.getStartIndex(); i < visProps.getStartIndex() + visProps.getPrimitiveCount() * 3; i++) {
+                    int index = geometry.getIndex(i) * 3;
                     objectGeometry.normals.add(geometry.getNormal(index));
                     objectGeometry.vertizes.add(geometry.getVertex(index));
                     objectGeometry.normals.add(geometry.getNormal(index + 1));
@@ -152,7 +183,7 @@ public class EMFIfcAccessor implements DataAccessor<EMFIfcAccessor.EngineEObject
             return objectGeometry;
         }
     }
-    
+
     public class Geometry {
         public List<Float> vertizes;
         public List<Float> normals;
