@@ -1,11 +1,10 @@
 <component name="libraryTable">
   <library name="j3d">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../BimserverViewer/lib/j3d" />
-      <root url="file://$PROJECT_DIR$/../BimserverViewer/lib/j3d" />
+      <root url="file://$EXTERNAL_LIBRARIES$/mmaa_oldnstable/plugins/cib.lib.bimserverViewer_1.0.0.201201301327/lib/j3d" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://$PROJECT_DIR$/../BimserverViewer/lib/j3d" recursive="false" />
+    <jarDirectory url="file://$EXTERNAL_LIBRARIES$/mmaa_oldnstable/plugins/cib.lib.bimserverViewer_1.0.0.201201301327/lib/j3d" recursive="false" />
   </library>
 </component>

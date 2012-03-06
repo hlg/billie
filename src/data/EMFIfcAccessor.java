@@ -52,7 +52,7 @@ public class EMFIfcAccessor implements IndexedDataAccessor<EMFIfcAccessor.Engine
         File tempDir = new File(homeDir, "tmp");
         if (!tempDir.exists()) tempDir.mkdirs();
 
-        PluginManager pluginManager = new PluginManager(homeDir, ".", "D:\\Nutzer\\helga\\dev\\BimserverViewer\\lib\\bimserver-client-lib-1.1.0-2012-02-20\\dep", "D:\\Nutzer\\helga\\dev\\BimserverViewer\\lib\\bimserver-client-lib-1.1.0-2012-02-20\\lib");
+        PluginManager pluginManager = new PluginManager(homeDir, ".", "L:\\src\\javalibs\\bimserver-client-lib-1.1.0-2012-02-20\\dep", "L:\\src\\javalibs\\bimserver-client-lib-1.1.0-2012-02-20\\lib");
         try {
             // pluginManager.staticLoadPlugins();
             pluginManager.loadPlugin(DeserializerPlugin.class, null, null, new IfcStepDeserializerPlugin());

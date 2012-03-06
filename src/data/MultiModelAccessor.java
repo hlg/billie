@@ -18,8 +18,7 @@ public class MultiModelAccessor<K> implements DataAccessor<MultiModelAccessor.Li
 
     private Map<String, IndexedDataAccessor> elementaryModels = new HashMap<String, IndexedDataAccessor>();
     private Map<String, ElementaryModelType> elementaryModelTypes = new HashMap<String, ElementaryModelType>();
-    private Map<Object, Map<ElementaryModelType, Map<String, Collection>>> groupedElements;
-    private Collection<LinkedObject<K>> groupedElements1;
+    private Collection<LinkedObject<K>> groupedElements;
     private LinkModelDescriptor linkModelDesc;
 
     private File mmFolder;
@@ -46,7 +45,6 @@ public class MultiModelAccessor<K> implements DataAccessor<MultiModelAccessor.Li
     }
 
     private void groupBy(String groupingModelId) {
-        groupedElements = new HashMap<Object, Map<ElementaryModelType, Map<String, Collection>>>();
         Map<K, LinkedObject<K>> trackMap = new HashMap<K, LinkedObject<K>>();
         try {
             File linkFile = new File(mmFolder, new URL(linkModelDesc.getFile()).getFile());
@@ -65,7 +63,7 @@ public class MultiModelAccessor<K> implements DataAccessor<MultiModelAccessor.Li
         } catch (MalformedURLException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        groupedElements1 = trackMap.values();
+        groupedElements = trackMap.values();
     }
 
     private ResolvedLink resolveLink(LinkObject link, String groupingModelId) {
@@ -121,7 +119,7 @@ public class MultiModelAccessor<K> implements DataAccessor<MultiModelAccessor.Li
     }
 
     public Iterator<LinkedObject<K>> iterator() {
-        return groupedElements1.iterator();
+        return groupedElements.iterator();
     }
 
     public void setInput(File file) {

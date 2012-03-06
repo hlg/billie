@@ -27,6 +27,6 @@ public class MultiModelAccessorTests {
             assertEquals(1, theLink.getLinkedBoQ().size());
             TgItem theItem = theLink.getLinkedBoQ().values().iterator().next();
         }
-        assertEquals(6,linkSize);
+        assertEquals(5,linkSize);
     }
 }
