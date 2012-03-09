@@ -1,6 +1,7 @@
 package data;
 
 import cib.lib.gaeb.model.gaeb.TgItem;
+import cib.mmaa.qto.elementaryModel.Qto.AnsatzType;
 import de.mefisto.model.container.*;
 import de.mefisto.model.linkModel.Link;
 import de.mefisto.model.linkModel.LinkModel;
@@ -14,12 +15,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
-public class MultiModelAccessor<K> implements DataAccessor<MultiModelAccessor.LinkedObject<K>> {
+public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.LinkedObject<K>> {
 
     private Map<String, IndexedDataAccessor> elementaryModels = new HashMap<String, IndexedDataAccessor>();
-    private Map<String, ElementaryModelType> elementaryModelTypes = new HashMap<String, ElementaryModelType>();
     private Collection<LinkedObject<K>> groupedElements;
-    private LinkModelDescriptor linkModelDesc;
 
     private File mmFolder;
 
@@ -32,7 +31,6 @@ public class MultiModelAccessor<K> implements DataAccessor<MultiModelAccessor.Li
         ElementaryModelType keyModelType = ElementaryModelType.OBJECT;
         String firstAccesibleKeyModelId = null;
         for (ElementaryModel elementaryModel : container.getElementaryModelGroup().getElementaryModels()) {
-            elementaryModelTypes.put(elementaryModel.getId(), elementaryModel.getType());
             IndexedDataAccessor accessor = firstAccessible(mmFolder, elementaryModel);
             if (accessor != null) {
                 elementaryModels.put(elementaryModel.getId(), accessor);
@@ -40,11 +38,11 @@ public class MultiModelAccessor<K> implements DataAccessor<MultiModelAccessor.Li
                     firstAccesibleKeyModelId = elementaryModel.getId();
             }
         }
-        linkModelDesc = container.getLinkModelDescriptorGroup().getLinkModelDescriptors().get(0); // TODO select by type / ID
-        if (firstAccesibleKeyModelId != null) groupBy(firstAccesibleKeyModelId);
+        LinkModelDescriptor linkModelDesc = container.getLinkModelDescriptorGroup().getLinkModelDescriptors().get(0);
+        if (firstAccesibleKeyModelId != null) groupBy(firstAccesibleKeyModelId, linkModelDesc);
     }
 
-    private void groupBy(String groupingModelId) {
+    private void groupBy(String groupingModelId, LinkModelDescriptor linkModelDesc) {
         Map<K, LinkedObject<K>> trackMap = new HashMap<K, LinkedObject<K>>();
         try {
             File linkFile = new File(mmFolder, new URL(linkModelDesc.getFile()).getFile());
@@ -141,6 +139,11 @@ public class MultiModelAccessor<K> implements DataAccessor<MultiModelAccessor.Li
             IndexedDataAccessor createAccessor() {
                 return new EMFGaebAccessor();
             }
+        },
+        QTO("QTO", "xml"){
+            IndexedDataAccessor createAccessor(){
+                return new EMFQtoAccessor();
+            }
         };
 
         private String modelType;
@@ -187,7 +190,12 @@ public class MultiModelAccessor<K> implements DataAccessor<MultiModelAccessor.Li
     public static class ResolvedLink {
         Map<String, EMFIfcAccessor.EngineEObject> ifcObjects = new HashMap<String, EMFIfcAccessor.EngineEObject>();
         Map<String, TgItem> gaebObjects = new HashMap<String, TgItem>();
+        Map<String, AnsatzType> qtoObjects = new HashMap<String, AnsatzType>();
 
+        public Map<String, AnsatzType> getLinkedQto(){
+            return qtoObjects;
+        }
+        
         public Map<String, TgItem> getLinkedBoQ() {
             return gaebObjects;
         }
@@ -199,12 +207,14 @@ public class MultiModelAccessor<K> implements DataAccessor<MultiModelAccessor.Li
         public Map<String, ?> getLinksOfType(ElementaryModelType elementaryModelType) {
             if (elementaryModelType.equals(ElementaryModelType.BO_Q)) return gaebObjects;
             if (elementaryModelType.equals(ElementaryModelType.OBJECT)) return ifcObjects;
+            if (elementaryModelType.equals(ElementaryModelType.QTO)) return qtoObjects;
             return null;
         }
 
         public void addObject(String modelId, Object object) {
             if(object instanceof TgItem) gaebObjects.put(modelId, (TgItem)object);
             if(object instanceof EMFIfcAccessor.EngineEObject) ifcObjects.put(modelId, (EMFIfcAccessor.EngineEObject)object);
+            if(object instanceof AnsatzType) qtoObjects.put(modelId, (AnsatzType)object);
         }
 
     }

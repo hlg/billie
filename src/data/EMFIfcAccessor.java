@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import java.io.*;
 import java.util.*;
 
-public class EMFIfcAccessor implements IndexedDataAccessor<EMFIfcAccessor.EngineEObject> {
+public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcAccessor.EngineEObject> {
 
     IfcModelInterface data;
     Map<String, EngineEObject> wrappedData;
@@ -52,7 +52,9 @@ public class EMFIfcAccessor implements IndexedDataAccessor<EMFIfcAccessor.Engine
         File tempDir = new File(homeDir, "tmp");
         if (!tempDir.exists()) tempDir.mkdirs();
 
-        PluginManager pluginManager = new PluginManager(homeDir, ".", "L:\\src\\javalibs\\bimserver-client-lib-1.1.0-2012-02-20\\dep", "L:\\src\\javalibs\\bimserver-client-lib-1.1.0-2012-02-20\\lib");
+        String libBase = System.getenv("JAVALIBS");
+
+        PluginManager pluginManager = new PluginManager(homeDir, ".", libBase + "\\bimserver-client-lib-1.1.0-2012-02-20\\dep", libBase + "\\bimserver-client-lib-1.1.0-2012-02-20\\lib");
         try {
             // pluginManager.staticLoadPlugins();
             pluginManager.loadPlugin(DeserializerPlugin.class, null, null, new IfcStepDeserializerPlugin());

@@ -15,60 +15,33 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class EMFGaebAccessor implements IndexedDataAccessor<EObject> {
-
-    Map<String, TgItem> index;
-    EObject data;
-    private String namespace = "";
+public class EMFGaebAccessor extends EMFGenericAccessor<TgItem> {
 
     public EMFGaebAccessor(){
 
     }
 
     public EMFGaebAccessor(URL url) throws IOException {
-        URI fileUri = URI.createFileURI(url.getPath());
-        Resource resource = createResource(fileUri);
-        resource.load(null);
-        data = resource.getContents().get(0);
+        super(url);
     }
 
     public EMFGaebAccessor(InputStream inputStream) throws IOException {
-        URI fakeUri = URI.createURI("inputstream://fake.resource.uri");
-        Resource resource = createResource(fakeUri);
-        resource.load(inputStream, null);
-        data = resource.getContents().get(0);
+        super(inputStream);
     }
 
-    private Resource createResource(URI uri) {
+    @Override
+    protected Resource createResource(URI uri) {
         GaebPackage.eINSTANCE.eClass();
         GaebResourceFactoryImpl gaebResourceFactory = new GaebResourceFactoryImpl();
         return gaebResourceFactory.createResource(uri);
     }
 
-    public Iterator<EObject> iterator() {
-        return data.eAllContents();
-    }
-
-    public void setInput(File file) throws IOException {
-        URI fileUri = URI.createFileURI(file.getPath());
-        Resource resource = createResource(fileUri);
-        resource.load(null);
-        data = resource.getContents().get(0);
-    }
-
-    public void index() {
-        index = collectLookUp(((DocumentRoot)data).getGAEB(), namespace);
+    @Override
+    protected Map<String, TgItem> collectLookUp() {
         // alternatively for(EObject object : this){ // collect rNoParts}
-    }
-
-    public void setInput(File file, String namespace) throws IOException {
-        setInput(file);
-        this.namespace = namespace+"::";
-    }
-
-    private Map<String, TgItem> collectLookUp(TgGAEB gaeb, String indexPrefix) {
+        TgGAEB gaeb = ((DocumentRoot)data).getGAEB();
         Map<String, TgItem> gaebLookUp = new HashMap<String, TgItem>();
-        traverseAndCollectLookUp(gaeb.getAward().getBoQ().getBoQBody(), 0, indexPrefix, gaebLookUp);
+        traverseAndCollectLookUp(gaeb.getAward().getBoQ().getBoQBody(), 0, namespace, gaebLookUp);
         return gaebLookUp;
     }
 
@@ -85,7 +58,4 @@ public class EMFGaebAccessor implements IndexedDataAccessor<EObject> {
             }
     }
 
-    public EObject getIndexed(String objectID) {
-        return index.get(objectID);
-    }
 }

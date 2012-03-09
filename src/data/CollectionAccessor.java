@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class CollectionAccessor<T> implements DataAccessor<T> {
+public class CollectionAccessor<T> extends DataAccessor<T> {
 
     private Collection<T> data;
 

@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="MFContainerParser">
     <CLASSES>
-      <root url="jar://$EXTERNAL_LIBRARIES$/mmaa_oldnstable/plugins/de.mefisto.container_1.0.0.201201272248/container.jar!/" />
+      <root url="jar://$JAVALIBS$/mmaa_oldnstable/plugins/de.mefisto.container_1.0.0.201201272248/container.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

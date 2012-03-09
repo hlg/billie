@@ -1,6 +1,7 @@
 package data;
 
 import cib.lib.gaeb.model.gaeb.TgItem;
+import cib.mmaa.qto.elementaryModel.Qto.AnsatzType;
 import de.mefisto.model.container.ElementaryModelType;
 import org.junit.Test;
 
@@ -26,6 +27,7 @@ public class MultiModelAccessorTests {
             assertTrue(theLink.getLinkedObject().isEmpty());
             assertEquals(1, theLink.getLinkedBoQ().size());
             TgItem theItem = theLink.getLinkedBoQ().values().iterator().next();
+            AnsatzType theAnsatz = theLink.getLinkedQto().values().iterator().next();
         }
         assertEquals(5,linkSize);
     }

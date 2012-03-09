@@ -1,10 +1,11 @@
 <component name="libraryTable">
   <library name="j3d">
     <CLASSES>
-      <root url="file://$EXTERNAL_LIBRARIES$/mmaa_oldnstable/plugins/cib.lib.bimserverViewer_1.0.0.201201301327/lib/j3d" />
+      <root url="jar://$JAVALIBS$/j3dcore.jar!/" />
+      <root url="jar://$JAVALIBS$/j3dutils.jar!/" />
+      <root url="jar://$JAVALIBS$/vecmath.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://$EXTERNAL_LIBRARIES$/mmaa_oldnstable/plugins/cib.lib.bimserverViewer_1.0.0.201201301327/lib/j3d" recursive="false" />
   </library>
 </component>

@@ -7,7 +7,9 @@ import data.EMFGaebAccessor;
 import mapping.Mapper;
 import mapping.PropertyMap;
 import mapping.TargetCreationException;
-import org.eclipse.draw2d.*;
+import org.eclipse.draw2d.FigureCanvas;
+import org.eclipse.draw2d.LightweightSystem;
+import org.eclipse.draw2d.Panel;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
@@ -18,25 +20,37 @@ import visualization.Draw2dFactory;
 import visualization.VisFactory2D;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 public class GaebBarchartMapper {
 
     private Mapper mapper;
 
     GaebBarchartMapper(Font font) throws IOException {
-        DataAccessor data = new EMFGaebAccessor(this.getClass().getResourceAsStream("/LV1.X81"));
+        EMFGaebAccessor data = new EMFGaebAccessor(this.getClass().getResourceAsStream("/LV1.X81"));
         Draw2dFactory visFactory = new Draw2dFactory(font);
         Draw2dBuilder visBuilder = new Draw2dBuilder();
         mapper = new Mapper(data, visFactory, visBuilder);
     }
 
-    public void config(){
-        final double factor = 0.3; // TODO: get from some statistical data accessor function
+    public void config() {
+        mapper.addStatistics("UPmax", new DataAccessor.Folder<EObject, BigDecimal>(new BigDecimal(0)) {
+            @Override
+            public BigDecimal function(BigDecimal aggregator, EObject elem) {
+                return elem instanceof TgItem ? aggregator.max(((TgItem) elem).getUP()) : aggregator;
+            }
+        });
+        mapper.addGlobals("widthFactor", new Mapper.PreProcessing<Double>() {
+            @Override
+            public Double getResult() {
+                return 1000. / mp.getStats("UPmax").doubleValue();
+            }
+        });
         mapper.addMapping(new PropertyMap<TgItem, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
                 graphObject.setHeight(15);
-                graphObject.setWidth((int)(data.getUP().intValue() * factor));
+                graphObject.setWidth((int) (data.getUP().intValue() * mapper.getGlobal("widthFactor")));
                 graphObject.setLeft(100);
                 graphObject.setTop(index * 20); // TODO: alternative to iterator index ? Layoutmanager, dataacessor sorting parameters
             }
@@ -46,7 +60,7 @@ public class GaebBarchartMapper {
             protected void configure() {
                 EObject container = data.eContainer().eContainer().eContainer();
                 StringBuilder labelText = new StringBuilder(data.getRNoPart());
-                while (container instanceof TgBoQCtgy){
+                while (container instanceof TgBoQCtgy) {
                     labelText.insert(0, '.');
                     labelText.insert(0, ((TgBoQCtgy) container).getRNoPart());
                     container = container.eContainer().eContainer();
@@ -57,7 +71,7 @@ public class GaebBarchartMapper {
             }
         });
     }
-    
+
     public Panel execute() throws TargetCreationException {
         return (Panel) mapper.map();
     }

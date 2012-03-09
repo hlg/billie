@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GXML Toolbox V3.11 R20091211;  http://www.gaeb-toolbox.de/ 
+ gtcConverter.dll used version 2011.05.06  -->
+<GAEB xmlns="http://www.gaeb.de/GAEB_DA_XML/200407">
+ <GAEBInfo>
+  <Version>3.1</Version>
+  <VersDate>2009-12</VersDate>
+  <Date>2012-02-24</Date>
+  <Time>18:12:47</Time>
+  <ProgSystem>/ GXML Toolbox V3.11 R20091211</ProgSystem>
+  <ProgName>iTWO_64_beta V2.3.456</ProgName>
+ </GAEBInfo>
+ <PrjInfo>
+  <NamePrj>demo-cp_TAU1</NamePrj>
+  <LblPrj>ttt</LblPrj>
+  <Cur>EUR</Cur>
+  <CurLbl>Euro</CurLbl>
+  <AlterBidPerm>Yes</AlterBidPerm>
+ </PrjInfo>
+ <Award>
+  <DP>81</DP>
+  <AwardInfo>
+   <Cur>EUR</Cur>
+   <CurLbl>Euro</CurLbl>
+   <CashDiscount>
+    <CashDiscDays Days="18"/>
+    <DiscountPcnt>0.00</DiscountPcnt>
+   </CashDiscount>
+  </AwardInfo>
+  <BoQ ID="IAIDAAAA">
+   <BoQInfo>
+    <Name>1</Name>
+    <LblBoQ>Rohbau</LblBoQ>
+    <Date>2012-02-24</Date>
+    <OutlCompl>AllTxt</OutlCompl>
+    <BoQBkdn>
+     <Type>BoQLevel</Type>
+     <LblBoQBkdn>Bereich</LblBoQBkdn>
+     <Length>2</Length>
+     <Num>Yes</Num>
+    </BoQBkdn>
+    <BoQBkdn>
+     <Type>BoQLevel</Type>
+     <LblBoQBkdn>Abschnitt</LblBoQBkdn>
+     <Length>2</Length>
+     <Num>Yes</Num>
+    </BoQBkdn>
+    <BoQBkdn>
+     <Type>Item</Type>
+     <Length>4</Length>
+     <Num>Yes</Num>
+    </BoQBkdn>
+    <BoQBkdn>
+     <Type>Index</Type>
+     <Length>1</Length>
+     <Num>No</Num>
+     <Alignment>left</Alignment>
+    </BoQBkdn>
+    <NoUPComps>4</NoUPComps>
+    <LblUPComp1>Löhne</LblUPComp1>
+    <LblUPComp2>Stoffe</LblUPComp2>
+    <LblUPComp3>Geräte</LblUPComp3>
+    <LblUPComp4>Sonstiges</LblUPComp4>
+    <Totals>
+     <Total>4203.40</Total>
+     <VAT>19.00</VAT>
+     <TotalGross>5002.05</TotalGross>
+    </Totals>
+    <Ctlg>
+     <CtlgID>IAHMCANA</CtlgID>
+     <CtlgType>locality</CtlgType>
+     <CtlgName>Orte</CtlgName>
+    </Ctlg>
+   </BoQInfo>
+   <BoQBody>
+    <BoQCtgy ID="IAIHAAAA" RNoPart="1">
+     <LblTx>
+      <p>
+       <span>Betonarbeiten</span>
+      </p>
+     </LblTx>
+     <BoQBody>
+      <BoQCtgy ID="IAIHAILI" RNoPart="1">
+       <LblTx>
+        <p>
+         <span>Schalungen</span>
+        </p>
+       </LblTx>
+       <BoQBody>
+        <Itemlist>
+         <Item ID="IAIHBBNI" RNoPart="10">
+          <Qty>10.000</Qty>
+          <PredQty>10.000</PredQty>
+          <QU>m²</QU>
+          <UP>100.000</UP>
+          <IT>1000.00</IT>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Stütze rund, d=25cm, fertige Rundschalung aus Kunststoff, SB1</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Stütze rund, d=25cm, fertige Rundschalung aus Kunststoff, SB1</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IAIHBNOI" RNoPart="20">
+          <Qty>8.000</Qty>
+          <PredQty>8.000</PredQty>
+          <QU>m²</QU>
+          <UP>60.000</UP>
+          <IT>480.00</IT>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Stütze quadratisch 25x25cm, Rahmenschalung, Kante mit Fase, SB1</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Stütze quadratisch 25x25cm, Rahmenschalung, Kante mit Fase, SB1</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IAIHCJII" RNoPart="30">
+          <Qty>43.496</Qty>
+          <PredQty>43.496</PredQty>
+          <QU>m²</QU>
+          <CtlgAssign>
+           <CtlgID>IAHMCANA</CtlgID>
+           <CtlgCode>115</CtlgCode>
+          </CtlgAssign>
+          <UP>50.000</UP>
+          <IT>2174.80</IT>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Decke, d=20cm, für Sichtbeton SB1</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Decke, d=20cm, für Sichtbeton SB1</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+        </Itemlist>
+       </BoQBody>
+       <Totals>
+        <Total>3654.80</Total>
+       </Totals>
+      </BoQCtgy>
+      <BoQCtgy ID="IAIHDFAI" RNoPart="2">
+       <LblTx>
+        <p>
+         <span>Bewehrungen</span>
+        </p>
+       </LblTx>
+       <BoQBody>
+        <Itemlist>
+         <Item ID="IAIHDNLI" RNoPart="10">
+          <Qty>0.160</Qty>
+          <PredQty>0.160</PredQty>
+          <QU>t</QU>
+          <UP>20.000</UP>
+          <IT>3.20</IT>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Stabstähle B500</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Stabstähle B500</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IAIHEJJI" RNoPart="20">
+          <Qty>1.075</Qty>
+          <PredQty>1.075</PredQty>
+          <QU>t</QU>
+          <CtlgAssign>
+           <CtlgID>IAHMCANA</CtlgID>
+           <CtlgCode>115</CtlgCode>
+          </CtlgAssign>
+          <UP>20.000</UP>
+          <IT>21.50</IT>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Mattenstahl B500</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Mattenstahl B500</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+        </Itemlist>
+       </BoQBody>
+       <Totals>
+        <Total>24.70</Total>
+       </Totals>
+      </BoQCtgy>
+      <BoQCtgy ID="IAIHFFAI" RNoPart="3">
+       <LblTx>
+        <p>
+         <span>Ortbeton</span>
+        </p>
+       </LblTx>
+       <BoQBody>
+        <Itemlist>
+         <Item ID="IAIHFNLI" RNoPart="10">
+          <Qty>1.406</Qty>
+          <PredQty>1.406</PredQty>
+          <QU>m³</QU>
+          <UP>50.000</UP>
+          <IT>70.30</IT>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Stütze rund, Durchmesser 20-30 cm, C40/50</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Stütze rund, Durchmesser 20-30 cm, C40/50</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IAIHGJLA" RNoPart="20">
+          <Qty>0.800</Qty>
+          <PredQty>0.800</PredQty>
+          <QU>m³</QU>
+          <UP>50.000</UP>
+          <IT>40.00</IT>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Stütze quadratisch 25x25cm, C40/50</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Stütze quadratisch 25x25cm, C40/50</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+         <Item ID="IAIHHFDI" RNoPart="30">
+          <Qty>8.272</Qty>
+          <PredQty>8.272</PredQty>
+          <QU>m³</QU>
+          <CtlgAssign>
+           <CtlgID>IAHMCANA</CtlgID>
+           <CtlgCode>115</CtlgCode>
+          </CtlgAssign>
+          <UP>50.000</UP>
+          <IT>413.60</IT>
+          <Description>
+           <CompleteText>
+            <DetailTxt>
+             <Text>
+              <p style="text-align:left;">
+               <span style="font-family:Arial;font-size:10pt;color:rgb(0,0,0);">Decke, d=20cm, C40/50</span>
+              </p>
+             </Text>
+            </DetailTxt>
+            <OutlineText>
+             <OutlTxt>
+              <TextOutlTxt>
+               <p>
+                <span>Decke, d=20cm, C40/50</span>
+               </p>
+              </TextOutlTxt>
+             </OutlTxt>
+            </OutlineText>
+           </CompleteText>
+          </Description>
+         </Item>
+        </Itemlist>
+       </BoQBody>
+       <Totals>
+        <Total>523.90</Total>
+       </Totals>
+      </BoQCtgy>
+     </BoQBody>
+     <Totals>
+      <Total>4203.40</Total>
+     </Totals>
+    </BoQCtgy>
+   </BoQBody>
+  </BoQ>
+ </Award>
+</GAEB>

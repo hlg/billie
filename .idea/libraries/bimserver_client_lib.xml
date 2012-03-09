@@ -1,17 +1,17 @@
 <component name="libraryTable">
   <library name="bimserver-client-lib">
     <CLASSES>
-      <root url="file://$EXTERNAL_LIBRARIES$/bimserver-client-lib-1.1.0-2012-02-20/dep" />
-      <root url="file://$EXTERNAL_LIBRARIES$/bimserver-client-lib-1.1.0-2012-02-20/lib" />
-      <root url="file://$EXTERNAL_LIBRARIES$/bimserver-client-lib-1.1.0-2012-02-20/dep" />
-      <root url="jar://$EXTERNAL_LIBRARIES$/mmaa_oldnstable/plugins/cib.lib.bimserverViewer_1.0.0.201201301327/lib/BimserverViewer-0.2.jar!/" />
+      <root url="file://$JAVALIBS$/bimserver-client-lib-1.1.0-2012-02-20/dep" />
+      <root url="file://$JAVALIBS$/bimserver-client-lib-1.1.0-2012-02-20/lib" />
+      <root url="file://$JAVALIBS$/bimserver-client-lib-1.1.0-2012-02-20/dep" />
+      <root url="jar://$JAVALIBS$/mmaa_oldnstable/plugins/cib.lib.bimserverViewer_1.0.0.201201301327/lib/BimserverViewer-0.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="file://$EXTERNAL_LIBRARIES$/bimserver-client-lib-1.1.0-2012-02-20/dep" />
-      <root url="file://$EXTERNAL_LIBRARIES$/bimserver-client-lib-1.1.0-2012-02-20/lib" />
+      <root url="file://$JAVALIBS$/bimserver-client-lib-1.1.0-2012-02-20/dep" />
+      <root url="file://$JAVALIBS$/bimserver-client-lib-1.1.0-2012-02-20/lib" />
     </SOURCES>
-    <jarDirectory url="file://$EXTERNAL_LIBRARIES$/bimserver-client-lib-1.1.0-2012-02-20/dep" recursive="false" />
-    <jarDirectory url="file://$EXTERNAL_LIBRARIES$/bimserver-client-lib-1.1.0-2012-02-20/lib" recursive="false" />
+    <jarDirectory url="file://$JAVALIBS$/bimserver-client-lib-1.1.0-2012-02-20/dep" recursive="false" />
+    <jarDirectory url="file://$JAVALIBS$/bimserver-client-lib-1.1.0-2012-02-20/lib" recursive="false" />
   </library>
 </component>

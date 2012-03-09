@@ -8,6 +8,7 @@ import visualization.VisBuilder;
 import visualization.VisFactory2D;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +18,18 @@ public class MapperTest extends MappingTestCase {
     @Before
     public void setUp(){
          super.setUp();
+    }
+
+    @Test
+    public void testFold(){
+        DataAccessor.Folder<String, String> folder = new DataAccessor.Folder<String, String>("go"){
+            @Override
+            public String function(String aggregator, String element) {
+                return aggregator + "." + element;
+            }
+        };
+        folder.fold(Arrays.asList("a", "b", "c"));
+        assertEquals("goabc", folder.getResult());
     }
 
     @Test
