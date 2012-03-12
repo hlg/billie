@@ -7,46 +7,59 @@ import data.EMFIfcAccessor;
 import data.MultiModelAccessor;
 import mapping.Mapper;
 import mapping.PropertyMap;
-import visualization.Java3dBuilder;
-import visualization.Java3dFactory;
-import visualization.VisBuilder;
+import mapping.TargetCreationException;
 import visualization.VisFactory3D;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 
-public class IfcGaebColored3DMapper {
+public class IfcGaebColored3DMapper extends
+        MappedBimserverViewer<MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject>> {
 
-    private Mapper mapper;
-
-    IfcGaebColored3DMapper() {
-        DataAccessor data = new MultiModelAccessor(this.getClass().getResource("/carport"));
-        VisBuilder builder = new Java3dBuilder();
-        VisFactory3D visFactory3D = new Java3dFactory();
-        mapper = new Mapper(data, visFactory3D, builder);
+    public static void main(String[] args) throws TargetCreationException {
+        new IfcGaebColored3DMapper().run();
     }
 
-    public static void main(String[] args) {
-        IfcGaebColored3DMapper self = new IfcGaebColored3DMapper();
-        self.config();
-    }
-
-    private void config() {
+    void configMapping() {
+        mapper.addStatistics("maxTotal", new DataAccessor.Folding<MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject>, BigDecimal>(new BigDecimal(0)) {
+            @Override
+            public BigDecimal function(BigDecimal aggregator, MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject> element) {
+                return calculateOveralPrice(element.getResolvedLinks()).max(aggregator);
+            }
+        });
+        mapper.addGlobals("halfMaxTotal", new Mapper.PreProcessing<Double>() {
+            @Override
+            public Double getResult() {
+                return mapper.getStats("maxTotal").doubleValue() * 0.5;
+            }
+        });
         mapper.addMapping(new PropertyMap<MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject>, VisFactory3D.Polyeder>() {
             @Override
             protected void configure() {
                 EMFIfcAccessor.Geometry geometry = data.getKeyObject().getGeometry();
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
-                Collection<MultiModelAccessor.ResolvedLink> gaebLinks = data.getResolvedLinks();
-                BigDecimal price = new BigDecimal(0);
-                for (MultiModelAccessor.ResolvedLink link : gaebLinks) {
-                    TgItem gaeb = link.getLinkedBoQ().values().iterator().next(); // TODO: implement getFirstLinkedBoQ ...
-                    AnsatzType qto = link.getLinkedQto().values().iterator().next();
-                    price = price.add(gaeb.getUP().multiply(BigDecimal.valueOf(qto.getResult())));
-                }
-                graphObject.setColor(1, 1, 1);
+                float price = calculateOveralPrice(data.getResolvedLinks()).floatValue();
+                float halfMaxTotal = mapper.getGlobal("halfMaxTotal").floatValue();
+                float red = price <= halfMaxTotal ? price / halfMaxTotal : 1;
+                float green = price > halfMaxTotal ? (1 - (price - halfMaxTotal) / halfMaxTotal) : 1;
+                graphObject.setColor(red, green, 0);     // 0 1 0 green, 1 1 0 yellow, 1 0 0 red
             }
         });
+    }
+
+    @Override
+    void loadFile() {
+        data = new MultiModelAccessor<EMFIfcAccessor.EngineEObject>(this.getClass().getResource("/carport"));
+    }
+
+    private BigDecimal calculateOveralPrice(Collection<MultiModelAccessor.ResolvedLink> resolvedLinks) {
+        BigDecimal price = new BigDecimal(0);
+        for (MultiModelAccessor.ResolvedLink link : resolvedLinks) {
+            TgItem gaeb = link.getLinkedBoQ().values().iterator().next(); // TODO: implement getFirstLinkedBoQ ...
+            AnsatzType qto = link.getLinkedQto().values().iterator().next();
+            price = price.add(gaeb.getUP().multiply(BigDecimal.valueOf(qto.getResult())));
+        }
+        return price;
     }
 }

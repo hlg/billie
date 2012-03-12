@@ -9,14 +9,15 @@ public abstract class VisFactory3D extends VisFactory2D {
     void addProviders() {
         super.addProviders();
         provMap.put(Polyeder.class, setPolyederProvider());
-
     }
 
     protected abstract PropertyMap.Provider<Polyeder> setPolyederProvider();
 
     public interface Polyeder extends GraphObject {
         void setVertizes(List<Float> vertizes);
+
         void setNormals(List<Float> normals);
+
         void setColor(float R, float G, float B);
     }
 

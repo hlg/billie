@@ -24,17 +24,17 @@ import java.math.BigDecimal;
 
 public class GaebBarchartMapper {
 
-    private Mapper mapper;
+    private Mapper<EObject> mapper;
 
     GaebBarchartMapper(Font font) throws IOException {
         EMFGaebAccessor data = new EMFGaebAccessor(this.getClass().getResourceAsStream("/LV1.X81"));
         Draw2dFactory visFactory = new Draw2dFactory(font);
         Draw2dBuilder visBuilder = new Draw2dBuilder();
-        mapper = new Mapper(data, visFactory, visBuilder);
+        mapper = new Mapper<EObject>(data, visFactory, visBuilder);
     }
 
     public void config() {
-        mapper.addStatistics("UPmax", new DataAccessor.Folder<EObject, BigDecimal>(new BigDecimal(0)) {
+        mapper.addStatistics("UPmax", new DataAccessor.Folding<EObject, BigDecimal>(new BigDecimal(0)) {
             @Override
             public BigDecimal function(BigDecimal aggregator, EObject elem) {
                 return elem instanceof TgItem ? aggregator.max(((TgItem) elem).getUP()) : aggregator;

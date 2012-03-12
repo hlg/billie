@@ -5,7 +5,7 @@ import visualization.VisFactory2D;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public abstract class PropertyMap<S,T extends VisFactory2D.GraphObject> {
+public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
     protected S data;
     protected T graphObject;
     protected int index;
@@ -14,14 +14,18 @@ public abstract class PropertyMap<S,T extends VisFactory2D.GraphObject> {
     Class<T> graphClass;
 
     private Provider<T> provider;
-    
-    protected PropertyMap(){
+
+    protected PropertyMap() {
         Type[] actualTypeArguments = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments();
-        dataClass = (Class<S>) actualTypeArguments[0];
-        graphClass = (Class<T>) actualTypeArguments[1];
+        dataClass = (Class<S>) getRawType(actualTypeArguments[0]);
+        graphClass = (Class<T>) getRawType(actualTypeArguments[1]);
     }
 
-    public T map(S source, T target, int i){
+    private Type getRawType(Type dataType) {
+        return (dataType instanceof ParameterizedType ? ((ParameterizedType) dataType).getRawType() : dataType);
+    }
+
+    public T map(S source, T target, int i) {
         this.index = i;
         this.data = source;
         this.graphObject = target;
@@ -35,24 +39,24 @@ public abstract class PropertyMap<S,T extends VisFactory2D.GraphObject> {
     }
 
     public T map(S source, int i) throws TargetCreationException {
-        if(provider == null){
+        if (provider == null) {
             throw new TargetCreationException("missing provider");
         }
         return map(source, provider.create(), i);
     }
 
-    public void with(Provider<T> provider){
+    public void with(Provider<T> provider) {
         this.provider = provider;
     }
 
     protected abstract void configure();
 
-    public boolean checkCondition(S source){
+    public boolean checkCondition(S source) {
         this.data = source;
         return condition();
     }
 
-    protected boolean condition(){
+    protected boolean condition() {
         return true;
     }
 

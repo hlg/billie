@@ -1,31 +1,22 @@
 package configurations;
 
-import cib.lib.bimserverViewer.BimserverViewer;
-import cib.lib.bimserverViewer.loaders.IfcScene;
 import data.EMFIfcAccessor;
-import mapping.Mapper;
 import mapping.PropertyMap;
 import mapping.TargetCreationException;
 import org.bimserver.models.ifc2x3.IfcBuildingElement;
-import visualization.*;
+import visualization.VisFactory3D;
 
-import javax.media.j3d.BranchGroup;
 import java.io.File;
 
-public class Ifc3DMapper extends BimserverViewer {
+public class Ifc3DMapper extends MappedBimserverViewer<EMFIfcAccessor.EngineEObject> {
 
-    private Mapper mapper;
-    private EMFIfcAccessor data;
-
-    private void configMapping() {
-        VisBuilder builder = new Java3dBuilder();
-        VisFactory2D factory = new Java3dFactory();
-        mapper = new Mapper(data, factory, builder);
+    protected void configMapping() {
         mapper.addMapping(new PropertyMap<EMFIfcAccessor.EngineEObject, VisFactory3D.Polyeder>() {
             @Override
             protected boolean condition() {
                 return data.getObject() instanceof IfcBuildingElement && ((IfcBuildingElement) data.getObject()).getRepresentation() != null;
             }
+
             @Override
             protected void configure() {
                 EMFIfcAccessor.Geometry geometry = data.getGeometry();
@@ -36,23 +27,16 @@ public class Ifc3DMapper extends BimserverViewer {
         });
     }
 
-    private void loadFile() {
+    @Override
+    void loadFile() {
         long size = new File(this.getClass().getResource("/carport2.ifc").getFile()).length();
-        data = new EMFIfcAccessor();
+        EMFIfcAccessor data = new EMFIfcAccessor();
         data.setInput(this.getClass().getResourceAsStream("/carport2.ifc"), size);
-    }
-
-    private void executeMapping() throws TargetCreationException {
-        scene = new IfcScene();
-        scene.setSceneGroup((BranchGroup) mapper.map());
+        this.data = data;
     }
 
     public static void main(String[] args) throws TargetCreationException {
         Ifc3DMapper ifcViewer = new Ifc3DMapper();
-        ifcViewer.setupViews();
-        ifcViewer.loadFile();
-        ifcViewer.configMapping();
-        ifcViewer.executeMapping();
-        ifcViewer.showScene();
+        ifcViewer.run();
     }
 }

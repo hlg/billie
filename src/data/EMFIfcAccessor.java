@@ -53,6 +53,8 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcAccessor.EngineEOb
         if (!tempDir.exists()) tempDir.mkdirs();
 
         String libBase = System.getenv("JAVALIBS");
+        if (libBase == null)
+            throw new RuntimeException("can't find bimserver libs - JAVALIBS environment variable not set");
 
         PluginManager pluginManager = new PluginManager(homeDir, ".", libBase + "\\bimserver-client-lib-1.1.0-2012-02-20\\dep", libBase + "\\bimserver-client-lib-1.1.0-2012-02-20\\lib");
         try {

@@ -1,6 +1,7 @@
 package data;
 
 import cib.lib.gaeb.model.gaeb.TgItem;
+import cib.mf.schedule.model.activity.Activity;
 import cib.mmaa.qto.elementaryModel.Qto.AnsatzType;
 import de.mefisto.model.container.*;
 import de.mefisto.model.linkModel.Link;
@@ -140,9 +141,15 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
                 return new EMFGaebAccessor();
             }
         },
-        QTO("QTO", "xml"){
-            IndexedDataAccessor createAccessor(){
+        QTO("QTO", "xml") {
+            IndexedDataAccessor createAccessor() {
                 return new EMFQtoAccessor();
+            }
+        },
+        ACTIVITY("Activity", "xml") {
+            @Override
+            IndexedDataAccessor createAccessor() {
+                return new EMFScheduleAccessor();
             }
         };
 
@@ -188,14 +195,15 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
     }
 
     public static class ResolvedLink {
-        Map<String, EMFIfcAccessor.EngineEObject> ifcObjects = new HashMap<String, EMFIfcAccessor.EngineEObject>();
-        Map<String, TgItem> gaebObjects = new HashMap<String, TgItem>();
-        Map<String, AnsatzType> qtoObjects = new HashMap<String, AnsatzType>();
+        private Map<String, EMFIfcAccessor.EngineEObject> ifcObjects = new HashMap<String, EMFIfcAccessor.EngineEObject>();
+        private Map<String, TgItem> gaebObjects = new HashMap<String, TgItem>();
+        private Map<String, AnsatzType> qtoObjects = new HashMap<String, AnsatzType>();
+        private Map<String, Activity> scheduleObjects = new HashMap<String, Activity>();
 
-        public Map<String, AnsatzType> getLinkedQto(){
+        public Map<String, AnsatzType> getLinkedQto() {
             return qtoObjects;
         }
-        
+
         public Map<String, TgItem> getLinkedBoQ() {
             return gaebObjects;
         }
@@ -204,17 +212,24 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
             return ifcObjects;
         }
 
+        public Map<String, Activity> getScheduleObjects() {
+            return scheduleObjects;
+        }
+
         public Map<String, ?> getLinksOfType(ElementaryModelType elementaryModelType) {
             if (elementaryModelType.equals(ElementaryModelType.BO_Q)) return gaebObjects;
             if (elementaryModelType.equals(ElementaryModelType.OBJECT)) return ifcObjects;
             if (elementaryModelType.equals(ElementaryModelType.QTO)) return qtoObjects;
+            if (elementaryModelType.equals(ElementaryModelType.ACTIVITY)) return scheduleObjects;
             return null;
         }
 
         public void addObject(String modelId, Object object) {
-            if(object instanceof TgItem) gaebObjects.put(modelId, (TgItem)object);
-            if(object instanceof EMFIfcAccessor.EngineEObject) ifcObjects.put(modelId, (EMFIfcAccessor.EngineEObject)object);
-            if(object instanceof AnsatzType) qtoObjects.put(modelId, (AnsatzType)object);
+            if (object instanceof TgItem) gaebObjects.put(modelId, (TgItem) object);
+            if (object instanceof EMFIfcAccessor.EngineEObject)
+                ifcObjects.put(modelId, (EMFIfcAccessor.EngineEObject) object);
+            if (object instanceof AnsatzType) qtoObjects.put(modelId, (AnsatzType) object);
+            if (object instanceof Activity) scheduleObjects.put(modelId, (Activity) object);
         }
 
     }

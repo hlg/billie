@@ -1,85 +1,97 @@
 <?xml version="1.0"?>
 <container guid="44bc415f-224b-48e7-a9e2-555175aa4ba8" formatVersion="1.0">
-	<meta>
-		<origin>
-			<created>2012-02-24T18:12:51</created>
-			<creatorId>tauscher</creatorId>
-			<appVersion>2.3.456</appVersion>
-			<application>iTWO64</application>
-		</origin>
-	</meta>
-	<models>
-		<model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1" type="BoQ" id="M1">
-			<content format="gaebxml" id="1" formatVersion="3.1">
-				<contentOptions>
-					<i k="description" t="xs:boolean" v="1"/>
-					<i k="extension" v="DA81"/>
-					<i k="qtosplit" t="xs:boolean" v="0"/>
-					<i k="unitrate" t="xs:boolean" v="1"/>
-					<i k="unitrate_breakdown" t="xs:boolean" v="1"/>
-				</contentOptions>
-				<file namespace="BoQ1">file:///BoQ/gaebxml/LV 1.X81</file>
-			</content>
-		</model>
-		<model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1" type="QTO" id="M2">
-			<content format="xml" id="1" formatVersion="1.0">
-				<file namespace="QTO1">file:///QTO/xml/1 LV VA.xml</file>
-			</content>
-		</model>
-		<model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1" type="Object" id="M3">
-			<content format="cpixml" id="1" formatVersion="1.4">
-				<file>file:///Object/cpixml/carport2.cpixml</file>
-				<file>file:///Object/cpixml/buildingStructure.cpixml</file>
-			</content>
-			<content format="ifc" id="2" formatVersion="1.0">
-				<file>file:///Object/ifc/carport2.ifc</file>
-			</content>
-		</model>
-		<model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1" type="Activity" id="M4">
-			<content format="xml" id="1" formatVersion="1.0">
-				<file namespace="Activity1">file:///Activity/xml/Vorgangsmodell 1.xml</file>
-				<file namespace="Activity2">file:///Activity/xml/Vorgangsmodell 2.xml</file>
-			</content>
-		</model>
-		<model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1" type="Plant" id="M5">
-			<content format="xml" id="1" formatVersion="1.0">
-				<file>file:///Plant/xml/Geräte.xml</file>
-			</content>
-		</model>
-	</models>
-	<linkModels>
-		<linkModel type="QuantitySplit" id="L1">
-			<models>
-				<model id="M1"/>
-				<model id="M3"/>
-				<model id="M4"/>
-				<model id="M2"/>
-				<model id="M6"/>
-			</models>
-			<file>file:///links/links.xml</file>
-		</linkModel>
-	</linkModels>
-	<context>
-		<element type="Other" id="\Projekte">
-			<name>Projekte</name>
-			<element type="Other" id="\Projekte\TUD">
-				<name>TUD</name>
-				<element type="Other" id="\Projekte\TUD\CIB">
-					<name>CIB</name>
-					<element type="Other" id="\Projekte\TUD\CIB\workshop_1211">
-						<name>workshop_1211</name>
-						<element type="Project" id="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)">
-							<name>demo-cp_TAU1 V1 (Angebot) ttt</name>
-							<element type="Other" id="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten">
-								<name>Projektvarianten</name>
-								<element type="Alternative" id="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1">
-									<name>demo-cp_TAU1 Bauseitige Anfrage</name>
-								</element>
-							</element>
-						</element>
-					</element>
-				</element>
-			</element>
-		</element>
-	</context>
+    <meta>
+        <origin>
+            <created>2012-02-24T18:12:51</created>
+            <creatorId>tauscher</creatorId>
+            <appVersion>2.3.456</appVersion>
+            <application>iTWO64</application>
+        </origin>
+    </meta>
+    <models>
+        <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
+               type="BoQ" id="M1">
+            <content format="gaebxml" id="1" formatVersion="3.1">
+                <contentOptions>
+                    <i k="description" t="xs:boolean" v="1"/>
+                    <i k="extension" v="DA81"/>
+                    <i k="qtosplit" t="xs:boolean" v="0"/>
+                    <i k="unitrate" t="xs:boolean" v="1"/>
+                    <i k="unitrate_breakdown" t="xs:boolean" v="1"/>
+                </contentOptions>
+                <file namespace="BoQ1">file:///BoQ/gaebxml/LV 1.X81</file>
+            </content>
+        </model>
+        <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
+               type="QTO" id="M2">
+            <content format="xml" id="1" formatVersion="1.0">
+                <file namespace="QTO1">file:///QTO/xml/1 LV VA.xml</file>
+            </content>
+        </model>
+        <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
+               type="Object" id="M3">
+            <content format="cpixml" id="1" formatVersion="1.4">
+                <file>file:///Object/cpixml/carport2.cpixml</file>
+                <file>file:///Object/cpixml/buildingStructure.cpixml</file>
+            </content>
+            <content format="ifc" id="2" formatVersion="1.0">
+                <file>file:///Object/ifc/carport2.ifc</file>
+            </content>
+        </model>
+        <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
+               type="Activity" id="M4">
+            <content format="xml" id="1" formatVersion="1.0">
+                <file namespace="Activity1">file:///Activity/xml/Vorgangsmodell 1.xml</file>
+            </content>
+        </model>
+        <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
+               type="Activity" id="M7">
+            <content format="xml" id="1" formatVersion="1.0">
+                <file namespace="Activity2">file:///Activity/xml/Vorgangsmodell 2.xml</file>
+            </content>
+        </model>
+        <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
+               type="Plant" id="M5">
+            <content format="xml" id="1" formatVersion="1.0">
+                <file>file:///Plant/xml/Geräte.xml</file>
+            </content>
+        </model>
+    </models>
+    <linkModels>
+        <linkModel type="QuantitySplit" id="L1">
+            <models>
+                <model id="M1"/>
+                <model id="M3"/>
+                <model id="M4"/>
+                <model id="M2"/>
+                <model id="M6"/>
+            </models>
+            <file>file:///links/links.xml</file>
+        </linkModel>
+    </linkModels>
+    <context>
+        <element type="Other" id="\Projekte">
+            <name>Projekte</name>
+            <element type="Other" id="\Projekte\TUD">
+                <name>TUD</name>
+                <element type="Other" id="\Projekte\TUD\CIB">
+                    <name>CIB</name>
+                    <element type="Other" id="\Projekte\TUD\CIB\workshop_1211">
+                        <name>workshop_1211</name>
+                        <element type="Project" id="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)">
+                            <name>demo-cp_TAU1 V1 (Angebot) ttt</name>
+                            <element type="Other"
+                                     id="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten">
+                                <name>Projektvarianten</name>
+                                <element type="Alternative"
+                                         id="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1">
+                                    <name>demo-cp_TAU1 Bauseitige Anfrage</name>
+                                </element>
+                            </element>
+                        </element>
+                    </element>
+                </element>
+            </element>
+        </element>
+    </context>
 </container>
