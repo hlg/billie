@@ -26,3 +26,6 @@ Objects
 
 
 Links und Quantities: runde Stützen Schalung und Bewehrung fehlt!
+
+Accessors are responsible for opening the file and providing an iterator over the data elements. In addition they may transform the data, e.g. to normalize geometric data (prepare triangulated meshes). // multimodel ++ indexing?
+
