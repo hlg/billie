@@ -27,7 +27,7 @@ public class IfcGaebColored3DMapper extends
                 return calculateOveralPrice(element.getResolvedLinks()).max(aggregator);
             }
         });
-        mapper.addGlobals("halfMaxTotal", new Mapper.PreProcessing<Double>() {
+        mapper.addGlobal("halfMaxTotal", new Mapper.PreProcessing<Double>() {
             @Override
             public Double getResult() {
                 return mapper.getStats("maxTotal").doubleValue() * 0.5;

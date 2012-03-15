@@ -42,6 +42,7 @@ public class Java3dFactory extends VisFactory3D {
 
         Java3DPolyeder(){
             setAppearance(defaultAppearance);
+            setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
         }
 
         // TODO: how to make sure Java3DGraphObjects implement GraphObject and Java3D Node?

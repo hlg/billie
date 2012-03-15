@@ -83,6 +83,15 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$JAVALIBS$/mmaa_oldnstable/plugins/cib.mf.schedule.model_1.0.0.201201272248/schedule.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

@@ -32,6 +32,7 @@ public abstract class MappedBimserverViewer<T> extends BimserverViewer {
     private void executeMapping() throws TargetCreationException {
         scene = new IfcScene();
         scene.setSceneGroup((BranchGroup) mapper.map());
+        mapper.animate();
     }
 
     protected void initMapper() {

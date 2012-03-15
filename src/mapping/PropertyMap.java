@@ -1,5 +1,6 @@
 package mapping;
 
+import visualization.TimeLine;
 import visualization.VisFactory2D;
 
 import java.lang.reflect.ParameterizedType;
@@ -9,6 +10,7 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
     protected S data;
     protected T graphObject;
     protected int index;
+    protected TimeLine<T> timeLine;
 
     Class<S> dataClass;
     Class<T> graphClass;
@@ -49,6 +51,22 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
         this.provider = provider;
     }
 
+    protected void addChange(int time, Change change){
+        timeLine.addChange(time, graphObject, change);
+    }
+
+    protected void addChange(int time, TimeLine.Change<T> change){
+        timeLine.addChange(time, graphObject, change);
+    }
+
+    public void with(TimeLine<T> timeLine) {
+        this.timeLine = timeLine;
+    }
+
+    public abstract class Change extends TimeLine.Change<T>{
+
+    }
+    
     protected abstract void configure();
 
     public boolean checkCondition(S source) {

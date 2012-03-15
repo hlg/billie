@@ -17,7 +17,7 @@
 				<activityData>
 					<start time="00:00:00" date="2011-12-10"/>
 					<duration>0</duration>
-					<end time="00:00:00" date="2011-12-12"/>
+					<end time="00:00:00" date="2011-12-13"/>
 					<comment></comment>
 					<revenue value="3654,80"/>
 					<budget value="0,00"/>
@@ -29,7 +29,7 @@
 						<activityQuantity evaluate="false" value="1,00"/>
 						<start time="00:00:00" date="2011-12-11"/>
 						<duration>0</duration>
-						<end time="00:00:00" date="2011-12-11"/>
+						<end time="00:00:00" date="2011-12-12"/>
 						<comment></comment>
 						<revenue evaluate="true" value="1000,00"/>
 						<budget evaluate="true" value="0,00"/>
@@ -47,7 +47,7 @@
 						<activityQuantity evaluate="false" value="1,00"/>
 						<start time="00:00:00" date="2011-12-10"/>
 						<duration>0</duration>
-						<end time="00:00:00" date="2011-12-10"/>
+						<end time="00:00:00" date="2011-12-11"/>
 						<comment></comment>
 						<revenue evaluate="true" value="480,00"/>
 						<budget evaluate="true" value="0,00"/>
@@ -63,9 +63,9 @@
 				<activity desc="decke" type="0" ID="001.003">
 					<activityData>
 						<activityQuantity evaluate="false" value="1,00"/>
-						<start time="00:00:00" date="2011-12-12"/>
+						<start time="00:00:00" date="2011-12-18"/>
 						<duration>0</duration>
-						<end time="00:00:00" date="2011-12-12"/>
+						<end time="00:00:00" date="2011-12-20"/>
 						<comment></comment>
 						<revenue evaluate="true" value="2174,80"/>
 						<budget evaluate="true" value="0,00"/>
@@ -81,9 +81,9 @@
 			</activity>
 			<activity desc="bewehren" type="1" ID="002">
 				<activityData>
-					<start time="00:00:00" date="2011-12-16"/>
+					<start time="00:00:00" date="2011-12-12"/>
 					<duration>1</duration>
-					<end time="00:00:00" date="2011-12-17"/>
+					<end time="00:00:00" date="2011-12-21"/>
 					<comment></comment>
 					<revenue value="24,70"/>
 					<budget value="0,00"/>
@@ -93,9 +93,9 @@
 				<activity desc="stützen" type="0" ID="002.001">
 					<activityData>
 						<activityQuantity evaluate="false" value="1,00"/>
-						<start time="00:00:00" date="2011-12-16"/>
+						<start time="00:00:00" date="2011-12-12"/>
 						<duration>0</duration>
-						<end time="00:00:00" date="2011-12-16"/>
+						<end time="00:00:00" date="2011-12-14"/>
 						<comment></comment>
 						<revenue evaluate="true" value="3,20"/>
 						<budget evaluate="true" value="0,00"/>
@@ -111,9 +111,9 @@
 				<activity desc="decke" type="0" ID="002.002">
 					<activityData>
 						<activityQuantity evaluate="false" value="1,00"/>
-						<start time="00:00:00" date="2011-12-17"/>
+						<start time="00:00:00" date="2011-12-19"/>
 						<duration>0</duration>
-						<end time="00:00:00" date="2011-12-17"/>
+						<end time="00:00:00" date="2011-12-21"/>
 						<comment></comment>
 						<revenue evaluate="true" value="21,50"/>
 						<budget evaluate="true" value="0,00"/>
@@ -129,9 +129,9 @@
 			</activity>
 			<activity desc="betonieren" type="1" ID="003">
 				<activityData>
-					<start time="00:00:00" date="2011-12-09"/>
+					<start time="00:00:00" date="2011-12-13"/>
 					<duration>1</duration>
-					<end time="00:00:00" date="2011-12-10"/>
+					<end time="00:00:00" date="2011-12-23"/>
 					<comment></comment>
 					<revenue value="523,90"/>
 					<budget value="0,00"/>
@@ -141,9 +141,9 @@
 				<activity desc="stützen" type="0" ID="003.001">
 					<activityData>
 						<activityQuantity evaluate="false" value="1,00"/>
-						<start time="00:00:00" date="2011-12-09"/>
+						<start time="00:00:00" date="2011-12-13"/>
 						<duration>0</duration>
-						<end time="00:00:00" date="2011-12-09"/>
+						<end time="00:00:00" date="2011-12-16"/>
 						<comment></comment>
 						<revenue evaluate="true" value="110,30"/>
 						<budget evaluate="true" value="0,00"/>
@@ -159,9 +159,9 @@
 				<activity desc="decke" type="0" ID="003.002">
 					<activityData>
 						<activityQuantity evaluate="false" value="1,00"/>
-						<start time="00:00:00" date="2011-12-10"/>
+						<start time="00:00:00" date="2011-12-21"/>
 						<duration>0</duration>
-						<end time="00:00:00" date="2011-12-10"/>
+						<end time="00:00:00" date="2011-12-23"/>
 						<comment></comment>
 						<revenue evaluate="true" value="413,60"/>
 						<budget evaluate="true" value="0,00"/>

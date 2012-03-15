@@ -40,7 +40,7 @@ public class GaebBarchartMapper {
                 return elem instanceof TgItem ? aggregator.max(((TgItem) elem).getUP()) : aggregator;
             }
         });
-        mapper.addGlobals("widthFactor", new Mapper.PreProcessing<Double>() {
+        mapper.addGlobal("widthFactor", new Mapper.PreProcessing<Double>() {
             @Override
             public Double getResult() {
                 return 1000. / mp.getStats("UPmax").doubleValue();

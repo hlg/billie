@@ -1,10 +1,10 @@
 package mapping;
 
 import data.DataAccessor;
+import visualization.TimeLine;
 import visualization.VisBuilder;
 import visualization.VisFactory2D;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 public class Mapper<E> {
@@ -12,8 +12,9 @@ public class Mapper<E> {
     private DataAccessor<E> dataAccessor;
     private VisFactory2D visFactory;
     private VisBuilder visBuilder;
+    private Map<Class, TimeLine> timeLines = new HashMap<Class, TimeLine>();
 
-    private Map<String, DataAccessor.Folding<E, BigDecimal>> statistics = new HashMap<String, DataAccessor.Folding<E, BigDecimal>>();
+    private Map<String, DataAccessor.Folding<E, ? extends Number>> statistics = new HashMap<String, DataAccessor.Folding<E, ? extends Number>>();
     private Map<String, PreProcessing<Double>> globals = new HashMap<String, PreProcessing<Double>>();
 
 
@@ -27,6 +28,8 @@ public class Mapper<E> {
 
     public <S, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
         propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
+        if (!timeLines.containsKey(propertyMap.graphClass)) timeLines.put(propertyMap.graphClass, new TimeLine<T>());
+        propertyMap.with(timeLines.get(propertyMap.graphClass));
         propertyMaps.addPropertyMap(propertyMap.dataClass, propertyMap);
     }
 
@@ -35,20 +38,54 @@ public class Mapper<E> {
         visBuilder.init();
         preProcess();
         mainPass();
+        visBuilder.finish();
         return visBuilder.getScene();
+    }
+
+    public void animate() {
+        if (hasAnimations()) {
+            TimerTask animation = new TimerTask() {
+                int frame = 0;
+                int maxFrame = getLongestTimeLine();
+
+                @Override
+                public void run() {
+                    for (TimeLine timeLine : timeLines.values()) {
+                        timeLine.changeAll(frame);
+                    }
+                    frame++;
+                    if (frame == maxFrame) frame = 0;    // TODO: time line initial state and reset
+                }
+            };
+            new Timer().schedule(animation, 2000, 40);   // 1 frame = 1 hour schedule, 1 frame = 40 ms animation -> 1 s animation = 1 day schedule time
+        }
+    }
+
+    private int getLongestTimeLine() {
+        int longest = 0;
+        for (TimeLine<?> timeLine : this.timeLines.values()) {
+            longest = Math.max(timeLine.lastKey(), longest);
+        }
+        return longest;
+    }
+
+    private boolean hasAnimations() {
+        for (TimeLine timeLine : timeLines.values()) {
+            if (!timeLine.isEmpty()) return true;
+        }
+        return false;
+    }
+
+    private void preProcess() {
+        for (DataAccessor.Folding<E, ?> stats : statistics.values()) {
+            stats.fold(dataAccessor);
+        }
     }
 
     private void mainPass() throws TargetCreationException {
         int mappingIndex = 0; // TODO: per class or even per property map index?
         for (Object source : dataAccessor) {
             if (mapAndBuild(source, mappingIndex)) mappingIndex++;
-        }
-        visBuilder.finish();
-    }
-
-    public void preProcess() {
-        for (DataAccessor.Folding<E, BigDecimal> stats : statistics.values()) {
-            stats.fold(dataAccessor);
         }
     }
 
@@ -67,16 +104,15 @@ public class Mapper<E> {
 
     }
 
-    public void addStatistics(String name, DataAccessor.Folding<E, BigDecimal> folder) {
+    public <T extends Number> void addStatistics(String name, DataAccessor.Folding<E, T> folder) {
         statistics.put(name, folder);
     }
-
-    public BigDecimal getStats(String name) {
-        // TODO return statistics.get(name).getResult();#
+    
+    public Number getStats(String name) {
         return statistics.get(name).getResult();
     }
 
-    public void addGlobals(String name, PreProcessing<Double> uPmax) {
+    public void addGlobal(String name, PreProcessing<Double> uPmax) {
         uPmax.setMapper(this);
         globals.put(name, uPmax);
     }
@@ -107,7 +143,6 @@ public class Mapper<E> {
             return res;
 
         }
-
 
     }
 
