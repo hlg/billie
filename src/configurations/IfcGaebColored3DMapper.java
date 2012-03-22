@@ -10,13 +10,14 @@ import mapping.PropertyMap;
 import mapping.TargetCreationException;
 import visualization.VisFactory3D;
 
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.Collection;
 
 public class IfcGaebColored3DMapper extends
         MappedBimserverViewer<MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject>> {
 
-    public static void main(String[] args) throws TargetCreationException {
+    public static void main(String[] args) throws TargetCreationException, FileNotFoundException {
         new IfcGaebColored3DMapper().run();
     }
 

@@ -15,6 +15,7 @@ import visualization.TimeLine;
 import javax.media.j3d.*;
 import javax.vecmath.Color3f;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -185,7 +186,7 @@ public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.Linked
         }
     }
 
-    public static void main(String[] args) throws TargetCreationException {
+    public static void main(String[] args) throws TargetCreationException, FileNotFoundException {
         new Ifc4DMapper().run();
     }
 

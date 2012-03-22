@@ -3,10 +3,7 @@ package configurations;
 import data.EMFIfcAccessor;
 import mapping.PropertyMap;
 import mapping.TargetCreationException;
-import org.bimserver.models.ifc2x3.IfcBuildingElement;
-import org.bimserver.models.ifc2x3.IfcRelContainedInSpatialStructure;
 import org.bimserver.models.ifc2x3.IfcSpace;
-import org.eclipse.emf.common.util.EList;
 import visualization.VisFactory3D;
 
 import javax.swing.*;
@@ -15,21 +12,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class Ifc3DMapper extends MappedBimserverViewer<EMFIfcAccessor.EngineEObject> {
+public class Ifc3DMapper_space extends MappedBimserverViewer<EMFIfcAccessor.EngineEObject> {
 
     protected void configMapping() {
         mapper.addMapping(new PropertyMap<EMFIfcAccessor.EngineEObject, VisFactory3D.Polyeder>() {
             @Override
             protected boolean condition() {
-                return data.getObject() instanceof IfcBuildingElement && ((IfcBuildingElement) data.getObject()).getRepresentation() != null;
+                return data.getObject() instanceof IfcSpace && ((IfcSpace) data.getObject()).getRepresentation() != null;
             }
 
             @Override
             protected void configure() {
                 EMFIfcAccessor.Geometry geometry = data.getGeometry();
                 assert geometry != null;
-                EList<IfcRelContainedInSpatialStructure> containedInStructure = ((IfcBuildingElement) data.getObject()).getContainedInStructure();
-                if (!containedInStructure.isEmpty() && containedInStructure.get(0).getRelatingStructure().getName().equals("9.OG"))
+                if (((IfcSpace) data.getObject()).getDecomposes().get(0).getRelatingObject().getName().equals("9.OG"))
                     graphObject.setColor(1, 0, 0);
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
@@ -47,9 +43,10 @@ public class Ifc3DMapper extends MappedBimserverViewer<EMFIfcAccessor.EngineEObj
     }
 
     public static void main(String[] args) throws TargetCreationException, FileNotFoundException {
-        Ifc3DMapper ifcViewer = new Ifc3DMapper();
+        Ifc3DMapper_space ifcViewer = new Ifc3DMapper_space();
         ifcViewer.run();
     }
+
     private File chooseFile(String directoryPath) {
         JFileChooser chooser = (directoryPath != null) ? new JFileChooser(directoryPath) : new JFileChooser();
         FileFilter filter = new FileFilter() {
@@ -67,4 +64,5 @@ public class Ifc3DMapper extends MappedBimserverViewer<EMFIfcAccessor.EngineEObj
         int returnVal = chooser.showOpenDialog(this);
         return (returnVal == JFileChooser.APPROVE_OPTION) ? chooser.getSelectedFile() : null;
     }
+
 }

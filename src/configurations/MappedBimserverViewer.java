@@ -11,12 +11,13 @@ import visualization.VisBuilder;
 import visualization.VisFactory2D;
 
 import javax.media.j3d.BranchGroup;
+import java.io.FileNotFoundException;
 
 public abstract class MappedBimserverViewer<T> extends BimserverViewer {
     protected Mapper<T> mapper;
     protected DataAccessor<T> data;
 
-    void run() throws TargetCreationException {
+    void run() throws TargetCreationException, FileNotFoundException {
         setupViews();
         loadFile();
         initMapper();
@@ -27,7 +28,7 @@ public abstract class MappedBimserverViewer<T> extends BimserverViewer {
 
     abstract void configMapping();
 
-    abstract void loadFile();
+    abstract void loadFile() throws FileNotFoundException;
 
     private void executeMapping() throws TargetCreationException {
         scene = new IfcScene();
