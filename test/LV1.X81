@@ -107,7 +107,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Schalung Stützen d=60cm</span>
+                <span>columns 60cm formwork</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -135,7 +135,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Bewehrung Stützen d=60cm</span>
+                <span>columns 60cm reinforcement</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -163,7 +163,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Beton Stützen d=60cm</span>
+                <span>columns 60cm concreting</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -194,7 +194,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Schalung Stützen d=70cm</span>
+                <span>columns 70cm formwork</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -222,7 +222,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Bewehrung Stützen d=70cm</span>
+                <span>columns 70cm reinforcement</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -250,7 +250,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Beton Stützen d=70cm</span>
+                <span>columns 70cm reinforcement</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -281,7 +281,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Schalung Stützen d=75cm</span>
+                <span>columns 75cm formwork</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -309,7 +309,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Bewehrung Stützen d=75cm</span>
+                <span>columns 75cm reinforcement</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -337,7 +337,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Beton Stützen 75cm</span>
+                <span>columns 75cm concreting</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -365,7 +365,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Zuschlag für Blitzschutz</span>
+                <span>lightning protection</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -393,7 +393,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Schalung Innenwände</span>
+                <span>interior walls formwork</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -421,7 +421,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Bewehrung Innenwände</span>
+                <span>interior walls reinforcement</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -449,7 +449,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Beton Innenwände</span>
+                <span>interior walls concreting</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -477,7 +477,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Zuschlag Kernwände  SB 3</span>
+                <span>facing concret surcharge</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -505,7 +505,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Schalung Decken</span>
+                <span>slabs formwork</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -535,7 +535,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Bewehrung Decken</span>
+                <span>slabs reinforcement</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
@@ -563,7 +563,7 @@
              <OutlTxt>
               <TextOutlTxt>
                <p>
-                <span>Beton Decken</span>
+                <span>slabs concreting</span>
                </p>
               </TextOutlTxt>
              </OutlTxt>
