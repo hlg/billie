@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="vismapping" default="all" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+
+    <property file="build.properties"/>
+    <property name="skip.tests" value="true"/>
+
+    <!-- Compiler options -->
+    <patternset id="ignored.files">
+        <!-- add as needed -->
+    </patternset>
+
+    <patternset id="library.patterns">
+        <include name="*.jar"/>
+    </patternset>
+    <patternset id="compiler.resources">
+        <!-- todo: clean up -->
+        <include name="**/?*.properties"/>
+        <include name="**/?*.xml"/>
+        <include name="**/?*.gif"/>
+        <include name="**/?*.png"/>
+        <include name="**/?*.jpeg"/>
+        <include name="**/?*.jpg"/>
+        <include name="**/?*.html"/>
+        <include name="**/?*.dtd"/>
+        <include name="**/?*.tld"/>
+        <include name="**/?*.ftl"/>
+        <include name="**/?*.X81"/>
+        <include name="**/?*.ifc"/>
+        <include name="**/?*.zip"/>
+    </patternset>
+
+    <path id="library.bimserver-client-lib.classpath">
+        <pathelement
+                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/cib.lib.bimserverViewer_1.0.0.201201301327/lib/BimserverViewer-0.2.jar"/>
+    </path>
+
+    <path id="library.mfcontainerparser.classpath">
+        <pathelement
+                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/de.mefisto.container_1.0.0.201201272248/container.jar"/>
+    </path>
+
+
+    <dirname property="basedir" file="${ant.file}"/>
+    <property name="module.vismapping.basedir" value="${basedir}/visMapping" />
+
+    <property name="output.dir" value="${module.vismapping.basedir}/out/production/visMapping"/>
+    <property name="testoutput.dir" value="${module.vismapping.basedir}/out/test/visMapping"/>
+
+
+    <path id="classpath">
+        <pathelement location="${idea.home}/lib/junit.jar"/>
+        <path refid="library.bimserver-client-lib.classpath"/>
+        <path refid="library.mfcontainerparser.classpath"/>
+        <pathelement
+                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar"/>
+        <pathelement
+                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar"/>
+        <pathelement
+                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar"/>
+        <pathelement
+                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/org.eclipse.emf.common_2.7.0.v20110605-0747.jar"/>
+        <pathelement
+                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/org.eclipse.swt.win32.win32.x86_3.7.0.v3735b.jar"/>
+        <pathelement
+                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/cib.lib.gaeb.model_1.0.0.201201272248/gaeb.jar"/>
+        <pathelement
+                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/cib.mmaa.qto.elementaryModel_1.0.0.201201272248.jar"/>
+        <pathelement
+                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/cib.mf.schedule.model_1.0.0.201201272248/schedule.jar"/>
+    </path>
+
+    <path id="sourcepath">
+        <dirset dir="${module.vismapping.basedir}">
+            <include name="src"/>
+            <include name="test"/>
+        </dirset>
+    </path>
+
+    <target name="compile" depends="compile.production, compile.tests" description="Compile module visMapping"/>
+
+
+    <target name="compile.production" description="Compile module visMapping; production classes">
+        <echo message="now retrivieng"/>
+
+        <ivy:resolve file="visMapping/ivy.xml"/>
+        <ivy:cachepath pathid="ivy.classpath" />
+        <ivy:report />
+
+        <echo message="compiling to ${output.dir} using classpath ${toString:ivy.classpath}" />
+        <mkdir dir="${output.dir}"/>
+        <javac destdir="${output.dir}" debug="on" srcdir="${module.vismapping.basedir}/src">
+            <classpath>
+                <path refid="classpath"/>
+                <path refid="ivy.classpath"/>
+            </classpath>
+            <patternset refid="ignored.files"/>
+        </javac>
+
+        <copy todir="${output.dir}">
+            <fileset dir="${module.vismapping.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+            <fileset dir="${module.vismapping.basedir}/test">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.tests" depends="compile.production" description="compile main module and test classes"
+            unless="skip.tests"/>
+
+    <target name="clean" description="cleanup module">
+        <delete dir="${output.dir}"/>
+        <delete dir="${testoutput.dir}"/>
+    </target>
+
+    <target name="init" description="Build initialization">
+        <echo message="hallo"/>
+        <!-- Perform any build initialization in this target -->
+    </target>
+
+    <target name="build" depends="init, clean, compile" description="build all modules"/>
+
+    <target name="all" depends="build" description="build all"/>
+</project>

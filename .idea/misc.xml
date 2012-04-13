@@ -4,6 +4,29 @@
     <entry_points version="2.0" />
   </component>
   <component name="IdProvider" IDEtalkID="8EA74D92AF55A147504FA64584F92C26" />
+  <component name="IvyIDEA.ProjectSettings">
+    <option name="artifactTypeSettings">
+      <ArtifactTypeSettings>
+        <option name="classesTypes" value="jar, mar, sar, war, ear, ejb, bundle, test-jar" />
+        <option name="javadocTypes" value="javadoc, doc, docs, apidoc, apidocs, documentation, documents" />
+        <option name="sourcesTypes" value="source, src, sources, srcs" />
+      </ArtifactTypeSettings>
+    </option>
+    <option name="ivyLogLevelThreshold" value="Verbose" />
+    <option name="libraryNameIncludesConfiguration" value="true" />
+    <option name="libraryNameIncludesModule" value="true" />
+    <option name="propertiesSettings">
+      <PropertiesSettings>
+        <option name="propertyFiles">
+          <list>
+            <option value="D:\Nutzer\helga\ivy.properties" />
+          </list>
+        </option>
+      </PropertiesSettings>
+    </option>
+    <option name="useCustomIvySettings" value="false" />
+    <option name="validateIvyFiles" value="true" />
+  </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
     <option name="OPTION_SCOPE" value="protected" />

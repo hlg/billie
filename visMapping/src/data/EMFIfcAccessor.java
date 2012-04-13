@@ -1,21 +1,25 @@
 package data;
 
-import cib.lib.bimserverViewer.util.PluginManager;
-import nl.tue.buildingsmart.emf.BuildingSmartLibrarySchemaPlugin;
+import com.google.common.base.Strings;
+import org.apache.commons.lang.StringUtils;
 import org.bimserver.emf.IdEObject;
-import org.bimserver.ifc.step.deserializer.IfcStepDeserializerPlugin;
-import org.bimserver.ifcengine.CppIfcEnginePlugin;
+import org.bimserver.models.ifc2x3.IfcElement;
 import org.bimserver.models.ifc2x3.IfcProduct;
+import org.bimserver.models.ifc2x3.IfcRelContainedInSpatialStructure;
+import org.bimserver.plugins.PluginDescriptor;
 import org.bimserver.plugins.PluginException;
+import org.bimserver.plugins.PluginManager;
 import org.bimserver.plugins.deserializers.DeserializeException;
-import org.bimserver.plugins.deserializers.DeserializerPlugin;
 import org.bimserver.plugins.deserializers.EmfDeserializer;
 import org.bimserver.plugins.ifcengine.*;
-import org.bimserver.plugins.schema.SchemaPlugin;
 import org.bimserver.plugins.serializers.IfcModelInterface;
 import org.eclipse.emf.ecore.EObject;
 
+import javax.xml.bind.JAXBException;
 import java.io.*;
+import java.net.JarURLConnection;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.*;
 
 public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcAccessor.EngineEObject> {
@@ -52,19 +56,11 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcAccessor.EngineEOb
         File tempDir = new File(homeDir, "tmp");
         if (!tempDir.exists()) tempDir.mkdirs();
 
-        String libBase = System.getenv("JAVALIBS");
-        if (libBase == null)
-            throw new RuntimeException("can't find bimserver libs - JAVALIBS environment variable not set");
-
-        PluginManager pluginManager = new PluginManager(homeDir, ".", libBase + "\\bimserver-client-lib-1.1.0-2012-02-20\\dep", libBase + "\\bimserver-client-lib-1.1.0-2012-02-20\\lib");
+        PluginM pluginManager = new PluginM();
+        pluginManager.loadPluginsFromCurrentClassloader();
+        pluginManager.initAllLoadedPlugins();
+        enginePlugin = pluginManager.getAllIfcEnginePlugins(true).iterator().next();
         try {
-            // pluginManager.staticLoadPlugins();
-            pluginManager.loadPlugin(DeserializerPlugin.class, null, null, new IfcStepDeserializerPlugin());
-            pluginManager.loadPlugin(SchemaPlugin.class, null, null, new BuildingSmartLibrarySchemaPlugin());
-            pluginManager.loadPlugin(IfcEnginePlugin.class, null, null, new CppIfcEnginePlugin());
-
-            pluginManager.initAllLoadedPlugins();
-            enginePlugin = pluginManager.getAllIfcEnginePlugins(true).iterator().next();
             deserializer = pluginManager.getFirstDeserializer("ifc", true).createDeserializer();
             deserializer.init(pluginManager.requireSchemaDefinition());
         } catch (PluginException e) {
@@ -73,13 +69,29 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcAccessor.EngineEOb
     }
 
     private void readStream() throws IfcEngineException, DeserializeException, IOException {
-        if (engine == null) engine = enginePlugin.createIfcEngine();
+        if (engine == null) {
+            engine = enginePlugin.createIfcEngine();
+            engine.init();
+        }
         byte[] bytes = new byte[(int) inputSize];
         inputStream.read(bytes);
-        engineModel = engine.openModel(new ByteArrayInputStream(bytes), (int) inputSize);
+        engineModel = engine.openModel(bytes);
         engineModel.setPostProcessing(true);
         geometry = engineModel.finalizeModelling(engineModel.initializeModelling());
         data = deserializer.read(new ByteArrayInputStream(bytes), "?", true, 16);
+        adjustRelations();
+    }
+
+    private void adjustRelations() {
+        // due to http://code.google.com/p/bimserver/wiki/Known_issues
+        for(EObject eObject: data.getAllWithSubTypes(IfcRelContainedInSpatialStructure.class)){
+            IfcRelContainedInSpatialStructure relation = (IfcRelContainedInSpatialStructure)eObject;
+            for(IfcProduct product :relation.getRelatedElements()){
+                if(product instanceof IfcElement){
+                    ((IfcElement) product).getContainedInStructure().add(relation);
+                }
+            }
+        }
     }
 
     public Iterator<EngineEObject> iterator() {
@@ -191,5 +203,18 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcAccessor.EngineEOb
     public class Geometry {
         public List<Float> vertizes;
         public List<Float> normals;
+    }
+
+    public class PluginM extends PluginManager {
+        @Override
+        public String getCompleteClassPath() {
+            URL[] allUrls = ((URLClassLoader)getClass().getClassLoader()).getURLs();
+            String[] allPAths = new String[allUrls.length];
+            for(int i=0; i<allUrls.length; i++){
+                allPAths[i] = allUrls[i].getPath();
+            }
+
+            return StringUtils.join(allPAths, ";");
+        }
     }
 }

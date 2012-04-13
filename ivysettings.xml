@@ -1,0 +1,5 @@
+<ivysettings>
+    <property name="ivy.local.default.root" value="D:/Nutzer/helga/.ivy2/local" override="false"/>
+    <include url="${ivy.default.settings.dir}/ivysettings.xml"/>
+    <caches defaultCacheDir="D:/Nutzer/helga/.ivy2/cache"/>
+</ivysettings>

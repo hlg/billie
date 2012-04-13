@@ -10,8 +10,10 @@ import mapping.TargetCreationException;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.draw2d.Panel;
+import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -49,10 +51,10 @@ public class GaebBarchartMapper {
         mapper.addMapping(new PropertyMap<TgItem, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
-                graphObject.setHeight(15);
-                graphObject.setWidth((int) (data.getUP().intValue() * mapper.getGlobal("widthFactor")));
-                graphObject.setLeft(200);
-                graphObject.setTop(index * 20); // TODO: alternative to iterator index ? Layoutmanager, dataacessor sorting parameters
+                graphObject.setHeight(75);
+                graphObject.setWidth((int) (data.getUP().intValue() * mapper.getGlobal("widthFactor") * 5));
+                graphObject.setLeft(1000);
+                graphObject.setTop(index * 100); // TODO: alternative to iterator index ? Layoutmanager, dataacessor sorting parameters
             }
         });
         mapper.addMapping(new PropertyMap<TgItem, VisFactory2D.Label>() {
@@ -69,7 +71,7 @@ public class GaebBarchartMapper {
                 labelText.append(data.getDescription().getCompleteText().getOutlineText().getOutlTxt().getTextOutlTxt().get(0).getP().get(0).getSpan().get(0).getValue());
                 graphObject.setText(labelText.toString());
                 graphObject.setLeft(0);
-                graphObject.setTop(index * 20);
+                graphObject.setTop(index * 100);
             }
         });
     }
@@ -86,7 +88,9 @@ public class GaebBarchartMapper {
         FigureCanvas canvas = new FigureCanvas(shell);
         LightweightSystem ls = new LightweightSystem(canvas);
 
-        GaebBarchartMapper gaebBarchartMapper = new GaebBarchartMapper(shell.getFont());
+        Font big = new Font(shell.getFont().getDevice(), "Times New Roman", 50, 0);
+
+        GaebBarchartMapper gaebBarchartMapper = new GaebBarchartMapper(big);
         gaebBarchartMapper.config();
 
         Panel content = gaebBarchartMapper.execute();
@@ -96,9 +100,21 @@ public class GaebBarchartMapper {
 
         shell.open();
 
+        Image image = new Image(Display.getCurrent(), content.getBounds().width, content.getBounds().height);
+        GC gc = new GC(image);
+        SWTGraphics graphics = new SWTGraphics(gc);
+        content.paint(graphics);
+
+        ImageLoader save = new ImageLoader();
+        save.data = new ImageData[] {image.getImageData()};
+        save.save("D:/test.png", SWT.IMAGE_PNG);
+        image.dispose();
+        gc.dispose();
+
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch()) display.sleep();
         }
+        big.dispose();
         display.dispose();
 
     }
