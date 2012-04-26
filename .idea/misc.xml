@@ -13,6 +13,7 @@
       </ArtifactTypeSettings>
     </option>
     <option name="ivyLogLevelThreshold" value="Verbose" />
+    <option name="ivySettingsFile" value="D:\Nutzer\helga\ivysettings.xml" />
     <option name="libraryNameIncludesConfiguration" value="true" />
     <option name="libraryNameIncludesModule" value="true" />
     <option name="propertiesSettings">
@@ -24,7 +25,6 @@
         </option>
       </PropertiesSettings>
     </option>
-    <option name="useCustomIvySettings" value="false" />
     <option name="validateIvyFiles" value="true" />
   </component>
   <component name="JavadocGenerationManager">

@@ -4,10 +4,6 @@ import data.EMFIfcAccessor;
 import mapping.PropertyMap;
 import mapping.TargetCreationException;
 import org.bimserver.models.ifc2x3.IfcBuildingElement;
-import org.bimserver.models.ifc2x3.IfcColumn;
-import org.bimserver.models.ifc2x3.IfcRelContainedInSpatialStructure;
-import org.bimserver.models.ifc2x3.IfcSpace;
-import org.eclipse.emf.common.util.EList;
 import visualization.VisFactory3D;
 
 import javax.swing.*;
@@ -23,9 +19,9 @@ public class Ifc3DMapper extends MappedBimserverViewer<EMFIfcAccessor.EngineEObj
             @Override
             protected boolean condition() {
                 return data.getObject() instanceof IfcBuildingElement
-                        && ((IfcBuildingElement) data.getObject()).getRepresentation() != null
+                       /* && ((IfcBuildingElement) data.getObject()).getRepresentation() != null
                         && !((IfcBuildingElement) data.getObject()).getContainedInStructure().isEmpty()
-                        && ((IfcBuildingElement) data.getObject()).getContainedInStructure().get(0).getRelatingStructure().getName().equals("E14")
+                        && ((IfcBuildingElement) data.getObject()).getContainedInStructure().get(0).getRelatingStructure().getName().equals("E14")*/
                         ;
             }
 
@@ -45,9 +41,8 @@ public class Ifc3DMapper extends MappedBimserverViewer<EMFIfcAccessor.EngineEObj
     @Override
     void loadFile() throws FileNotFoundException {
         File ifc = chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle");
-        long size = ifc.length();
         EMFIfcAccessor data = new EMFIfcAccessor();
-        data.setInput(new FileInputStream(ifc), size);
+        data.setInput(new FileInputStream(ifc));
         this.data = data;
     }
 

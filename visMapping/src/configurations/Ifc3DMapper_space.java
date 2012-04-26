@@ -4,7 +4,6 @@ import data.EMFIfcAccessor;
 import mapping.PropertyMap;
 import mapping.TargetCreationException;
 import org.bimserver.models.ifc2x3.IfcSpace;
-import org.bimserver.models.ifc2x3.IfcSpatialStructureElement;
 import visualization.VisFactory3D;
 
 import javax.swing.*;
@@ -38,9 +37,8 @@ public class Ifc3DMapper_space extends MappedBimserverViewer<EMFIfcAccessor.Engi
     @Override
     void loadFile() throws FileNotFoundException {
         File ifc = chooseFile(".");
-        long size = ifc.length();
         EMFIfcAccessor data = new EMFIfcAccessor();
-        data.setInput(new FileInputStream(ifc), size);
+        data.setInput(new FileInputStream(ifc));
         this.data = data;
     }
 

@@ -1,6 +1,7 @@
 package data;
 
 import com.google.common.base.Strings;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3.IfcElement;
@@ -31,7 +32,6 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcAccessor.EngineEOb
     private IfcEnginePlugin enginePlugin;
     private EmfDeserializer deserializer;
     private InputStream inputStream;
-    private long inputSize;
     private IfcEngine engine;
     private String namespace = "";
 
@@ -46,9 +46,8 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcAccessor.EngineEOb
         engine.close();
     }
 
-    public void setInput(InputStream inputStream, long size) {
+    public void setInput(InputStream inputStream) {
         this.inputStream = inputStream;
-        this.inputSize = size;
     }
 
     private void init() {
@@ -73,12 +72,11 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcAccessor.EngineEOb
             engine = enginePlugin.createIfcEngine();
             engine.init();
         }
-        byte[] bytes = new byte[(int) inputSize];
-        inputStream.read(bytes);
+        byte[] bytes = IOUtils.toByteArray(inputStream); // todo: save memory by branching the stream with TeeInputStream
         engineModel = engine.openModel(bytes);
         engineModel.setPostProcessing(true);
         geometry = engineModel.finalizeModelling(engineModel.initializeModelling());
-        data = deserializer.read(new ByteArrayInputStream(bytes), "?", true, 16);
+        data = deserializer.read(new ByteArrayInputStream(bytes), "?", true, 16*58);
         adjustRelations();
     }
 
@@ -113,7 +111,6 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcAccessor.EngineEOb
 
     public void setInput(File file) throws IOException {
         this.inputStream = new FileInputStream(file);
-        this.inputSize = file.length();
     }
 
     public void index() {
@@ -177,10 +174,9 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcAccessor.EngineEOb
 
         public Geometry getGeometry() {
             if (!(idEObject instanceof IfcProduct)) return null;
-            IfcEngineInstance instance = null;
             Geometry objectGeometry = new Geometry();
             try {
-                instance = engineModel.getInstanceFromExpressId((int) idEObject.getOid());
+                IfcEngineInstance instance = engineModel.getInstanceFromExpressId((int) idEObject.getOid());
                 IfcEngineInstanceVisualisationProperties visProps = instance.getVisualisationProperties();
                 objectGeometry.vertizes = new ArrayList<Float>(visProps.getPrimitiveCount() * 9); // TODO: optimize memory: retain index!
                 objectGeometry.normals = new ArrayList<Float>(visProps.getPrimitiveCount() * 9); // TODO: optimize memory: retain index!

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="vismapping" default="all" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="vismapping" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
 
 
     <property file="build.properties"/>
@@ -13,6 +13,7 @@
     <patternset id="library.patterns">
         <include name="*.jar"/>
     </patternset>
+
     <patternset id="compiler.resources">
         <!-- todo: clean up -->
         <include name="**/?*.properties"/>
@@ -30,11 +31,6 @@
         <include name="**/?*.zip"/>
     </patternset>
 
-    <path id="library.bimserver-client-lib.classpath">
-        <pathelement
-                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/cib.lib.bimserverViewer_1.0.0.201201301327/lib/BimserverViewer-0.2.jar"/>
-    </path>
-
     <path id="library.mfcontainerparser.classpath">
         <pathelement
                 location="${path.variable.javalibs}/mmaa_oldnstable/plugins/de.mefisto.container_1.0.0.201201272248/container.jar"/>
@@ -42,15 +38,13 @@
 
 
     <dirname property="basedir" file="${ant.file}"/>
-    <property name="module.vismapping.basedir" value="${basedir}/visMapping" />
+    <property name="module.vismapping.basedir" value="${basedir}/visMapping"/>
 
     <property name="output.dir" value="${module.vismapping.basedir}/out/production/visMapping"/>
     <property name="testoutput.dir" value="${module.vismapping.basedir}/out/test/visMapping"/>
 
 
     <path id="classpath">
-        <pathelement location="${idea.home}/lib/junit.jar"/>
-        <path refid="library.bimserver-client-lib.classpath"/>
         <path refid="library.mfcontainerparser.classpath"/>
         <pathelement
                 location="${path.variable.javalibs}/mmaa_oldnstable/plugins/org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar"/>
@@ -77,19 +71,20 @@
         </dirset>
     </path>
 
-    <target name="compile" depends="compile.production, compile.tests" description="Compile module visMapping"/>
 
-
-    <target name="compile.production" description="Compile module visMapping; production classes">
-        <echo message="now retrivieng"/>
-
+    <target name="resolve">
+        <property name="ivy.lib.dir" value="${output.dir}/lib" />
         <ivy:resolve file="visMapping/ivy.xml"/>
-        <ivy:cachepath pathid="ivy.classpath" />
-        <ivy:report />
+        <ivy:cachepath pathid="ivy.classpath"/>
+        <ivy:retrieve type="jar,bundle" />
+        <!-- ivy:report / -->
+    </target>
 
-        <echo message="compiling to ${output.dir} using classpath ${toString:ivy.classpath}" />
-        <mkdir dir="${output.dir}"/>
-        <javac destdir="${output.dir}" debug="on" srcdir="${module.vismapping.basedir}/src">
+    <target name="compile" depends="compile.production, compile.tests"/>
+
+    <target name="compile.production" depends="resolve">
+        <mkdir dir="${output.dir}/classes"/>
+        <javac destdir="${output.dir}/classes" debug="on" srcdir="${module.vismapping.basedir}/src">
             <classpath>
                 <path refid="classpath"/>
                 <path refid="ivy.classpath"/>
@@ -97,7 +92,7 @@
             <patternset refid="ignored.files"/>
         </javac>
 
-        <copy todir="${output.dir}">
+        <copy todir="${output.dir}/classes">
             <fileset dir="${module.vismapping.basedir}/src">
                 <patternset refid="compiler.resources"/>
                 <type type="file"/>
@@ -109,20 +104,40 @@
         </copy>
     </target>
 
-    <target name="compile.tests" depends="compile.production" description="compile main module and test classes"
-            unless="skip.tests"/>
+    <target name="compile.tests" depends="compile.production" unless="skip.tests">
+    </target>
+
+    <target name="dist" depends="compile">
+        <tstamp/>
+        <property name="specversion" value="0.1"/>
+        <property name="implversion" value="${DSTAMP}${TSTAMP}"/>
+
+        <pathconvert property="mf.classpath" pathsep=" ">
+            <path refid="ivy.classpath"/>
+            <flattenmapper/>
+        </pathconvert>
+
+        <mkdir dir="${output.dir}/jar"/>
+        <jar jarfile="${output.dir}/jar/visMapping-${specversion}-${implversion}.jar" basedir="${output.dir}/classes">
+            <manifest>
+                <attribute name="Specification-Title" value="Visualization Mapping Framework"/>
+                <attribute name="Specification-Version" value="${specversion}"/>
+                <attribute name="Specification-Vendor" value="TU Dresden, CIB"/>
+                <attribute name="Implementation-Title" value="snapshot"/>
+                <attribute name="Implementation-Version" value="${implversion}"/>
+                <attribute name="Implementation-Vendor" value="TU Dresden, CIB"/>
+                <attribute name="Main-Class" value="configurations.Ifc3DMapper"/>
+                <attribute name="Class-Path" value="${mf.classpath}"/>
+            </manifest>
+        </jar>
+
+    </target>
 
     <target name="clean" description="cleanup module">
         <delete dir="${output.dir}"/>
         <delete dir="${testoutput.dir}"/>
     </target>
 
-    <target name="init" description="Build initialization">
-        <echo message="hallo"/>
-        <!-- Perform any build initialization in this target -->
-    </target>
+    <target name="build" depends="clean, compile, dist" description="clean build and package"/>
 
-    <target name="build" depends="init, clean, compile" description="build all modules"/>
-
-    <target name="all" depends="build" description="build all"/>
 </project>
