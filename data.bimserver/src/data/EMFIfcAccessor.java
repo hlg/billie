@@ -16,9 +16,7 @@ import org.bimserver.plugins.ifcengine.*;
 import org.bimserver.plugins.serializers.IfcModelInterface;
 import org.eclipse.emf.ecore.EObject;
 
-import javax.xml.bind.JAXBException;
 import java.io.*;
-import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;

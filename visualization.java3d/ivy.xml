@@ -1,0 +1,8 @@
+<ivy-module version="2.0">
+<info organisation="de.tu-dresden.bau.cib" module="visualization.draw2d"/>
+<dependencies>
+    <dependency org="de.tu-dresden.bau.cib" name="java3Dviewer" rev="SNAPSHOT"/>
+    <dependency org="java3d" name="java3d" rev="1.5.2"/>
+    <dependency org="de.tu-dresden.bau.cib" name="visMapping" rev="latest.integration"/>
+</dependencies>
+</ivy-module>

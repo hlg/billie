@@ -1,0 +1,10 @@
+<ivy-module version="2.0">
+<info organisation="de.tu-dresden.bau.cib" module="data.multimodel"/>
+<dependencies>
+    <dependency org="bundle" name="de.mefisto.container" rev="1.0.+"/>
+    <dependency org="bundle" name="cib.lib.gaeb.model" rev="1.0.+" changing="true" />
+    <dependency org="bundle" name="cib.mmaa.qto.elementaryModel" rev="1.0.+"/>
+    <dependency org="bundle" name="cib.mf.schedule.model" rev="1.0.+"/>
+    <dependency org="de.tu-dresden.bau.cib" name="visMapping" rev="latest.integration "/>
+</dependencies>
+</ivy-module>

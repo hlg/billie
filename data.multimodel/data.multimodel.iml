@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="IvyIDEA" name="IvyIDEA">
+      <configuration ivyFile="D:\Nutzer\helga\dev\visMapping.git\data.multimodel\ivy.xml" useProjectSettings="true" useCustomIvySettings="true" ivySettingsFile="" onlyResolveSelectedConfigs="false">
+        <propertiesSettings>
+          <propertiesFiles includeProjectLevelPropertiesFiles="true" />
+        </propertiesSettings>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="visMapping" />
+    <orderEntry type="module-library">
+      <library name="IvyIDEA-data.multimodel-default">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/de.mefisto.container/jars/de.mefisto.container-1.0.0.201204271704.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.emf.ecore/jars/org.eclipse.emf.ecore-2.7.0.v20110605-0747.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.emf.ecore.xmi/jars/org.eclipse.emf.ecore.xmi-2.7.0.v20110520-1406.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.lib.gaeb.model/jars/cib.lib.gaeb.model-1.0.0.201204271704.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.runtime/jars/org.eclipse.core.runtime-3.7.0.v20110110.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.equinox.common/jars/org.eclipse.equinox.common-3.6.0.v20110523.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.osgi/jars/org.eclipse.osgi-3.7.0.v20110613.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.jobs/jars/org.eclipse.core.jobs-3.5.100.v20110404.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.equinox.registry/jars/org.eclipse.equinox.registry-3.5.100.v20110502.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/javax.xml/jars/javax.xml-1.3.4.v201005080400.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.contenttype/jars/org.eclipse.core.contenttype-3.4.100.v20110423-0524.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.equinox.preferences/jars/org.eclipse.equinox.preferences-3.4.0.v20110502.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.equinox.app/jars/org.eclipse.equinox.app-1.3.100.v20110321.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mmaa.qto.elementaryModel/jars/cib.mmaa.qto.elementaryModel-1.0.0.201204271704.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mmaa.application/jars/cib.mmaa.application-1.0.0.201204271704.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.ui/jars/org.eclipse.ui-3.7.0.I20110602-0100.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.swt/jars/org.eclipse.swt-3.7.0.v3735b.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.jface/jars/org.eclipse.jface-3.7.0.I20110522-1430.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.commands/jars/org.eclipse.core.commands-3.6.0.I20110111-0800.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.ui.workbench/jars/org.eclipse.ui.workbench-3.7.0.I20110519-0100.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.help/jars/org.eclipse.help-3.5.100.v20110426.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.expressions/jars/org.eclipse.core.expressions-3.4.300.v20110228.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/com.ibm.icu/jars/com.ibm.icu-4.4.2.v20110208.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.jface.databinding/jars/org.eclipse.jface.databinding-1.5.0.I20100907-0800.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.databinding.observable/jars/org.eclipse.core.databinding.observable-1.4.0.I20110222-0800.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.databinding.property/jars/org.eclipse.core.databinding.property-1.4.0.I20110222-0800.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.databinding/jars/org.eclipse.core.databinding-1.4.0.I20110111-0800.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.ui.forms/jars/org.eclipse.ui.forms-3.5.100.v20110425.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.zest.core/jars/org.eclipse.zest.core-1.3.0.v20110221-2050.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.zest.layouts/jars/org.eclipse.zest.layouts-1.1.0.v20110425-2050.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.draw2d/jars/org.eclipse.draw2d-3.7.0.v20110425-2050.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.lib.apache.commons/jars/cib.lib.apache.commons-1.3.0.201204271704.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.lib.common/jars/cib.lib.common-1.0.0.201204271704.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mmaa.multimodel/jars/cib.mmaa.multimodel-1.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.emf.edit/jars/org.eclipse.emf.edit-2.7.0.v20110606-0949.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mmaa.query/jars/cib.mmaa.query-1.0.0.201204271704.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mf.schedule.model/jars/cib.mf.schedule.model-1.0.0.201204271704.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+

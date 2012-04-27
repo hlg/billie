@@ -3,6 +3,7 @@ package visualization;
 import mapping.PropertyMap;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -69,7 +70,7 @@ public class Draw2dFactory extends VisFactory2D {
         }
         public void setText(String text){
             super.setText(text);
-            setLabelAlignment(LEFT);
+            setLabelAlignment(PositionConstants.LEFT);
             setSize(getTextSize());
         }
    }

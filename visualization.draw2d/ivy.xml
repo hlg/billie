@@ -1,0 +1,7 @@
+<ivy-module version="2.0">
+<info organisation="de.tu-dresden.bau.cib" module="visualization.draw2d"/>
+<dependencies>
+    <dependency org="org.eclipse" name="draw2d" rev="3.7.0" />
+    <dependency org="de.tu-dresden.bau.cib" name="visMapping" rev="latest.integration"/>
+</dependencies>
+</ivy-module>
