@@ -1,6 +1,7 @@
 package configurations;
 
 import data.EMFIfcAccessor;
+import data.EMFIfcParser;
 import mapping.PropertyMap;
 import mapping.TargetCreationException;
 import org.bimserver.models.ifc2x3.IfcSpace;
@@ -9,13 +10,12 @@ import visualization.VisFactory3D;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public class Ifc3DMapper_space extends MappedBimserverViewer<EMFIfcAccessor.EngineEObject> {
+public class Ifc3DMapper_space extends MappedBimserverViewer<EMFIfcParser.EngineEObject> {
 
     protected void configMapping() {
-        mapper.addMapping(new PropertyMap<EMFIfcAccessor.EngineEObject, VisFactory3D.Polyeder>() {
+        mapper.addMapping(new PropertyMap<EMFIfcParser.EngineEObject, VisFactory3D.Polyeder>() {
             @Override
             protected boolean condition() {
                 return data.getObject() instanceof IfcSpace
@@ -26,7 +26,7 @@ public class Ifc3DMapper_space extends MappedBimserverViewer<EMFIfcAccessor.Engi
 
             @Override
             protected void configure() {
-                EMFIfcAccessor.Geometry geometry = data.getGeometry();
+                EMFIfcParser.Geometry geometry = data.getGeometry();
                 assert geometry != null;
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
@@ -35,14 +35,14 @@ public class Ifc3DMapper_space extends MappedBimserverViewer<EMFIfcAccessor.Engi
     }
 
     @Override
-    void loadFile() throws FileNotFoundException {
+    void loadFile() throws IOException {
         File ifc = chooseFile(".");
         EMFIfcAccessor data = new EMFIfcAccessor();
-        data.setInput(new FileInputStream(ifc));
+        data.setInput(ifc);
         this.data = data;
     }
 
-    public static void main(String[] args) throws TargetCreationException, FileNotFoundException {
+    public static void main(String[] args) throws TargetCreationException, IOException {
         Ifc3DMapper_space ifcViewer = new Ifc3DMapper_space();
         ifcViewer.run();
     }

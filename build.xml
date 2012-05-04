@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="vismapping" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
 
+    <ivy:settings file="D:/Nutzer/helga/ivysettings.xml"/>
 
     <property file="build.properties"/>
     <property name="skip.tests" value="true"/>
@@ -75,6 +76,14 @@
     <target name="resolve">
         <property name="ivy.lib.dir" value="${output.dir}/lib" />
         <ivy:resolve file="visMapping/ivy.xml"/>
+        <ivy:cachepath pathid="ivy.classpath"/>
+        <ivy:retrieve type="jar,bundle" />
+        <!-- ivy:report / -->
+    </target>
+
+    <target name="resolve.data.multimodel">
+        <property name="ivy.lib.dir" value="${output.dir}/lib" />
+        <ivy:resolve file="data.multimodel/ivy.xml"/>
         <ivy:cachepath pathid="ivy.classpath"/>
         <ivy:retrieve type="jar,bundle" />
         <!-- ivy:report / -->

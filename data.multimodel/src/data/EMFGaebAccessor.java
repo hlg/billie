@@ -4,7 +4,6 @@ import cib.lib.gaeb.model.gaeb.*;
 import cib.lib.gaeb.model.gaeb.util.GaebResourceFactoryImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import java.io.IOException;

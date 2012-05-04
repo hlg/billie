@@ -6,7 +6,7 @@ import cib.lib.gaeb.model.gaeb.TgItem;
 import cib.mf.schedule.model.activity.Activity;
 import cib.mf.schedule.model.activity.Timestamp;
 import data.DataAccessor;
-import data.EMFIfcAccessor;
+import data.EMFIfcParser;
 import data.MultiModelAccessor;
 import mapping.PropertyMap;
 import mapping.TargetCreationException;
@@ -15,19 +15,19 @@ import visualization.TimeLine;
 import javax.media.j3d.*;
 import javax.vecmath.Color3f;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
 import static visualization.VisFactory3D.Polyeder;
 
-public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject>> {
+public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> {
     @Override
     void configMapping() {
-        mapper.addStatistics("earliestStart", new DataAccessor.Folding<MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject>, Long>(Long.MAX_VALUE) {
+        mapper.addStatistics("earliestStart", new DataAccessor.Folding<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
             @Override
-            public Long function(Long aggregator, MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject> element) {
+            public Long function(Long aggregator, MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject> element) {
                 for (MultiModelAccessor.ResolvedLink link : element.getResolvedLinks()) {
                     for (Activity activity : link.getScheduleObjects().values()) {
                         aggregator = Math.min(aggregator, getTimeInMillis(activity.getActivityData().getStart()));
@@ -36,9 +36,9 @@ public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.Linked
                 return aggregator;
             }
         });
-        mapper.addStatistics("latestEnd", new DataAccessor.Folding<MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject>, Long>(Long.MIN_VALUE) {
+        mapper.addStatistics("latestEnd", new DataAccessor.Folding<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MIN_VALUE) {
             @Override
-            public Long function(Long aggregator, MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject> element) {
+            public Long function(Long aggregator, MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject> element) {
                 for (MultiModelAccessor.ResolvedLink link : element.getResolvedLinks()) {
                     for (Activity activity : link.getScheduleObjects().values()) {
                         aggregator = Math.max(aggregator, getTimeInMillis(activity.getActivityData().getEnd()));
@@ -63,7 +63,7 @@ public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.Linked
                 ((Shape3D) graph).setAppearance(TypeAppearance.DEACTIVATED.getAppearance());
             }
         };
-        PropertyMap<MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject>, Polyeder> anyActiveMapping = new PropertyMap<MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject>, Polyeder>() {
+        PropertyMap<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, Polyeder> anyActiveMapping = new PropertyMap<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, Polyeder>() {
             @Override
             protected void configure() {
                 graphObject.setNormals(data.getKeyObject().getGeometry().normals);
@@ -81,7 +81,7 @@ public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.Linked
         final Map<Set<ActivityType>, TimeLine.Change<Polyeder>> colorScale = new HashMap<Set<ActivityType>, TimeLine.Change<Polyeder>>();
         final AppearanceCache appearanceCache = new AppearanceCache();
 
-        PropertyMap<MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject>, Polyeder> specialActiveMapping = new PropertyMap<MultiModelAccessor.LinkedObject<EMFIfcAccessor.EngineEObject>, Polyeder>() {
+        PropertyMap<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, Polyeder> specialActiveMapping = new PropertyMap<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, Polyeder>() {
             @Override
             protected void configure() {
                 graphObject.setNormals(data.getKeyObject().getGeometry().normals);
@@ -180,13 +180,13 @@ public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.Linked
         try {
             URL resource1 = new File("D:\\Nutzer\\helga\\div\\mefisto-container\\MMC_Sim_4D_vonALI").toURI().toURL();
             URL resource2 =  this.getClass().getResource("/carport");
-            data = new MultiModelAccessor<EMFIfcAccessor.EngineEObject>(resource1);
+            data = new MultiModelAccessor<EMFIfcParser.EngineEObject>(resource1);
         } catch (MalformedURLException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
 
-    public static void main(String[] args) throws TargetCreationException, FileNotFoundException {
+    public static void main(String[] args) throws TargetCreationException, IOException {
         new Ifc4DMapper().run();
     }
 

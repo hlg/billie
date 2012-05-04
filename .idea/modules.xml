@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/data.bimserver/data.bimserver.iml" filepath="$PROJECT_DIR$/data.bimserver/data.bimserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/data.multimodel/data.multimodel.iml" filepath="$PROJECT_DIR$/data.multimodel/data.multimodel.iml" />
       <module fileurl="file://$PROJECT_DIR$/visMapping.iml" filepath="$PROJECT_DIR$/visMapping.iml" />
+      <module fileurl="file://$PROJECT_DIR$/visMapping.configurations/visMapping.configurations.iml" filepath="$PROJECT_DIR$/visMapping.configurations/visMapping.configurations.iml" />
       <module fileurl="file://$PROJECT_DIR$/visualization.draw2d/visualization.draw2d.iml" filepath="$PROJECT_DIR$/visualization.draw2d/visualization.draw2d.iml" />
       <module fileurl="file://$PROJECT_DIR$/visualization.java3d/visualization.java3d.iml" filepath="$PROJECT_DIR$/visualization.java3d/visualization.java3d.iml" />
     </modules>

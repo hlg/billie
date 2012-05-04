@@ -3,7 +3,6 @@ package visualization;
 import cib.lib.bimserverViewer.colorTime.TypeAppearance;
 import mapping.PropertyMap;
 import org.apache.commons.lang.ArrayUtils;
-import org.eclipse.draw2d.IFigure;
 
 import javax.media.j3d.*;
 import javax.vecmath.Color3f;

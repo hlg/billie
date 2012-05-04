@@ -17,13 +17,7 @@
     <option name="libraryNameIncludesConfiguration" value="true" />
     <option name="libraryNameIncludesModule" value="true" />
     <option name="propertiesSettings">
-      <PropertiesSettings>
-        <option name="propertyFiles">
-          <list>
-            <option value="D:\Nutzer\helga\ivy.properties" />
-          </list>
-        </option>
-      </PropertiesSettings>
+      <PropertiesSettings />
     </option>
     <option name="validateIvyFiles" value="true" />
   </component>

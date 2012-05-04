@@ -195,7 +195,7 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
     }
 
     public static class ResolvedLink {
-        private Map<String, EMFIfcAccessor.EngineEObject> ifcObjects = new HashMap<String, EMFIfcAccessor.EngineEObject>();
+        private Map<String, EMFIfcParser.EngineEObject> ifcObjects = new HashMap<String, EMFIfcParser.EngineEObject>();
         private Map<String, TgItem> gaebObjects = new HashMap<String, TgItem>();
         private Map<String, AnsatzType> qtoObjects = new HashMap<String, AnsatzType>();
         private Map<String, Activity> scheduleObjects = new HashMap<String, Activity>();
@@ -208,7 +208,7 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
             return gaebObjects;
         }
 
-        public Map<String, EMFIfcAccessor.EngineEObject> getLinkedObject() {
+        public Map<String, EMFIfcParser.EngineEObject> getLinkedObject() {
             return ifcObjects;
         }
 
@@ -226,8 +226,8 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
 
         public void addObject(String modelId, Object object) {
             if (object instanceof TgItem) gaebObjects.put(modelId, (TgItem) object);
-            if (object instanceof EMFIfcAccessor.EngineEObject)
-                ifcObjects.put(modelId, (EMFIfcAccessor.EngineEObject) object);
+            if (object instanceof EMFIfcParser.EngineEObject)
+                ifcObjects.put(modelId, (EMFIfcParser.EngineEObject) object);
             if (object instanceof AnsatzType) qtoObjects.put(modelId, (AnsatzType) object);
             if (object instanceof Activity) scheduleObjects.put(modelId, (Activity) object);
         }
