@@ -1,4 +1,4 @@
-package data;
+package data.multimodel;
 
 import cib.mmaa.qto.elementaryModel.Qto.*;
 import cib.mmaa.qto.elementaryModel.Qto.util.QtoResourceFactoryImpl;

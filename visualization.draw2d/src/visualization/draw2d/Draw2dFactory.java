@@ -1,4 +1,4 @@
-package visualization;
+package visualization.draw2d;
 
 import mapping.PropertyMap;
 import org.eclipse.draw2d.ColorConstants;
@@ -7,6 +7,7 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import visualization.VisFactory2D;
 
 public class Draw2dFactory extends VisFactory2D {
 

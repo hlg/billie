@@ -1,8 +1,12 @@
-package data;
+package data.multimodel;
 
 import cib.lib.gaeb.model.gaeb.TgItem;
 import cib.mf.schedule.model.activity.Activity;
 import cib.mmaa.qto.elementaryModel.Qto.AnsatzType;
+import data.DataAccessor;
+import data.IndexedDataAccessor;
+import data.bimserver.EMFIfcAccessor;
+import data.bimserver.EMFIfcParser;
 import de.mefisto.model.container.*;
 import de.mefisto.model.linkModel.Link;
 import de.mefisto.model.linkModel.LinkModel;

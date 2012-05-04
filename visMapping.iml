@@ -12,8 +12,8 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$/visMapping">
-      <sourceFolder url="file://$MODULE_DIR$/visMapping/test" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/visMapping/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/visMapping/test" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

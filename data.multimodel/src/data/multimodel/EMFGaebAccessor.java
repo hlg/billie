@@ -1,4 +1,4 @@
-package data;
+package data.multimodel;
 
 import cib.lib.gaeb.model.gaeb.*;
 import cib.lib.gaeb.model.gaeb.util.GaebResourceFactoryImpl;

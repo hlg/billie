@@ -29,7 +29,7 @@ public class MapperTest extends MappingTestCase {
             }
         };
         folder.fold(Arrays.asList("a", "b", "c"));
-        assertEquals("goabc", folder.getResult());
+        assertEquals("go.a.b.c", folder.getResult());
     }
 
     @Test

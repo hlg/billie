@@ -1,5 +1,6 @@
-package data;
+package data.multimodel;
 
+import data.IndexedDataAccessor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;

@@ -5,10 +5,10 @@ import cib.lib.bimserverViewer.loaders.IfcScene;
 import data.DataAccessor;
 import mapping.Mapper;
 import mapping.TargetCreationException;
-import visualization.Java3dBuilder;
-import visualization.Java3dFactory;
 import visualization.VisBuilder;
 import visualization.VisFactory2D;
+import visualization.java3d.Java3dBuilder;
+import visualization.java3d.Java3dFactory;
 
 import javax.media.j3d.BranchGroup;
 import java.io.IOException;

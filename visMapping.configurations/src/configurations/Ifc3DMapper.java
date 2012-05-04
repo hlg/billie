@@ -1,7 +1,7 @@
 package configurations;
 
-import data.EMFIfcAccessor;
-import data.EMFIfcParser;
+import data.bimserver.EMFIfcAccessor;
+import data.bimserver.EMFIfcParser;
 import mapping.PropertyMap;
 import mapping.TargetCreationException;
 import org.bimserver.models.ifc2x3.IfcBuildingElement;

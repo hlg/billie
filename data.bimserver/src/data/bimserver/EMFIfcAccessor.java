@@ -1,4 +1,6 @@
-package data;
+package data.bimserver;
+
+import data.IndexedDataAccessor;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,13 +21,18 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObje
         parser = new EMFIfcParser();
     }
 
+    public void setInput(File file) throws IOException {
+        parser.inputStream = new FileInputStream(file);
+    }
+
+    public void setInput(File file, String namespace) throws IOException {
+        setInput(file);
+        this.namespace = namespace + "::";
+    }
+
     public Iterator<EMFIfcParser.EngineEObject> iterator() {
         parser.lazyLoad();
         return parser.getIterator();
-    }
-
-    public void setInput(File file) throws IOException {
-        parser.inputStream = new FileInputStream(file);
     }
 
     public void index() {
@@ -35,7 +42,6 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObje
     }
 
     public EMFIfcParser.EngineEObject getIndexed(String objectID) {
-        parser.lazyLoad();
         if (objectID.contains("::")) {
             String[] idParts = objectID.split("::");
             assert idParts[0].equals(namespace);
@@ -48,11 +54,6 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObje
             wrappedData.put(objectID, wrapped);
             return wrapped;
         }
-    }
-
-    public void setInput(File file, String namespace) throws IOException {
-        setInput(file);
-        this.namespace = namespace + "::";
     }
 
 }

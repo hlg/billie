@@ -1,4 +1,6 @@
-package visualization;
+package visualization.java3d;
+
+import visualization.VisBuilder;
 
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;

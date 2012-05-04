@@ -1,8 +1,12 @@
-package visualization;
+package visualization.draw2d;
 
 
-import org.eclipse.draw2d.*;
+import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.MarginBorder;
+import org.eclipse.draw2d.Panel;
+import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
+import visualization.VisBuilder;
 
 public class Draw2dBuilder implements VisBuilder<Draw2dFactory.Draw2dObject, Panel> {
     private Panel chart;

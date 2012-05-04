@@ -1,4 +1,4 @@
-package data;
+package data.bimserver;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -106,7 +106,7 @@ public class EMFIfcParser {
     }
 
     public Iterator<EngineEObject> getIterator() {
-        return new EngineIterator(data.getValues().iterator());
+        return data != null ? new EngineIterator(data.getValues().iterator()) : null;
     }
 
     class EngineIterator implements Iterator<EngineEObject> {

@@ -1,4 +1,4 @@
-package data;
+package data.multimodel;
 
 import cib.mf.schedule.model.activity.Activity;
 import cib.mf.schedule.model.activity.ActivityPackage;
