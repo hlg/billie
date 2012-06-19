@@ -30,6 +30,7 @@ public class Ifc3DMapper_space extends MappedBimserverViewer<EMFIfcParser.Engine
                 assert geometry != null;
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
+                graphObject.setIndizes(geometry.indizes);
             }
         });
     }

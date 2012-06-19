@@ -7,16 +7,10 @@ import data.multimodel.EMFGaebAccessor;
 import mapping.Mapper;
 import mapping.PropertyMap;
 import mapping.TargetCreationException;
-import org.eclipse.draw2d.FigureCanvas;
-import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.draw2d.Panel;
-import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import visualization.VisFactory2D;
 import visualization.draw2d.Draw2dBuilder;
 import visualization.draw2d.Draw2dFactory;
@@ -81,41 +75,13 @@ public class GaebBarchartMapper {
     }
 
     public static void main(String[] args) throws TargetCreationException, IOException {
-        Display display = new Display();
-        Shell shell = new Shell(display);
-        shell.setLayout(new FillLayout());
-
-        FigureCanvas canvas = new FigureCanvas(shell);
-        LightweightSystem ls = new LightweightSystem(canvas);
-
-        Font big = new Font(shell.getFont().getDevice(), "Times New Roman", 50, 0);
-
+        Draw2DViewer viewer = new Draw2DViewer();
+        Font big = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 50, 0);
         GaebBarchartMapper gaebBarchartMapper = new GaebBarchartMapper(big);
         gaebBarchartMapper.config();
-
         Panel content = gaebBarchartMapper.execute();
-        canvas.setContents(content);
-
-        ls.setContents(canvas.getViewport());
-
-        shell.open();
-
-        Image image = new Image(Display.getCurrent(), content.getBounds().width, content.getBounds().height);
-        GC gc = new GC(image);
-        SWTGraphics graphics = new SWTGraphics(gc);
-        content.paint(graphics);
-
-        ImageLoader save = new ImageLoader();
-        save.data = new ImageData[] {image.getImageData()};
-        save.save("D:/test.png", SWT.IMAGE_PNG);
-        image.dispose();
-        gc.dispose();
-
-        while (!shell.isDisposed()) {
-            if (!display.readAndDispatch()) display.sleep();
-        }
+        viewer.setSnapShotParams("D:/test.png", SWT.IMAGE_PNG);
+        viewer.showContent(content);
         big.dispose();
-        display.dispose();
-
     }
 }

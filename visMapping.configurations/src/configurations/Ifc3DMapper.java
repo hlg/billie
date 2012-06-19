@@ -34,6 +34,7 @@ public class Ifc3DMapper extends MappedBimserverViewer<EMFIfcParser.EngineEObjec
                     graphObject.setColor(1, 0, 0); */
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
+                graphObject.setIndizes(geometry.indizes);
             }
         });
     }

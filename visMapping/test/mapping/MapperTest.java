@@ -50,6 +50,11 @@ public class MapperTest extends MappingTestCase {
             protected PropertyMap.Provider<VisFactory2D.Label> setLabelProvider() {
                 return null;
             }
+
+            @Override
+            protected PropertyMap.Provider<Polyline> setPolylineProvider() {
+                return null;
+            }
         };
         Mapper test = new Mapper(data, factory, builder);
         test.addMapping(

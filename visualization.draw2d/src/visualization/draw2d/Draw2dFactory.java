@@ -5,6 +5,7 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import visualization.VisFactory2D;
@@ -33,6 +34,15 @@ public class Draw2dFactory extends VisFactory2D {
         return new PropertyMap.Provider<Label>() {
             public Label create() {
                 return new Draw2dLabel();
+            }
+        };
+    }
+
+    @Override
+    protected PropertyMap.Provider<Polyline> setPolylineProvider() {
+        return new PropertyMap.Provider<Polyline>(){
+            public Polyline create() {
+                return new Draw2dPolyline();
             }
         };
     }
@@ -75,4 +85,14 @@ public class Draw2dFactory extends VisFactory2D {
             setSize(getTextSize());
         }
    }
+
+    class Draw2dPolyline extends org.eclipse.draw2d.Polyline implements Polyline, Draw2dObject {
+
+        public void addLine(int x1, int y1, int x2, int y2) {
+        }
+
+        public void addPoint(int x, int y) {
+            addPoint(new Point(x, y));
+        }
+    }
 }

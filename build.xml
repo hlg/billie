@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="vismapping" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
 
+    <echo message="lets go"/>
+
     <ivy:settings file="D:/Nutzer/helga/ivysettings.xml"/>
 
-    <property file="build.properties"/>
+    <property file="build.properties" />
     <property name="skip.tests" value="true"/>
 
     <!-- Compiler options -->
@@ -16,109 +18,55 @@
     </patternset>
 
     <patternset id="compiler.resources">
-        <!-- todo: clean up -->
-        <include name="**/?*.properties"/>
-        <include name="**/?*.xml"/>
-        <include name="**/?*.gif"/>
-        <include name="**/?*.png"/>
-        <include name="**/?*.jpeg"/>
-        <include name="**/?*.jpg"/>
-        <include name="**/?*.html"/>
-        <include name="**/?*.dtd"/>
-        <include name="**/?*.tld"/>
-        <include name="**/?*.ftl"/>
-        <include name="**/?*.X81"/>
-        <include name="**/?*.ifc"/>
-        <include name="**/?*.zip"/>
+        <!-- add as needed -->
     </patternset>
 
-    <path id="library.mfcontainerparser.classpath">
-        <pathelement
-                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/de.mefisto.container_1.0.0.201201272248/container.jar"/>
-    </path>
-
-
     <dirname property="basedir" file="${ant.file}"/>
-    <property name="module.vismapping.basedir" value="${basedir}/visMapping"/>
 
-    <property name="output.dir" value="${module.vismapping.basedir}/out/production/visMapping"/>
-    <property name="testoutput.dir" value="${module.vismapping.basedir}/out/test/visMapping"/>
+    <target name="config.module">
+        <property name="module.basedir" value="${basedir}/${module.name}"/>
+        <property name="module.output.dir" value="${module.basedir}/output/production"/>
+        <path id="sourcepath">
+            <dirset dir="${module.basedir}">
+                <include name="src"/>
+                <include name="test"/>
+            </dirset>
+        </path>
+    </target>
 
-
-    <path id="classpath">
-        <path refid="library.mfcontainerparser.classpath"/>
-        <pathelement
-                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar"/>
-        <pathelement
-                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar"/>
-        <pathelement
-                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/org.eclipse.draw2d_3.7.0.v20110425-2050.jar"/>
-        <pathelement
-                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/org.eclipse.emf.common_2.7.0.v20110605-0747.jar"/>
-        <pathelement
-                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/org.eclipse.swt.win32.win32.x86_3.7.0.v3735b.jar"/>
-        <pathelement
-                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/cib.lib.gaeb.model_1.0.0.201201272248/gaeb.jar"/>
-        <pathelement
-                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/cib.mmaa.qto.elementaryModel_1.0.0.201201272248.jar"/>
-        <pathelement
-                location="${path.variable.javalibs}/mmaa_oldnstable/plugins/cib.mf.schedule.model_1.0.0.201201272248/schedule.jar"/>
-    </path>
-
-    <path id="sourcepath">
-        <dirset dir="${module.vismapping.basedir}">
-            <include name="src"/>
-            <include name="test"/>
-        </dirset>
-    </path>
-
-
-    <target name="resolve">
-        <property name="ivy.lib.dir" value="${output.dir}/lib" />
-        <ivy:resolve file="visMapping/ivy.xml"/>
+    <target name="resolve.module" depends="config.module">
+        <echo message="resolving: ${module.basedir}"/>
+        <ivy:resolve file="${module.basedir}/ivy.xml"/>
         <ivy:cachepath pathid="ivy.classpath"/>
         <ivy:retrieve type="jar,bundle" />
         <!-- ivy:report / -->
     </target>
 
-    <target name="resolve.data.multimodel">
-        <property name="ivy.lib.dir" value="${output.dir}/lib" />
-        <ivy:resolve file="data.multimodel/ivy.xml"/>
-        <ivy:cachepath pathid="ivy.classpath"/>
-        <ivy:retrieve type="jar,bundle" />
-        <!-- ivy:report / -->
-    </target>
-
-    <target name="compile" depends="compile.production, compile.tests"/>
-
-    <target name="compile.production" depends="resolve">
-        <mkdir dir="${output.dir}/classes"/>
-        <javac destdir="${output.dir}/classes" debug="on" srcdir="${module.vismapping.basedir}/src">
+    <target name="compile.module" depends="resolve.module">
+        <mkdir dir="${module.output.dir}/classes"/>
+        <javac destdir="${module.output.dir}/classes" debug="on" srcdir="${module.basedir}/src">
             <classpath>
-                <path refid="classpath"/>
                 <path refid="ivy.classpath"/>
             </classpath>
             <patternset refid="ignored.files"/>
         </javac>
 
-        <copy todir="${output.dir}/classes">
-            <fileset dir="${module.vismapping.basedir}/src">
+        <copy todir="${module.output.dir}/classes">
+            <fileset dir="${module.basedir}/src">
                 <patternset refid="compiler.resources"/>
                 <type type="file"/>
             </fileset>
-            <fileset dir="${module.vismapping.basedir}/test">
+            <fileset dir="${module.basedir}/test">
                 <patternset refid="compiler.resources"/>
                 <type type="file"/>
             </fileset>
         </copy>
     </target>
 
-    <target name="compile.tests" depends="compile.production" unless="skip.tests">
-    </target>
 
-    <target name="dist" depends="compile">
+    <target name="dist.module" depends="compile.module">
         <tstamp/>
-        <property name="specversion" value="0.1"/>
+        <property name="specversion" value="0.1"/>  <!-- todo: per module specversion? -->
         <property name="implversion" value="${DSTAMP}${TSTAMP}"/>
 
         <pathconvert property="mf.classpath" pathsep=" ">
@@ -126,8 +74,8 @@
             <flattenmapper/>
         </pathconvert>
 
-        <mkdir dir="${output.dir}/jar"/>
-        <jar jarfile="${output.dir}/jar/visMapping-${specversion}-${implversion}.jar" basedir="${output.dir}/classes">
+        <mkdir dir="${module.output.dir}/jar"/>
+        <jar jarfile="${module.output.dir}/jar/${module.name}-${specversion}-SNAPSHOT.jar" basedir="${module.output.dir}/classes">
             <manifest>
                 <attribute name="Specification-Title" value="Visualization Mapping Framework"/>
                 <attribute name="Specification-Version" value="${specversion}"/>
@@ -142,11 +90,33 @@
 
     </target>
 
-    <target name="clean" description="cleanup module">
-        <delete dir="${output.dir}"/>
-        <delete dir="${testoutput.dir}"/>
+    <target name="publish.module" depends="compile.module">
+        <ivy:publish artifactspattern="${module.output.dir}/jar/[artifact]-[version]-SNAPSHOT.[ext]" resolver="local"
+                     pubrevision="${specversion}" pubdate="${now}" status="integration" forcedeliver="true"/>
     </target>
 
-    <target name="build" depends="clean, compile, dist" description="clean build and package"/>
+    <target name="publish.all">
+        <antcall target="publish.module"><param name="module.name" value="visMapping"/></antcall>
+        <antcall target="publish.module"><param name="module.name" value="visMapping.configurations"/></antcall>
+        <antcall target="publish.module"><param name="module.name" value="data.bimserver"/></antcall>
+        <antcall target="publish.module"><param name="module.name" value="data.multimodel"/></antcall>
+        <antcall target="publish.module"><param name="module.name" value="visualization.draw2d"/></antcall>
+        <antcall target="publish.module"><param name="module.name" value="visualization.java3d"/></antcall>
+    </target>
 
+    <target name="clean.module" description="cleanup module">
+        <delete dir="${module.output.dir}"/>
+        <delete dir="${module.testoutput.dir}"/>
+    </target>
+
+    <target name="clean.all">
+        <antcall target="clean.module"><param name="module.name" value="visMapping"/></antcall>
+        <antcall target="clean.module"><param name="module.name" value="visMapping.configurations"/></antcall>
+        <antcall target="clean.module"><param name="module.name" value="data.bimserver"/></antcall>
+        <antcall target="clean.module"><param name="module.name" value="data.multimodel"/></antcall>
+        <antcall target="clean.module"><param name="module.name" value="visualization.draw2d"/></antcall>
+        <antcall target="clean.module"><param name="module.name" value="visualization.java3d"/></antcall>
+    </target>
+
+    <target name="build" depends="clean.all" description="clean build and package"/>
 </project>

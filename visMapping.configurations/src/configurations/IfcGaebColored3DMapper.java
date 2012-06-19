@@ -40,6 +40,7 @@ public class IfcGaebColored3DMapper extends
                 EMFIfcParser.Geometry geometry = data.getKeyObject().getGeometry();
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
+                graphObject.setIndizes(geometry.indizes);
                 float price = calculateOveralPrice(data.getResolvedLinks()).floatValue();
                 float halfMaxTotal = mapper.getGlobal("halfMaxTotal").floatValue();
                 float red = price <= halfMaxTotal ? price / halfMaxTotal : 1;

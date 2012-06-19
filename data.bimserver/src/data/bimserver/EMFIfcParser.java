@@ -6,6 +6,7 @@ import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3.IfcElement;
 import org.bimserver.models.ifc2x3.IfcProduct;
 import org.bimserver.models.ifc2x3.IfcRelContainedInSpatialStructure;
+import org.bimserver.models.ifc2x3.IfcRoot;
 import org.bimserver.plugins.PluginException;
 import org.bimserver.plugins.PluginManager;
 import org.bimserver.plugins.deserializers.DeserializeException;
@@ -20,9 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 public class EMFIfcParser {
@@ -102,7 +101,11 @@ public class EMFIfcParser {
     }
 
     public EngineEObject getWrappedObject(String objectID) {
-        return new EngineEObject(data.get(objectID), engineModel, geometry);
+        return getWrappedObject(data.get(objectID));
+    }
+
+    public EngineEObject getWrappedObject(IfcRoot ifcRoot) {
+        return new EngineEObject(ifcRoot, engineModel, geometry);
     }
 
     public Iterator<EngineEObject> getIterator() {
@@ -151,16 +154,27 @@ public class EMFIfcParser {
             try {
                 IfcEngineInstance instance = engineModel.getInstanceFromExpressId((int) idEObject.getOid());
                 IfcEngineInstanceVisualisationProperties visProps = instance.getVisualisationProperties();
-                objectGeometry.vertizes = new ArrayList<Float>(visProps.getPrimitiveCount() * 9); // TODO: optimize memory: retain index!
-                objectGeometry.normals = new ArrayList<Float>(visProps.getPrimitiveCount() * 9); // TODO: optimize memory: retain index!
-                for (int i = visProps.getStartIndex(); i < visProps.getStartIndex() + visProps.getPrimitiveCount() * 3; i++) {
-                    int index = geometry.getIndex(i) * 3;
-                    objectGeometry.normals.add(geometry.getNormal(index));
-                    objectGeometry.vertizes.add(geometry.getVertex(index));
-                    objectGeometry.normals.add(geometry.getNormal(index + 1));
-                    objectGeometry.vertizes.add(geometry.getVertex(index + 1));
-                    objectGeometry.normals.add(geometry.getNormal(index + 2));
-                    objectGeometry.vertizes.add(geometry.getVertex(index + 2));
+                objectGeometry.vertizes = new ArrayList<Float>();
+                objectGeometry.normals = new ArrayList<Float>();
+                objectGeometry.indizes = new ArrayList<Integer>(visProps.getPrimitiveCount());
+                Map<Integer, Integer> reindex = new HashMap<Integer, Integer>();
+                int newIndex = -1;
+                for (int i = 0; i < visProps.getPrimitiveCount() * 3; i++) {
+                    int oldIndex = geometry.getIndex(i + visProps.getStartIndex());
+                    if(reindex.containsKey(oldIndex)){
+                        objectGeometry.indizes.add(reindex.get(oldIndex));
+                    } else {
+                        newIndex++;
+                        reindex.put(oldIndex, newIndex);
+                        objectGeometry.indizes.add(newIndex);
+                        int oldCoordIndex = oldIndex * 3;
+                        objectGeometry.normals.add(geometry.getNormal(oldCoordIndex));
+                        objectGeometry.vertizes.add(geometry.getVertex(oldCoordIndex));
+                        objectGeometry.normals.add(geometry.getNormal(oldCoordIndex + 1));
+                        objectGeometry.vertizes.add(geometry.getVertex(oldCoordIndex + 1));
+                        objectGeometry.normals.add(geometry.getNormal(oldCoordIndex + 2));
+                        objectGeometry.vertizes.add(geometry.getVertex(oldCoordIndex + 2));
+                    }
                 }
             } catch (IfcEngineException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -185,6 +199,7 @@ public class EMFIfcParser {
     public static class Geometry {
         public List<Float> vertizes;
         public List<Float> normals;
+        public List<Integer> indizes;
     }
 
 

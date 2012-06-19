@@ -68,6 +68,7 @@ public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.Linked
             protected void configure() {
                 graphObject.setNormals(data.getKeyObject().getGeometry().normals);
                 graphObject.setVertizes(data.getKeyObject().getGeometry().vertizes);
+                graphObject.setIndizes(data.getKeyObject().getGeometry().indizes);
                 ((Shape3D) graphObject).setAppearance(TypeAppearance.DEFAULT.getAppearance()); // TODO: generic model
                 long earliestStart = mapper.getStats("earliestStart").longValue();
                 Map<Integer, Integer> activityHistogram = getActivityHistogram(data.getResolvedLinks(), earliestStart);
@@ -86,6 +87,7 @@ public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.Linked
             protected void configure() {
                 graphObject.setNormals(data.getKeyObject().getGeometry().normals);
                 graphObject.setVertizes(data.getKeyObject().getGeometry().vertizes);
+                graphObject.setIndizes(data.getKeyObject().getGeometry().indizes);
                 ((Shape3D) graphObject).setAppearance(TypeAppearance.DEFAULT.getAppearance()); // TODO: generic model
                 long earliestStart = mapper.getStats("earliestStart").longValue();
                 Map<Integer, Event> activityList = getActivityList(data.getResolvedLinks(), earliestStart);
