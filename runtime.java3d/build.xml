@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="BimserverViewer" default="compile" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <dirname property="basedir" file="${ant.file}"/>
+    <property name="output.dir" value="${basedir}/out"/>
+
+    <path id="ivy.classpath"/>
+    <ivy:settings file="D:/Nutzer/helga/ivysettings.xml"/>
+
+    <target name="resolve">
+        <echo message="resolving dependencies"/>
+        <ivy:resolve file="ivy.xml" type="jar,bundle"/>
+        <ivy:cachepath pathid="ivy.classpath"/>
+        <!-- ivy:report/ -->
+    </target>
+
+    <target name="retrieve" depends="resolve">
+        <echo message="retrieving dependencies"/>
+        <delete dir="${ivy.lib.dir}"/>
+        <ivy:retrieve type="jar,bundle"/>
+    </target>
+
+    <target name="compile" depends="resolve">
+        <echo message="compiling to ${output.dir} using classpath ${toString:ivy.classpath}"/>
+        <mkdir dir="${output.dir}/classes"/>
+        <javac destdir="${output.dir}/classes" debug="on" srcdir="${basedir}/src">
+            <classpath>
+                <path refid="ivy.classpath"/>
+            </classpath>
+        </javac>
+        <copy file="${basedir}/src/log4j.xml" todir="${output.dir}/classes"/>
+        <!-- TODO: copy resources -->
+    </target>
+
+    <target name="dist" depends="compile" description="generate the distribution">
+        <tstamp/>
+        <property name="specversion" value="0.2"/>
+        <property name="implversion" value="${DSTAMP}${TSTAMP}"/>
+
+        <pathconvert property="mf.classpath" pathsep=" ">
+            <path refid="ivy.classpath"/>
+            <flattenmapper/>
+        </pathconvert>
+
+        <mkdir dir="${output.dir}/jar"/>
+        <jar jarfile="${output.dir}/jar/java3Dviewer-${specversion}-${implversion}.jar" basedir="${output.dir}/classes">
+            <manifest>
+                <attribute name="Specification-Title" value="Java 3D viewer"/>
+                <attribute name="Specification-Version" value="${specversion}"/>
+                <attribute name="Specification-Vendor" value="TU Dresden, CIB"/>
+                <attribute name="Implementation-Title" value="snapshot"/>
+                <attribute name="Implementation-Version" value="${implversion}"/>
+                <attribute name="Implementation-Vendor" value="TU Dresden, CIB"/>
+                <attribute name="Main-Class" value="runtime.java3d.testApps.IfcViewer"/>
+                <attribute name="Class-Path" value="${mf.classpath}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="publish" depends="dist">
+        <ivy:publish resolver="local" pubrevision="SNAPSHOT">
+            <artifacts pattern="${output.dir}/jar/[artifact]-${specversion}-${implversion}.[ext]"/>
+        </ivy:publish>
+    </target>
+
+    <target name="clean">
+        <delete dir="${output.dir}"/>
+    </target>
+
+    <target name="build" depends="clean, publish"/>
+</project>

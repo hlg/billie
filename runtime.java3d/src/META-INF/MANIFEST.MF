@@ -1,0 +1,62 @@
+Manifest-Version: 1.0
+Specification-Version: 0.2
+Class-Path: activation.jar antlr-2.7.7.jar antlr-3.1.1-runtime.jar ant
+ lr-3.1.1.jar aopalliance-1.0.jar asm-3.3.jar com.sun.el_1.0.0.v201004
+ 190952.jar commons-beanutils-1.8.3.jar commons-beanutils-bean-collect
+ ions-1.8.3.jar commons-beanutils-core-1.8.3.jar commons-codec-1.3.jar
+  commons-collections-3.2.1.jar commons-fileupload-1.2.1.jar commons-l
+ ang-2.4.jar commons-lang-2.6.jar commons-logging-1.1.1.jar commons-po
+ ol-1.5.2.jar cxf-2.4.3.jar cxf-manifest.jar cxf-xjc-boolean-2.4.0.jar
+  cxf-xjc-bug671-2.4.0.jar cxf-xjc-dv-2.4.0.jar cxf-xjc-ts-2.4.0.jar e
+ cj-3.6.jar FastInfoset-1.2.9.jar geoapi-2.3-M1.jar geoapi-pending-2.3
+ -M1.jar geronimo-activation_1.1_spec-1.1.jar geronimo-annotation_1.0_
+ spec-1.1.1.jar geronimo-javamail_1.4_spec-1.7.1.jar geronimo-jaxws_2.
+ 2_spec-1.1.jar geronimo-jms_1.1_spec-1.1.1.jar geronimo-stax-api_1.0_
+ spec-1.0.1.jar geronimo-ws-metadata_2.0_spec-1.1.3.jar guava-10.0.jar
+  ifcNamespaces.jar isorelax-20030108.jar java-getopt-1.0.13.jar javax
+ .el_2.1.0.v201004190952.jar javax.servlet.jsp.jstl_1.2.0.v20100419095
+ 2.jar javax.servlet.jsp_2.1.0.v201004190952.jar jaxb-api-2.2.3.jar ja
+ xb-impl-2.2.4-1.jar jaxb-xjc-2.2.4-1.jar jdom-1.0.jar je-4.1.6.jar je
+ ttison-1.0.1.jar jettison-1.3.jar jetty-ajp-7.5.0-SNAPSHOT.jar jetty-
+ annotations-7.5.0-SNAPSHOT.jar jetty-client-7.5.0-SNAPSHOT.jar jetty-
+ continuation-7.5.0-SNAPSHOT.jar jetty-deploy-7.5.0-SNAPSHOT.jar jetty
+ -http-7.5.0-SNAPSHOT.jar jetty-io-7.5.0-SNAPSHOT.jar jetty-jmx-7.5.0-
+ SNAPSHOT.jar jetty-jndi-7.5.0-SNAPSHOT.jar jetty-jsp-2.1-7.5.0-SNAPSH
+ OT.jar jetty-overlay-deployer-7.5.0-SNAPSHOT.jar jetty-plus-7.5.0-SNA
+ PSHOT.jar jetty-policy-7.5.0-SNAPSHOT.jar jetty-rewrite-7.5.0-SNAPSHO
+ T.jar jetty-security-7.5.0-SNAPSHOT.jar jetty-server-7.5.0-SNAPSHOT.j
+ ar jetty-servlet-7.5.0-SNAPSHOT.jar jetty-servlets-7.5.0-SNAPSHOT.jar
+  jetty-util-7.5.0-SNAPSHOT.jar jetty-webapp-7.5.0-SNAPSHOT.jar jetty-
+ websocket-7.5.0-SNAPSHOT.jar jetty-xml-7.5.0-SNAPSHOT.jar jna.jar jod
+ a-time-1.6.2.jar joda-time-1.6.jar jra-1.0-alpha-4.jar js-1.7R2.jar j
+ son.jar jsr173_1.0_api.jar jsr311-api-1.1.1.jar junit-4.8.2.jar log4j
+ -1.2.16.jar mail.jar mimepull-1.4.jar msv-core-2011.1.jar neethi-3.0.
+ 1.jar opensaml-2.5.1-1.jar openws-1.4.2-1.jar org.apache.jasper.glass
+ fish_2.1.0.v201007080150.jar org.apache.taglibs.standard.glassfish_1.
+ 2.0.v201004190952.jar org.eclipse.emf.codegen.ecore_2.7.0.v20110606-0
+ 949.jar org.eclipse.emf.codegen_2.6.0.v20110606-0949.jar org.eclipse.
+ emf.common_2.7.0.v20110605-0747.jar org.eclipse.emf.compare.diff_1.2.
+ 0.v20110607-2028.jar org.eclipse.emf.compare.match_1.2.0.v20110607-20
+ 28.jar org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar org.eclipse
+ .emf.ecore_2.7.0.v20110605-0747.jar org.eclipse.emf_2.6.0.v20110606-0
+ 949.jar quartz-1.8.3.jar relaxngDatatype-20020414.jar resolver.jar ro
+ me-1.0.jar saaj-api-1.3.4.jar saaj-impl-1.3.12.jar serializer-2.7.1.j
+ ar servlet-api-2.5.jar slf4j-api-1.6.2.jar slf4j-log4j12-1.6.2.jar sp
+ ring-aop-3.0.6.RELEASE.jar spring-asm-3.0.6.RELEASE.jar spring-beans-
+ 3.0.6.RELEASE.jar spring-context-3.0.6.RELEASE.jar spring-core-3.0.6.
+ RELEASE.jar spring-expression-3.0.6.RELEASE.jar spring-jms-3.0.6.RELE
+ ASE.jar spring-tx-3.0.6.RELEASE.jar spring-web-3.0.6.RELEASE.jar stax
+ 2-api-3.1.1.jar stringtemplate-3.2.jar tar.jar velocity-1.7.jar woods
+ tox-core-asl-4.1.1.jar wsdl4j-1.6.2.jar wss4j-1.6.3.jar xalan-2.7.1.j
+ ar xbean.jar xbean_xpath.jar xml-resolver-1.2.jar xmlbeans-2.4.0.jar 
+ xmlbeans-qname.jar xmlpublic.jar xmlschema-core-2.0.1.jar xmlsec-1.4.
+ 5.jar xmltooling-1.3.2-1.jar xsdlib-2010.1.jar commons-io-2.0.1.jar b
+ imserver-1.1beta-2011-11-18-buildingSMARTLibrary.jar bimserver-1.1bet
+ a-2011-11-18-client-lib.jar bimserver-1.1beta-2011-11-18-emf.jar bims
+ erver-1.1beta-2011-11-18-ifc.jar bimserver-1.1beta-2011-11-18-ifcplug
+ ins.jar bimserver-1.1beta-2011-11-18-plugins.jar bimserver-1.1beta-20
+ 11-11-18-shared.jar bimserver-1.1beta-2011-11-18-utils.jar bimserver-
+ 1.1beta-2011-11-18.jar bimserver-1.1beta-2011-11-18-filebasedobjectid
+ m.jar bimserver-1.1beta-2011-11-18-ifcengine.jar j3dcore.jar j3dutils
+ .jar unbboolean-1.1.exe.jar vecmath.jar
+Main-Class: cib.lib.bimserverViewer.testApps.IfcViewer
