@@ -22,7 +22,7 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObje
     }
 
     public void setInput(File file) throws IOException {
-        parser.inputStream = new FileInputStream(file);
+        parser.setInput(new FileInputStream(file));
     }
 
     public void setInput(File file, String namespace) throws IOException {

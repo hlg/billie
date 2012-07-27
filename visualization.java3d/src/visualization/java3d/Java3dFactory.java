@@ -1,10 +1,8 @@
 package visualization.java3d;
 
 import cib.lib.bimserverViewer.colorTime.TypeAppearance;
-import com.google.common.collect.Collections2;
 import mapping.PropertyMap;
 import org.apache.commons.lang.ArrayUtils;
-import visualization.VisFactory2D;
 import visualization.VisFactory3D;
 
 import javax.media.j3d.*;

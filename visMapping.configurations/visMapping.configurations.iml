@@ -24,7 +24,7 @@
     <orderEntry type="module-library">
       <library name="IvyIDEA-visMapping.configurations-default">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/de.mefisto.container/jars/de.mefisto.container-1.0.0.201205021857.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/de.mefisto.container/jars/de.mefisto.container-1.0.0.201207231724.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.emf.ecore/jars/org.eclipse.emf.ecore-2.7.0.v20110605-0747.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.runtime/jars/org.eclipse.core.runtime-3.7.0.v20110110.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.osgi/jars/org.eclipse.osgi-3.7.0.v20110613.jar!/" />
@@ -37,46 +37,20 @@
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.equinox.app/jars/org.eclipse.equinox.app-1.3.100.v20110321.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.emf.common/jars/org.eclipse.emf.common-2.7.0.v20110605-0747.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.emf.ecore.xmi/jars/org.eclipse.emf.ecore.xmi-2.7.0.v20110520-1406.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.lib.gaeb.model/jars/cib.lib.gaeb.model-1.0.0.201205021857.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mmaa.qto.elementaryModel/jars/cib.mmaa.qto.elementaryModel-1.0.0.201205021857.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mmaa.application/jars/cib.mmaa.application-1.0.0.201205021857.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.ui/jars/org.eclipse.ui-3.7.0.I20110602-0100.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.swt/jars/org.eclipse.swt-3.7.0.v3735b.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.jface/jars/org.eclipse.jface-3.7.0.I20110522-1430.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.commands/jars/org.eclipse.core.commands-3.6.0.I20110111-0800.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.ui.workbench/jars/org.eclipse.ui.workbench-3.7.0.I20110519-0100.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.help/jars/org.eclipse.help-3.5.100.v20110426.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.expressions/jars/org.eclipse.core.expressions-3.4.300.v20110228.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/com.ibm.icu/jars/com.ibm.icu-4.4.2.v20110208.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.jface.databinding/jars/org.eclipse.jface.databinding-1.5.0.I20100907-0800.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.databinding.observable/jars/org.eclipse.core.databinding.observable-1.4.0.I20110222-0800.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.databinding.property/jars/org.eclipse.core.databinding.property-1.4.0.I20110222-0800.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.databinding/jars/org.eclipse.core.databinding-1.4.0.I20110111-0800.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.ui.ide/jars/org.eclipse.ui.ide-3.7.0.I20110519-0100.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.filesystem/jars/org.eclipse.core.filesystem-1.3.100.v20110423-0524.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.jface.text/jars/org.eclipse.jface.text-3.7.0.v20110505-0800.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.text/jars/org.eclipse.text-3.5.100.v20110505-0800.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.equinox.p2.engine/jars/org.eclipse.equinox.p2.engine-2.1.0.v20110511.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.equinox.p2.core/jars/org.eclipse.equinox.p2.core-2.1.0.v20110502-1955.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.equinox.p2.metadata/jars/org.eclipse.equinox.p2.metadata-2.1.0.v20110510.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.equinox.p2.metadata.repository/jars/org.eclipse.equinox.p2.metadata.repository-1.2.0.v20110511-1359.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.equinox.p2.repository/jars/org.eclipse.equinox.p2.repository-2.1.0.v20110601.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.equinox.security/jars/org.eclipse.equinox.security-1.1.0.v20110502.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.ui.forms/jars/org.eclipse.ui.forms-3.5.100.v20110425.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.emf.validation/jars/org.eclipse.emf.validation-1.4.0.v20100428-2315.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.emf.edit/jars/org.eclipse.emf.edit-2.7.0.v20110606-0949.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.core.resources/jars/org.eclipse.core.resources-3.7.100.v20110510-0712.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.emf.databinding.edit/jars/org.eclipse.emf.databinding.edit-1.2.0.v20110606-0949.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.emf.databinding/jars/org.eclipse.emf.databinding-1.2.0.v20110606-0949.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.zest.core/jars/org.eclipse.zest.core-1.3.0.v20110221-2050.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.zest.layouts/jars/org.eclipse.zest.layouts-1.1.0.v20110425-2050.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.lib.gaeb.model/jars/cib.lib.gaeb.model-1.0.0.201207231724.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mf.qto.model/jars/cib.mf.qto.model-1.0.0.201207231724.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mf.schedule.model/jars/cib.mf.schedule.model-1.0.0.201207231724.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.draw2d/jars/org.eclipse.draw2d-3.7.0.v20110425-2050.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.lib.apache.commons/jars/cib.lib.apache.commons-1.3.0.201205021857.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.lib.common/jars/cib.lib.common-1.0.0.201205021857.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.apache.commons.lang/jars/org.apache.commons.lang-2.4.0.v201005080502.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mmaa.multimodel/jars/cib.mmaa.multimodel-1.0.0.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mmaa.query/jars/cib.mmaa.query-1.0.0.201205021857.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/cib.mf.schedule.model/jars/cib.mf.schedule.model-1.0.0.201205021857.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.swt/jars/org.eclipse.swt-3.7.0.v3735b.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/com.ibm.icu/jars/com.ibm.icu-4.4.2.v20110208.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.swt.win32.win32.x86/jars/org.eclipse.swt.win32.win32.x86-3.7.0.v3735b.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/de.tu-dresden.bau.cib/java3Dviewer/jars/java3Dviewer-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/java3d/java3d/jars/j3dutils-1.5.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/java3d/java3d/jars/j3dcore-1.5.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/java3d/java3d/jars/vecmath-1.5.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/junit/junit/jars/junit-4.10.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/commons-io/commons-io/jars/commons-io-2.1.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.bimserver/bimserver-emf/jars/bimserver-emf-1.1RC1.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.bimserver/bimserver-buildingSMARTLibrary/jars/bimserver-buildingSMARTLibrary-1.1RC1.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/javax.activation/activation/jars/activation-1.1.1.jar!/" />
@@ -244,17 +218,11 @@
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.eclipse.jetty/jetty-rewrite/jars/jetty-rewrite-7.5.0.v20110901.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/net.java.dev.jna/jna/jars/jna-3.2.5.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/com.sleepycat/je/jars/je-4.0.92.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/de.tu-dresden.bau.cib/java3Dviewer/jars/java3Dviewer-SNAPSHOT.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/java3d/java3d/jars/j3dutils-1.5.2.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/java3d/java3d/jars/j3dcore-1.5.2.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/java3d/java3d/jars/vecmath-1.5.2.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/junit/junit/jars/junit-4.10.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.1.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/commons-io/commons-io/jars/commons-io-2.1.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.bimserver/bimserver-ifcengine/jars/bimserver-ifcengine-1.1RC1.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/bundle/org.eclipse.swt.win32.win32.x86/jars/org.eclipse.swt.win32.win32.x86-3.7.0.v3735b.jar!/" />
         </CLASSES>
         <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/junit/junit/javadocs/junit-4.10-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/commons-io/commons-io/javadocs/commons-io-2.1-javadoc.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/commons-codec/commons-codec/javadocs/commons-codec-1.3-javadoc.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/log4j/log4j/javadocs/log4j-1.2.16-javadoc.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.slf4j/slf4j-log4j12/javadocs/slf4j-log4j12-1.6.2-javadoc.jar!/" />
@@ -276,10 +244,10 @@
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.eclipse.jetty/jetty-policy/javadocs/jetty-policy-7.5.0.v20110901-javadoc.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.eclipse.jetty/jetty-rewrite/javadocs/jetty-rewrite-7.5.0.v20110901-javadoc.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/com.sleepycat/je/javadocs/je-4.0.92-javadoc.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/junit/junit/javadocs/junit-4.10-javadoc.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/commons-io/commons-io/javadocs/commons-io-2.1-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/junit/junit/sources/junit-4.10-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/commons-io/commons-io/sources/commons-io-2.1-sources.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/javax.activation/activation/sources/activation-1.1.1-sources.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.apache.xmlbeans/xmlbeans/sources/xmlbeans-2.4.0-sources.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.antlr/antlr-runtime/sources/antlr-runtime-3.1.1-sources.jar!/" />
@@ -307,8 +275,6 @@
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/org.eclipse.jetty/jetty-rewrite/sources/jetty-rewrite-7.5.0.v20110901-sources.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/net.java.dev.jna/jna/sources/jna-3.2.5-sources.jar!/" />
           <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/com.sleepycat/je/sources/je-4.0.92-sources.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/junit/junit/sources/junit-4.10-sources.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../../.ivy2/cache/commons-io/commons-io/sources/commons-io-2.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

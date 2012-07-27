@@ -1,7 +1,7 @@
 package data.multimodel;
 
 import cib.lib.gaeb.model.gaeb.TgItem;
-import cib.mmaa.qto.elementaryModel.Qto.AnsatzType;
+import cib.mf.qto.model.AnsatzType;
 import data.bimserver.EMFIfcParser;
 import de.mefisto.model.container.ElementaryModelType;
 import org.junit.Assert;

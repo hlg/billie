@@ -1,6 +1,6 @@
 package data.bimserver;
 
-import org.bimserver.models.ifc2x3.IfcBuildingElement;
+import org.bimserver.models.ifc2x3tc1.IfcBuildingElement;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package data.multimodel;
 
-import cib.mmaa.qto.elementaryModel.Qto.*;
-import cib.mmaa.qto.elementaryModel.Qto.util.QtoResourceFactoryImpl;
+import cib.mf.qto.model.*;
+import cib.mf.qto.model.util.QtoResourceFactoryImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;

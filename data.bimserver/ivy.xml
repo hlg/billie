@@ -1,9 +1,11 @@
 <ivy-module version="2.0">
 <info organisation="de.tu-dresden.bau.cib" module="data.bimserver"/>
 <dependencies>
-    <dependency org="org.bimserver" name="bimserver-client-libs" rev="1.1RC3"/>
-    <dependency org="org.bimserver" name="bimserver-ifcengine" rev="1.1RC3"/>
+    <dependency org="org.bimserver" name="bimserver-ifcplugins" rev="1.1.0"/>
+    <dependency org="org.bimserver" name="bimserver-buildingSMARTLibrary" rev="1.1.0"/>
+    <dependency org="org.bimserver" name="bimserver-ifcengine" rev="1.1.0"/>
     <dependency org="de.tu-dresden.bau.cib" name="visMapping" rev="latest.integration" />
     <dependency org="junit" name="junit" rev="4.10"/>
+    <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.2"/>
 </dependencies>
 </ivy-module>

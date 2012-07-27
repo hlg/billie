@@ -3,10 +3,10 @@ package data.bimserver;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bimserver.emf.IdEObject;
-import org.bimserver.models.ifc2x3.IfcElement;
-import org.bimserver.models.ifc2x3.IfcProduct;
-import org.bimserver.models.ifc2x3.IfcRelContainedInSpatialStructure;
-import org.bimserver.models.ifc2x3.IfcRoot;
+import org.bimserver.models.ifc2x3tc1.IfcElement;
+import org.bimserver.models.ifc2x3tc1.IfcProduct;
+import org.bimserver.models.ifc2x3tc1.IfcRelContainedInSpatialStructure;
+import org.bimserver.models.ifc2x3tc1.IfcRoot;
 import org.bimserver.plugins.PluginException;
 import org.bimserver.plugins.PluginManager;
 import org.bimserver.plugins.deserializers.DeserializeException;
@@ -16,7 +16,6 @@ import org.bimserver.plugins.serializers.IfcModelInterface;
 import org.eclipse.emf.ecore.EObject;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -37,10 +36,6 @@ public class EMFIfcParser {
     InputStream inputStream;
 
     public EMFIfcParser() {
-        File homeDir = new File("bimserverHome");
-        File tempDir = new File(homeDir, "tmp");
-        if (!tempDir.exists()) tempDir.mkdirs();
-
         PluginM pluginManager = new PluginM();
         pluginManager.loadPluginsFromCurrentClassloader();
         pluginManager.initAllLoadedPlugins();
