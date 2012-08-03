@@ -1,5 +1,5 @@
 <ivy-module version="2.0">
-    <info organisation="de.tu-dresden.bau.cib" module="java3Dviewer"/>
+    <info organisation="de.tu-dresden.bau.cib" module="runtime.java3d"/>
     <dependencies>
         <dependency org="java3d" name="java3d" rev="1.5.2"/>
         <dependency org="junit" name="junit" rev="4.10"/>

@@ -2,23 +2,29 @@ package configurations;
 
 import cib.lib.gaeb.model.gaeb.TgItem;
 import cib.mf.qto.model.AnsatzType;
-import data.DataAccessor;
+import com.sun.j3d.loaders.Loader;
 import data.bimserver.EMFIfcParser;
 import data.multimodel.MultiModelAccessor;
-import mapping.Mapper;
-import mapping.PropertyMap;
-import mapping.TargetCreationException;
-import visualization.VisFactory3D;
+import org.bimserver.plugins.PluginException;
+import runtime.java3d.viewers.SimpleViewer;
+import visMapping.data.DataAccessor;
+import visMapping.mapping.Mapper;
+import visMapping.mapping.PropertyMap;
+import visMapping.mapping.TargetCreationException;
+import visMapping.visualization.VisFactory3D;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Collection;
 
 public class IfcGaebColored3DMapper extends
-        MappedBimserverViewer<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> {
+        MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> {
 
-    public static void main(String[] args) throws TargetCreationException, IOException {
-        new IfcGaebColored3DMapper().run();
+    public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
+        Loader loader = new IfcGaebColored3DMapper();
+        SimpleViewer viewer = new SimpleViewer(loader);
+        viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\", "zip").getCanonicalPath());
     }
 
     void configMapping() {
@@ -51,8 +57,9 @@ public class IfcGaebColored3DMapper extends
     }
 
     @Override
-    void loadFile() {
-        data = new MultiModelAccessor<EMFIfcParser.EngineEObject>(this.getClass().getResource("/carport"));
+    void load(InputStream inputStream) throws IOException {
+        // TODO use zipinputstrem directly instead of folder
+        data = new MultiModelAccessor<EMFIfcParser.EngineEObject>(unzip(inputStream));
     }
 
     private BigDecimal calculateOveralPrice(Collection<MultiModelAccessor.ResolvedLink> resolvedLinks) {

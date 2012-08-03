@@ -2,26 +2,27 @@ package configurations;
 
 import data.bimserver.EMFIfcAccessor;
 import data.bimserver.EMFIfcParser;
-import mapping.Mapper;
-import mapping.PropertyMap;
-import mapping.TargetCreationException;
-import org.bimserver.models.ifc2x3.*;
+import org.bimserver.models.ifc2x3tc1.*;
 import org.eclipse.draw2d.Panel;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.swt.graphics.Font;
-import visualization.VisFactory2D;
+import visMapping.mapping.Mapper;
+import visMapping.mapping.PropertyMap;
+import visMapping.mapping.TargetCreationException;
+import visMapping.visualization.VisFactory2D;
 import visualization.draw2d.Draw2dBuilder;
 import visualization.draw2d.Draw2dFactory;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public class Ifc2DMapper {
 
     private Mapper<EMFIfcParser.EngineEObject> mapper;
 
-    Ifc2DMapper(Font font, File input) throws IOException {
+    Ifc2DMapper(Font font, InputStream input) throws IOException {
         EMFIfcAccessor data = new EMFIfcAccessor();
         data.setInput(input);
         Draw2dFactory visFactory = new Draw2dFactory(font);
@@ -131,7 +132,7 @@ public class Ifc2DMapper {
 
     public static void main(String[] args) throws IOException, TargetCreationException {
         Draw2DViewer viewer = new Draw2DViewer();
-        File input = new File(args.length >= 1 ? args[0] : viewer.getClass().getResource("/carport2.ifc").getPath());
+        InputStream input = args.length >= 1 ? new FileInputStream(args[0]) : viewer.getClass().getResourceAsStream("/carport2.ifc");
         Ifc2DMapper ifc2DMapper = new Ifc2DMapper(viewer.getDefaultFont(), input);
         ifc2DMapper.config();
         viewer.showContent(ifc2DMapper.execute());

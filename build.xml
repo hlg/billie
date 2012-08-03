@@ -90,18 +90,19 @@
 
     </target>
 
-    <target name="publish.module" depends="compile.module">
-        <ivy:publish artifactspattern="${module.output.dir}/jar/[artifact]-[version]-SNAPSHOT.[ext]" resolver="local"
-                     pubrevision="${specversion}" pubdate="${now}" status="integration" forcedeliver="true"/>
+    <target name="publish.module" depends="dist.module">
+        <ivy:publish artifactspattern="${module.output.dir}/jar/[artifact]-[revision]-SNAPSHOT.[ext]" resolver="local"
+                 overwrite="true"  pubrevision="${specversion}" pubdate="now" status="integration" forcedeliver="true"/>
     </target>
 
     <target name="publish.all">
         <antcall target="publish.module"><param name="module.name" value="visMapping"/></antcall>
-        <antcall target="publish.module"><param name="module.name" value="visMapping.configurations"/></antcall>
         <antcall target="publish.module"><param name="module.name" value="data.bimserver"/></antcall>
         <antcall target="publish.module"><param name="module.name" value="data.multimodel"/></antcall>
         <antcall target="publish.module"><param name="module.name" value="visualization.draw2d"/></antcall>
+        <antcall target="publish.module"><param name="module.name" value="runtime.java3d"/></antcall>
         <antcall target="publish.module"><param name="module.name" value="visualization.java3d"/></antcall>
+        <antcall target="publish.module"><param name="module.name" value="visMapping.configurations"/></antcall>
     </target>
 
     <target name="clean.module" description="cleanup module">

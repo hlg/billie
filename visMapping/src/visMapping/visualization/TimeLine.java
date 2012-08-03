@@ -1,4 +1,4 @@
-package visualization;
+package visMapping.visualization;
 
 import java.util.*;
 

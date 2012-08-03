@@ -1,4 +1,4 @@
-package mapping;
+package visMapping.mapping;
 
 public class TargetCreationException extends Exception {
     public TargetCreationException(String s) {

@@ -1,11 +1,10 @@
 package data.multimodel;
 
-import data.IndexedDataAccessor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import visMapping.data.IndexedDataAccessor;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -25,6 +24,10 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
     }
 
     public EMFGenericAccessor(InputStream inputStream) throws IOException {
+        setData(inputStream);
+    }
+
+    private void setData(InputStream inputStream) throws IOException {
         URI fakeUri = URI.createURI("inputstream://fake.resource.uri");
         Resource resource = createResource(fakeUri);
         resource.load(inputStream, null);
@@ -37,8 +40,8 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
         return data.eAllContents();
     }
 
-    public void setInput(File file) throws IOException {
-        setData(URI.createFileURI(file.getPath()));
+    public void setInput(InputStream inputStream) throws IOException {
+        setData(inputStream);
     }
 
     protected void setData(URI fileUri) throws IOException {
@@ -53,8 +56,8 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
 
     protected abstract Map<String, T> collectLookUp();
 
-    public void setInput(File file, String namespace) throws IOException {
-        setInput(file);
+    public void setInput(InputStream inputStream, String namespace) throws IOException {
+        setInput(inputStream);
         this.namespace = namespace + "::";
     }
 

@@ -1,7 +1,7 @@
-package data;
+package visMapping.data;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public abstract class DataAccessor<E> implements Iterable<E> {
         }
     }
 
-    public abstract void setInput(File file) throws IOException;
+    public abstract void setInput(InputStream inputStream) throws IOException;
 
     public static abstract class Folding<A, B> {
         private B result;

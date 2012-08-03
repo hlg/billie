@@ -18,7 +18,6 @@ import javax.vecmath.Point3d;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.Reader;
 import java.util.HashSet;
 import java.util.Set;
@@ -66,6 +65,18 @@ public class SimpleViewer extends JFrame {
         showScene();
     }
 
+    public void run(String path) throws FileNotFoundException {
+        setupViews();
+        loadFile(path);
+        setupBehaviour();
+        showScene();
+    }
+
+    private void loadFile(String path) throws FileNotFoundException {
+        universe.showLoader();
+        scene = loader.load(path);
+    }
+
     protected void loadFile(Reader input) throws FileNotFoundException {
         universe.showLoader();
         scene = loader.load(input);
@@ -77,12 +88,12 @@ public class SimpleViewer extends JFrame {
         universe.showScene(scene.getSceneGroup());
     }
 
-    public Reader chooseFile(String directoryPath) throws FileNotFoundException {
+    public File chooseFile(String directoryPath, final String fileType) throws FileNotFoundException {
         JFileChooser chooser = (directoryPath != null) ? new JFileChooser(directoryPath) : new JFileChooser();
         FileFilter filter = new FileFilter() {
             @Override
             public boolean accept(File f) {
-                return f.getName().endsWith("ifc");
+                return f.isDirectory() || f.getName().endsWith(fileType);
             }
 
             @Override
@@ -92,8 +103,9 @@ public class SimpleViewer extends JFrame {
         };
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
-        return (returnVal == JFileChooser.APPROVE_OPTION) ? new FileReader(chooser.getSelectedFile()) : null;
+        return (returnVal == JFileChooser.APPROVE_OPTION) ? chooser.getSelectedFile() : null;
     }
+
 
     protected void setupBehaviour() {
         BranchGroup mainScene = scene.getSceneGroup();
@@ -117,6 +129,4 @@ public class SimpleViewer extends JFrame {
         pickMouseBehavior.setSchedulingBounds(new BoundingSphere(new Point3d(0, 0, 0), Double.MAX_VALUE));
         mainScene.addChild(pickMouseBehavior);
     }
-
-
 }

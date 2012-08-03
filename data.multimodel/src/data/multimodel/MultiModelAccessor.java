@@ -3,8 +3,6 @@ package data.multimodel;
 import cib.lib.gaeb.model.gaeb.TgItem;
 import cib.mf.qto.model.AnsatzType;
 import cib.mf.schedule.model.activity.Activity;
-import data.DataAccessor;
-import data.IndexedDataAccessor;
 import data.bimserver.EMFIfcAccessor;
 import data.bimserver.EMFIfcParser;
 import de.mefisto.model.container.*;
@@ -13,9 +11,13 @@ import de.mefisto.model.linkModel.LinkModel;
 import de.mefisto.model.linkModel.LinkObject;
 import de.mefisto.model.parser.ContainerModelParser;
 import de.mefisto.model.parser.LinkModelParser;
+import visMapping.data.DataAccessor;
+import visMapping.data.IndexedDataAccessor;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -29,7 +31,11 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
 
     public MultiModelAccessor(URL resource) {
         // TODO unzip, move to setInput
-        mmFolder = new File(resource.getFile());
+        this(new File(resource.getFile()));
+    }
+
+    public MultiModelAccessor(File folder){
+        mmFolder = folder;
         File mmFile = new File(mmFolder, "MultiModel.xml");
         assert mmFolder.exists() && mmFile.exists();
         Container container = ContainerModelParser.readContainerModel(mmFile).getContainer();
@@ -107,7 +113,7 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
                 for (ContainerFile contentFile : content.getFiles()) {
                     try {
                         File file = new File(mmFolder, new URL(contentFile.getValue()).getFile());
-                        accessor.setInput(file, contentFile.getNamespace()); // TODO: accessor should join multiple sucessively set/added files
+                        accessor.setInput(new FileInputStream(file), contentFile.getNamespace()); // TODO: accessor should join multiple sucessively set/added files
                     } catch (MalformedURLException e) {
                         e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     } catch (IOException e) {
@@ -125,7 +131,7 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
         return groupedElements.iterator();
     }
 
-    public void setInput(File file) {
+    public void setInput(InputStream inputStream) {
 
     }
 

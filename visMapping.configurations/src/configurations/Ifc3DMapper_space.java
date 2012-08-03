@@ -2,17 +2,18 @@ package configurations;
 
 import data.bimserver.EMFIfcAccessor;
 import data.bimserver.EMFIfcParser;
-import mapping.PropertyMap;
-import mapping.TargetCreationException;
-import org.bimserver.models.ifc2x3.IfcSpace;
-import visualization.VisFactory3D;
+import org.bimserver.models.ifc2x3tc1.IfcSpace;
+import org.bimserver.plugins.PluginException;
+import runtime.java3d.viewers.SimpleViewer;
+import visMapping.mapping.PropertyMap;
+import visMapping.mapping.TargetCreationException;
+import visMapping.visualization.VisFactory3D;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 
-public class Ifc3DMapper_space extends MappedBimserverViewer<EMFIfcParser.EngineEObject> {
+public class Ifc3DMapper_space extends MappedJ3DLoader<EMFIfcParser.EngineEObject> {
 
     protected void configMapping() {
         mapper.addMapping(new PropertyMap<EMFIfcParser.EngineEObject, VisFactory3D.Polyeder>() {
@@ -36,34 +37,16 @@ public class Ifc3DMapper_space extends MappedBimserverViewer<EMFIfcParser.Engine
     }
 
     @Override
-    void loadFile() throws IOException {
-        File ifc = chooseFile(".");
+    void load(InputStream inputStream) throws IOException {
         EMFIfcAccessor data = new EMFIfcAccessor();
-        data.setInput(ifc);
+        data.setInput(inputStream);
         this.data = data;
     }
 
-    public static void main(String[] args) throws TargetCreationException, IOException {
-        Ifc3DMapper_space ifcViewer = new Ifc3DMapper_space();
-        ifcViewer.run();
-    }
-
-    private File chooseFile(String directoryPath) {
-        JFileChooser chooser = (directoryPath != null) ? new JFileChooser(directoryPath) : new JFileChooser();
-        FileFilter filter = new FileFilter() {
-            @Override
-            public boolean accept(File f) {
-                return f.isDirectory() || f.getName().endsWith("ifc");
-            }
-
-            @Override
-            public String getDescription() {
-                return "IFC files";
-            }
-        };
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(this);
-        return (returnVal == JFileChooser.APPROVE_OPTION) ? chooser.getSelectedFile() : null;
+    public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
+        Ifc3DMapper_space loader = new Ifc3DMapper_space();
+        SimpleViewer viewer = new SimpleViewer(loader);
+        viewer.run(new FileReader(viewer.chooseFile(".","ifc")));
     }
 
 }

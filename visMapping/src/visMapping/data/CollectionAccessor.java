@@ -1,7 +1,7 @@
-package data;
+package visMapping.data;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -17,7 +17,7 @@ public class CollectionAccessor<T> extends DataAccessor<T> {
         return data.iterator();
     }
 
-    public void setInput(File file) throws IOException {
+    public void setInput(InputStream inputStream) throws IOException {
         throw new UnsupportedOperationException();
         // TODO inheritance : FileAccessor, IndexableAccessor ...
     }

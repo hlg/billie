@@ -1,10 +1,9 @@
 package data.bimserver;
 
-import data.IndexedDataAccessor;
+import visMapping.data.IndexedDataAccessor;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,12 +20,12 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObje
         parser = new EMFIfcParser();
     }
 
-    public void setInput(File file) throws IOException {
-        parser.setInput(new FileInputStream(file));
+    public void setInput(InputStream inputStream) throws IOException {
+        parser.setInput(inputStream);
     }
 
-    public void setInput(File file, String namespace) throws IOException {
-        setInput(file);
+    public void setInput(InputStream inputStream, String namespace) throws IOException {
+        setInput(inputStream);
         this.namespace = namespace + "::";
     }
 

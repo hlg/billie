@@ -1,9 +1,9 @@
-package mapping;
+package visMapping.mapping;
 
-import data.DataAccessor;
-import visualization.TimeLine;
-import visualization.VisBuilder;
-import visualization.VisFactory2D;
+import visMapping.data.DataAccessor;
+import visMapping.visualization.TimeLine;
+import visMapping.visualization.VisBuilder;
+import visMapping.visualization.VisFactory2D;
 
 import java.util.*;
 

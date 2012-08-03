@@ -1,7 +1,7 @@
-package mapping;
+package visMapping.mapping;
 
-import visualization.TimeLine;
-import visualization.VisFactory2D;
+import visMapping.visualization.TimeLine;
+import visMapping.visualization.VisFactory2D;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

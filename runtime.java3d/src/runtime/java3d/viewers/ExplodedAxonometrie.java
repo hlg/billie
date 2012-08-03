@@ -15,7 +15,9 @@ import javax.media.j3d.Canvas3D;
 import javax.media.j3d.PolygonAttributes;
 import javax.media.j3d.ViewSpecificGroup;
 import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.Reader;
 import java.util.Collection;
 
@@ -85,8 +87,8 @@ public class ExplodedAxonometrie extends SimpleViewer {
         noCullingAppearance.setPolygonAttributes(pgonAttrs);
         loader.setDefaultAppearance(noCullingAppearance);
         ExplodedAxonometrie ifcViewer = new ExplodedAxonometrie(loader);
-        Reader file = ifcViewer.chooseFile(args.length > 0 ? args[0] : null);
-        ifcViewer.run(file);
+        File file = ifcViewer.chooseFile(args.length > 0 ? args[0] : null, "ifc");
+        ifcViewer.run(new FileReader(file));
     }
 
     private void setStoreys(Collection<ViewSpecificGroup> storeyNodes) {

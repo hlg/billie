@@ -4,10 +4,10 @@ import cib.lib.gaeb.model.gaeb.TgAward;
 import cib.lib.gaeb.model.gaeb.TgGAEB;
 import cib.lib.gaeb.model.gaeb.TgGAEBInfo;
 import cib.lib.gaeb.model.gaeb.TgPrjInfo;
-import data.DataAccessor;
 import org.eclipse.emf.ecore.EObject;
 import org.junit.Assert;
 import org.junit.Test;
+import visMapping.data.DataAccessor;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

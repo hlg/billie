@@ -2,16 +2,16 @@ package configurations;
 
 import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
 import cib.lib.gaeb.model.gaeb.TgItem;
-import data.DataAccessor;
 import data.multimodel.EMFGaebAccessor;
-import mapping.Mapper;
-import mapping.PropertyMap;
-import mapping.TargetCreationException;
 import org.eclipse.draw2d.Panel;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.*;
-import visualization.VisFactory2D;
+import org.eclipse.swt.graphics.Font;
+import visMapping.data.DataAccessor;
+import visMapping.mapping.Mapper;
+import visMapping.mapping.PropertyMap;
+import visMapping.mapping.TargetCreationException;
+import visMapping.visualization.VisFactory2D;
 import visualization.draw2d.Draw2dBuilder;
 import visualization.draw2d.Draw2dFactory;
 

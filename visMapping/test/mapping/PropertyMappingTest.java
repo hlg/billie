@@ -2,6 +2,8 @@ package mapping;
 
 import org.junit.Before;
 import org.junit.Test;
+import visMapping.mapping.PropertyMap;
+import visMapping.mapping.TargetCreationException;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;

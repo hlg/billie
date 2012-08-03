@@ -1,11 +1,14 @@
 package mapping;
 
-import data.CollectionAccessor;
-import data.DataAccessor;
 import org.junit.Before;
 import org.junit.Test;
-import visualization.VisBuilder;
-import visualization.VisFactory2D;
+import visMapping.data.CollectionAccessor;
+import visMapping.data.DataAccessor;
+import visMapping.mapping.Mapper;
+import visMapping.mapping.PropertyMap;
+import visMapping.mapping.TargetCreationException;
+import visMapping.visualization.VisBuilder;
+import visMapping.visualization.VisFactory2D;
 
 import java.util.ArrayList;
 import java.util.Arrays;

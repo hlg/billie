@@ -1,28 +1,28 @@
 package configurations;
 
-import cib.lib.bimserverViewer.colorTime.TypeAppearance;
 import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
 import cib.lib.gaeb.model.gaeb.TgItem;
 import cib.mf.schedule.model.activity.Activity;
 import cib.mf.schedule.model.activity.Timestamp;
-import data.DataAccessor;
 import data.bimserver.EMFIfcParser;
 import data.multimodel.MultiModelAccessor;
-import mapping.PropertyMap;
-import mapping.TargetCreationException;
-import visualization.TimeLine;
+import org.bimserver.plugins.PluginException;
+import runtime.java3d.colorTime.TypeAppearance;
+import runtime.java3d.viewers.SimpleViewer;
+import visMapping.data.DataAccessor;
+import visMapping.mapping.PropertyMap;
+import visMapping.mapping.TargetCreationException;
+import visMapping.visualization.TimeLine;
 
 import javax.media.j3d.*;
 import javax.vecmath.Color3f;
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.*;
 
-import static visualization.VisFactory3D.Polyeder;
+import static visMapping.visualization.VisFactory3D.Polyeder;
 
-public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> {
+public class Ifc4DMapper extends MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> {
     @Override
     void configMapping() {
         mapper.addStatistics("earliestStart", new DataAccessor.Folding<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
@@ -146,17 +146,20 @@ public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.Linked
         TreeMap<Integer, Event> result = new TreeMap<Integer, Event>();
         for (MultiModelAccessor.ResolvedLink link : links) {
             assert link.getScheduleObjects().size() == 1;
-            Activity theActivity = link.getScheduleObjects().values().iterator().next();
-            String descr = (link.getLinkedBoQ().size()>= 1)
-                    ? descriptionFromSpec(link.getLinkedBoQ().values().iterator().next())
-                    : theActivity.getDesc();
-            ActivityType type = ActivityType.fromDescription(descr);
-            int start = (int) (getTimeInMillis(theActivity.getActivityData().getStart()) - earliestStart);
-            if (!result.containsKey(start)) result.put(start, new Event());
-            result.get(start).starting.add(type);
-            int end = (int) (getTimeInMillis(theActivity.getActivityData().getEnd()) - earliestStart);
-            if (!result.containsKey(end)) result.put(end, new Event());
-            result.get(end).ending.add(type);
+            Collection<Activity> activities = link.getScheduleObjects().values();
+            if (!activities.isEmpty()) {
+                Activity theActivity = activities.iterator().next();
+                String descr = (link.getLinkedBoQ().size() >= 1)
+                        ? descriptionFromSpec(link.getLinkedBoQ().values().iterator().next())
+                        : theActivity.getDesc();
+                ActivityType type = ActivityType.fromDescription(descr);
+                int start = (int) (getTimeInMillis(theActivity.getActivityData().getStart()) - earliestStart);
+                if (!result.containsKey(start)) result.put(start, new Event());
+                result.get(start).starting.add(type);
+                int end = (int) (getTimeInMillis(theActivity.getActivityData().getEnd()) - earliestStart);
+                if (!result.containsKey(end)) result.put(end, new Event());
+                result.get(end).ending.add(type);
+            }
         }
         HashSet<ActivityType> current = new HashSet<ActivityType>();
         for (int time : result.keySet()) {
@@ -178,18 +181,14 @@ public class Ifc4DMapper extends MappedBimserverViewer<MultiModelAccessor.Linked
     }
 
     @Override
-    void loadFile() {
-        try {
-            URL resource1 = new File("D:\\Nutzer\\helga\\div\\mefisto-container\\MMC_Sim_4D_vonALI").toURI().toURL();
-            URL resource2 =  this.getClass().getResource("/carport");
-            data = new MultiModelAccessor<EMFIfcParser.EngineEObject>(resource1);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+    void load(InputStream inputStream) throws IOException {
+        data = new MultiModelAccessor<EMFIfcParser.EngineEObject>(unzip(inputStream));  // TODO constructor which reads from zip directly (w/o unzipping)
     }
 
-    public static void main(String[] args) throws TargetCreationException, IOException {
-        new Ifc4DMapper().run();
+    public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
+        Ifc4DMapper ifc4DMapper = new Ifc4DMapper();
+        SimpleViewer viewer = new SimpleViewer(ifc4DMapper);
+        viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath()); // or carport.zip
     }
 
     private enum ActivityType {

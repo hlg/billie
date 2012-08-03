@@ -1,6 +1,6 @@
-package visualization;
+package visMapping.visualization;
 
-import mapping.PropertyMap;
+import visMapping.mapping.PropertyMap;
 
 import java.util.HashMap;
 

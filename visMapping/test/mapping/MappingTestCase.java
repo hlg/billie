@@ -1,6 +1,6 @@
 package mapping;
 
-import visualization.VisFactory2D;
+import visMapping.visualization.VisFactory2D;
 
 public class MappingTestCase {
     DataElement d;
