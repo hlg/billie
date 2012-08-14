@@ -6,8 +6,8 @@
     <dependency org="bundle" name="cib.mf.qto.model" rev="1.0.+"/>
     <dependency org="bundle" name="cib.mf.schedule.model" rev="1.0.+"/>
     <dependency org="bundle" name="org.eclipse.emf.common" rev="2.7.+"/>
-    <dependency org="de.tu-dresden.bau.cib" name="visMapping" rev="latest.integration "/>
-    <dependency org="de.tu-dresden.bau.cib" name="data.bimserver" rev="latest.integration "/>
+    <dependency org="de.tu-dresden.bau.cib" name="visMapping" rev="latest.integration" changing="true"/>
+    <dependency org="de.tu-dresden.bau.cib" name="data.bimserver" rev="latest.integration" changing="true"/>
     <dependency org="junit" name="junit" rev="4.10"/>
 </dependencies>
 </ivy-module>

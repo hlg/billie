@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Multi model parser
+Bundle-SymbolicName: de.tu-dresden.bau.cib.data.multimodel
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: CIB TU Dresden
+Require-Bundle: de.tu-dresden.bau.cib.visMapping,
+ de.tu-dresden.bau.cib.data.bimserver,
+ de.mefisto.container,
+ cib.lib.gaeb.model,
+ cib.mf.qto.model,
+ cib.mf.schedule.model,
+ org.eclipse.emf.common
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Export-Package: data.multimodel

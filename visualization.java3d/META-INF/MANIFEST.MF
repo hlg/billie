@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CIB visualization framework java3d implementation
+Bundle-SymbolicName: de.tu-dresden.bau.cib.visualization.java3d
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: CIB TU Dresden
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Export-Package: visualization.java3d
+Require-Bundle: cib.lib.j3d,
+ de.tu-dresden.bau.cib.visMapping,
+ de.tu-dresden.bau.cib.runtime.java3d

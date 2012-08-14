@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="common" default="dist.module" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+
+    <property file="build.properties" />
+    <property name="skip.tests" value="true"/>
+
+    <!-- Compiler options -->
+    <patternset id="ignored.files">
+        <!-- add as needed -->
+    </patternset>
+
+    <patternset id="library.patterns">
+        <include name="*.jar"/>
+    </patternset>
+
+    <patternset id="compiler.resources">
+        <!-- add as needed -->
+    </patternset>
+
+    <dirname property="basedir" file="${ant.file}"/>
+
+    <target name="config.module">
+        <ivy:settings file="D:/Nutzer/helga/ivysettings.xml"/>
+        <dirname property="module.basedir" file="${ant.file}"/>
+        <property name="module.basedir" value="${basedir}"/>
+        <property name="module.output.dir" value="${module.basedir}/output/production"/>
+        <path id="sourcepath">
+            <dirset dir="${module.basedir}">
+                <include name="src"/>
+                <include name="test"/>
+            </dirset>
+        </path>
+    </target>
+
+    <target name="resolve.module" depends="config.module">
+        <echo message="resolving: ${module.basedir}"/>
+        <ivy:resolve file="${module.basedir}/ivy.xml"/>
+        <ivy:cachepath pathid="ivy.classpath"/>
+        <ivy:retrieve type="jar,bundle" />
+        <!-- ivy:report / -->
+    </target>
+
+    <target name="compile.module" depends="resolve.module">
+        <mkdir dir="${module.output.dir}/classes"/>
+        <javac destdir="${module.output.dir}/classes" debug="on" srcdir="${module.basedir}/src">
+            <classpath>
+                <path refid="ivy.classpath"/>
+            </classpath>
+            <patternset refid="ignored.files"/>
+        </javac>
+
+        <copy todir="${module.output.dir}/classes">
+            <fileset dir="${module.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+            <fileset dir="${module.basedir}/test">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+    <target name="dist.module" depends="compile.module">
+        <tstamp/>
+        <property name="implversion" value="${DSTAMP}${TSTAMP}"/>
+
+        <pathconvert property="mf.classpath" pathsep=" ">
+            <path refid="ivy.classpath"/>
+            <flattenmapper/>
+        </pathconvert>
+
+        <mkdir dir="${module.output.dir}/jar"/>
+        <jar jarfile="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar"
+             basedir="${module.output.dir}/classes"
+             manifest="${module.basedir}/META-INF/MANIFEST.MF">
+            <manifest>
+                <attribute name="Specification-Vendor" value="TU Dresden, CIB"/>
+                <attribute name="Specification-Version" value="${version}"/>
+                <attribute name="Implementation-Vendor" value="TU Dresden, CIB"/>
+                <attribute name="Implementation-Version" value="${implversion}"/>
+                <attribute name="Bundle-Version"  value="${version}" />
+                <attribute name="Class-Path" value="${mf.classpath}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="publish.module" depends="dist.module">
+        <ivy:publish artifactspattern="${module.output.dir}/jar/[artifact]-[revision]-SNAPSHOT.[ext]" resolver="local"
+                 overwrite="true"  pubrevision="${version}" pubdate="now" status="integration" forcedeliver="true"/>
+    </target>
+
+    <target name="clean.module" description="cleanup module">
+        <delete dir="${module.output.dir}"/>
+        <delete dir="${module.testoutput.dir}"/>
+    </target>
+
+</project>

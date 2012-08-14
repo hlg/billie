@@ -166,6 +166,10 @@ public class BimserverJava3dLoader implements Loader {
         this.defaultPickability = defaultPickability;
     }
 
+    public void dispose() throws IfcEngineException {
+        parser.dispose();
+    }
+
     class ParsingErrorException extends com.sun.j3d.loaders.ParsingErrorException {
         // shouldn't this be a checked exception ???
         ParsingErrorException(String msg, Throwable cause) {
