@@ -2,11 +2,11 @@ package runtime.java3d.loaders;
 
 import org.apache.commons.io.IOUtils;
 import org.bimserver.plugins.PluginException;
+import org.bimserver.plugins.PluginManager;
 import org.bimserver.plugins.deserializers.DeserializeException;
 import org.bimserver.plugins.deserializers.EmfDeserializer;
 import org.bimserver.plugins.ifcengine.*;
 import org.bimserver.plugins.serializers.IfcModelInterface;
-import runtime.java3d.util.PluginManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -18,9 +18,7 @@ public class TNOIFCParser {
     private IfcEngineModel ifcEngineModel;
     private EmfDeserializer deserializer;
 
-    public TNOIFCParser() throws PluginException, IOException {
-        PluginManager pluginManager = new PluginManager();
-        pluginManager.loadPluginsFromCurrentClassloader();
+    public TNOIFCParser(PluginManager pluginManager) throws PluginException, IOException {
         pluginManager.initAllLoadedPlugins();
         ifcEnginePlugin = pluginManager.requireIfcEngine();
         deserializer = pluginManager.getFirstDeserializer("ifc", true).createDeserializer();

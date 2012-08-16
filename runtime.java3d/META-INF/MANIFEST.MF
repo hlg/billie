@@ -3,10 +3,11 @@ Bundle-ManifestVersion: 2
 Bundle-Name: CIB Java3D viewer
 Bundle-SymbolicName: de.tu-dresden.bau.cib.runtime.java3d
 Bundle-Vendor: CIB TU Dresden
-Require-Bundle: org.bimserver.ifc-emf,
+Require-Bundle: org.bimserver.ifcemf,
  org.eclipse.emf.common,
  cib.lib.j3d,
- cib.lib.apache.commons
+ cib.lib.apache.commons,
+ slf4j.api
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .
 Bundle-Localization: plugin

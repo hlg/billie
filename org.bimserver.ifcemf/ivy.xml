@@ -1,0 +1,10 @@
+<ivy-module version="2.0">
+<info organisation="de.tu-dresden.bau.cib" module="data.bimserver"/>
+<dependencies>
+    <dependency org="org.bimserver" name="bimserver-ifcplugins" rev="1.1.0"/>
+    <dependency org="org.bimserver" name="bimserver-buildingSMARTLibrary" rev="1.1.0"/>
+    <dependency org="org.bimserver" name="bimserver-ifcengine" rev="1.1.0"/>
+    <dependency org="bundle" name="org.eclipse.equinox.common" rev="3.6+" />
+    <dependency org="bundle" name="org.eclipse.osgi" rev="3.7+" />
+</dependencies>
+</ivy-module>

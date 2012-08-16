@@ -10,6 +10,7 @@ import org.bimserver.plugins.PluginException;
 import runtime.java3d.UniverseBuilder;
 import runtime.java3d.colorTime.TypeAppearance;
 import runtime.java3d.loaders.BimserverSpatialHierarchyLoader;
+import runtime.java3d.util.PluginManager;
 import runtime.java3d.views.OrbitalView;
 
 import javax.media.j3d.*;
@@ -60,7 +61,7 @@ public class SpatialHierarchyViewer extends SimpleViewer {
     }
 
     public static void main(String[] args) throws Exception {
-        BimserverSpatialHierarchyLoader loader = new BimserverSpatialHierarchyLoader();
+        BimserverSpatialHierarchyLoader loader = new BimserverSpatialHierarchyLoader(new PluginManager());
         loader.setDefaultAppearance(TypeAppearance.OFF.getAppearance());
         loader.setDefaultPickability(false);
         SpatialHierarchyViewer ifcViewer = new SpatialHierarchyViewer(loader);

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: IFC parser based on TNO Bimserver
 Bundle-SymbolicName: de.tu-dresden.bau.cib.data.bimserver
 Bundle-Vendor: CIB TU Dresden
-Require-Bundle: org.bimserver.ifc-emf,
+Require-Bundle: org.bimserver.ifcemf,
  de.tu-dresden.bau.cib.visMapping
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .

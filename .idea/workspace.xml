@@ -14,40 +14,29 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="67383783-7bb9-40b6-888a-163f1fcce815" name="Default" comment="ivy dependencies, module restructuring finished&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data.bimserver/src/data/bimserver/EMFIfcParser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data.bimserver/test/carport2.ifc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data.bimserver/test/data/bimserver/EMFIfcParserTests.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data.multimodel/test/data/multimodel/EMFAccessorTests.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data.multimodel/test/data/multimodel/MultiModelAccessorTests.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visualization.draw2d/src/visualization/draw2d/Draw2dBuilder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visualization.draw2d/src/visualization/draw2d/Draw2dFactory.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/visualization.java3d/src/visualization/java3d/Java3dFactory.java" />
+    <list default="true" id="67383783-7bb9-40b6-888a-163f1fcce815" name="Default" comment="j3d viewer module&#10;">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/org.bimserver.ifcemf/build.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/org.bimserver.ifcemf/build.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/org.bimserver.ifcemf/ivy.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/org.bimserver.ifcemf/org.bimserver.ifcemf.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/org.bimserver.ifcemf/src/org/bimserver/ifcemf/OsgiPluginManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ant.xml" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data.bimserver/data.bimserver.iml" afterPath="$PROJECT_DIR$/data.bimserver/data.bimserver.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data.bimserver/ivy.xml" afterPath="$PROJECT_DIR$/data.bimserver/ivy.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visMapping.configurations/src/configurations/GaebBarchartMapper.java" afterPath="$PROJECT_DIR$/visMapping.configurations/src/configurations/GaebBarchartMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc3DMapper.java" afterPath="$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc3DMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc3DMapper_space.java" afterPath="$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc3DMapper_space.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc4DMapper.java" afterPath="$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc4DMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visMapping.configurations/src/configurations/IfcGaebColored3DMapper.java" afterPath="$PROJECT_DIR$/visMapping.configurations/src/configurations/IfcGaebColored3DMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visMapping.configurations/src/configurations/MappedBimserverViewer.java" afterPath="$PROJECT_DIR$/visMapping.configurations/src/configurations/MappedBimserverViewer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visMapping.iml" afterPath="$PROJECT_DIR$/visMapping.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visMapping/src/data/DataAccessor.java" afterPath="$PROJECT_DIR$/visMapping/src/data/DataAccessor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visMapping/test/mapping/MapperTest.java" afterPath="$PROJECT_DIR$/visMapping/test/mapping/MapperTest.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\data.bimserver\src\data\EMFIfcAccessor.java" afterPath="$PROJECT_DIR$/data.bimserver/src/data/bimserver/EMFIfcAccessor.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\data.bimserver\src\data\EMFIfcParser.java" afterPath="$PROJECT_DIR$/data.bimserver/src/data/bimserver/EMFIfcParser.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\data.multimodel\src\data\EMFGaebAccessor.java" afterPath="$PROJECT_DIR$/data.multimodel/src/data/multimodel/EMFGaebAccessor.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\data.multimodel\src\data\EMFGenericAccessor.java" afterPath="$PROJECT_DIR$/data.multimodel/src/data/multimodel/EMFGenericAccessor.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\data.multimodel\src\data\EMFQtoAccessor.java" afterPath="$PROJECT_DIR$/data.multimodel/src/data/multimodel/EMFQtoAccessor.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\data.multimodel\src\data\EMFScheduleAccessor.java" afterPath="$PROJECT_DIR$/data.multimodel/src/data/multimodel/EMFScheduleAccessor.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\data.multimodel\src\data\MultiModelAccessor.java" afterPath="$PROJECT_DIR$/data.multimodel/src/data/multimodel/MultiModelAccessor.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\data.multimodel\test\data\EMFAccessorTests.java" afterPath="$PROJECT_DIR$/data.multimodel/test/data/multimodel/EMFAccessorTests.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\data.multimodel\test\data\MultiModelAccessorTests.java" afterPath="$PROJECT_DIR$/data.multimodel/test/data/multimodel/MultiModelAccessorTests.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\visualization.draw2d\src\visualization\Draw2dBuilder.java" afterPath="$PROJECT_DIR$/visualization.draw2d/src/visualization/draw2d/Draw2dBuilder.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\visualization.draw2d\src\visualization\Draw2dFactory.java" afterPath="$PROJECT_DIR$/visualization.draw2d/src/visualization/draw2d/Draw2dFactory.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\visualization.java3d\src\visualization\Java3dBuilder.java" afterPath="$PROJECT_DIR$/visualization.java3d/src/visualization/java3d/Java3dBuilder.java" />
-      <change type="MOVED" beforePath="D:\Nutzer\helga\dev\visMapping.git\visualization.java3d\src\visualization\Java3dFactory.java" afterPath="$PROJECT_DIR$/visualization.java3d/src/visualization/java3d/Java3dFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data.bimserver/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/data.bimserver/META-INF/MANIFEST.MF" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data.bimserver/build.xml" afterPath="$PROJECT_DIR$/data.bimserver/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data.bimserver/src/data/bimserver/EMFIfcParser.java" afterPath="$PROJECT_DIR$/data.bimserver/src/data/bimserver/EMFIfcParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime.java3d/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/runtime.java3d/META-INF/MANIFEST.MF" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/loaders/BimserverJava3dLoader.java" afterPath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/loaders/BimserverJava3dLoader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/loaders/BimserverSpatialHierarchyLoader.java" afterPath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/loaders/BimserverSpatialHierarchyLoader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/loaders/BimserverStoreyLoader.java" afterPath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/loaders/BimserverStoreyLoader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/loaders/TNOIFCParser.java" afterPath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/loaders/TNOIFCParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/testApps/IfcViewer.java" afterPath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/testApps/IfcViewer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/util/PluginManager.java" afterPath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/util/PluginManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/viewers/AnimatedViewer.java" afterPath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/viewers/AnimatedViewer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/viewers/ExplodedAxonometrie.java" afterPath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/viewers/ExplodedAxonometrie.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/viewers/SpatialHierarchyViewer.java" afterPath="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/viewers/SpatialHierarchyViewer.java" />
     </list>
     <ignored path="visMapping.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -83,7 +72,7 @@
       </breakpoint>
     </exception_breakpoints>
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/data.bimserver/src/data/bimserver/EMFIfcParser.java" line="107" class="data.EMFIfcParser" package="data">
+      <breakpoint url="file://$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc2DMapper.java" line="72" class="configurations.Ifc2DMapper$2" package="configurations">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -96,7 +85,85 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/data.bimserver/src/data/bimserver/EMFIfcParser.java" line="81" class="data.EMFIfcParser" package="data">
+      <breakpoint url="file://$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc2DMapper.java" line="77" class="configurations.Ifc2DMapper$2" package="configurations">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc2DMapper.java" line="95" class="configurations.Ifc2DMapper$2" package="configurations">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/visMapping.configurations/src/configurations/MappedJ3DLoader.java" line="38" class="configurations.MappedJ3DLoader" package="configurations">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc4DMapper.java" line="149" class="configurations.Ifc4DMapper" package="configurations">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc4DMapper.java" line="94" class="configurations.Ifc4DMapper$7" package="configurations">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/data.multimodel/src/data/multimodel/MultiModelAccessor.java" line="56" class="data.multimodel.MultiModelAccessor" package="data.multimodel">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/util/PluginManager.java" line="33" class="runtime.java3d.util.PluginManager" package="runtime.java3d.util">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -167,97 +234,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="EMFIfcParserTests.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/data.bimserver/test/data/bimserver/EMFIfcParserTests.java">
+      <file leaf-file-name="ivy.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/org.bimserver.ifcemf/ivy.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="61" selection-start="226" selection-end="226" vertical-scroll-proportion="-0.37027708">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MultiModelAccessorTests.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data.multimodel/test/data/multimodel/MultiModelAccessorTests.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="16" selection-start="468" selection-end="468" vertical-scroll-proportion="0.0">
+            <state line="6" column="60" selection-start="414" selection-end="414" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Draw2dBuilder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/visualization.draw2d/src/visualization/draw2d/Draw2dBuilder.java">
+      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/org.bimserver.ifcemf/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="13" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0">
+            <state line="18" column="17" selection-start="854" selection-end="854" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Draw2dFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/visualization.draw2d/src/visualization/draw2d/Draw2dFactory.java">
+      <file leaf-file-name="build.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="13" selection-start="350" selection-end="350" vertical-scroll-proportion="0.0">
+            <state line="35" column="14" selection-start="1093" selection-end="1093" vertical-scroll-proportion="0.69917744">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Java3dBuilder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/visualization.java3d/src/visualization/java3d/Java3dBuilder.java">
+      <file leaf-file-name="MANIFEST.MF" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data.bimserver/META-INF/MANIFEST.MF">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="13" selection-start="226" selection-end="226" vertical-scroll-proportion="0.0">
+            <state line="5" column="33" selection-start="216" selection-end="216" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Java3dFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/visualization.java3d/src/visualization/java3d/Java3dFactory.java">
+      <file leaf-file-name="MANIFEST.MF" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data.bimserver/output/production/osgi/org.bimserver.ifc-emf_0.1/META-INF/MANIFEST.MF">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="42" selection-start="466" selection-end="466" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EMFIfcAccessor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data.bimserver/src/data/bimserver/EMFIfcAccessor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="16" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MapperTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/visMapping/test/mapping/MapperTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="29" selection-start="862" selection-end="862" vertical-scroll-proportion="0.0">
+            <state line="18" column="35" selection-start="1081" selection-end="1081" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IndexedDataAccessor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/visMapping/src/data/IndexedDataAccessor.java">
+      <file leaf-file-name="MANIFEST.MF" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime.java3d/META-INF/MANIFEST.MF">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="58" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0">
+            <state line="5" column="33" selection-start="200" selection-end="200" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataAccessor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/visMapping/src/data/DataAccessor.java">
+      <file leaf-file-name="common.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="0" selection-start="575" selection-end="575" vertical-scroll-proportion="0.0">
+            <state line="1" column="64" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/org.bimserver.ifcemf/build.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="11" selection-start="11" selection-end="11" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OsgiPluginManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/org.bimserver.ifcemf/src/org/bimserver/ifcemf/OsgiPluginManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IfcViewer.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime.java3d/output/production/classes/runtime/java3d/testApps/IfcViewer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="47" selection-start="454" selection-end="454" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -267,32 +328,38 @@
   </component>
   <component name="FindManager">
     <FindUsagesManager>
-      <setting name="OPEN_NEW_TAB" value="false" />
+      <setting name="OPEN_NEW_TAB" value="true" />
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="LINE_SEPARATORS_CONVERSION" value="ASK" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="expandStates">
+      <map>
+        <entry key="visMapping" value="true" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/data.multimodel/test/data/EMFAccessorTests.java" />
-        <option value="$PROJECT_DIR$/visualization.draw2d/ivy.xml" />
-        <option value="$PROJECT_DIR$/visMapping.configurations/src/configurations/GaebBarchartMapper.java" />
-        <option value="$PROJECT_DIR$/visMapping.configurations/src/configurations/IfcGaebColored3DMapper.java" />
-        <option value="$PROJECT_DIR$/visMapping.configurations/src/configurations/Ifc4DMapper.java" />
-        <option value="$PROJECT_DIR$/visMapping.configurations/ivy.xml" />
-        <option value="$PROJECT_DIR$/visMapping.configurations/src/configurations/MappedBimserverViewer.java" />
-        <option value="$PROJECT_DIR$/data.bimserver/src/data/EMFIfcAccessor.java" />
-        <option value="$PROJECT_DIR$/data.bimserver/ivy.xml" />
-        <option value="$PROJECT_DIR$/data.bimserver/test/data/EMFIfcAccessorTests.java" />
-        <option value="$PROJECT_DIR$/data.bimserver/src/data/EMFIfcParser.java" />
-        <option value="$PROJECT_DIR$/data.bimserver/test/data/EMFIfcParserTests.java" />
-        <option value="$PROJECT_DIR$/visualization.java3d/src/visualization/java3d/Java3dFactory.java" />
-        <option value="$PROJECT_DIR$/data.bimserver/src/data/bimserver/EMFIfcAccessor.java" />
-        <option value="$PROJECT_DIR$/visMapping/src/data/DataAccessor.java" />
-        <option value="$PROJECT_DIR$/visMapping/test/mapping/MapperTest.java" />
+        <option value="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/loaders/TNOIFCParser.java" />
+        <option value="$PROJECT_DIR$/runtime.java3d/output/production/classes/runtime/java3d/testApps/IfcViewer.java" />
+        <option value="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/testApps/IfcViewer.java" />
+        <option value="$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/viewers/AnimatedViewer.java" />
+        <option value="$PROJECT_DIR$/org.bimserver.ifc-emf/build.properties" />
+        <option value="$PROJECT_DIR$/org.bimserver.ifc-emf/ivy.xml" />
+        <option value="$PROJECT_DIR$/org.bimserver.ifc-emf/src/PluginManager.java" />
+        <option value="$PROJECT_DIR$/org.bimserver.ifc-emf/src/OsgiPluginManager.java" />
+        <option value="$PROJECT_DIR$/org.bimserver.ifc-emf/src/org/bimserver/ifc_emf/OsgiPluginManager.java" />
+        <option value="$PROJECT_DIR$/org.bimserver.ifc-emf/src/org/bimserver/ifcemf/OsgiPluginManager.java" />
+        <option value="$PROJECT_DIR$/data.bimserver/META-INF/MANIFEST.MF" />
+        <option value="$PROJECT_DIR$/runtime.java3d/META-INF/MANIFEST.MF" />
+        <option value="$PROJECT_DIR$/data.bimserver/build.xml" />
+        <option value="$PROJECT_DIR$/org.bimserver.ifc-emf/build.xml" />
+        <option value="$PROJECT_DIR$/org.bimserver.ifcemf/build.xml" />
+        <option value="$PROJECT_DIR$/build.xml" />
       </list>
     </option>
   </component>
@@ -301,10 +368,10 @@
     <option name="LAST_EDITED_TAB_NAME" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="1" />
+    <option name="y" value="1" />
+    <option name="width" value="1918" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -350,13 +417,23 @@
       <showMembers />
       <showModules />
       <showLibraryContents />
-      <hideEmptyPackages />
+      <hideEmptyPackages ProjectPane="false" />
       <abbreviatePackageNames />
       <autoscrollToSource />
       <autoscrollFromSource />
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="visMapping" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -374,228 +451,6 @@
               <option name="myItemId" value="visMapping" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visualization.java3d" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visualization.draw2d" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping.configurations" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data.multimodel" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data.multimodel" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="multimodel" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data.multimodel" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data.multimodel" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data.bimserver" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data.bimserver" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data.bimserver" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bimserver" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data.bimserver" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bimserver" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visMapping" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -605,24 +460,24 @@
   <component name="PropertiesComponent">
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="277" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="274" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="project.structure.proportion" value="0.14844227" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="296" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="293" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="GenerateAntBuildDialog.generateSingleFile" value="true" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="292" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="289" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="297" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="967" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="972" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="292" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="291" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="294" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="958" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="963" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="289" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="288" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="vismapping" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="false" />
@@ -639,7 +494,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="options.lastSelected" value="org.clarent.ivyidea.intellij.ui.IvyIdeaProjectSettingsComponent" />
+    <property name="options.lastSelected" value="project.propVCSSupport.VCSs.Git" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="project.structure.side.proportion" value="0.11655009" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -652,11 +507,11 @@
       <recent name="configurations" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Nutzer\helga\dev\visMapping.git\data.bimserver\test" />
-      <recent name="D:\Nutzer\helga\dev\visMapping.git\visMapping.configurations" />
+      <recent name="D:\Nutzer\helga\dev\visMapping.git\org.bimserver.ifc-emf" />
       <recent name="D:\Nutzer\helga\dev\visMapping.git\visualization.java3d" />
       <recent name="D:\Nutzer\helga\dev\visMapping.git\visualization.draw2d" />
-      <recent name="D:\Nutzer\helga\dev\visMapping.git\data.multimodel" />
+      <recent name="D:\Nutzer\helga\dev\visMapping.git\visMapping.configurations" />
+      <recent name="D:\Nutzer\helga\dev\visMapping.git\visMapping" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="data" />
@@ -666,18 +521,66 @@
       <recent name="visualization" />
       <recent name="" />
     </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="data.multimodel" />
-      <recent name="data.bimserver" />
-      <recent name="visualization.draw2d" />
-      <recent name="visualization.java3d" />
-      <recent name="data" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Nutzer\helga\dev\visMapping.git\visMapping" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.bimserver.ifc_emf" />
+      <recent name="runtime.java3d" />
+      <recent name="data.multimodel" />
+      <recent name="data.bimserver" />
+      <recent name="visualization.draw2d" />
+    </key>
   </component>
-  <component name="RunManager" selected="JUnit.data.bimserver in data.bimserver">
+  <component name="RunManager" selected="Application.IfcViewer">
+    <configuration default="false" name="Ifc4DMapper" type="Application" factoryName="Application" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" />
+      <option name="MAIN_CLASS_NAME" value="configurations.Ifc4DMapper" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="visMapping.configurations" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="All in data.bimserver" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" />
+      <module name="data.bimserver" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs>
+        <env name="JAVALIBS" value="$JAVALIBS$" />
+      </envs>
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="false" name="All in data.multimodel" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false" />
       <module name="data.multimodel" />
@@ -728,78 +631,26 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="mapping in visMapping" type="JUnit" factoryName="JUnit" temporary="true">
+    <configuration default="false" name="IfcViewer" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" />
-      <module name="visMapping" />
+      <option name="MAIN_CLASS_NAME" value="runtime.java3d.testApps.IfcViewer" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="PACKAGE_NAME" value="mapping" />
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs>
-        <env name="JAVALIBS" value="$JAVALIBS$" />
-      </envs>
-      <patterns />
+      <module name="runtime.java3d" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="data.multimodel in data.multimodel" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" />
-      <module name="data.multimodel" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="PACKAGE_NAME" value="data.multimodel" />
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs>
-        <env name="JAVALIBS" value="$JAVALIBS$" />
-      </envs>
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="data.bimserver in data.bimserver" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" />
-      <module name="data.bimserver" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="PACKAGE_NAME" value="data.bimserver" />
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs>
-        <env name="JAVALIBS" value="$JAVALIBS$" />
-      </envs>
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -885,57 +736,23 @@
         <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
-    <configuration default="false" name="Ifc4DMapper" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" />
-      <option name="MAIN_CLASS_NAME" value="configurations.Ifc4DMapper" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="visMapping" />
-      <envs>
-        <env name="JAVALIBS" value="D:\Nutzer\helga\dev\javalibs" />
-      </envs>
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <list size="6">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.Ifc4DMapper" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.All in data.multimodel" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.All in visMapping" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.mapping in visMapping" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.data.multimodel in data.multimodel" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.data.bimserver in data.bimserver" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.All in data.bimserver" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.All in data.multimodel" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.All in visMapping" />
+      <item index="4" class="java.lang.String" itemvalue="Application.IfcViewer" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <changelist date="1331300769345">
-      <option name="PATH" value="\\anton\nutzerdaten$\helga\.IdeaIC11\config\shelf\animation_.patch" />
-      <option name="DESCRIPTION" value="animation " />
-    </changelist>
-    <recycled_changelist date="1331300656929">
-      <option name="PATH" value="\\anton\nutzerdaten$\helga\.IdeaIC11\config\shelf\multimodel_accessor.patch" />
-      <option name="DESCRIPTION" value="multimodel accessor" />
-    </recycled_changelist>
-    <recycled_changelist date="1331300679504">
-      <option name="PATH" value="\\anton\nutzerdaten$\helga\.IdeaIC11\config\shelf\multimodel_accessor1.patch" />
-      <option name="DESCRIPTION" value="multimodel accessor" />
-    </recycled_changelist>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SliceManager">
+    <option name="analysisUIOptions">
+      <AnalysisUIOptions />
+    </option>
   </component>
   <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
     <option name="USER" value="" />
@@ -952,6 +769,7 @@
     <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
     <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
     <configuration useDefault="true">C:\Users\helga\AppData\Roaming\Subversion</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
   </component>
@@ -969,7 +787,27 @@
       <created>1336146973443</created>
       <updated>1336146973443</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="tests deeper package structure">
+      <created>1336150841118</created>
+      <updated>1336150841118</updated>
+    </task>
+    <task id="LOCAL-00004" summary="dependencies: bimserver and qto model latest versions&#10;">
+      <created>1343413271547</created>
+      <updated>1343413271547</updated>
+    </task>
+    <task id="LOCAL-00005" summary="j3d viewer module&#10;">
+      <created>1343413754899</created>
+      <updated>1343413754899</updated>
+    </task>
+    <task id="LOCAL-00006" summary="- j3d viewer (runtime) integration&#10;- restructure: mapped loader&#10;- fixed build">
+      <created>1344022541119</created>
+      <updated>1344022541119</updated>
+    </task>
+    <task id="LOCAL-00007" summary="automated build:&#10;* ant scripts&#10;* eclipse plugin manifests&#10;* ivy: changing integration version&#10;">
+      <created>1344962838490</created>
+      <updated>1344962838490</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -993,33 +831,33 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="1" y="1" width="1918" height="1038" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2109375" sideWeight="0.49786323" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.546875" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3828125" sideWeight="0.49786323" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.59709823" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.53571427" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4029018" sideWeight="0.3792735" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12567422" sideWeight="0.56605923" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45785877" sideWeight="0.7761752" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3783482" sideWeight="0.3386752" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="IvyIDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4029018" sideWeight="0.61698717" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44874716" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="IvyIDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5432802" sideWeight="0.61698717" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="simpleUML" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5899736" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42410713" sideWeight="0.4636752" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.49786323" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19764957" sideWeight="0.49776787" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.50223213" sideWeight="0.678953" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32470334" sideWeight="0.56605923" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37471527" sideWeight="0.65758544" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24839744" sideWeight="0.64285713" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24839744" sideWeight="0.6886161" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.59794986" sideWeight="0.491453" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43394077" sideWeight="0.44658118" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1061,7 +899,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="ivy dependencies, module restructuring finished&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="automated build:&#10;* ant scripts&#10;* eclipse plugin manifests&#10;* ivy: changing integration version&#10;" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1081,6 +919,11 @@
     <MESSAGE value="file selection dialog, 3D mapping experiments&#10;" />
     <MESSAGE value="small refactoring (no more file size required), dependencies, build&#10;" />
     <MESSAGE value="ivy dependencies, module restructuring finished&#10;" />
+    <MESSAGE value="tests deeper package structure" />
+    <MESSAGE value="dependencies: bimserver and qto model latest versions&#10;" />
+    <MESSAGE value="j3d viewer module&#10;" />
+    <MESSAGE value="- j3d viewer (runtime) integration&#10;- restructure: mapped loader&#10;- fixed build" />
+    <MESSAGE value="automated build:&#10;* ant scripts&#10;* eclipse plugin manifests&#10;* ivy: changing integration version&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1092,15 +935,107 @@
       <antCommandLine value="" />
       <runInBackground value="false" />
       <targetFilters>
-        <filter targetName="compile.tests" isVisible="true" />
-        <filter targetName="clean" isVisible="true" />
-        <filter targetName="compile" isVisible="true" />
-        <filter targetName="compile.production" isVisible="true" />
         <filter targetName="build" isVisible="true" />
-        <filter targetName="resolve" isVisible="false" />
-        <filter targetName="resolve.data.multimodel" isVisible="false" />
-        <filter targetName="dist" isVisible="false" />
+        <filter targetName="resolve.module" isVisible="true" />
+        <filter targetName="config.module" isVisible="true" />
+        <filter targetName="dist.module" isVisible="true" />
+        <filter targetName="compile.module" isVisible="true" />
+        <filter targetName="clean.module" isVisible="true" />
+        <filter targetName="publish.module" isVisible="false" />
+        <filter targetName="clean.all" isVisible="false" />
+        <filter targetName="publish.all" isVisible="false" />
       </targetFilters>
+      <treeView value="true" />
+      <verbose value="true" />
+      <viewClosedWhenNoErrors value="false" />
+      <expanded value="false" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/data.bimserver/build.xml">
+      <antCommandLine value="" />
+      <runInBackground value="true" />
+      <targetFilters>
+        <filter targetName="build.dep.module" isVisible="false" />
+        <filter targetName="resolve" isVisible="false" />
+        <filter targetName="compile" isVisible="false" />
+        <filter targetName="config" isVisible="false" />
+      </targetFilters>
+      <treeView value="true" />
+      <verbose value="true" />
+      <viewClosedWhenNoErrors value="false" />
+      <expanded value="false" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/data.multimodel/build.xml">
+      <antCommandLine value="" />
+      <runInBackground value="true" />
+      <targetFilters>
+        <filter targetName="clean.module" isVisible="true" />
+        <filter targetName="resolve.module" isVisible="false" />
+        <filter targetName="config.module" isVisible="false" />
+        <filter targetName="publish.module" isVisible="false" />
+        <filter targetName="dist.module" isVisible="false" />
+        <filter targetName="compile.module" isVisible="false" />
+      </targetFilters>
+      <treeView value="true" />
+      <verbose value="true" />
+      <viewClosedWhenNoErrors value="false" />
+      <expanded value="false" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/runtime.java3d/build.xml">
+      <antCommandLine value="" />
+      <runInBackground value="true" />
+      <targetFilters>
+        <filter targetName="clean.module" isVisible="true" />
+        <filter targetName="resolve.module" isVisible="false" />
+        <filter targetName="config.module" isVisible="false" />
+        <filter targetName="publish.module" isVisible="false" />
+        <filter targetName="dist.module" isVisible="false" />
+        <filter targetName="compile.module" isVisible="false" />
+      </targetFilters>
+      <treeView value="true" />
+      <verbose value="true" />
+      <viewClosedWhenNoErrors value="false" />
+      <expanded value="true" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/visMapping/build.xml">
+      <antCommandLine value="" />
+      <runInBackground value="true" />
+      <targetFilters />
+      <treeView value="true" />
+      <verbose value="true" />
+      <viewClosedWhenNoErrors value="false" />
+      <expanded value="false" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/visMapping.configurations/build.xml">
+      <antCommandLine value="" />
+      <runInBackground value="true" />
+      <targetFilters />
+      <treeView value="true" />
+      <verbose value="true" />
+      <viewClosedWhenNoErrors value="false" />
+      <expanded value="false" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/visualization.draw2d/build.xml">
+      <antCommandLine value="" />
+      <runInBackground value="true" />
+      <targetFilters />
+      <treeView value="true" />
+      <verbose value="true" />
+      <viewClosedWhenNoErrors value="false" />
+      <expanded value="false" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/visualization.java3d/build.xml">
+      <antCommandLine value="" />
+      <runInBackground value="true" />
+      <targetFilters />
+      <treeView value="true" />
+      <verbose value="true" />
+      <viewClosedWhenNoErrors value="false" />
+      <expanded value="false" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/org.bimserver.ifcemf/build.xml">
+      <antCommandLine value="" />
+      <runInBackground value="true" />
+      <targetFilters />
       <treeView value="true" />
       <verbose value="true" />
       <viewClosedWhenNoErrors value="false" />
@@ -1108,136 +1043,87 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/../../.ivy2/cache/junit/junit/sources/junit-4.10-sources.jar!/org/junit/internal/runners/model/ReflectiveCallable.java">
+    <entry file="file://$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/util/PluginManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0">
+        <state line="34" column="23" selection-start="1512" selection-end="1512" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/loaders/TNOIFCParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="30" selection-start="705" selection-end="705" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/testApps/IfcViewer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="47" selection-start="406" selection-end="406" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime.java3d/src/runtime/java3d/viewers/AnimatedViewer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="102" column="47" selection-start="3453" selection-end="3453" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data.bimserver/ivy.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="47" selection-start="611" selection-end="611" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data.bimserver/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="86" selection-start="359" selection-end="359" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bimserver.ifcemf/ivy.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="60" selection-start="414" selection-end="414" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bimserver.ifcemf/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="17" selection-start="854" selection-end="854" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../../.ivy2/cache/junit/junit/sources/junit-4.10-sources.jar!/org/junit/runners/ParentRunner.java">
+    <entry file="file://$PROJECT_DIR$/data.bimserver/META-INF/MANIFEST.MF">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="270" column="0" selection-start="9346" selection-end="9346" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#8148#8242#0" expanded="false" />
-            <element signature="e#8237#8238#0" expanded="false" />
-            <element signature="e#8373#8476#0" expanded="false" />
-            <element signature="e#8470#8471#0" expanded="false" />
-            <element signature="e#11060#11071#0" expanded="false" />
-            <element signature="e#11569#11701#0" expanded="false" />
-            <element signature="e#11696#11697#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="5" column="33" selection-start="216" selection-end="216" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../../.ivy2/cache/junit/junit/sources/junit-4.10-sources.jar!/org/junit/runners/BlockJUnit4ClassRunner.java">
+    <entry file="file://$PROJECT_DIR$/data.bimserver/output/production/osgi/org.bimserver.ifc-emf_0.1/META-INF/MANIFEST.MF">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="0" selection-start="2519" selection-end="2519" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#8222#8359#0" expanded="false" />
-            <element signature="e#8353#8354#0" expanded="false" />
-            <element signature="e#11653#11685#0" expanded="false" />
-            <element signature="e#12003#12035#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="18" column="35" selection-start="1081" selection-end="1081" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data.multimodel/test/carport/Object/ifc/carport2.ifc">
+    <entry file="file://$PROJECT_DIR$/runtime.java3d/META-INF/MANIFEST.MF">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="5" column="33" selection-start="200" selection-end="200" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="64" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bimserver.ifcemf/build.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="11" selection-start="11" selection-end="11" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bimserver.ifcemf/src/org/bimserver/ifcemf/OsgiPluginManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime.java3d/output/production/classes/runtime/java3d/testApps/IfcViewer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="47" selection-start="454" selection-end="454" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="14" selection-start="1093" selection-end="1093" vertical-scroll-proportion="0.69917744">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data.bimserver/src/data/bimserver/EMFIfcParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="147" column="24" selection-start="5302" selection-end="5302" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../../.ivy2/cache/junit/junit/sources/junit-4.10-sources.jar!/org/junit/Assert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="525" column="0" selection-start="16923" selection-end="16923" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/visualization.draw2d/src/visualization/draw2d/Draw2dBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="13" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/visualization.draw2d/src/visualization/draw2d/Draw2dFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="13" selection-start="350" selection-end="350" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/visualization.java3d/src/visualization/java3d/Java3dBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="226" selection-end="226" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/visualization.java3d/src/visualization/java3d/Java3dFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="42" selection-start="466" selection-end="466" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/visMapping/src/data/IndexedDataAccessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="58" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/visMapping/src/data/DataAccessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="575" selection-end="575" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data.bimserver/src/data/bimserver/EMFIfcAccessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="16" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/visMapping/test/mapping/MapperTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="29" selection-start="862" selection-end="862" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data.multimodel/test/data/multimodel/MultiModelAccessorTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="16" selection-start="468" selection-end="468" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data.bimserver/test/data/bimserver/EMFIfcParserTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="61" selection-start="226" selection-end="226" vertical-scroll-proportion="-0.37027708">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1274,7 +1160,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.116550125" />
+                <option value="0.11655009" />
               </list>
             </option>
           </splitter-proportions>
@@ -1294,7 +1180,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>data.bimserver</last-edited>
+          <last-edited>org.bimserver.ifc-emf</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1323,7 +1209,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.116550125" />
+                <option value="0.11655009" />
               </list>
             </option>
           </splitter-proportions>

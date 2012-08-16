@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/data.bimserver/data.bimserver.iml" filepath="$PROJECT_DIR$/data.bimserver/data.bimserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/data.multimodel/data.multimodel.iml" filepath="$PROJECT_DIR$/data.multimodel/data.multimodel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bimserver.ifcemf/org.bimserver.ifcemf.iml" filepath="$PROJECT_DIR$/org.bimserver.ifcemf/org.bimserver.ifcemf.iml" />
       <module fileurl="file://$PROJECT_DIR$/runtime.java3d/runtime.java3d.iml" filepath="$PROJECT_DIR$/runtime.java3d/runtime.java3d.iml" />
       <module fileurl="file://$PROJECT_DIR$/visMapping.iml" filepath="$PROJECT_DIR$/visMapping.iml" />
       <module fileurl="file://$PROJECT_DIR$/visMapping.configurations/visMapping.configurations.iml" filepath="$PROJECT_DIR$/visMapping.configurations/visMapping.configurations.iml" />

@@ -4,6 +4,7 @@ import org.bimserver.models.ifc2x3tc1.IfcObjectDefinition;
 import org.bimserver.models.ifc2x3tc1.IfcProduct;
 import org.bimserver.models.ifc2x3tc1.IfcProject;
 import org.bimserver.models.ifc2x3tc1.IfcRelDecomposes;
+import org.bimserver.plugins.PluginManager;
 
 import javax.media.j3d.BranchGroup;
 
@@ -11,6 +12,10 @@ import javax.media.j3d.BranchGroup;
  * @author helga
  */
 public class BimserverSpatialHierarchyLoader extends BimserverJava3dLoader {
+
+    public BimserverSpatialHierarchyLoader(PluginManager pm) {
+        super(pm);
+    }
 
     @Override
     protected BranchGroup createSceneGraph() {

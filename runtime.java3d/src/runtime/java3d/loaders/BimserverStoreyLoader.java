@@ -1,6 +1,7 @@
 package runtime.java3d.loaders;
 
 import org.bimserver.models.ifc2x3tc1.*;
+import org.bimserver.plugins.PluginManager;
 import org.eclipse.emf.common.util.EList;
 
 import javax.media.j3d.BranchGroup;
@@ -15,6 +16,10 @@ import java.util.*;
 public class BimserverStoreyLoader extends BimserverJava3dLoader implements MultiLoader {
     private Map<IfcBuildingStorey, Set<IfcBuildingElement>> storyMap = new HashMap<IfcBuildingStorey, Set<IfcBuildingElement>>();
     private Map<IfcBuildingStorey, ViewSpecificGroup> storeyNodes = new HashMap<IfcBuildingStorey, ViewSpecificGroup>();
+
+    public BimserverStoreyLoader(PluginManager pm) {
+        super(pm);
+    }
 
     public Map<IfcBuildingStorey, Set<IfcBuildingElement>> getStoryMap() {
         return storyMap;

@@ -7,6 +7,7 @@ import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.IfcBuildingElement;
 import org.bimserver.models.ifc2x3tc1.IfcProduct;
 import org.bimserver.plugins.PluginException;
+import org.bimserver.plugins.PluginManager;
 import org.bimserver.plugins.deserializers.DeserializeException;
 import org.bimserver.plugins.ifcengine.*;
 import org.bimserver.plugins.serializers.IfcModelInterface;
@@ -33,9 +34,9 @@ public class BimserverJava3dLoader implements Loader {
     private IfcEngineGeometry geometry;
     private IfcEngineModel ifcEngineModel;
 
-    public BimserverJava3dLoader() {
+    public BimserverJava3dLoader(PluginManager pm) {
         try {
-            parser = new TNOIFCParser();
+            parser = new TNOIFCParser(pm);
         } catch (PluginException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (IOException e) {

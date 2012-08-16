@@ -7,6 +7,7 @@ import runtime.java3d.UniverseBuilder;
 import runtime.java3d.colorTime.TypeAppearance;
 import runtime.java3d.loaders.BimserverStoreyLoader;
 import runtime.java3d.loaders.MultiLoader;
+import runtime.java3d.util.PluginManager;
 import runtime.java3d.views.AxonometricView;
 import runtime.java3d.views.OrbitalView;
 
@@ -80,7 +81,7 @@ public class ExplodedAxonometrie extends SimpleViewer {
     }
 
     public static void main(String[] args) throws FileNotFoundException, PluginException {
-        BimserverStoreyLoader loader = new BimserverStoreyLoader();
+        BimserverStoreyLoader loader = new BimserverStoreyLoader(new PluginManager());
         Appearance noCullingAppearance = TypeAppearance.IfcWallImpl.createAppearance();
         PolygonAttributes pgonAttrs = new PolygonAttributes();
         pgonAttrs.setCullFace(PolygonAttributes.CULL_NONE);

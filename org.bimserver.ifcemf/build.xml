@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="data.bimserver" xmlns:ivy="antlib:org.apache.ivy.ant" default="build.dep.module">
+<project name="org.bimserver.ifcemf" xmlns:ivy="antlib:org.apache.ivy.ant" default="build.dep.module">
     <property file="build.properties"/>
     <import file="../common.xml"/>
 
-    <target name="build.dep.module" depends="config.module">
+    <target name="build.dep.module" depends="common.compile.module">
         <property name="bundle.dir" value="${module.output.dir}/osgi/org.bimserver.ifcemf_0.1"/>
         <deltree dir="lib"/>
         <deltree dir="${bundle.dir}"/>
@@ -16,6 +16,8 @@
         </ivy:resolve>
         <ivy:retrieve/>
 
+        <copydir src="${module.output.dir}/classes" dest="${bundle.dir}" />
+
         <mkdir dir="${bundle.dir}/META-INF"/>
         <pathconvert property="bundle.classpath" pathsep=",">
             <fileset dir="lib"/>
@@ -24,10 +26,11 @@
         <manifest file="${bundle.dir}/META-INF/MANIFEST.MF">
             <attribute name="Manifest-Version" value="1.0"/>
             <attribute name="Bundle-ManifestVersion" value="2"/>
-            <attribute name="Bundle-Classpath" value="${bundle.classpath}"/>
+            <attribute name="Bundle-Classpath" value="${bundle.classpath},."/>
             <attribute name="Require-Bundle"
-                       value="org.eclipse.emf.ecore,org.eclipse.emf.common,org.eclipse.emf.ecore.xmi"/>
-            <attribute name="Bundle-SymbolicName" value="org.bimserver.ifc-emf"/>
+                       value="org.eclipse.emf.ecore,org.eclipse.emf.common,org.eclipse.emf.ecore.xmi,
+                       org.eclipse.equinox.common,org.eclipse.osgi"/>
+            <attribute name="Bundle-SymbolicName" value="org.bimserver.ifcemf"/>
             <attribute name="Bundle-Version" value="0.1"/>
             <attribute name="Export-Package"
                        value="org.bimserver.ifc.step.deserializer,
@@ -35,6 +38,7 @@
  org.bimserver.ifc.xml.deserializer,
  org.bimserver.ifc.xml.serializer,
  nl.tue.buildingsmart.emf,
+ org.bimserver.emf,
  org.bimserver.ifcengine,
  org.bimserver.ifcengine.jvm,
  org.bimserver.models.ifc2x3tc1,

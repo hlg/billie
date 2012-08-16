@@ -12,6 +12,12 @@
     </filelist>
 
 
+    <target name="dist.all">
+        <subant target="dist.module">
+            <filelist refid="projects" />
+        </subant>
+    </target>
+
     <target name="publish.all">
         <subant target="publish.module">
             <filelist refid="projects" />

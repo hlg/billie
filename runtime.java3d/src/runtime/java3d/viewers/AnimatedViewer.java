@@ -8,6 +8,7 @@ import runtime.java3d.UniverseBuilder;
 import runtime.java3d.colorTime.TimeLine;
 import runtime.java3d.colorTime.TypeAppearance;
 import runtime.java3d.loaders.BimserverJava3dLoader;
+import runtime.java3d.util.PluginManager;
 import runtime.java3d.views.OrbitalView;
 
 import javax.media.j3d.*;
@@ -98,7 +99,9 @@ public class AnimatedViewer extends SimpleViewer {
     }
 
     public static void main(String[] args) throws FileNotFoundException, PluginException {
-        AnimatedViewer ifcViewer = new AnimatedViewer(new BimserverJava3dLoader());
+        PluginManager pm = new PluginManager();
+        pm.loadPluginsFromCurrentClassloader();
+        AnimatedViewer ifcViewer = new AnimatedViewer(new BimserverJava3dLoader(pm));
         File file = ifcViewer.chooseFile(args.length > 0 ? args[0] : null, "ifc");
         ifcViewer.run(new FileReader(file));
     }
