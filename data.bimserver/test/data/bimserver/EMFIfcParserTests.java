@@ -19,12 +19,12 @@ public class EMFIfcParserTests {
 
     @Test
     public void testLazyLoad() {
-        parser.setInput(getClass().getResourceAsStream("/carport2.ifc"));
+        parser.setInput(getClass().getResourceAsStream("/resources/carport2.ifc"));
         assertNull(parser.data);
         assertNull(parser.getIterator());
         parser.lazyLoad();
         assertNotNull(parser.data);
-        assertEquals(145, parser.data.getSize());  // size was 99x - why has it changed?
+        assertEquals(993, parser.data.getSize());  // size was 99x - why has it changed?
         assertEquals(5, parser.data.getAllWithSubTypes(IfcBuildingElement.class).size());
         Iterator<EMFIfcParser.EngineEObject> iterator = parser.getIterator();
         assertNotNull(iterator);

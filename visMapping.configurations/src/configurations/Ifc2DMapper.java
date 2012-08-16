@@ -132,7 +132,7 @@ public class Ifc2DMapper {
 
     public static void main(String[] args) throws IOException, TargetCreationException {
         Draw2DViewer viewer = new Draw2DViewer();
-        InputStream input = args.length >= 1 ? new FileInputStream(args[0]) : viewer.getClass().getResourceAsStream("/carport2.ifc");
+        InputStream input = args.length >= 1 ? new FileInputStream(args[0]) : viewer.getClass().getResourceAsStream("/resources/carport2.ifc");
         Ifc2DMapper ifc2DMapper = new Ifc2DMapper(viewer.getDefaultFont(), input);
         ifc2DMapper.config();
         viewer.showContent(ifc2DMapper.execute());

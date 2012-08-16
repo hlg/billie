@@ -23,7 +23,7 @@ public class GaebBarchartMapper {
     private Mapper<EObject> mapper;
 
     GaebBarchartMapper(Font font) throws IOException {
-        EMFGaebAccessor data = new EMFGaebAccessor(this.getClass().getResourceAsStream("/LV1.X81"));
+        EMFGaebAccessor data = new EMFGaebAccessor(this.getClass().getResourceAsStream("/resources/LV1.X81"));
         Draw2dFactory visFactory = new Draw2dFactory(font);
         Draw2dBuilder visBuilder = new Draw2dBuilder();
         mapper = new Mapper<EObject>(data, visFactory, visBuilder);
