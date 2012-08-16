@@ -19,13 +19,13 @@
                     <i k="unitrate" t="xs:boolean" v="1"/>
                     <i k="unitrate_breakdown" t="xs:boolean" v="1"/>
                 </contentOptions>
-                <file namespace="BoQ1">file:///BoQ/gaebxml/LV 1.X81</file>
+                <file namespace="BoQ1">file:///BoQ/gaebxml/LV_1.X81</file>
             </content>
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
                type="QTO" id="M2">
             <content format="xml" id="1" formatVersion="1.0">
-                <file namespace="QTO1">file:///QTO/xml/1 LV VA.xml</file>
+                <file namespace="QTO1">file:///QTO/xml/1_LV_VA.xml</file>
             </content>
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
@@ -41,13 +41,13 @@
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
                type="Activity" id="M4">
             <content format="xml" id="1" formatVersion="1.0">
-                <file namespace="Activity1">file:///Activity/xml/Vorgangsmodell 1.xml</file>
+                <file namespace="Activity1">file:///Activity/xml/Vorgangsmodell_1.xml</file>
             </content>
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
                type="Activity" id="M7">
             <content format="xml" id="1" formatVersion="1.0">
-                <file namespace="Activity2">file:///Activity/xml/Vorgangsmodell 2.xml</file>
+                <file namespace="Activity2">file:///Activity/xml/Vorgangsmodell_2.xml</file>
             </content>
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"

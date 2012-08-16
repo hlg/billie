@@ -18,7 +18,7 @@
         <ivy:settings file="D:/Nutzer/helga/ivysettings.xml"/>
         <dirname property="module.basedir" file="${ant.file}"/>
         <property name="module.basedir" value="${basedir}"/>
-        <property name="module.output.dir" value="${module.basedir}/output/production"/>
+        <property name="module.output.dir" value="${module.basedir}/out"/>
 
         <path id="sourcepath">
             <dirset dir="${module.basedir}">
