@@ -11,6 +11,11 @@
         <file name="visMapping.configurations/build.xml"/>
     </filelist>
 
+    <target name="test.all">
+        <subant target="test.module">
+            <filelist refid="projects" />
+        </subant>
+    </target>
 
     <target name="dist.all">
         <subant target="dist.module">
