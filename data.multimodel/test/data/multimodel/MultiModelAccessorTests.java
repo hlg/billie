@@ -15,7 +15,6 @@ import static junit.framework.Assert.assertEquals;
 public class MultiModelAccessorTests {
     @Test
     public void testAccess() {
-        // test trigger
         URL testResource = this.getClass().getResource("/carport");
         MultiModelAccessor<EMFIfcParser.EngineEObject> mma = new MultiModelAccessor<EMFIfcParser.EngineEObject>(testResource);
         int linkSize = 0;
