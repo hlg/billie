@@ -86,7 +86,7 @@
         </jar>
     </target>
 
-    <target name="test.module" depends="compile.module, compile.tests">
+    <target name="test.module" depends="compile.module, compile.tests" if="tests.available">
         <echo message="testing ${module.basedir}/test" />
         <junit printsummary="yes" haltonfailure="yes">
             <classpath>
