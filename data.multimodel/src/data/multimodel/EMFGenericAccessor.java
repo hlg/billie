@@ -8,6 +8,7 @@ import visMapping.data.IndexedDataAccessor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
     protected String namespace = "";
 
     EMFGenericAccessor(URL url) throws IOException {
-        setData(URI.createFileURI(url.getPath()));
+        setData(URI.createFileURI(URLDecoder.decode(url.getPath(),"UTF-8")));
     }
 
     protected EMFGenericAccessor() {
