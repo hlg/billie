@@ -88,14 +88,15 @@
 
     <target name="test.module" depends="compile.module, compile.tests" if="tests.available">
         <echo message="testing ${module.basedir}/test" />
+        <mkdir dir="${module.output.dir}/testreports" />
         <junit printsummary="yes" haltonfailure="yes">
             <classpath>
                 <path refid="ivy.classpath"/>
                 <pathelement path="${module.output.dir}/classes" />
                 <pathelement path="${module.output.dir}/testclasses" />
             </classpath>
-            <formatter type="plain"/>
-            <batchtest fork="yes">
+            <formatter type="xml"/>
+            <batchtest fork="yes" todir="${module.output.dir}/testreports">
                 <fileset dir="${module.basedir}/test">
                     <include name="**/*Test.java" />
                     <type type="file"/>
