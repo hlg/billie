@@ -98,7 +98,7 @@
             <formatter type="xml"/>
             <batchtest fork="yes" todir="${module.output.dir}/testreports">
                 <fileset dir="${module.basedir}/test">
-                    <include name="**/*Test.java" />
+                    <include name="**/*Tests.java" />
                     <type type="file"/>
                 </fileset>
             </batchtest>
