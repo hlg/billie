@@ -14,13 +14,12 @@ import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.LinkedObject<K>> {
 
@@ -132,8 +131,30 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
     }
 
     public void setInput(InputStream inputStream) {
-
+        // TODO: read from zip
     }
+
+    protected File unzip(InputStream inputStream) throws IOException {
+        File tmp = new File("tmpunzip");
+        tmp.mkdir();
+        tmp.deleteOnExit();
+        ZipInputStream zip = new ZipInputStream(inputStream);
+        ZipEntry zipEntry = zip.getNextEntry();
+        while (zipEntry != null) {
+            File file = new File(tmp, zipEntry.getName());
+            if (zipEntry.isDirectory()) file.mkdirs();
+            else {
+                file.getParentFile().mkdirs();
+                FileOutputStream fos = new FileOutputStream(file);
+                for (int c = zip.read(); c != -1; c = zip.read()) {
+                    fos.write(c);
+                }
+            }
+            zipEntry = zip.getNextEntry();
+        }
+        return tmp;
+    }
+
 
     enum AccessModes {
         PURE,

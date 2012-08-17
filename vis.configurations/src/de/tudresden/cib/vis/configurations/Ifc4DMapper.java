@@ -7,6 +7,7 @@ import cib.mf.schedule.model.activity.Timestamp;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.multimodel.MultiModelAccessor;
+import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
@@ -17,14 +18,14 @@ import org.bimserver.plugins.PluginException;
 import javax.media.j3d.*;
 import javax.vecmath.Color3f;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
-public class Ifc4DMapper extends MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> {
-    @Override
-    void configMapping() {
+public class Ifc4DMapper {
+
+    void configMapping(MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> loader) {
+        final Mapper<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> mapper = loader.getMapper();
         mapper.addStatistics("earliestStart", new DataAccessor.Folding<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
             @Override
             public Long function(Long aggregator, MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject> element) {
@@ -180,15 +181,12 @@ public class Ifc4DMapper extends MappedJ3DLoader<MultiModelAccessor.LinkedObject
         return dateMillis + timeMillis;
     }
 
-    @Override
-    void load(InputStream inputStream) throws IOException {
-        data = new MultiModelAccessor<EMFIfcParser.EngineEObject>(unzip(inputStream));  // TODO constructor which reads from zip directly (w/o unzipping)
-    }
-
     public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
-        Ifc4DMapper ifc4DMapper = new Ifc4DMapper();
-        SimpleViewer viewer = new SimpleViewer(ifc4DMapper);
-        viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath()); // or carport.zip
+        MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>());
+        new Ifc4DMapper().configMapping(loader);
+        SimpleViewer viewer = new SimpleViewer(loader);
+        viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());  // or carport.zip
+
     }
 
     private enum ActivityType {

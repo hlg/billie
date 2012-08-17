@@ -11,12 +11,11 @@ import org.bimserver.plugins.PluginException;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 
-public class Ifc3DMapper extends MappedJ3DLoader<EMFIfcParser.EngineEObject> {
+public class Ifc3DMapper {
 
-    protected void configMapping() {
-        mapper.addMapping(new PropertyMap<EMFIfcParser.EngineEObject, VisFactory3D.Polyeder>() {
+    protected void configMapping(MappedJ3DLoader<EMFIfcParser.EngineEObject> loader) {
+        loader.addMapping(new PropertyMap<EMFIfcParser.EngineEObject, VisFactory3D.Polyeder>() {
             @Override
             protected boolean condition() {
                 return data.getObject() instanceof IfcBuildingElement
@@ -40,15 +39,9 @@ public class Ifc3DMapper extends MappedJ3DLoader<EMFIfcParser.EngineEObject> {
         });
     }
 
-    @Override
-    void load(InputStream in) throws IOException {
-        EMFIfcAccessor data = new EMFIfcAccessor();
-        data.setInput(in);
-        this.data = data;
-    }
-
     public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
-        Ifc3DMapper loader = new Ifc3DMapper();
+        MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcAccessor());
+        new Ifc3DMapper().configMapping(loader);
         SimpleViewer viewer = new SimpleViewer(loader);
         viewer.run(new FileReader(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc")));
     }

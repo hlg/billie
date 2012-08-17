@@ -11,6 +11,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class Draw2DViewer {
+
+    // todo: move to vis.runtime.draw2d
+
     private Shell shell;
     private FigureCanvas canvas;
     private LightweightSystem ls;
