@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: IFC parser based on TNO Bimserver
+Bundle-SymbolicName: de.tudresden.cib.vis.data.bimserver
+Bundle-Vendor: CIB TU Dresden
+Require-Bundle: org.bimserver.ifcemf,
+ de.tudresden.cib.vis
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Export-Package: de.tudresden.cib.vis.data.bimserver

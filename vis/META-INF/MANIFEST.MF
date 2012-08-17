@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CIB visualization framework
+Bundle-SymbolicName: de.tudresden.cib.vis
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: CIB TU Dresden
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Export-Package: de.tudresden.cib.vis.data,
+ de.tudresden.cib.vis.mapping,
+ de.tudresden.cib.vis.scene
+Specification-Title: CIB visualization framework
+Specification-Version: 0.1
+Implementation-Title: snapshot
+Implementation-Version: 0.1
+

@@ -2,13 +2,13 @@
 <project name="vismapping.master" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <filelist id="projects" dir=".">
-        <file name="visMapping/build.xml"/>
-        <file name="data.bimserver/build.xml"/>
-        <file name="data.multimodel/build.xml"/>
-        <file name="visualization.draw2d/build.xml"/>
-        <file name="runtime.java3d/build.xml"/>
-        <file name="visualization.java3d/build.xml"/>
-        <file name="visMapping.configurations/build.xml"/>
+        <file name="vis/build.xml"/>
+        <file name="vis.data.bimserver/build.xml"/>
+        <file name="vis.data.multimodel/build.xml"/>
+        <file name="vis.scene.draw2d/build.xml"/>
+        <file name="vis.runtime.java3d/build.xml"/>
+        <file name="vis.scene.java3d/build.xml"/>
+        <file name="vis.configurations/build.xml"/>
     </filelist>
 
     <target name="test.all">

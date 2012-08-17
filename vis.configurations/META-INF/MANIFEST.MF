@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CIB visualization framework sample use cases
+Bundle-SymbolicName: de.tudresden.cib.vis.configurations
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: CIB TU Dresden
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Export-Package: de.tudresden.cib.vis.configurations
+Require-Bundle: de.mefisto.container,
+ cib.lib.gaeb.model,
+ cib.mf.qto.model,
+ cib.mf.schedule.model,
+ org.eclipse.draw2d,
+ org.eclipse.swt.win32.win32.x86,
+ de.tudresden.cib.vis.runtime.java3d,
+ de.tudresden.cib.vis,
+ de.tudresden.cib.vis.data.bimserver,
+ de.tudresden.cib.vis.data.multimodel,
+ de.tudresden.cib.vis.scene.java3d,
+ de.tudresden.cib.vis.scene.draw2d

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="runtime.java3d" default="common.dist.module">
-    <property file="build.properties"/>
-    <import file="../common.xml" />
-</project>

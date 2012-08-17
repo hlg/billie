@@ -1,5 +1,5 @@
 <ivy-module version="2.0">
-<info organisation="de.tu-dresden.bau.cib" module="data.bimserver"/>
+<info organisation="org.bimserver" module="ifcemf"/>
 <dependencies>
     <dependency org="org.bimserver" name="bimserver-ifcplugins" rev="1.1.0"/>
     <dependency org="org.bimserver" name="bimserver-buildingSMARTLibrary" rev="1.1.0"/>

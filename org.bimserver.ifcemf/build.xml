@@ -3,20 +3,22 @@
     <property file="build.properties"/>
     <import file="../common.xml"/>
 
-    <target name="build.dep.module" depends="common.compile.module">
+    <target name="build.dep.module" depends="common.dist.module">
         <property name="bundle.dir" value="${module.output.dir}/osgi/org.bimserver.ifcemf_0.1"/>
+        <property name="adapter.jar" value="${ant.project.name}-${version}-SNAPSHOT.jar" />
+
         <deltree dir="lib"/>
         <deltree dir="${bundle.dir}"/>
         <ivy:resolve>
-            <ivy:dependency org="de.tu-dresden.bau.cib" name="data.bimserver" rev="latest.integration"/>
+            <ivy:dependency org="de.tudresden.cib" name="vis.data.bimserver" rev="latest.integration"/>
             <ivy:exclude org="*" ext="*" type="source"/>
             <ivy:exclude org="*" ext="*" type="javadoc"/>
             <ivy:exclude org="bundle"/>
-            <ivy:exclude org="de.tu-dresden.bau.cib"/>
+            <ivy:exclude org="de.tudresden.cib"/>
         </ivy:resolve>
         <ivy:retrieve/>
 
-        <copydir src="${module.output.dir}/classes" dest="${bundle.dir}" />
+        <copy file="${module.output.dir}/jar/${adapter.jar}" todir="${bundle.dir}" />
 
         <mkdir dir="${bundle.dir}/META-INF"/>
         <pathconvert property="bundle.classpath" pathsep=",">
@@ -26,7 +28,7 @@
         <manifest file="${bundle.dir}/META-INF/MANIFEST.MF">
             <attribute name="Manifest-Version" value="1.0"/>
             <attribute name="Bundle-ManifestVersion" value="2"/>
-            <attribute name="Bundle-Classpath" value="${bundle.classpath},."/>
+            <attribute name="Bundle-Classpath" value="${bundle.classpath},${adapter.jar},."/>
             <attribute name="Require-Bundle"
                        value="org.eclipse.emf.ecore,org.eclipse.emf.common,org.eclipse.emf.ecore.xmi,
                        org.eclipse.equinox.common,org.eclipse.osgi"/>

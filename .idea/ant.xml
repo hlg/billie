@@ -10,7 +10,7 @@
       <maximumStackSize value="2" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/data.bimserver/build.xml">
+    <buildFile url="file://$PROJECT_DIR$/vis.data.bimserver/build.xml">
       <additionalClassPath />
       <antReference name="Apache Ant version 1.8.3" />
       <customJdkName value="" />
@@ -18,7 +18,7 @@
       <maximumStackSize value="2" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/data.multimodel/build.xml">
+    <buildFile url="file://$PROJECT_DIR$/vis.data.multimodel/build.xml">
       <additionalClassPath />
       <antReference name="Apache Ant version 1.8.3" />
       <customJdkName value="" />
@@ -26,7 +26,7 @@
       <maximumStackSize value="2" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/runtime.java3d/build.xml">
+    <buildFile url="file://$PROJECT_DIR$/vis.runtime.java3d/build.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
@@ -34,7 +34,7 @@
       <maximumStackSize value="2" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/visMapping/build.xml">
+    <buildFile url="file://$PROJECT_DIR$/vis/build.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
@@ -42,7 +42,7 @@
       <maximumStackSize value="2" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/visMapping.configurations/build.xml">
+    <buildFile url="file://$PROJECT_DIR$/vis.configurations/build.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
@@ -50,7 +50,7 @@
       <maximumStackSize value="2" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/visualization.draw2d/build.xml">
+    <buildFile url="file://$PROJECT_DIR$/vis.scene.draw2d/build.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
@@ -58,7 +58,7 @@
       <maximumStackSize value="2" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/visualization.java3d/build.xml">
+    <buildFile url="file://$PROJECT_DIR$/vis.scene.java3d/build.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />

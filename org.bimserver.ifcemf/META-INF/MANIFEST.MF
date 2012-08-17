@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Extended Bimserver Plugin manager suitable for use in OSGI runtime
+Bundle-SymbolicName: org.bimserver.ifcemf.osgi
+Bundle-Vendor: CIB TU Dresden
+Require-Bundle: org.eclipse.equinox.common,
+ org.eclipse.osgi
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Export-Package: org.bimserver.ifcemf

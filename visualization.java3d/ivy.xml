@@ -1,8 +1,0 @@
-<ivy-module version="2.0">
-<info organisation="de.tu-dresden.bau.cib" module="visualization.java3d"/>
-<dependencies>
-    <dependency org="de.tu-dresden.bau.cib" name="runtime.java3d" rev="latest.integration" changing="true"/>
-    <dependency org="java3d" name="java3d" rev="1.5.2"/>
-    <dependency org="de.tu-dresden.bau.cib" name="visMapping" rev="latest.integration" changing="true"/>
-</dependencies>
-</ivy-module>
