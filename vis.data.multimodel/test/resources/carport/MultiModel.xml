@@ -53,7 +53,7 @@
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
                type="Plant" id="M5">
             <content format="xml" id="1" formatVersion="1.0">
-                <file>file:///Plant/xml/Geräte.xml</file>
+                <file>file:///Plant/xml/Geraete.xml</file>
             </content>
         </model>
     </models>

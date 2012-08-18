@@ -2,7 +2,7 @@
 <module type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="IvyIDEA" name="IvyIDEA">
-      <configuration ivyFile="D:\Nutzer\helga\dev\visMapping.git\visMapping\ivy.xml" useProjectSettings="true" useCustomIvySettings="false" ivySettingsFile="" onlyResolveSelectedConfigs="false">
+      <configuration ivyFile="$MODULE_DIR$/vis/ivy.xml" useProjectSettings="true" useCustomIvySettings="false" ivySettingsFile="" onlyResolveSelectedConfigs="false">
         <propertiesSettings>
           <propertiesFiles includeProjectLevelPropertiesFiles="true" />
         </propertiesSettings>

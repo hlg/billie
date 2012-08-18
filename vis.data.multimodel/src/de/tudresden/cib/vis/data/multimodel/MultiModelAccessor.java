@@ -30,10 +30,14 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
 
     public MultiModelAccessor(URL resource) {
         // TODO unzip, move to setInput
-        this(new File(resource.getFile()));
+        readFromFolder(new File(resource.getFile()));
     }
 
-    public MultiModelAccessor(File folder){
+    public MultiModelAccessor(){
+
+    }
+
+    private void readFromFolder(File folder) {
         mmFolder = folder;
         File mmFile = new File(mmFolder, "MultiModel.xml");
         assert mmFolder.exists() && mmFile.exists();
@@ -130,8 +134,8 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
         return groupedElements.iterator();
     }
 
-    public void setInput(InputStream inputStream) {
-        // TODO: read from zip
+    public void setInput(InputStream inputStream) throws IOException {
+        readFromFolder(unzip(inputStream));
     }
 
     protected File unzip(InputStream inputStream) throws IOException {

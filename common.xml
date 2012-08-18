@@ -78,7 +78,7 @@
             <path refid="ivy.classpath"/>
         </pathconvert>
 
-        <echo message="-cp ${run.classpath}" />
+        <!-- echo message="-cp ${run.classpath}" /-->
 
         <mkdir dir="${module.output.dir}/jar"/>
         <jar jarfile="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar"

@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="MFContainerParser">
-    <CLASSES>
-      <root url="jar://$JAVALIBS$/mmaa_oldnstable/plugins/de.mefisto.container_1.0.0.201201272248/container.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

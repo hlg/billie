@@ -2,7 +2,6 @@ package de.tudresden.cib.vis.configurations;
 
 import cib.lib.gaeb.model.gaeb.TgItem;
 import cib.mf.qto.model.AnsatzType;
-import com.sun.j3d.loaders.Loader;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.multimodel.MultiModelAccessor;
@@ -14,20 +13,19 @@ import de.tudresden.cib.vis.scene.VisFactory3D;
 import org.bimserver.plugins.PluginException;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Collection;
 
-public class IfcGaebColored3DMapper extends
-        MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> {
+public class IfcGaebColored3DMapper {
 
     public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
-        Loader loader = new IfcGaebColored3DMapper();
+        MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>());
+        new IfcGaebColored3DMapper().configMapping(loader.getMapper());
         SimpleViewer viewer = new SimpleViewer(loader);
         viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\", "zip").getCanonicalPath());
     }
 
-    void configMapping() {
+    void configMapping(final Mapper<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
         mapper.addStatistics("maxTotal", new DataAccessor.Folding<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, BigDecimal>(new BigDecimal(0)) {
             @Override
             public BigDecimal function(BigDecimal aggregator, MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject> element) {
@@ -54,12 +52,6 @@ public class IfcGaebColored3DMapper extends
                 graphObject.setColor(red, green, 0);     // 0 1 0 green, 1 1 0 yellow, 1 0 0 red
             }
         });
-    }
-
-    @Override
-    void load(InputStream inputStream) throws IOException {
-        // TODO use zipinputstrem directly instead of folder
-        data = new MultiModelAccessor<EMFIfcParser.EngineEObject>(unzip(inputStream));
     }
 
     private BigDecimal calculateOveralPrice(Collection<MultiModelAccessor.ResolvedLink> resolvedLinks) {
