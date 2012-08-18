@@ -16,6 +16,7 @@ import org.bimserver.plugins.serializers.IfcModelInterface;
 import org.eclipse.emf.ecore.EObject;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -187,7 +188,7 @@ public class EMFIfcParser {
                 allPAths[i] = allUrls[i].getPath();
             }
 
-            return StringUtils.join(allPAths, ";");
+            return StringUtils.join(allPAths, File.pathSeparator);
         }
     }
 

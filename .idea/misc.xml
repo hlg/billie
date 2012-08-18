@@ -13,7 +13,7 @@
       </ArtifactTypeSettings>
     </option>
     <option name="ivyLogLevelThreshold" value="Verbose" />
-    <option name="ivySettingsFile" value="D:\Nutzer\helga\ivysettings.xml" />
+    <option name="ivySettingsFile" value="$USER_HOME$/ivysettings.xml" />
     <option name="libraryNameIncludesConfiguration" value="true" />
     <option name="libraryNameIncludesModule" value="true" />
     <option name="propertiesSettings">
@@ -41,7 +41,7 @@
   <component name="ProjectResources">
     <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />

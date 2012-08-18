@@ -22,14 +22,14 @@
     <orderEntry type="module-library">
       <library name="IvyIDEA-visMapping-default">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../.ivy2/cache/junit/junit/jars/junit-4.10.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.1.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/jars/junit-4.10.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.1.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../.ivy2/cache/junit/junit/javadocs/junit-4.10-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/javadocs/junit-4.10-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../.ivy2/cache/junit/junit/sources/junit-4.10-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/sources/junit-4.10-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

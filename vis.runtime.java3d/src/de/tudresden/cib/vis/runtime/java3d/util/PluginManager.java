@@ -11,6 +11,7 @@ import org.bimserver.plugins.ifcengine.IfcEnginePlugin;
 import org.bimserver.plugins.schema.SchemaPlugin;
 import org.bimserver.plugins.serializers.SerializerPlugin;
 
+import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 
@@ -36,7 +37,7 @@ public class PluginManager extends org.bimserver.plugins.PluginManager {
             allPAths[i] = allUrls[i].getPath();
         }
 
-        return StringUtils.join(allPAths, ";");
+        return StringUtils.join(allPAths, File.pathSeparator);
     }
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="common" default="dist.module" xmlns:ivy="antlib:org.apache.ivy.ant">
 
-
+    <property file="../common.build.properties"/>
     <property file="build.properties"/>
 
     <patternset id="library.patterns">
@@ -15,7 +15,7 @@
     </target>
 
     <target name="config.module">
-        <ivy:settings file="D:/Nutzer/helga/ivysettings.xml"/>
+        <ivy:settings file="${ivy.settings.file}"/>
         <dirname property="module.basedir" file="${ant.file}"/>
         <property name="module.basedir" value="${basedir}"/>
         <property name="module.output.dir" value="${module.basedir}/out"/>
@@ -73,6 +73,12 @@
             <path refid="ivy.classpath"/>
             <flattenmapper/>
         </pathconvert>
+
+        <pathconvert property="run.classpath" pathsep="${path.separator}">
+            <path refid="ivy.classpath"/>
+        </pathconvert>
+
+        <echo message="-cp ${run.classpath}" />
 
         <mkdir dir="${module.output.dir}/jar"/>
         <jar jarfile="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar"

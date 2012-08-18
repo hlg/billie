@@ -4,7 +4,7 @@
     <defaultAnt name="Apache Ant version 1.8.3" />
     <buildFile url="file://$PROJECT_DIR$/build.xml">
       <additionalClassPath />
-      <antReference name="Apache Ant version 1.8.3" />
+      <antReference projectDefault="true" />
       <customJdkName value="" />
       <maximumHeapSize value="128" />
       <maximumStackSize value="2" />
@@ -12,7 +12,7 @@
     </buildFile>
     <buildFile url="file://$PROJECT_DIR$/vis.data.bimserver/build.xml">
       <additionalClassPath />
-      <antReference name="Apache Ant version 1.8.3" />
+      <antReference projectDefault="true" />
       <customJdkName value="" />
       <maximumHeapSize value="128" />
       <maximumStackSize value="2" />
@@ -20,7 +20,7 @@
     </buildFile>
     <buildFile url="file://$PROJECT_DIR$/vis.data.multimodel/build.xml">
       <additionalClassPath />
-      <antReference name="Apache Ant version 1.8.3" />
+      <antReference projectDefault="true" />
       <customJdkName value="" />
       <maximumHeapSize value="128" />
       <maximumStackSize value="2" />
