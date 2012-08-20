@@ -21,15 +21,21 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="vis" />
     <orderEntry type="module-library">
-      <library name="IvyIDEA-visualization.draw2d-default">
+      <library name="IvyIDEA-vis.scene.draw2d-default">
         <CLASSES>
           <root url="jar://$USER_HOME$/.ivy2/cache/bundle/org.eclipse.draw2d/jars/org.eclipse.draw2d-3.7.0.v20110425-2050.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/bundle/org.eclipse.swt/jars/org.eclipse.swt-3.7.0.v3735b.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/bundle/com.ibm.icu/jars/com.ibm.icu-4.4.2.v20110208.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/bundle/org.eclipse.swt.win32.win32.x86/jars/org.eclipse.swt.win32.win32.x86-3.7.0.v3735b.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/jars/junit-4.10.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.1.jar!/" />
         </CLASSES>
-        <JAVADOC />
-        <SOURCES />
+        <JAVADOC>
+          <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/javadocs/junit-4.10-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/sources/junit-4.10-sources.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
   </component>

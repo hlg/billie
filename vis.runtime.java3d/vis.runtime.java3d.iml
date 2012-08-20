@@ -20,7 +20,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
-      <library name="IvyIDEA-runtime.java3d-default">
+      <library name="IvyIDEA-vis.runtime.java3d-default">
         <CLASSES>
           <root url="jar://$USER_HOME$/.ivy2/cache/java3d/java3d/jars/j3dutils-1.5.2.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/java3d/java3d/jars/j3dcore-1.5.2.jar!/" />

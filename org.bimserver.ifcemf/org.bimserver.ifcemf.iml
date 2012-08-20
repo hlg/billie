@@ -19,7 +19,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
-      <library name="IvyIDEA-org.bimserver.ifc-emf-default">
+      <library name="IvyIDEA-org.bimserver.ifcemf-default">
         <CLASSES>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.bimserver/bimserver-ifcplugins/jars/bimserver-ifcplugins-1.1.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.bimserver/bimserver-ifc/jars/bimserver-ifc-1.1.0.jar!/" />
