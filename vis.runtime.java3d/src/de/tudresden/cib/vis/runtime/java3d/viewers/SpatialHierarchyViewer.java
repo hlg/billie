@@ -6,10 +6,10 @@ import com.sun.j3d.loaders.Loader;
 import com.sun.j3d.utils.picking.PickResult;
 import com.sun.j3d.utils.picking.behaviors.PickMouseBehavior;
 import com.sun.j3d.utils.universe.SimpleUniverse;
+import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.runtime.java3d.UniverseBuilder;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
 import de.tudresden.cib.vis.runtime.java3d.loaders.BimserverSpatialHierarchyLoader;
-import de.tudresden.cib.vis.runtime.java3d.util.PluginManager;
 import de.tudresden.cib.vis.runtime.java3d.views.OrbitalView;
 import org.bimserver.plugins.PluginException;
 
@@ -61,7 +61,7 @@ public class SpatialHierarchyViewer extends SimpleViewer {
     }
 
     public static void main(String[] args) throws Exception {
-        BimserverSpatialHierarchyLoader loader = new BimserverSpatialHierarchyLoader(new PluginManager());
+        BimserverSpatialHierarchyLoader loader = new BimserverSpatialHierarchyLoader(new SimplePluginManager());
         loader.setDefaultAppearance(TypeAppearance.OFF.getAppearance());
         loader.setDefaultPickability(false);
         SpatialHierarchyViewer ifcViewer = new SpatialHierarchyViewer(loader);

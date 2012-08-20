@@ -24,7 +24,6 @@
     <orderEntry type="module" module-name="vis.scene.java3d" />
     <orderEntry type="module" module-name="vis.scene.draw2d" />
     <orderEntry type="module" module-name="vis.data.multimodel" />
-    <orderEntry type="module" module-name="vis.runtime.java3d" />
     <orderEntry type="module-library">
       <library name="IvyIDEA-vis.configurations-default">
         <CLASSES>
@@ -116,6 +115,8 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="org.bimserver.ifcemf" />
+    <orderEntry type="module" module-name="vis.runtime.java3d" />
   </component>
 </module>
 

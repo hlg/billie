@@ -2,11 +2,11 @@ package de.tudresden.cib.vis.runtime.java3d.viewers;
 
 import com.sun.j3d.loaders.Loader;
 import com.sun.j3d.utils.universe.SimpleUniverse;
+import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.runtime.java3d.UniverseBuilder;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
 import de.tudresden.cib.vis.runtime.java3d.loaders.BimserverStoreyLoader;
 import de.tudresden.cib.vis.runtime.java3d.loaders.MultiLoader;
-import de.tudresden.cib.vis.runtime.java3d.util.PluginManager;
 import de.tudresden.cib.vis.runtime.java3d.views.AxonometricView;
 import de.tudresden.cib.vis.runtime.java3d.views.OrbitalView;
 import org.bimserver.plugins.PluginException;
@@ -81,7 +81,7 @@ public class ExplodedAxonometrie extends SimpleViewer {
     }
 
     public static void main(String[] args) throws FileNotFoundException, PluginException {
-        BimserverStoreyLoader loader = new BimserverStoreyLoader(new PluginManager());
+        BimserverStoreyLoader loader = new BimserverStoreyLoader(new SimplePluginManager());
         Appearance noCullingAppearance = TypeAppearance.IfcWallImpl.createAppearance();
         PolygonAttributes pgonAttrs = new PolygonAttributes();
         pgonAttrs.setCullFace(PolygonAttributes.CULL_NONE);

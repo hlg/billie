@@ -4,6 +4,7 @@ import cib.lib.gaeb.model.gaeb.TgItem;
 import cib.mf.qto.model.AnsatzType;
 import de.mefisto.model.container.ElementaryModelType;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
+import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class MultiModelAccessorTests {
     @Test
     public void testAccess() {
         URL testResource = this.getClass().getResource("/resources/carport");
-        MultiModelAccessor<EMFIfcParser.EngineEObject> mma = new MultiModelAccessor<EMFIfcParser.EngineEObject>(testResource);
+        MultiModelAccessor<EMFIfcParser.EngineEObject> mma = new MultiModelAccessor<EMFIfcParser.EngineEObject>(testResource, new SimplePluginManager());
         int linkSize = 0;
         ElementaryModelType groupingModel = ElementaryModelType.OBJECT;
         for (MultiModelAccessor.LinkedObject linking : mma) {

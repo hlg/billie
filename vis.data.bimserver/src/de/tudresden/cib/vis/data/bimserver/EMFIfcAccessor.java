@@ -1,6 +1,7 @@
 package de.tudresden.cib.vis.data.bimserver;
 
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import org.bimserver.plugins.PluginManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,8 +17,8 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObje
     private EMFIfcParser parser;
 
 
-    public EMFIfcAccessor() {
-        parser = new EMFIfcParser();
+    public EMFIfcAccessor(PluginManager pluginManager) {
+        parser = new EMFIfcParser(pluginManager);
     }
 
     public void setInput(InputStream inputStream) throws IOException {

@@ -1,7 +1,6 @@
 package de.tudresden.cib.vis.data.bimserver;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.IfcElement;
 import org.bimserver.models.ifc2x3tc1.IfcProduct;
@@ -16,11 +15,8 @@ import org.bimserver.plugins.serializers.IfcModelInterface;
 import org.eclipse.emf.ecore.EObject;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.*;
 
 
@@ -36,8 +32,7 @@ public class EMFIfcParser {
     IfcModelInterface data;
     InputStream inputStream;
 
-    public EMFIfcParser() {
-        PluginM pluginManager = new PluginM();
+    public EMFIfcParser(PluginManager pluginManager) {
         pluginManager.loadPluginsFromCurrentClassloader();
         pluginManager.initAllLoadedPlugins();
         enginePlugin = pluginManager.getAllIfcEnginePlugins(true).iterator().next();
@@ -176,19 +171,6 @@ public class EMFIfcParser {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
             return objectGeometry;
-        }
-    }
-
-    public class PluginM extends PluginManager {
-        @Override
-        public String getCompleteClassPath() {
-            URL[] allUrls = ((URLClassLoader) getClass().getClassLoader()).getURLs();
-            String[] allPAths = new String[allUrls.length];
-            for (int i = 0; i < allUrls.length; i++) {
-                allPAths[i] = allUrls[i].getPath();
-            }
-
-            return StringUtils.join(allPAths, File.pathSeparator);
         }
     }
 

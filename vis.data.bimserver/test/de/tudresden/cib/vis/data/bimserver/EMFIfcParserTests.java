@@ -14,7 +14,7 @@ public class EMFIfcParserTests {
 
     @Before
     public void setUp(){
-        parser = new EMFIfcParser();
+        parser = new EMFIfcParser(new SimplePluginManager());
     }
 
     @Test

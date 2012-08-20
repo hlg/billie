@@ -13,6 +13,7 @@ import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
+import org.bimserver.plugins.PluginManager;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -28,13 +29,14 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
 
     private File mmFolder;
 
-    public MultiModelAccessor(URL resource) {
+    public MultiModelAccessor(URL resource, PluginManager pm) {
         // TODO unzip, move to setInput
+        this(pm);
         readFromFolder(new File(resource.getFile()));
     }
 
-    public MultiModelAccessor(){
-
+    public MultiModelAccessor(PluginManager pm){
+        EMTypes.pm = pm;
     }
 
     private void readFromFolder(File folder) {
@@ -168,7 +170,7 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
     public enum EMTypes {
         IFC("Object", "ifc") {
             IndexedDataAccessor createAccessor() {
-                return new EMFIfcAccessor();
+                return new EMFIfcAccessor(pm);
             }
         },
         GAEB("BoQ", "gaebxml") {
@@ -190,6 +192,7 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
 
         private String modelType;
         private String format;
+        static PluginManager pm;
 
         EMTypes(String modelType, String format) {
             this.modelType = modelType;

@@ -2,14 +2,15 @@ package de.tudresden.cib.vis.runtime.java3d.viewers;
 
 import com.sun.j3d.loaders.Loader;
 import com.sun.j3d.utils.universe.SimpleUniverse;
+import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.runtime.java3d.UniverseBuilder;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TimeLine;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
 import de.tudresden.cib.vis.runtime.java3d.loaders.BimserverJava3dLoader;
-import de.tudresden.cib.vis.runtime.java3d.util.PluginManager;
 import de.tudresden.cib.vis.runtime.java3d.views.OrbitalView;
 import org.bimserver.models.ifc2x3tc1.IfcRoot;
 import org.bimserver.plugins.PluginException;
+import org.bimserver.plugins.PluginManager;
 
 import javax.media.j3d.*;
 import javax.swing.*;
@@ -99,7 +100,7 @@ public class AnimatedViewer extends SimpleViewer {
     }
 
     public static void main(String[] args) throws FileNotFoundException, PluginException {
-        PluginManager pm = new PluginManager();
+        PluginManager pm = new SimplePluginManager();
         pm.loadPluginsFromCurrentClassloader();
         AnimatedViewer ifcViewer = new AnimatedViewer(new BimserverJava3dLoader(pm));
         File file = ifcViewer.chooseFile(args.length > 0 ? args[0] : null, "ifc");
