@@ -2,7 +2,6 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Multi model parser
 Bundle-SymbolicName: de.tudresden.cib.vis.data.multimodel
-Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: CIB TU Dresden
 Require-Bundle: de.tudresden.cib.vis,
  de.tudresden.cib.vis.data.bimserver,

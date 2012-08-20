@@ -21,22 +21,20 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObje
         parser = new EMFIfcParser(pluginManager);
     }
 
-    public void setInput(InputStream inputStream) throws IOException {
-        parser.setInput(inputStream);
+    public void read(InputStream inputStream) throws IOException {
+        parser.read(inputStream);
     }
 
     public void setInput(InputStream inputStream, String namespace) throws IOException {
-        setInput(inputStream);
+        read(inputStream);
         this.namespace = namespace + "::";
     }
 
     public Iterator<EMFIfcParser.EngineEObject> iterator() {
-        parser.lazyLoad();
         return parser.getIterator();
     }
 
     public void index() {
-        parser.lazyLoad();
         parser.data.indexGuids();
         wrappedData = new HashMap<String, EMFIfcParser.EngineEObject>();
     }

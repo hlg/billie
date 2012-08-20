@@ -25,7 +25,7 @@ import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
 public class Ifc4DMapper {
 
-    void configMapping(MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> loader) {
+    public void configMapping(MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> loader) {
         final Mapper<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> mapper = loader.getMapper();
         mapper.addStatistics("earliestStart", new DataAccessor.Folding<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
             @Override

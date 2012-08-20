@@ -119,6 +119,14 @@
                      overwrite="true" pubrevision="${version}" pubdate="now" status="integration" forcedeliver="true"/>
     </target>
 
+    <target name="publish.module.OSGI.fast" depends="config.module"> <!-- dependency is on master level -->
+        <copy tofile="${osgi.target}/dropins/plugins/de.tudresden.cib.${ant.project.name}_${version}.jar">
+            <file name="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar" />
+        </copy>
+    </target>
+
+    <target name="publish.module.OSGI" depends="dist.module, publish.module.OSGI.fast" />
+
     <target name="clean.module" description="cleanup module" depends="config.module">
         <delete dir="${module.output.dir}"/>
     </target>

@@ -30,7 +30,6 @@ public class EMFIfcParser {
     private EmfDeserializer deserializer;
 
     IfcModelInterface data;
-    InputStream inputStream;
 
     public EMFIfcParser(PluginManager pluginManager) {
         pluginManager.loadPluginsFromCurrentClassloader();
@@ -39,18 +38,21 @@ public class EMFIfcParser {
         try {
             deserializer = pluginManager.getFirstDeserializer("ifc", true).createDeserializer();
             deserializer.init(pluginManager.requireSchemaDefinition());
+            engine = enginePlugin.createIfcEngine();
+            engine.init();
         } catch (PluginException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
 
-    public void setInput(InputStream inputStream) {
-        this.inputStream = inputStream;
-    }
-
-    void lazyLoad() {
-        if (data == null) try {
-            readStream(); // lazy engine creation necessare, cause plugin init is not synched
+    public void read(InputStream inputStream) {
+        try {
+            byte[] bytes = IOUtils.toByteArray(inputStream); // todo: save memory by branching the stream with TeeInputStream
+            engineModel = engine.openModel(bytes);
+            engineModel.setPostProcessing(true);
+            geometry = engineModel.finalizeModelling(engineModel.initializeModelling());
+            data = deserializer.read(new ByteArrayInputStream(bytes), "?", true, 16 * 58);
+            adjustRelations();
         } catch (IfcEngineException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (DeserializeException e) {
@@ -60,25 +62,12 @@ public class EMFIfcParser {
         }
     }
 
-    private void readStream() throws IfcEngineException, DeserializeException, IOException {
-        if (engine == null) {
-            engine = enginePlugin.createIfcEngine();
-            engine.init();
-        }
-        byte[] bytes = IOUtils.toByteArray(inputStream); // todo: save memory by branching the stream with TeeInputStream
-        engineModel = engine.openModel(bytes);
-        engineModel.setPostProcessing(true);
-        geometry = engineModel.finalizeModelling(engineModel.initializeModelling());
-        data = deserializer.read(new ByteArrayInputStream(bytes), "?", true, 16*58);
-        adjustRelations();
-    }
-
     private void adjustRelations() {
         // due to http://code.google.com/p/bimserver/wiki/Known_issues
-        for(EObject eObject: data.getAllWithSubTypes(IfcRelContainedInSpatialStructure.class)){
-            IfcRelContainedInSpatialStructure relation = (IfcRelContainedInSpatialStructure)eObject;
-            for(IfcProduct product :relation.getRelatedElements()){
-                if(product instanceof IfcElement){
+        for (EObject eObject : data.getAllWithSubTypes(IfcRelContainedInSpatialStructure.class)) {
+            IfcRelContainedInSpatialStructure relation = (IfcRelContainedInSpatialStructure) eObject;
+            for (IfcProduct product : relation.getRelatedElements()) {
+                if (product instanceof IfcElement) {
                     ((IfcElement) product).getContainedInStructure().add(relation);
                 }
             }
@@ -152,7 +141,7 @@ public class EMFIfcParser {
                 int newIndex = -1;
                 for (int i = 0; i < visProps.getPrimitiveCount() * 3; i++) {
                     int oldIndex = geometry.getIndex(i + visProps.getStartIndex());
-                    if(reindex.containsKey(oldIndex)){
+                    if (reindex.containsKey(oldIndex)) {
                         objectGeometry.indizes.add(reindex.get(oldIndex));
                     } else {
                         newIndex++;

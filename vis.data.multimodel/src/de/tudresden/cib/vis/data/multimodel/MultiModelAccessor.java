@@ -30,7 +30,7 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
     private File mmFolder;
 
     public MultiModelAccessor(URL resource, PluginManager pm) {
-        // TODO unzip, move to setInput
+        // TODO unzip, move to read
         this(pm);
         readFromFolder(new File(resource.getFile()));
     }
@@ -136,7 +136,7 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
         return groupedElements.iterator();
     }
 
-    public void setInput(InputStream inputStream) throws IOException {
+    public void read(InputStream inputStream) throws IOException {
         readFromFolder(unzip(inputStream));
     }
 

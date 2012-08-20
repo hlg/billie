@@ -29,6 +29,12 @@
         </subant>
     </target>
 
+    <target name="publish.all.OSGI" depends="dist.all">
+        <subant target="publish.module.OSGI.fast">
+            <filelist refid="projects" />
+        </subant>
+    </target>
+
     <target name="clean.all">
         <subant target="clean.module">
             <filelist refid="projects" />

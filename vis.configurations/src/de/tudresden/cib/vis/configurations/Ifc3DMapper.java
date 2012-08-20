@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class Ifc3DMapper {
 
-    protected void configMapping(Mapper<EMFIfcParser.EngineEObject> mapper) {
+    public void configMapping(Mapper<EMFIfcParser.EngineEObject> mapper) {
         mapper.addMapping(new PropertyMap<EMFIfcParser.EngineEObject, VisFactory3D.Polyeder>() {
             @Override
             protected boolean condition() {

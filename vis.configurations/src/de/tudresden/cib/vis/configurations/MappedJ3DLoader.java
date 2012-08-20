@@ -38,7 +38,7 @@ public class MappedJ3DLoader<T> implements Loader {
     private Scene loadScene(InputStream inputStream) {
         IfcScene result = null;
         try {
-            data.setInput(inputStream);
+            data.read(inputStream);
             result = new IfcScene();
             result.setSceneGroup((BranchGroup) mapper.map());
             mapper.animate();

@@ -20,7 +20,7 @@ public abstract class DataAccessor<E> implements Iterable<E> {
         }
     }
 
-    public abstract void setInput(InputStream inputStream) throws IOException;
+    public abstract void read(InputStream inputStream) throws IOException;
 
     public static abstract class Folding<A, B> {
         private B result;

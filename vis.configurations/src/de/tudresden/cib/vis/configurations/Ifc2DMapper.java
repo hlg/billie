@@ -25,13 +25,13 @@ public class Ifc2DMapper {
 
     Ifc2DMapper(Font font, InputStream input) throws IOException {
         EMFIfcAccessor data = new EMFIfcAccessor(new SimplePluginManager());
-        data.setInput(input);
+        data.read(input);
         Draw2dFactory visFactory = new Draw2dFactory(font);
         Draw2dBuilder visBuilder = new Draw2dBuilder();
         mapper = new Mapper<EMFIfcParser.EngineEObject>(data, visFactory, visBuilder);
     }
 
-    void configSemantic() {
+    public void configSemantic() {
         mapper.addMapping(new PropertyMap<EMFIfcParser.EngineEObject, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
@@ -58,7 +58,7 @@ public class Ifc2DMapper {
 
     }
 
-    void config() {
+    public void config() {
         final double scale = 0.02;
         final int offsetX = 200;
         final int offsetY = 200;

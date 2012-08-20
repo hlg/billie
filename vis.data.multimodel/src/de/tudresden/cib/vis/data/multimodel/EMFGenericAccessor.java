@@ -41,7 +41,7 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
         return data.eAllContents();
     }
 
-    public void setInput(InputStream inputStream) throws IOException {
+    public void read(InputStream inputStream) throws IOException {
         setData(inputStream);
     }
 
@@ -58,7 +58,7 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
     protected abstract Map<String, T> collectLookUp();
 
     public void setInput(InputStream inputStream, String namespace) throws IOException {
-        setInput(inputStream);
+        read(inputStream);
         this.namespace = namespace + "::";
     }
 
