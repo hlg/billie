@@ -4,6 +4,7 @@ Bundle-Name: Multi model parser
 Bundle-SymbolicName: de.tudresden.cib.vis.data.multimodel
 Bundle-Vendor: CIB TU Dresden
 Require-Bundle: de.tudresden.cib.vis,
+ org.bimserver.ifcemf,
  de.tudresden.cib.vis.data.bimserver,
  de.mefisto.container,
  cib.lib.gaeb.model,

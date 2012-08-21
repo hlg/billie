@@ -4,8 +4,11 @@
     <dependency org="org.bimserver" name="bimserver-ifcplugins" rev="1.1.0"/>
     <dependency org="org.bimserver" name="bimserver-buildingSMARTLibrary" rev="1.1.0"/>
     <dependency org="org.bimserver" name="bimserver-ifcengine" rev="1.1.0"/>
+    <dependency org="org.bimserver" name="bimserver-plugins" rev="1.1.0"/>
+    <dependency org="bundle" name="org.eclipse.emf.ecore" rev="2.7.+"/>
     <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true" />
     <dependency org="junit" name="junit" rev="4.10"/>
     <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.2"/>
+    <dependency org="commons-io" name="commons-io" rev="2.0+" />
 </dependencies>
 </ivy-module>

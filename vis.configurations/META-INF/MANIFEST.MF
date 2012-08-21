@@ -17,4 +17,6 @@ Require-Bundle: de.mefisto.container,
  de.tudresden.cib.vis.data.bimserver,
  de.tudresden.cib.vis.data.multimodel,
  de.tudresden.cib.vis.scene.java3d,
- de.tudresden.cib.vis.scene.draw2d
+ de.tudresden.cib.vis.scene.draw2d,
+ cib.lib.apache.commons,
+ org.bimserver.ifcemf

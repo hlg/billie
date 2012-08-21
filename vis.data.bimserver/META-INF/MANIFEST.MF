@@ -4,7 +4,9 @@ Bundle-Name: IFC parser based on TNO Bimserver
 Bundle-SymbolicName: de.tudresden.cib.vis.data.bimserver
 Bundle-Vendor: CIB TU Dresden
 Require-Bundle: org.bimserver.ifcemf,
- de.tudresden.cib.vis
+ de.tudresden.cib.vis,
+ org.eclipse.emf.ecore,
+ cib.lib.apache.commons
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .
 Bundle-Localization: plugin
