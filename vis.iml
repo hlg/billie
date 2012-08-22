@@ -16,6 +16,7 @@
     <content url="file://$MODULE_DIR$/vis">
       <sourceFolder url="file://$MODULE_DIR$/vis/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/vis/test" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/vis/out" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

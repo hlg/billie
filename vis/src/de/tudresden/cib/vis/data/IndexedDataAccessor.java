@@ -7,6 +7,6 @@ public abstract class IndexedDataAccessor<E> extends DataAccessor<E> {
 
     public abstract void index();
     public abstract E getIndexed(String objectID);
-    public abstract void setInput(InputStream inputStream, String namespace) throws IOException;
+    public abstract void read(InputStream inputStream, String namespace) throws IOException;
 
 }

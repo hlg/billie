@@ -14,6 +14,7 @@ import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import org.bimserver.plugins.PluginManager;
+import org.eclipse.emf.common.util.EList;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -27,55 +28,52 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
     private Map<String, IndexedDataAccessor> elementaryModels = new HashMap<String, IndexedDataAccessor>();
     private Collection<LinkedObject<K>> groupedElements;
 
-    private File mmFolder;
-
-    public MultiModelAccessor(URL resource, PluginManager pm) {
-        // TODO unzip, move to read
-        this(pm);
-        readFromFolder(new File(resource.getFile()));
-    }
-
-    public MultiModelAccessor(PluginManager pm){
+    public MultiModelAccessor(PluginManager pm) {
         EMTypes.pm = pm;
     }
 
     private void readFromFolder(File folder) {
-        mmFolder = folder;
-        File mmFile = new File(mmFolder, "MultiModel.xml");
-        assert mmFolder.exists() && mmFile.exists();
+        File mmFile = new File(folder, "MultiModel.xml");
+        assert folder.exists() && mmFile.exists();
         Container container = ContainerModelParser.readContainerModel(mmFile).getContainer();
         ElementaryModelType keyModelType = ElementaryModelType.OBJECT;
         String firstAccesibleKeyModelId = null;
-        for (ElementaryModel elementaryModel : container.getElementaryModelGroup().getElementaryModels()) {
-            IndexedDataAccessor accessor = firstAccessible(mmFolder, elementaryModel);
+        EList<ElementaryModel> elementaryModels1 = container.getElementaryModelGroup().getElementaryModels();
+        for (ElementaryModel elementaryModel : elementaryModels1) {
+            IndexedDataAccessor accessor = firstAccessible(folder, elementaryModel);
             if (accessor != null) {
                 elementaryModels.put(elementaryModel.getId(), accessor);
                 if (elementaryModel.getType().equals(keyModelType))
                     firstAccesibleKeyModelId = elementaryModel.getId();
             }
         }
-        LinkModelDescriptor linkModelDesc = container.getLinkModelDescriptorGroup().getLinkModelDescriptors().get(0);
-        if (firstAccesibleKeyModelId != null) groupBy(firstAccesibleKeyModelId, linkModelDesc);
+        if (firstAccesibleKeyModelId != null) {
+            try {
+                LinkModel linkModel = readLinkModel(folder, container.getLinkModelDescriptorGroup().getLinkModelDescriptors().get(0));
+                groupBy(firstAccesibleKeyModelId, linkModel);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
     }
 
-    private void groupBy(String groupingModelId, LinkModelDescriptor linkModelDesc) {
+    private LinkModel readLinkModel(File folder, LinkModelDescriptor linkModelDesc) throws MalformedURLException {
+        File linkFile = new File(folder, new URL(linkModelDesc.getFile()).getFile());
+        return LinkModelParser.readLinkModel(linkFile).getLinkModel();
+    }
+
+    void groupBy(String groupingModelId, LinkModel linkModel) {
         Map<K, LinkedObject<K>> trackMap = new HashMap<K, LinkedObject<K>>();
-        try {
-            File linkFile = new File(mmFolder, new URL(linkModelDesc.getFile()).getFile());
-            LinkModel linkModel = LinkModelParser.readLinkModel(linkFile).getLinkModel();
-            for (LinkObject link : linkModel.getLinkObjects()) {
-                K keyObject = resolveKey(link, groupingModelId);
-                LinkedObject<K> relations;
-                if (trackMap.containsKey(keyObject)) {
-                    relations = trackMap.get(keyObject);
-                } else {
-                    relations = new LinkedObject<K>(keyObject);
-                    trackMap.put(keyObject, relations);
-                }
-                relations.addLink(resolveLink(link, groupingModelId));
+        for (LinkObject link : linkModel.getLinkObjects()) {
+            K keyObject = resolveKey(link, groupingModelId);
+            LinkedObject<K> relations;
+            if (trackMap.containsKey(keyObject)) {
+                relations = trackMap.get(keyObject);
+            } else {
+                relations = new LinkedObject<K>(keyObject);
+                trackMap.put(keyObject, relations);
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            relations.addLink(resolveLink(link, groupingModelId));
         }
         groupedElements = trackMap.values();
     }
@@ -118,7 +116,7 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
                 for (ContainerFile contentFile : content.getFiles()) {
                     try {
                         File file = new File(mmFolder, new URL(contentFile.getValue()).getFile());
-                        accessor.setInput(new FileInputStream(file), contentFile.getNamespace()); // TODO: accessor should join multiple sucessively set/added files
+                        accessor.read(new FileInputStream(file), contentFile.getNamespace()); // TODO: accessor should join multiple sucessively set/added files
                     } catch (MalformedURLException e) {
                         e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     } catch (IOException e) {
@@ -161,6 +159,14 @@ public class MultiModelAccessor<K> extends DataAccessor<MultiModelAccessor.Linke
         return tmp;
     }
 
+    public void read(URL resource) {
+        readFromFolder(new File(resource.getFile()));
+    }
+
+    public void addAcessor(String key, IndexedDataAccessor accessor) {
+        accessor.index();
+        elementaryModels.put(key, accessor);
+    }
 
     enum AccessModes {
         PURE,

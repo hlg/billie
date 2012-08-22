@@ -21,11 +21,20 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
         setData(URI.createFileURI(URLDecoder.decode(url.getPath(),"UTF-8")));
     }
 
+    EMFGenericAccessor(EObject parsed){
+        data = parsed;
+    }
+
     protected EMFGenericAccessor() {
     }
 
     public EMFGenericAccessor(InputStream inputStream) throws IOException {
         setData(inputStream);
+    }
+
+    public EMFGenericAccessor(InputStream stream, String namespace) throws IOException {
+        this.namespace = namespace + "::";
+        setData(stream);
     }
 
     private void setData(InputStream inputStream) throws IOException {
@@ -57,7 +66,7 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
 
     protected abstract Map<String, T> collectLookUp();
 
-    public void setInput(InputStream inputStream, String namespace) throws IOException {
+    public void read(InputStream inputStream, String namespace) throws IOException {
         read(inputStream);
         this.namespace = namespace + "::";
     }

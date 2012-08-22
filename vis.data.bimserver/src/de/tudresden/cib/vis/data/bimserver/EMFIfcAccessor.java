@@ -25,7 +25,7 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObje
         parser.read(inputStream);
     }
 
-    public void setInput(InputStream inputStream, String namespace) throws IOException {
+    public void read(InputStream inputStream, String namespace) throws IOException {
         read(inputStream);
         this.namespace = namespace + "::";
     }
