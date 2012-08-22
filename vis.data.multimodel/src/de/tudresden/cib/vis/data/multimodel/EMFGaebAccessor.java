@@ -1,7 +1,7 @@
 package de.tudresden.cib.vis.data.multimodel;
 
 import cib.lib.gaeb.model.gaeb.*;
-import cib.lib.gaeb.model.gaeb.util.GaebResourceImpl;
+import cib.lib.gaeb.model.gaeb.util.GaebResourceFactoryImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -38,7 +38,8 @@ public class EMFGaebAccessor extends EMFGenericAccessor<TgItem> {
     @Override
     protected Resource createResource(URI uri) {
         GaebPackage.eINSTANCE.eClass();
-        return new GaebResourceImpl(uri);
+        GaebResourceFactoryImpl gaebResourceFactory = new GaebResourceFactoryImpl();
+        return gaebResourceFactory.createResource(uri);
     }
 
     @Override

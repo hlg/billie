@@ -1,7 +1,7 @@
 package de.tudresden.cib.vis.data.multimodel;
 
 import cib.mf.qto.model.*;
-import cib.mf.qto.model.util.QtoResourceImpl;
+import cib.mf.qto.model.util.QtoResourceFactoryImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -27,7 +27,8 @@ public class EMFQtoAccessor extends EMFGenericAccessor<AnsatzType> {
     @Override
     protected Resource createResource(URI uri) {
         QtoPackage.eINSTANCE.eClass();
-        return new QtoResourceImpl(uri);
+        QtoResourceFactoryImpl qtoResourceFactory = new QtoResourceFactoryImpl();
+        return qtoResourceFactory.createResource(uri);
     }
 
     @Override
