@@ -9,6 +9,7 @@ Bundle-Localization: plugin
 Export-Package: de.tudresden.cib.vis.configurations
 Require-Bundle: de.mefisto.container,
  cib.lib.gaeb.model,
+ cib.lib.j3d,
  cib.mf.qto.model,
  cib.mf.schedule.model,
  org.eclipse.draw2d,

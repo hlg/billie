@@ -27,7 +27,7 @@ public class IfcGaebColored3DMapper {
         viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\", "zip").getCanonicalPath());
     }
 
-    void configMapping(final Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
+    public void configMapping(final Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
         mapper.addStatistics("maxTotal", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, BigDecimal>(new BigDecimal(0)) {
             @Override
             public BigDecimal function(BigDecimal aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
@@ -41,6 +41,11 @@ public class IfcGaebColored3DMapper {
             }
         });
         mapper.addMapping(new PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, VisFactory3D.Polyeder>() {
+            @Override
+            protected boolean condition() {
+                return data.getKeyObject()!=null;  // TODO -> prevent null key objects during link resolution process
+            }
+
             @Override
             protected void configure() {
                 EMFIfcParser.Geometry geometry = data.getKeyObject().getGeometry();
@@ -59,9 +64,11 @@ public class IfcGaebColored3DMapper {
     private BigDecimal calculateOveralPrice(Collection<LinkedObject.ResolvedLink> resolvedLinks) {
         BigDecimal price = new BigDecimal(0);
         for (LinkedObject.ResolvedLink link : resolvedLinks) {
-            TgItem gaeb = link.getLinkedBoQ().values().iterator().next(); // TODO: implement getFirstLinkedBoQ ...
-            AnsatzType qto = link.getLinkedQto().values().iterator().next();
-            price = price.add(gaeb.getUP().multiply(BigDecimal.valueOf(qto.getResult())));
+            if(!link.getLinkedBoQ().isEmpty()&&!link.getLinkedQto().isEmpty()){
+                TgItem gaeb = link.getLinkedBoQ().values().iterator().next(); // TODO: implement getFirstLinkedBoQ ...
+                AnsatzType qto = link.getLinkedQto().values().iterator().next();
+                price = price.add(gaeb.getUP().multiply(BigDecimal.valueOf(qto.getResult())));
+            }
         }
         return price;
     }
