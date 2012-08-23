@@ -60,11 +60,11 @@ public class MultiModelAccessorTests {
 
     private void check(MultiModelAccessor<EMFIfcParser.EngineEObject> mma) {
         int linkSize = 0;
-        for (MultiModelAccessor.LinkedObject linking : mma) {
+        for (LinkedObject linking : mma) {
             linkSize++;
-            Collection<MultiModelAccessor.ResolvedLink> linkedItems = linking.getResolvedLinks();
+            Collection<LinkedObject.ResolvedLink> linkedItems = linking.getResolvedLinks();
             Assert.assertFalse(linkedItems.isEmpty());
-            MultiModelAccessor.ResolvedLink theLink = linkedItems.iterator().next();
+            LinkedObject.ResolvedLink theLink = linkedItems.iterator().next();
             Assert.assertTrue(theLink.getLinkedObject().isEmpty());
             assertEquals(1, theLink.getLinkedBoQ().size());
             assertEquals(1, theLink.getScheduleObjects().size());

@@ -5,6 +5,7 @@ import cib.mf.qto.model.AnsatzType;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
+import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.data.multimodel.MultiModelAccessor;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -20,16 +21,16 @@ import java.util.Collection;
 public class IfcGaebColored3DMapper {
 
     public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
-        MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager()));
+        MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager()));
         new IfcGaebColored3DMapper().configMapping(loader.getMapper());
         SimpleViewer viewer = new SimpleViewer(loader);
         viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\", "zip").getCanonicalPath());
     }
 
-    void configMapping(final Mapper<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
-        mapper.addStatistics("maxTotal", new DataAccessor.Folding<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, BigDecimal>(new BigDecimal(0)) {
+    void configMapping(final Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
+        mapper.addStatistics("maxTotal", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, BigDecimal>(new BigDecimal(0)) {
             @Override
-            public BigDecimal function(BigDecimal aggregator, MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject> element) {
+            public BigDecimal function(BigDecimal aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
                 return calculateOveralPrice(element.getResolvedLinks()).max(aggregator);
             }
         });
@@ -39,7 +40,7 @@ public class IfcGaebColored3DMapper {
                 return mapper.getStats("maxTotal").doubleValue() * 0.5;
             }
         });
-        mapper.addMapping(new PropertyMap<MultiModelAccessor.LinkedObject<EMFIfcParser.EngineEObject>, VisFactory3D.Polyeder>() {
+        mapper.addMapping(new PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, VisFactory3D.Polyeder>() {
             @Override
             protected void configure() {
                 EMFIfcParser.Geometry geometry = data.getKeyObject().getGeometry();
@@ -55,9 +56,9 @@ public class IfcGaebColored3DMapper {
         });
     }
 
-    private BigDecimal calculateOveralPrice(Collection<MultiModelAccessor.ResolvedLink> resolvedLinks) {
+    private BigDecimal calculateOveralPrice(Collection<LinkedObject.ResolvedLink> resolvedLinks) {
         BigDecimal price = new BigDecimal(0);
-        for (MultiModelAccessor.ResolvedLink link : resolvedLinks) {
+        for (LinkedObject.ResolvedLink link : resolvedLinks) {
             TgItem gaeb = link.getLinkedBoQ().values().iterator().next(); // TODO: implement getFirstLinkedBoQ ...
             AnsatzType qto = link.getLinkedQto().values().iterator().next();
             price = price.add(gaeb.getUP().multiply(BigDecimal.valueOf(qto.getResult())));
