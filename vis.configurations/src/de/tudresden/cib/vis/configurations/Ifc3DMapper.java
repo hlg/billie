@@ -1,18 +1,10 @@
 package de.tudresden.cib.vis.configurations;
 
-import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
-import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
-import de.tudresden.cib.vis.mapping.TargetCreationException;
-import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
 import de.tudresden.cib.vis.scene.VisFactory3D;
 import org.bimserver.models.ifc2x3tc1.IfcBuildingElement;
-import org.bimserver.plugins.PluginException;
-
-import java.io.FileReader;
-import java.io.IOException;
 
 public class Ifc3DMapper {
 
@@ -41,10 +33,4 @@ public class Ifc3DMapper {
         });
     }
 
-    public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
-        MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcAccessor(new SimplePluginManager()));
-        new Ifc3DMapper().configMapping(loader.getMapper());
-        SimpleViewer viewer = new SimpleViewer(loader);
-        viewer.run(new FileReader(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc")));
-    }
 }

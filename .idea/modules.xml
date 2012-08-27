@@ -7,7 +7,9 @@
       <module fileurl="file://$PROJECT_DIR$/vis.configurations/vis.configurations.iml" filepath="$PROJECT_DIR$/vis.configurations/vis.configurations.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.data.bimserver/vis.data.bimserver.iml" filepath="$PROJECT_DIR$/vis.data.bimserver/vis.data.bimserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.data.multimodel/vis.data.multimodel.iml" filepath="$PROJECT_DIR$/vis.data.multimodel/vis.data.multimodel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vis.runtime.draw2d/vis.runtime.draw2d.iml" filepath="$PROJECT_DIR$/vis.runtime.draw2d/vis.runtime.draw2d.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.runtime.java3d/vis.runtime.java3d.iml" filepath="$PROJECT_DIR$/vis.runtime.java3d/vis.runtime.java3d.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vis.sampleApps/vis.sampleApps.iml" filepath="$PROJECT_DIR$/vis.sampleApps/vis.sampleApps.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.scene.draw2d/vis.scene.draw2d.iml" filepath="$PROJECT_DIR$/vis.scene.draw2d/vis.scene.draw2d.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.scene.java3d/vis.scene.java3d.iml" filepath="$PROJECT_DIR$/vis.scene.java3d/vis.scene.java3d.iml" />
     </modules>

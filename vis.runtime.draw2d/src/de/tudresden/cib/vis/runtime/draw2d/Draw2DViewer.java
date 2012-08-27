@@ -1,4 +1,4 @@
-package de.tudresden.cib.vis.configurations;
+package de.tudresden.cib.vis.runtime.draw2d;
 
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.LightweightSystem;

@@ -1,4 +1,4 @@
-package de.tudresden.cib.vis.configurations;
+package de.tudresden.cib.vis.sampleApps;
 
 import com.sun.j3d.loaders.IncorrectFormatException;
 import com.sun.j3d.loaders.Loader;
@@ -35,7 +35,7 @@ public class MappedJ3DLoader<T> implements Loader {
         return loadScene(new FileInputStream(s));
     }
 
-    private Scene loadScene(InputStream inputStream) {
+    private Scene loadScene(InputStream inputStream) throws FileNotFoundException {
         IfcScene result = null;
         try {
             data.read(inputStream);
@@ -43,9 +43,9 @@ public class MappedJ3DLoader<T> implements Loader {
             result.setSceneGroup((BranchGroup) mapper.map());
             mapper.animate();
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new FileNotFoundException(e.getMessage());
         } catch (TargetCreationException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new ParsingErrorException(e.getMessage());
         }
         return result;
     }
@@ -54,9 +54,8 @@ public class MappedJ3DLoader<T> implements Loader {
         try {
             return loadScene(url.openStream());  //To change body of implemented methods use File | Settings | File Templates.
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new FileNotFoundException(e.getMessage());
         }
-        return null;
     }
 
     public Scene load(Reader reader) throws FileNotFoundException, IncorrectFormatException, ParsingErrorException {

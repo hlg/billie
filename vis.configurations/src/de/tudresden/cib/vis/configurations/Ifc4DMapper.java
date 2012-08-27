@@ -6,28 +6,21 @@ import cib.mf.schedule.model.activity.Activity;
 import cib.mf.schedule.model.activity.Timestamp;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
-import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
-import de.tudresden.cib.vis.data.multimodel.MultiModelAccessor;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
-import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
-import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
 import de.tudresden.cib.vis.scene.TimeLine;
-import org.bimserver.plugins.PluginException;
 
 import javax.media.j3d.*;
 import javax.vecmath.Color3f;
-import java.io.IOException;
 import java.util.*;
 
 import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
 public class Ifc4DMapper {
 
-    public void configMapping(MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader) {
-        final Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper = loader.getMapper();
+    public void configMapping(final Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
         mapper.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
             @Override
             public Long function(Long aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
@@ -181,14 +174,6 @@ public class Ifc4DMapper {
         long dateMillis = timeStamp.getDate().toGregorianCalendar().getTimeInMillis();
         long timeMillis = timeStamp.getTime().toGregorianCalendar().getTimeInMillis();
         return dateMillis + timeMillis;
-    }
-
-    public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
-        MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager()));
-        new Ifc4DMapper().configMapping(loader);
-        SimpleViewer viewer = new SimpleViewer(loader);
-        viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());  // or carport.zip
-
     }
 
     private enum ActivityType {

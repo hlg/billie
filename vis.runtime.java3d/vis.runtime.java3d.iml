@@ -105,6 +105,7 @@
     </orderEntry>
     <orderEntry type="module" module-name="org.bimserver.ifcemf" />
     <orderEntry type="module" module-name="vis.data.bimserver" />
+    <orderEntry type="module" module-name="vis" />
   </component>
 </module>
 

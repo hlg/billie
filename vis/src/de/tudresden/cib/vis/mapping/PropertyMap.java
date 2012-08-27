@@ -42,7 +42,7 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
 
     public T map(S source, int i) throws TargetCreationException {
         if (provider == null) {
-            throw new TargetCreationException("missing provider");
+            throw new TargetCreationException("missing provider"); // TODO: how to handle or avoid?
         }
         return map(source, provider.create(), i);
     }
