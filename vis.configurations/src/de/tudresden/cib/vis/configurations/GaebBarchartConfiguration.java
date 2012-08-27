@@ -15,14 +15,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.graphics.Font;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 
-public class GaebBarchartMapper {
+public class GaebBarchartConfiguration {
 
     private Mapper<EObject> mapper;
 
-    public GaebBarchartMapper(Font font) throws IOException {
-        EMFGaebAccessor data = new EMFGaebAccessor(this.getClass().getResourceAsStream("/resources/LV1.X81"));
+    public GaebBarchartConfiguration(Font font, InputStream input) throws IOException {
+        EMFGaebAccessor data = new EMFGaebAccessor(input);
         Draw2dFactory visFactory = new Draw2dFactory(font);
         Draw2dBuilder visBuilder = new Draw2dBuilder();
         mapper = new Mapper<EObject>(data, visFactory, visBuilder);
@@ -69,7 +70,7 @@ public class GaebBarchartMapper {
         });
     }
 
-    public Panel execute() throws TargetCreationException {
+    public Panel runMapper() throws TargetCreationException {
         return (Panel) mapper.map();
     }
 

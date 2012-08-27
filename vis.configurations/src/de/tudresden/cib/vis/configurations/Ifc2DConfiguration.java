@@ -18,11 +18,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-public class Ifc2DMapper {
+public class Ifc2DConfiguration {
 
     private Mapper<EMFIfcParser.EngineEObject> mapper;
 
-    public Ifc2DMapper(Font font, InputStream input) throws IOException {
+    public Ifc2DConfiguration(Font font, InputStream input) throws IOException {
         EMFIfcAccessor data = new EMFIfcAccessor(new SimplePluginManager());
         data.read(input);
         Draw2dFactory visFactory = new Draw2dFactory(font);
@@ -126,7 +126,7 @@ public class Ifc2DMapper {
         });
     }
 
-    public Panel execute() throws TargetCreationException {
+    public Panel runMapper() throws TargetCreationException {
         return (Panel) mapper.map();
     }
 

@@ -12,7 +12,7 @@ import de.tudresden.cib.vis.scene.VisFactory3D;
 import java.math.BigDecimal;
 import java.util.Collection;
 
-public class IfcGaebColored3DMapper {
+public class IfcGaebColored3DConfiguration {
 
     public void configMapping(final Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
         mapper.addStatistics("maxTotal", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, BigDecimal>(new BigDecimal(0)) {

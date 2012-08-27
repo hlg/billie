@@ -18,7 +18,7 @@ import java.util.*;
 
 import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
-public class Ifc4DMapper {
+public class Ifc4DConfiguration {
 
     public void configMapping(final Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
         mapper.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
