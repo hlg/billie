@@ -41,7 +41,7 @@ public class MappedJ3DLoader<T> implements Loader {
             data.read(inputStream);
             result = new IfcScene();
             result.setSceneGroup((BranchGroup) mapper.map());
-            mapper.animate();
+            mapper.getSceneManager().animate();
         } catch (IOException e) {
             throw new FileNotFoundException(e.getMessage());
         } catch (TargetCreationException e) {

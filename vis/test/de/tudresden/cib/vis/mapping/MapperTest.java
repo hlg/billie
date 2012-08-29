@@ -2,17 +2,16 @@ package de.tudresden.cib.vis.mapping;
 
 import de.tudresden.cib.vis.data.CollectionAccessor;
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.scene.TimeLine;
 import de.tudresden.cib.vis.scene.VisBuilder;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class MapperTest extends MappingTestCase {
     @Before
@@ -34,9 +33,56 @@ public class MapperTest extends MappingTestCase {
 
     @Test
     public void testMapping() throws TargetCreationException {
-        DataAccessor data = new CollectionAccessor(Collections.singletonList(d));
         FakeVisBuilder builder = new FakeVisBuilder();
-        VisFactory2D factory = new VisFactory2D() {
+        Mapper test = makeMapper(builder);
+        test.addMapping(
+                new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+                    @Override
+                    protected void configure() {
+                        graphObject.setWidth(data.a);
+                    }
+                }
+        );
+        test.map();
+        assertEquals(1, builder.parts.size());
+        VisFactory2D.GraphObject expected = builder.parts.get(0);
+        assertEquals(d.a, ((FakeRectangle) expected).a);
+        assertEquals(expected, test.getGraph(d));
+        assertEquals(d, test.getData(expected));
+    }
+
+    private Mapper makeMapper(FakeVisBuilder builder) {
+        DataAccessor data = new CollectionAccessor(Collections.singletonList(d));
+        VisFactory2D factory = new FakeVisFactoy();
+        return new Mapper(data, factory, builder);
+    }
+
+    @Test
+    public void testChange() throws TargetCreationException {
+        FakeVisBuilder builder = new FakeVisBuilder();
+        Mapper test = makeMapper(builder);
+        final TimeLine.Change theChange = new TimeLine.Change(){
+            @Override
+            protected void configure() {
+                ((FakeRectangle) graph).setWidth(100);
+            }
+        };
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                graphObject.setWidth(data.a);
+                addChange(0, theChange);
+           }
+        });
+        test.map();
+        VisFactory2D.Rectangle generatedGraph = (VisFactory2D.Rectangle) builder.parts.get(0);
+        TimeLine<? extends VisFactory2D.Rectangle> generatedTimeline = test.getSceneManager().getTimeLine(VisFactory2D.Rectangle.class);
+        Set<? extends VisFactory2D.Rectangle> toBeChanged = generatedTimeline.get(0).get(theChange);
+        assertTrue(toBeChanged.contains(generatedGraph));
+        assertEquals(1, toBeChanged.size());
+    }
+
+    public static class FakeVisFactoy extends VisFactory2D {
             @Override
             protected PropertyMap.Provider<VisFactory2D.Rectangle> setRectangleProvider() {
                 return new PropertyMap.Provider<Rectangle>() {
@@ -55,19 +101,6 @@ public class MapperTest extends MappingTestCase {
             protected PropertyMap.Provider<Polyline> setPolylineProvider() {
                 return null;
             }
-        };
-        Mapper test = new Mapper(data, factory, builder);
-        test.addMapping(
-                new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
-                    @Override
-                    protected void configure() {
-                        graphObject.setWidth(data.a);
-                    }
-                }
-        );
-        test.map();
-        assertEquals(1, builder.parts.size());
-        assertEquals(d.a, ((FakeRectangle) builder.parts.get(0)).a);
     }
 
     public static class FakeVisBuilder implements VisBuilder<VisFactory2D.GraphObject, Object> {

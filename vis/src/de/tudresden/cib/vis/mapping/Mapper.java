@@ -1,7 +1,9 @@
 package de.tudresden.cib.vis.mapping;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import de.tudresden.cib.vis.data.DataAccessor;
-import de.tudresden.cib.vis.scene.TimeLine;
+import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.VisBuilder;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 
@@ -12,13 +14,11 @@ public class Mapper<E> {
     private DataAccessor<E> dataAccessor;
     private VisFactory2D visFactory;
     private VisBuilder visBuilder;
-    private Map<Class, TimeLine> timeLines = new HashMap<Class, TimeLine>();
+    private SceneManager sceneManager = new SceneManager();
 
     private Map<String, DataAccessor.Folding<E, ? extends Number>> statistics = new HashMap<String, DataAccessor.Folding<E, ? extends Number>>();
     private Map<String, PreProcessing<Double>> globals = new HashMap<String, PreProcessing<Double>>();
-
-
-    // TODO: collect and keep a map of already mapped objects
+    private BiMap<E, VisFactory2D.GraphObject> mapped = HashBiMap.create();
 
     public Mapper(DataAccessor<E> dataAccessor, VisFactory2D visFactory, VisBuilder visBuilder) {
         this.dataAccessor = dataAccessor;
@@ -28,8 +28,7 @@ public class Mapper<E> {
 
     public <S, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
         propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
-        if (!timeLines.containsKey(propertyMap.graphClass)) timeLines.put(propertyMap.graphClass, new TimeLine<T>());
-        propertyMap.with(timeLines.get(propertyMap.graphClass));
+        propertyMap.with(sceneManager.getTimeLine(propertyMap.graphClass));
         propertyMaps.addPropertyMap(propertyMap.dataClass, propertyMap);
     }
 
@@ -42,38 +41,8 @@ public class Mapper<E> {
         return visBuilder.getScene();
     }
 
-    public void animate() {
-        if (hasAnimations()) {
-            TimerTask animation = new TimerTask() {
-                int frame = 0;
-                int maxFrame = getLongestTimeLine();
-
-                @Override
-                public void run() {
-                    for (TimeLine timeLine : timeLines.values()) {
-                        timeLine.changeAll(frame);
-                    }
-                    frame++;
-                    if (frame == maxFrame) frame = 0;    // TODO: time line initial state and reset
-                }
-            };
-            new Timer().schedule(animation, 2000, 40);   // 1 frame = 1 hour schedule, 1 frame = 40 ms animation -> 1 s animation = 1 day schedule time
-        }
-    }
-
-    private int getLongestTimeLine() {
-        int longest = 0;
-        for (TimeLine<?> timeLine : this.timeLines.values()) {
-            longest = Math.max(timeLine.lastKey(), longest);
-        }
-        return longest;
-    }
-
-    private boolean hasAnimations() {
-        for (TimeLine timeLine : timeLines.values()) {
-            if (!timeLine.isEmpty()) return true;
-        }
-        return false;
+    public SceneManager getSceneManager(){
+        return sceneManager;
     }
 
     private void preProcess() {
@@ -84,19 +53,20 @@ public class Mapper<E> {
 
     private void mainPass() throws TargetCreationException {
         int mappingIndex = 0; // TODO: per class or even per property map index?
-        for (Object source : dataAccessor) {
+        for (E source : dataAccessor) {
             if (mapAndBuild(source, mappingIndex)) mappingIndex++;
         }
     }
 
-    private <A> boolean mapAndBuild(A source, int mappingIndex) throws TargetCreationException {
-        Class<A> sClass = (Class<A>) source.getClass();
-        Collection<PropertyMap<A, ?>> matchingPropMaps = propertyMaps.getPropertyMaps(sClass);
+    private boolean mapAndBuild(E source, int mappingIndex) throws TargetCreationException {
+        Class<E> sClass = (Class<E>) source.getClass();
+        Collection<PropertyMap<E, ?>> matchingPropMaps = propertyMaps.getPropertyMaps(sClass);
         boolean matchedAny = false;
-        for (PropertyMap<? super A, ?> propertyMap : matchingPropMaps) {
+        for (PropertyMap<? super E, ?> propertyMap : matchingPropMaps) {
             if (propertyMap.checkCondition(source)) {
                 matchedAny = true;
                 propertyMap.map(source, mappingIndex);
+                mapped.put(source, propertyMap.graphObject);
                 visBuilder.addPart(propertyMap.graphObject);
             }
         }
@@ -119,6 +89,14 @@ public class Mapper<E> {
 
     public Double getGlobal(String name) {
         return globals.get(name).getResult();
+    }
+
+    public VisFactory2D.GraphObject getGraph(E data) {
+        return mapped.get(data);
+    }
+
+    public E getData(VisFactory2D.GraphObject graphObject) {
+        return mapped.inverse().get(graphObject);
     }
 
     class ClassMap extends HashMap<Class, Collection<PropertyMap>> {
