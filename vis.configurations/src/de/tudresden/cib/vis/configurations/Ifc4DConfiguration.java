@@ -11,6 +11,8 @@ import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
 import de.tudresden.cib.vis.scene.TimeLine;
+import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
+import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 
 import javax.media.j3d.*;
 import javax.vecmath.Color3f;
@@ -20,7 +22,17 @@ import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
 public class Ifc4DConfiguration {
 
-    public void configMapping(final Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
+    private Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper;
+
+    public Ifc4DConfiguration(DataAccessor<LinkedObject<EMFIfcParser.EngineEObject>> data){
+        this.mapper = new Mapper<LinkedObject<EMFIfcParser.EngineEObject>>(data, new Java3dFactory(), new Java3dBuilder());
+    }
+
+    public Ifc4DConfiguration(Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
+        this.mapper = mapper;
+    }
+
+    public void config() {
         mapper.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
             @Override
             public Long function(Long aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {

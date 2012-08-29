@@ -8,13 +8,25 @@ import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory3D;
+import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
+import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 
 public class IfcGaebColored3DConfiguration {
 
-    public void configMapping(final Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
+    private Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper;
+
+    public IfcGaebColored3DConfiguration(DataAccessor<LinkedObject<EMFIfcParser.EngineEObject>> data){
+        this.mapper = new Mapper<LinkedObject<EMFIfcParser.EngineEObject>>(data, new Java3dFactory(), new Java3dBuilder());
+    }
+
+    public IfcGaebColored3DConfiguration(Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
+        this.mapper = mapper;
+    }
+
+    public void config() {
         mapper.addStatistics("maxTotal", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, BigDecimal>(new BigDecimal(0)) {
             @Override
             public BigDecimal function(BigDecimal aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
