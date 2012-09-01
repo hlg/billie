@@ -28,7 +28,6 @@ public class Mapper<E> {
 
     public <S, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
         propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
-        propertyMap.with(sceneManager.getTimeLine(propertyMap.graphClass));
         propertyMap.with(sceneManager);
         propertyMaps.addPropertyMap(propertyMap.dataClass, propertyMap);
     }

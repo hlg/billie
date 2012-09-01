@@ -2,11 +2,17 @@ package de.tudresden.cib.vis.mapping;
 
 import de.tudresden.cib.vis.data.CollectionAccessor;
 import de.tudresden.cib.vis.data.DataAccessor;
-import de.tudresden.cib.vis.scene.*;
+import de.tudresden.cib.vis.scene.Change;
+import de.tudresden.cib.vis.scene.Event;
+import de.tudresden.cib.vis.scene.VisBuilder;
+import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -75,10 +81,9 @@ public class MapperTest extends MappingTestCase {
         });
         test.map();
         VisFactory2D.Rectangle generatedGraph = (VisFactory2D.Rectangle) builder.parts.get(0);
-        TimeLine<? extends VisFactory2D.Rectangle> generatedTimeline = test.getSceneManager().getTimeLine(VisFactory2D.Rectangle.class);
-        Set<? extends VisFactory2D.Rectangle> toBeChanged = generatedTimeline.get(0).get(theChange);
-        assertTrue(toBeChanged.contains(generatedGraph));
-        assertEquals(1,toBeChanged.size());
+        List<Change> changes = test.getSceneManager().getChanges(0, generatedGraph);
+        assertTrue(changes.contains(theChange));
+        assertEquals(1, changes.size());
     }
 
     @Test
@@ -101,8 +106,9 @@ public class MapperTest extends MappingTestCase {
         });
         test.map();
         VisFactory2D.Rectangle generatedGraph = (VisFactory2D.Rectangle) builder.parts.get(0);
-        List<Change> changes = test.getSceneManager().getEvents(Event.CLICK).get(generatedGraph);
+        List<Change> changes = test.getSceneManager().getChanges(Event.CLICK, generatedGraph);
         assertTrue(changes.contains(theChange));
+        assertEquals(1, changes.size());
     }
 
     public static class FakeVisFactoy extends VisFactory2D {

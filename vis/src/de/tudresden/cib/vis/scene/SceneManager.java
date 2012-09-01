@@ -1,48 +1,26 @@
 package de.tudresden.cib.vis.scene;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class SceneManager {
 
-    private Map<Class, TimeLine> timeLines = new HashMap<Class, TimeLine>();
-    private Map<Event, EventMap> eventMaps = new HashMap<Event, EventMap>();
+    private TreeMap<Integer, ChangeMap> timeLines = new TreeMap<Integer, ChangeMap>();
+    private Map<Event, ChangeMap> eventMaps = new HashMap<Event, ChangeMap>();
 
-    // TODO: initial state and reset
     // TODO: use animation facilities of scene graph library if possible
-
-    public <T extends VisFactory2D.GraphObject> TimeLine<T> getTimeLine(Class<T> graphClass) {
-        if (!timeLines.containsKey(graphClass)) timeLines.put(graphClass, new TimeLine<T>());
-        return timeLines.get(graphClass);
-    }
-
-    public EventMap getEvents(Event event) {
-        if (!eventMaps.containsKey(event)) eventMaps.put(event, new EventMap());
-        return eventMaps.get(event);
-    }
+    // TODO: initial state and reset
 
     private int advanceFrame(int current, int maxFrame) {
-        for(TimeLine timeLine: timeLines.values()){
-            timeLine.changeAll(current);
-        }
+        if(timeLines.containsKey(current)) timeLines.get(current).changeAll();
         return  (current+1 == maxFrame) ? 0 : current+1;
     }
 
     private int getLongestTimeLine() {
-        int longest = 0;
-        for (TimeLine<?> timeLine : this.timeLines.values()) {
-            longest = Math.max(timeLine.lastKey(), longest);
-        }
-        return longest;
+        return timeLines.lastKey();
     }
 
     private boolean hasAnimations() {
-        for (TimeLine timeLine : timeLines.values()) {
-            if (!timeLine.isEmpty()) return true;
-        }
-        return false;
+        return !timeLines.isEmpty();
     }
 
     public void animate(){
@@ -64,6 +42,7 @@ public class SceneManager {
         }
     }
 
+
     public void jumpToTime(int frame){
         int current = 0;
         int maxFrame = getLongestTimeLine();
@@ -72,9 +51,26 @@ public class SceneManager {
         }
     }
 
-
-    public void addChange(Event event, VisFactory2D.GraphObject graphObject, Change change) {
-        if(!eventMaps.containsKey(event)) eventMaps.put(event, new EventMap());
+    public <S extends VisFactory2D.GraphObject> void addChange(Event event, S graphObject, Change<S> change) {
+        if(!eventMaps.containsKey(event)) eventMaps.put(event, new ChangeMap());
         eventMaps.get(event).addChange(change, graphObject);
     }
+
+    public <S extends VisFactory2D.GraphObject> void addChange(int time, S graphObject, Change<S> change) {
+        if(!timeLines.containsKey(time)) timeLines.put(time, new ChangeMap());
+        timeLines.get(time).addChange(change, graphObject);
+    }
+
+    public List<Change> getChanges(int time, VisFactory2D.GraphObject graph) {
+        return (timeLines.containsKey(time) && timeLines.get(time).containsKey(graph))
+                ? timeLines.get(time).get(graph)
+                : null;
+    }
+    public List<Change> getChanges(Event event, VisFactory2D.GraphObject graph) {
+        return (eventMaps.containsKey(event) && eventMaps.get(event).containsKey(graph))
+                ? eventMaps.get(event).get(graph)
+                : null;
+
+    }
+
 }

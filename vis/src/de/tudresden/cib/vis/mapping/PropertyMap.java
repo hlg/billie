@@ -2,7 +2,6 @@ package de.tudresden.cib.vis.mapping;
 
 import de.tudresden.cib.vis.scene.Event;
 import de.tudresden.cib.vis.scene.SceneManager;
-import de.tudresden.cib.vis.scene.TimeLine;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 
 import java.lang.reflect.ParameterizedType;
@@ -12,7 +11,6 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
     protected S data;
     protected T graphObject;
     protected int index;
-    protected TimeLine<T> timeLine;
 
     Class<S> dataClass;
     Class<T> graphClass;
@@ -55,15 +53,11 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
     }
 
     protected void addChange(int time, de.tudresden.cib.vis.scene.Change<T> change){
-        timeLine.addChange(time, graphObject, change);
+        sceneManager.addChange(time, graphObject, change);
     }
 
     protected void addChange(Event event, de.tudresden.cib.vis.scene.Change<T> change){
         sceneManager.addChange(event, graphObject, change);
-    }
-
-    public void with(TimeLine<T> timeLine) {
-        this.timeLine = timeLine;
     }
 
     public void with(SceneManager sceneManager) {
