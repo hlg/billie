@@ -2,9 +2,7 @@ package de.tudresden.cib.vis.mapping;
 
 import de.tudresden.cib.vis.data.CollectionAccessor;
 import de.tudresden.cib.vis.data.DataAccessor;
-import de.tudresden.cib.vis.scene.TimeLine;
-import de.tudresden.cib.vis.scene.VisBuilder;
-import de.tudresden.cib.vis.scene.VisFactory2D;
+import de.tudresden.cib.vis.scene.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -59,12 +57,13 @@ public class MapperTest extends MappingTestCase {
 
     @Test
     public void testChange() throws TargetCreationException {
+        // TODO: tests to much (integration tests?)
         FakeVisBuilder builder = new FakeVisBuilder();
         Mapper test = makeMapper(builder);
-        final TimeLine.Change theChange = new TimeLine.Change(){
+        final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>(){
             @Override
             protected void configure() {
-                ((FakeRectangle) graph).setWidth(100);
+                graph.setWidth(100);
             }
         };
         test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
@@ -79,7 +78,31 @@ public class MapperTest extends MappingTestCase {
         TimeLine<? extends VisFactory2D.Rectangle> generatedTimeline = test.getSceneManager().getTimeLine(VisFactory2D.Rectangle.class);
         Set<? extends VisFactory2D.Rectangle> toBeChanged = generatedTimeline.get(0).get(theChange);
         assertTrue(toBeChanged.contains(generatedGraph));
-        assertEquals(1, toBeChanged.size());
+        assertEquals(1,toBeChanged.size());
+    }
+
+    @Test
+    public void testEvent() throws TargetCreationException {
+        // TODO: tests to much (integration tests?)
+       FakeVisBuilder builder = new FakeVisBuilder();
+       Mapper test = makeMapper(builder);
+       final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>() {
+           @Override
+           protected void configure() {
+               graph.setWidth(100);
+           }
+       };
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                graphObject.setWidth(data.a);
+                addChange(Event.CLICK, theChange);
+            }
+        });
+        test.map();
+        VisFactory2D.Rectangle generatedGraph = (VisFactory2D.Rectangle) builder.parts.get(0);
+        List<Change> changes = test.getSceneManager().getEvents(Event.CLICK).get(generatedGraph);
+        assertTrue(changes.contains(theChange));
     }
 
     public static class FakeVisFactoy extends VisFactory2D {

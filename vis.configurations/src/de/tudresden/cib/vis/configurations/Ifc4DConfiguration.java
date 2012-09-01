@@ -10,7 +10,7 @@ import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
-import de.tudresden.cib.vis.scene.TimeLine;
+import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 
@@ -56,17 +56,17 @@ public class Ifc4DConfiguration {
             }
         });
         final int scale = 3600 * 1000; // scale to hours TODO: globals?
-        final TimeLine.Change<Polyeder> reset = new TimeLine.Change<Polyeder>() {
+        final Change<Polyeder> reset = new Change<Polyeder>() {
             protected void configure() {
                 ((Shape3D) graph).setAppearance(TypeAppearance.INACTIVE.getAppearance());
             }
         };
-        final TimeLine.Change<Polyeder> activate = new TimeLine.Change<Polyeder>() {
+        final Change<Polyeder> activate = new Change<Polyeder>() {
             public void configure() {
                 ((Shape3D) graph).setAppearance(TypeAppearance.ACTIVATED.getAppearance());
             }
         };
-        final TimeLine.Change<Polyeder> deactivate = new TimeLine.Change<Polyeder>() {
+        final Change<Polyeder> deactivate = new Change<Polyeder>() {
             public void configure() {
                 ((Shape3D) graph).setAppearance(TypeAppearance.DEACTIVATED.getAppearance());
             }
@@ -87,7 +87,7 @@ public class Ifc4DConfiguration {
             }
         };
 
-        final Map<Set<ActivityType>, TimeLine.Change<Polyeder>> colorScale = new HashMap<Set<ActivityType>, TimeLine.Change<Polyeder>>();
+        final Map<Set<ActivityType>, Change<Polyeder>> colorScale = new HashMap<Set<ActivityType>, Change<Polyeder>>();
         final AppearanceCache appearanceCache = new AppearanceCache();
 
         PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, Polyeder> specialActiveMapping = new PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, Polyeder>() {
@@ -114,12 +114,12 @@ public class Ifc4DConfiguration {
 
     }
 
-    private TimeLine.Change<Polyeder> getActiveColorChange(Set<ActivityType> active, final AppearanceCache appearanceCache) {
+    private Change<Polyeder> getActiveColorChange(Set<ActivityType> active, final AppearanceCache appearanceCache) {
         final float R = active.contains(ActivityType.SCHALUNG) ? 1 : 0;
         final float G = active.contains(ActivityType.STAHL) ? 1 : 0;
         final float B = active.contains(ActivityType.BETON) ? 1 : 0;
         final float alpha = (R == 0 && G == 0 && B == 0) ? 0.9f : 0;
-        return new TimeLine.Change<Polyeder>() {
+        return new Change<Polyeder>() {
             @Override
             protected void configure() {
                 ((Shape3D) graph).setAppearance(appearanceCache.getAppearance(R, G, B, alpha));

@@ -29,6 +29,7 @@ public class Mapper<E> {
     public <S, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
         propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
         propertyMap.with(sceneManager.getTimeLine(propertyMap.graphClass));
+        propertyMap.with(sceneManager);
         propertyMaps.addPropertyMap(propertyMap.dataClass, propertyMap);
     }
 
@@ -92,10 +93,12 @@ public class Mapper<E> {
     }
 
     public VisFactory2D.GraphObject getGraph(E data) {
+        // TODO: move to scene manager?
         return mapped.get(data);
     }
 
     public E getData(VisFactory2D.GraphObject graphObject) {
+        // TODO: move to scene manager?
         return mapped.inverse().get(graphObject);
     }
 

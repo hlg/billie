@@ -8,11 +8,19 @@ import java.util.TimerTask;
 public class SceneManager {
 
     private Map<Class, TimeLine> timeLines = new HashMap<Class, TimeLine>();
+    private Map<Event, EventMap> eventMaps = new HashMap<Event, EventMap>();
+
     // TODO: initial state and reset
+    // TODO: use animation facilities of scene graph library if possible
 
     public <T extends VisFactory2D.GraphObject> TimeLine<T> getTimeLine(Class<T> graphClass) {
         if (!timeLines.containsKey(graphClass)) timeLines.put(graphClass, new TimeLine<T>());
         return timeLines.get(graphClass);
+    }
+
+    public EventMap getEvents(Event event) {
+        if (!eventMaps.containsKey(event)) eventMaps.put(event, new EventMap());
+        return eventMaps.get(event);
     }
 
     private int advanceFrame(int current, int maxFrame) {
@@ -65,4 +73,8 @@ public class SceneManager {
     }
 
 
+    public void addChange(Event event, VisFactory2D.GraphObject graphObject, Change change) {
+        if(!eventMaps.containsKey(event)) eventMaps.put(event, new EventMap());
+        eventMaps.get(event).addChange(change, graphObject);
+    }
 }
