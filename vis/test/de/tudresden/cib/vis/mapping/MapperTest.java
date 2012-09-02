@@ -38,7 +38,7 @@ public class MapperTest extends MappingTestCase {
     @Test
     public void testMapping() throws TargetCreationException {
         FakeVisBuilder builder = new FakeVisBuilder();
-        Mapper test = makeMapper(builder);
+        Mapper<DataElement> test = makeMapper(builder);
         test.addMapping(
                 new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
                     @Override
@@ -51,8 +51,8 @@ public class MapperTest extends MappingTestCase {
         assertEquals(1, builder.parts.size());
         VisFactory2D.GraphObject expected = builder.parts.get(0);
         assertEquals(d.a, ((FakeRectangle) expected).a);
-        assertEquals(expected, test.getGraph(d));
-        assertEquals(d, test.getData(expected));
+        assertEquals(expected, test.getSceneManager().getGraph(d));
+        assertEquals(d, test.getSceneManager().getData(expected));
     }
 
     private Mapper makeMapper(FakeVisBuilder builder) {
@@ -84,6 +84,30 @@ public class MapperTest extends MappingTestCase {
         List<Change> changes = test.getSceneManager().getChanges(0, generatedGraph);
         assertTrue(changes.contains(theChange));
         assertEquals(1, changes.size());
+    }
+
+    @Test
+    public void testTriggerSelf() throws TargetCreationException {
+        FakeVisBuilder builder = new FakeVisBuilder();
+        Mapper<DataElement> test = makeMapper(builder);
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                graphObject.setWidth(10);
+                addTrigger(Event.CLICK);
+                addChange(Event.CLICK, new Change<VisFactory2D.Rectangle>() {
+                    @Override
+                    protected void configure() {
+                        graph.setWidth(1000);
+                    }
+                });
+            }
+        });
+        test.map();
+        FakeRectangle graph = (FakeRectangle) builder.parts.get(0);
+        assertEquals(10, graph.a);
+        test.getSceneManager().fire(Event.CLICK, graph);
+        assertEquals(1000, graph.a);
     }
 
     @Test

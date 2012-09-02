@@ -1,9 +1,9 @@
 package de.tudresden.cib.vis.scene;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChangeMap extends HashMap<VisFactory2D.GraphObject, List<Change>> {
 
@@ -13,9 +13,19 @@ public class ChangeMap extends HashMap<VisFactory2D.GraphObject, List<Change>> {
     }
 
     public void changeAll() {
-        for(Map.Entry<VisFactory2D.GraphObject, List<Change>> changeEntry : this.entrySet()){
-            VisFactory2D.GraphObject toBeChanged = changeEntry.getKey();
-            for(Change change : changeEntry.getValue()) change.change(toBeChanged);
-        }
+        for(VisFactory2D.GraphObject toBeChanged : this.keySet()) applyChanges(toBeChanged);
     }
+
+    public void change(Collection<VisFactory2D.GraphObject> graphObjects){
+        for (VisFactory2D.GraphObject toBeChanged: graphObjects) applyChanges(toBeChanged);
+    }
+
+    public void change(VisFactory2D.GraphObject graphObject){
+        applyChanges(graphObject);
+    }
+
+    private void applyChanges(VisFactory2D.GraphObject toBeChanged) {
+        for(Change change : get(toBeChanged)) change.change(toBeChanged);
+    }
+
 }

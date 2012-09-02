@@ -1,7 +1,5 @@
 package de.tudresden.cib.vis.mapping;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.VisBuilder;
@@ -14,11 +12,10 @@ public class Mapper<E> {
     private DataAccessor<E> dataAccessor;
     private VisFactory2D visFactory;
     private VisBuilder visBuilder;
-    private SceneManager sceneManager = new SceneManager();
+    private SceneManager<E> sceneManager = new SceneManager<E>();
 
     private Map<String, DataAccessor.Folding<E, ? extends Number>> statistics = new HashMap<String, DataAccessor.Folding<E, ? extends Number>>();
     private Map<String, PreProcessing<Double>> globals = new HashMap<String, PreProcessing<Double>>();
-    private BiMap<E, VisFactory2D.GraphObject> mapped = HashBiMap.create();
 
     public Mapper(DataAccessor<E> dataAccessor, VisFactory2D visFactory, VisBuilder visBuilder) {
         this.dataAccessor = dataAccessor;
@@ -26,7 +23,7 @@ public class Mapper<E> {
         this.visBuilder = visBuilder;
     }
 
-    public <S, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
+    public <T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<E, T> propertyMap) {
         propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
         propertyMap.with(sceneManager);
         propertyMaps.addPropertyMap(propertyMap.dataClass, propertyMap);
@@ -41,7 +38,7 @@ public class Mapper<E> {
         return visBuilder.getScene();
     }
 
-    public SceneManager getSceneManager(){
+    public SceneManager<E> getSceneManager(){
         return sceneManager;
     }
 
@@ -66,7 +63,6 @@ public class Mapper<E> {
             if (propertyMap.checkCondition(source)) {
                 matchedAny = true;
                 propertyMap.map(source, mappingIndex);
-                mapped.put(source, propertyMap.graphObject);
                 visBuilder.addPart(propertyMap.graphObject);
             }
         }
@@ -91,21 +87,11 @@ public class Mapper<E> {
         return globals.get(name).getResult();
     }
 
-    public VisFactory2D.GraphObject getGraph(E data) {
-        // TODO: move to scene manager?
-        return mapped.get(data);
-    }
-
-    public E getData(VisFactory2D.GraphObject graphObject) {
-        // TODO: move to scene manager?
-        return mapped.inverse().get(graphObject);
-    }
-
     class ClassMap extends HashMap<Class, Collection<PropertyMap>> {
 
         public <S> void addPropertyMap(Class<S> sourceClass, PropertyMap<S, ?> propertyMap) {
             if (!containsKey(sourceClass)) {
-                put(sourceClass, new HashSet<PropertyMap>());
+                put(sourceClass, new ArrayList<PropertyMap>()); // todo: make sure they are unique
             }
             get(sourceClass).add(propertyMap);
         }
