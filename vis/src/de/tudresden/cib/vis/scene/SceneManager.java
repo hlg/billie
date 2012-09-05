@@ -1,7 +1,6 @@
 package de.tudresden.cib.vis.scene;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import de.tudresden.cib.vis.util.MultiBiMap;
 
 import java.util.*;
 
@@ -10,7 +9,7 @@ public class SceneManager<E> {
     private TreeMap<Integer, ChangeMap> scheduledChanges = new TreeMap<Integer, ChangeMap>();
     private Map<Event, ChangeMap> triggeredChanges = new HashMap<Event, ChangeMap>();
     private Map<Event, Collection<VisFactory2D.GraphObject>> triggers = new HashMap<Event, Collection<VisFactory2D.GraphObject>>();
-    private BiMap<E, VisFactory2D.GraphObject> mapped = HashBiMap.create(); // TODO: custom map implementation: multi bimap
+    private MultiBiMap<E, VisFactory2D.GraphObject> mapped = MultiBiMap.create();
 
     // TODO: use animation facilities of scene graph library if possible
     // TODO: initial state and reset
@@ -85,11 +84,16 @@ public class SceneManager<E> {
     public void fire(Event event, VisFactory2D.GraphObject triggerGraph) {
         if(triggers.get(event).contains(triggerGraph)){
             E data = getData(triggerGraph);
-            triggeredChanges.get(event).change(getGraph(data));
+            triggeredChanges.get(event).change(getGraphs(data));
         }
     }
 
-    public VisFactory2D.GraphObject getGraph(E data) {
+    public VisFactory2D.GraphObject getFirstGraph(E data) {
+        Collection<VisFactory2D.GraphObject> graphObjects = mapped.get(data);
+        return graphObjects.isEmpty() ? null : graphObjects.iterator().next();
+    }
+
+    public Collection<VisFactory2D.GraphObject> getGraphs(E data){
         return mapped.get(data);
     }
 

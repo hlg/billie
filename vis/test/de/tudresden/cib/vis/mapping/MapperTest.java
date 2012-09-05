@@ -51,7 +51,7 @@ public class MapperTest extends MappingTestCase {
         assertEquals(1, builder.parts.size());
         VisFactory2D.GraphObject expected = builder.parts.get(0);
         assertEquals(d.a, ((FakeRectangle) expected).a);
-        assertEquals(expected, test.getSceneManager().getGraph(d));
+        assertEquals(expected, test.getSceneManager().getFirstGraph(d));
         assertEquals(d, test.getSceneManager().getData(expected));
     }
 
@@ -94,7 +94,6 @@ public class MapperTest extends MappingTestCase {
             @Override
             protected void configure() {
                 graphObject.setWidth(10);
-                addTrigger(Event.CLICK);
                 addChange(Event.CLICK, new Change<VisFactory2D.Rectangle>() {
                     @Override
                     protected void configure() {
@@ -108,6 +107,36 @@ public class MapperTest extends MappingTestCase {
         assertEquals(10, graph.a);
         test.getSceneManager().fire(Event.CLICK, graph);
         assertEquals(1000, graph.a);
+    }
+
+    @Test
+    public void testTriggerOther() throws TargetCreationException {
+        FakeVisBuilder builder = new FakeVisBuilder();
+        Mapper<DataElement> test = makeMapper(builder);
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                graphObject.setWidth(10);
+                addChange(Event.CLICK, new Change<VisFactory2D.Rectangle>() {
+                    @Override
+                    protected void configure() {
+                        graph.setWidth(1000);
+                    }
+                });
+            }
+        });
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                addTrigger(Event.CLICK);
+            }
+        });
+        test.map();
+        FakeRectangle receiving = (FakeRectangle) builder.parts.get(0);
+        FakeRectangle triggering = (FakeRectangle) builder.parts.get(1);
+        assertEquals(10, receiving.a);
+        test.getSceneManager().fire(Event.CLICK, triggering);
+        assertEquals(1000, receiving.a);
     }
 
     @Test
