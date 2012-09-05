@@ -23,7 +23,7 @@ public class Mapper<E> {
         this.visBuilder = visBuilder;
     }
 
-    public <T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<E, T> propertyMap) {
+    public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
         propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
         propertyMap.with(sceneManager);
         propertyMaps.addPropertyMap(propertyMap.dataClass, propertyMap);
