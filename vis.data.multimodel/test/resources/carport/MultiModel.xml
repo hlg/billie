@@ -34,7 +34,7 @@
                 <file>file:///Object/cpixml/carport2.cpixml</file>
                 <file>file:///Object/cpixml/buildingStructure.cpixml</file>
             </content>
-            <content format="ifc" id="2" formatVersion="1.0">
+            <content format="ifc" id="2" formatVersion="2x3">
                 <file>file:///Object/ifc/carport2.ifc</file>
             </content>
         </model>

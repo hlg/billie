@@ -1,8 +1,8 @@
 package de.tudresden.cib.vis.data.multimodel;
 
-import cib.mf.schedule.model.activity.Activity;
-import cib.mf.schedule.model.activity.ActivityPackage;
-import cib.mf.schedule.model.activity.util.ActivityResourceFactoryImpl;
+import cib.mf.schedule.model.activity10.Activity;
+import cib.mf.schedule.model.activity10.Activity10Package;
+import cib.mf.schedule.model.activity10.util.Activity10ResourceFactoryImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -35,8 +35,8 @@ public class EMFScheduleAccessor extends EMFGenericAccessor<Activity> {
 
     @Override
     protected Resource createResource(URI uri) {
-        ActivityPackage.eINSTANCE.eClass();
-        ActivityResourceFactoryImpl resourceFactory = new ActivityResourceFactoryImpl();
+        Activity10Package.eINSTANCE.eClass();
+        Activity10ResourceFactoryImpl resourceFactory = new Activity10ResourceFactoryImpl();
         return resourceFactory.createResource(uri);
     }
 

@@ -2,8 +2,8 @@ package de.tudresden.cib.vis.configurations;
 
 import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
 import cib.lib.gaeb.model.gaeb.TgItem;
-import cib.mf.schedule.model.activity.Activity;
-import cib.mf.schedule.model.activity.Timestamp;
+import cib.mf.schedule.model.activity10.Activity;
+import cib.mf.schedule.model.activity10.Timestamp;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;

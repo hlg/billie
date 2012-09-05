@@ -1,9 +1,9 @@
 package de.tudresden.cib.vis.data.multimodel;
 
-import cib.mf.schedule.model.activity.ActivitySection;
-import cib.mf.schedule.model.activity.Cpixml;
-import cib.mf.schedule.model.activity.Schedule;
-import cib.mf.schedule.model.activity.ScheduleData;
+import cib.mf.schedule.model.activity10.ActivitySection;
+import cib.mf.schedule.model.activity10.Cpixml;
+import cib.mf.schedule.model.activity10.Schedule;
+import cib.mf.schedule.model.activity10.ScheduleData;
 import de.tudresden.cib.vis.data.DataAccessor;
 import org.eclipse.emf.ecore.EObject;
 import org.junit.Assert;

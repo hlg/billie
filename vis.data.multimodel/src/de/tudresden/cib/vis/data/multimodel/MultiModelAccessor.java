@@ -105,7 +105,7 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
 
     private IndexedDataAccessor firstAccessible(File mmFolder, ElementaryModel elementaryModel) {
         for (Content content : elementaryModel.getContent()) {
-            EMTypes recognizedType = EMTypes.find(elementaryModel.getType().getName(), content.getFormat());
+            EMTypes recognizedType = EMTypes.find(elementaryModel.getType().getName(), content.getFormat(), content.getFormatVersion());
             if (recognizedType != null) {
                 IndexedDataAccessor accessor = recognizedType.createAccessor();
                 for (ContainerFile contentFile : content.getFiles()) {
@@ -169,22 +169,22 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
     }
 
     public enum EMTypes {
-        IFC("Object", "ifc") {
+        IFC("Object", "ifc", "2x3") {
             IndexedDataAccessor createAccessor() {
                 return new EMFIfcAccessor(pm);
             }
         },
-        GAEB("BoQ", "gaebxml") {
+        GAEB("BoQ", "gaebxml", "3.1") {
             IndexedDataAccessor createAccessor() {
                 return new EMFGaebAccessor();
             }
         },
-        QTO("QTO", "xml") {
+        QTO("QTO", "xml", "1.0") {
             IndexedDataAccessor createAccessor() {
                 return new EMFQtoAccessor();
             }
         },
-        ACTIVITY("Activity", "xml") {
+        ACTIVITY("Activity", "xml", "1.0") {
             @Override
             IndexedDataAccessor createAccessor() {
                 return new EMFScheduleAccessor();
@@ -193,18 +193,20 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
 
         private String modelType;
         private String format;
+        private String formatVersion;
         static PluginManager pm;
 
-        EMTypes(String modelType, String format) {
+        EMTypes(String modelType, String format, String formatVersion) {
             this.modelType = modelType;
             this.format = format;
+            this.formatVersion = formatVersion;
         }
 
         abstract IndexedDataAccessor createAccessor();
 
-        static EMTypes find(String modelType, String format) {
+        static EMTypes find(String modelType, String format, String formatVersion) {
             for (EMTypes type : EMTypes.values()) {
-                if (type.modelType.equals(modelType) && type.format.equals(format)) {
+                if (type.modelType.equals(modelType) && type.format.equals(format) && type.formatVersion.equals(formatVersion)) {
                     return type;
                 }
             }
