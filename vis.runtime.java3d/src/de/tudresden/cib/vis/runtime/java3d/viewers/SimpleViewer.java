@@ -98,7 +98,7 @@ public class SimpleViewer extends JFrame {
 
             @Override
             public String getDescription() {
-                return "IFC files";
+                return fileType + " files";
             }
         };
         chooser.setFileFilter(filter);

@@ -6,28 +6,33 @@ import cib.mf.schedule.model.activity10.Activity;
 import cib.mf.schedule.model.activity10.Timestamp;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
-import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
-import de.tudresden.cib.vis.data.multimodel.MultiModelAccessor;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
-import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
-import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
-import de.tudresden.cib.vis.scene.TimeLine;
-import org.bimserver.plugins.PluginException;
+import de.tudresden.cib.vis.scene.Change;
+import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
+import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 
 import javax.media.j3d.*;
 import javax.vecmath.Color3f;
-import java.io.IOException;
 import java.util.*;
 
 import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
-public class Ifc4DMapper {
+public class Ifc4DConfiguration {
 
-    public void configMapping(MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader) {
-        final Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper = loader.getMapper();
+    private Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper;
+
+    public Ifc4DConfiguration(DataAccessor<LinkedObject<EMFIfcParser.EngineEObject>> data){
+        this.mapper = new Mapper<LinkedObject<EMFIfcParser.EngineEObject>>(data, new Java3dFactory(), new Java3dBuilder());
+    }
+
+    public Ifc4DConfiguration(Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
+        this.mapper = mapper;
+    }
+
+    public void config() {
         mapper.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
             @Override
             public Long function(Long aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
@@ -51,17 +56,17 @@ public class Ifc4DMapper {
             }
         });
         final int scale = 3600 * 1000; // scale to hours TODO: globals?
-        final TimeLine.Change<Polyeder> reset = new TimeLine.Change<Polyeder>() {
+        final Change<Polyeder> reset = new Change<Polyeder>() {
             protected void configure() {
                 ((Shape3D) graph).setAppearance(TypeAppearance.INACTIVE.getAppearance());
             }
         };
-        final TimeLine.Change<Polyeder> activate = new TimeLine.Change<Polyeder>() {
+        final Change<Polyeder> activate = new Change<Polyeder>() {
             public void configure() {
                 ((Shape3D) graph).setAppearance(TypeAppearance.ACTIVATED.getAppearance());
             }
         };
-        final TimeLine.Change<Polyeder> deactivate = new TimeLine.Change<Polyeder>() {
+        final Change<Polyeder> deactivate = new Change<Polyeder>() {
             public void configure() {
                 ((Shape3D) graph).setAppearance(TypeAppearance.DEACTIVATED.getAppearance());
             }
@@ -82,7 +87,7 @@ public class Ifc4DMapper {
             }
         };
 
-        final Map<Set<ActivityType>, TimeLine.Change<Polyeder>> colorScale = new HashMap<Set<ActivityType>, TimeLine.Change<Polyeder>>();
+        final Map<Set<ActivityType>, Change<Polyeder>> colorScale = new HashMap<Set<ActivityType>, Change<Polyeder>>();
         final AppearanceCache appearanceCache = new AppearanceCache();
 
         PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, Polyeder> specialActiveMapping = new PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, Polyeder>() {
@@ -109,12 +114,12 @@ public class Ifc4DMapper {
 
     }
 
-    private TimeLine.Change<Polyeder> getActiveColorChange(Set<ActivityType> active, final AppearanceCache appearanceCache) {
+    private Change<Polyeder> getActiveColorChange(Set<ActivityType> active, final AppearanceCache appearanceCache) {
         final float R = active.contains(ActivityType.SCHALUNG) ? 1 : 0;
         final float G = active.contains(ActivityType.STAHL) ? 1 : 0;
         final float B = active.contains(ActivityType.BETON) ? 1 : 0;
         final float alpha = (R == 0 && G == 0 && B == 0) ? 0.9f : 0;
-        return new TimeLine.Change<Polyeder>() {
+        return new Change<Polyeder>() {
             @Override
             protected void configure() {
                 ((Shape3D) graph).setAppearance(appearanceCache.getAppearance(R, G, B, alpha));
@@ -181,14 +186,6 @@ public class Ifc4DMapper {
         long dateMillis = timeStamp.getDate().toGregorianCalendar().getTimeInMillis();
         long timeMillis = timeStamp.getTime().toGregorianCalendar().getTimeInMillis();
         return dateMillis + timeMillis;
-    }
-
-    public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
-        MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager()));
-        new Ifc4DMapper().configMapping(loader);
-        SimpleViewer viewer = new SimpleViewer(loader);
-        viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());  // or carport.zip
-
     }
 
     private enum ActivityType {

@@ -1,22 +1,27 @@
 package de.tudresden.cib.vis.configurations;
 
-import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
+import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
-import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
-import de.tudresden.cib.vis.mapping.TargetCreationException;
-import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
 import de.tudresden.cib.vis.scene.VisFactory3D;
+import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
+import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 import org.bimserver.models.ifc2x3tc1.IfcBuildingElement;
-import org.bimserver.plugins.PluginException;
 
-import java.io.FileReader;
-import java.io.IOException;
+public class Ifc3DConfiguration {
 
-public class Ifc3DMapper {
+    private Mapper<EMFIfcParser.EngineEObject> mapper;
 
-    public void configMapping(Mapper<EMFIfcParser.EngineEObject> mapper) {
+    public Ifc3DConfiguration(DataAccessor<EMFIfcParser.EngineEObject> data){
+       this.mapper = new Mapper<EMFIfcParser.EngineEObject>(data, new Java3dFactory(), new Java3dBuilder());
+    }
+
+    public Ifc3DConfiguration(Mapper<EMFIfcParser.EngineEObject> mapper) {
+        this.mapper = mapper;
+    }
+
+    public void config() {
         mapper.addMapping(new PropertyMap<EMFIfcParser.EngineEObject, VisFactory3D.Polyeder>() {
             @Override
             protected boolean condition() {
@@ -41,10 +46,4 @@ public class Ifc3DMapper {
         });
     }
 
-    public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
-        MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcAccessor(new SimplePluginManager()));
-        new Ifc3DMapper().configMapping(loader.getMapper());
-        SimpleViewer viewer = new SimpleViewer(loader);
-        viewer.run(new FileReader(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc")));
-    }
 }

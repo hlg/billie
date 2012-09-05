@@ -2,6 +2,8 @@ package de.tudresden.cib.vis.mapping;
 
 import de.tudresden.cib.vis.data.CollectionAccessor;
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.scene.Change;
+import de.tudresden.cib.vis.scene.Event;
 import de.tudresden.cib.vis.scene.VisBuilder;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.junit.Before;
@@ -13,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class MapperTest extends MappingTestCase {
     @Before
@@ -34,9 +37,134 @@ public class MapperTest extends MappingTestCase {
 
     @Test
     public void testMapping() throws TargetCreationException {
-        DataAccessor data = new CollectionAccessor(Collections.singletonList(d));
         FakeVisBuilder builder = new FakeVisBuilder();
-        VisFactory2D factory = new VisFactory2D() {
+        Mapper<DataElement> test = makeMapper(builder);
+        test.addMapping(
+                new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+                    @Override
+                    protected void configure() {
+                        graphObject.setWidth(data.a);
+                    }
+                }
+        );
+        test.map();
+        assertEquals(1, builder.parts.size());
+        VisFactory2D.GraphObject expected = builder.parts.get(0);
+        assertEquals(d.a, ((FakeRectangle) expected).a);
+        assertEquals(expected, test.getSceneManager().getFirstGraph(d));
+        assertEquals(d, test.getSceneManager().getData(expected));
+    }
+
+    private Mapper makeMapper(FakeVisBuilder builder) {
+        DataAccessor data = new CollectionAccessor(Collections.singletonList(d));
+        VisFactory2D factory = new FakeVisFactoy();
+        return new Mapper(data, factory, builder);
+    }
+
+    @Test
+    public void testChange() throws TargetCreationException {
+        // TODO: tests to much (integration tests?)
+        FakeVisBuilder builder = new FakeVisBuilder();
+        Mapper test = makeMapper(builder);
+        final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>(){
+            @Override
+            protected void configure() {
+                graph.setWidth(100);
+            }
+        };
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                graphObject.setWidth(data.a);
+                addChange(0, theChange);
+           }
+        });
+        test.map();
+        VisFactory2D.Rectangle generatedGraph = (VisFactory2D.Rectangle) builder.parts.get(0);
+        List<Change> changes = test.getSceneManager().getChanges(0, generatedGraph);
+        assertTrue(changes.contains(theChange));
+        assertEquals(1, changes.size());
+    }
+
+    @Test
+    public void testTriggerSelf() throws TargetCreationException {
+        FakeVisBuilder builder = new FakeVisBuilder();
+        Mapper<DataElement> test = makeMapper(builder);
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                graphObject.setWidth(10);
+                addChange(Event.CLICK, new Change<VisFactory2D.Rectangle>() {
+                    @Override
+                    protected void configure() {
+                        graph.setWidth(1000);
+                    }
+                });
+            }
+        });
+        test.map();
+        FakeRectangle graph = (FakeRectangle) builder.parts.get(0);
+        assertEquals(10, graph.a);
+        test.getSceneManager().fire(Event.CLICK, graph);
+        assertEquals(1000, graph.a);
+    }
+
+    @Test
+    public void testTriggerOther() throws TargetCreationException {
+        FakeVisBuilder builder = new FakeVisBuilder();
+        Mapper<DataElement> test = makeMapper(builder);
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                graphObject.setWidth(10);
+                addChange(Event.CLICK, new Change<VisFactory2D.Rectangle>() {
+                    @Override
+                    protected void configure() {
+                        graph.setWidth(1000);
+                    }
+                });
+            }
+        });
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                addTrigger(Event.CLICK);
+            }
+        });
+        test.map();
+        FakeRectangle receiving = (FakeRectangle) builder.parts.get(0);
+        FakeRectangle triggering = (FakeRectangle) builder.parts.get(1);
+        assertEquals(10, receiving.a);
+        test.getSceneManager().fire(Event.CLICK, triggering);
+        assertEquals(1000, receiving.a);
+    }
+
+    @Test
+    public void testEvent() throws TargetCreationException {
+        // TODO: tests to much (integration tests?)
+       FakeVisBuilder builder = new FakeVisBuilder();
+       Mapper test = makeMapper(builder);
+       final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>() {
+           @Override
+           protected void configure() {
+               graph.setWidth(100);
+           }
+       };
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                graphObject.setWidth(data.a);
+                addChange(Event.CLICK, theChange);
+            }
+        });
+        test.map();
+        VisFactory2D.Rectangle generatedGraph = (VisFactory2D.Rectangle) builder.parts.get(0);
+        List<Change> changes = test.getSceneManager().getChanges(Event.CLICK, generatedGraph);
+        assertTrue(changes.contains(theChange));
+        assertEquals(1, changes.size());
+    }
+
+    public static class FakeVisFactoy extends VisFactory2D {
             @Override
             protected PropertyMap.Provider<VisFactory2D.Rectangle> setRectangleProvider() {
                 return new PropertyMap.Provider<Rectangle>() {
@@ -55,19 +183,6 @@ public class MapperTest extends MappingTestCase {
             protected PropertyMap.Provider<Polyline> setPolylineProvider() {
                 return null;
             }
-        };
-        Mapper test = new Mapper(data, factory, builder);
-        test.addMapping(
-                new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
-                    @Override
-                    protected void configure() {
-                        graphObject.setWidth(data.a);
-                    }
-                }
-        );
-        test.map();
-        assertEquals(1, builder.parts.size());
-        assertEquals(d.a, ((FakeRectangle) builder.parts.get(0)).a);
     }
 
     public static class FakeVisBuilder implements VisBuilder<VisFactory2D.GraphObject, Object> {

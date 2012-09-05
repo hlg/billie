@@ -14,16 +14,15 @@ import org.eclipse.draw2d.Panel;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.swt.graphics.Font;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-public class Ifc2DMapper {
+public class Ifc2DConfiguration {
 
     private Mapper<EMFIfcParser.EngineEObject> mapper;
 
-    Ifc2DMapper(Font font, InputStream input) throws IOException {
+    public Ifc2DConfiguration(Font font, InputStream input) throws IOException {
         EMFIfcAccessor data = new EMFIfcAccessor(new SimplePluginManager());
         data.read(input);
         Draw2dFactory visFactory = new Draw2dFactory(font);
@@ -127,15 +126,8 @@ public class Ifc2DMapper {
         });
     }
 
-    Panel execute() throws TargetCreationException {
+    public Panel runMapper() throws TargetCreationException {
         return (Panel) mapper.map();
     }
 
-    public static void main(String[] args) throws IOException, TargetCreationException {
-        Draw2DViewer viewer = new Draw2DViewer();
-        InputStream input = args.length >= 1 ? new FileInputStream(args[0]) : viewer.getClass().getResourceAsStream("/resources/carport2.ifc");
-        Ifc2DMapper ifc2DMapper = new Ifc2DMapper(viewer.getDefaultFont(), input);
-        ifc2DMapper.config();
-        viewer.showContent(ifc2DMapper.execute());
-    }
 }

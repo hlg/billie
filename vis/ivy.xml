@@ -2,5 +2,6 @@
 <info organisation="de.tudresden.cib" module="vis"/>
 <dependencies>
     <dependency org="junit" name="junit" rev="4.10"/>
+    <dependency org="com.google.guava" name="guava" rev="11.0.1"/>
 </dependencies>
 </ivy-module>

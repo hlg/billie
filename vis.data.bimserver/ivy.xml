@@ -9,6 +9,6 @@
     <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true" />
     <dependency org="junit" name="junit" rev="4.10"/>
     <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.2"/>
-    <dependency org="commons-io" name="commons-io" rev="2.0+" />
+    <dependency org="commons-io" name="commons-io" rev="2.1" />
 </dependencies>
 </ivy-module>
