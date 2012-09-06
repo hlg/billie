@@ -5,31 +5,39 @@
         <file name="vis/build.xml"/>
         <file name="vis.data.bimserver/build.xml"/>
         <file name="vis.data.multimodel/build.xml"/>
+        <file name="vis.runtime.draw2d/build.xml"/>
         <file name="vis.scene.draw2d/build.xml"/>
         <file name="vis.runtime.java3d/build.xml"/>
         <file name="vis.scene.java3d/build.xml"/>
         <file name="vis.configurations/build.xml"/>
+        <file name="vis.sampleApps/build.xml"/>
     </filelist>
 
-    <target name="test.all">
+    <target name="test.all" depends="clean.all">
         <subant target="test.module">
             <filelist refid="projects" />
         </subant>
     </target>
 
-    <target name="dist.all">
+    <target name="dist.all" depends="clean.all">
         <subant target="dist.module">
             <filelist refid="projects" />
         </subant>
     </target>
 
-    <target name="publish.all">
+    <target name="publish.all" depends="clean.all">
         <subant target="publish.module">
             <filelist refid="projects" />
         </subant>
     </target>
 
-    <target name="publish.all.OSGI" depends="dist.all">
+    <target name="publish.all.OSGI" depends="publish.all">
+        <subant target="publish.module.OSGI.fast">
+            <filelist refid="projects" />
+        </subant>
+    </target>
+
+    <target name="publish.all.OSGI.fast">
         <subant target="publish.module.OSGI.fast">
             <filelist refid="projects" />
         </subant>
@@ -41,6 +49,6 @@
         </subant>
     </target>
 
-    <target name="build" depends="clean.all, publish.all" description="clean build, package and publish"/>
+    <target name="build" depends="publish.all" description="clean build, package and publish"/>
 
 </project>

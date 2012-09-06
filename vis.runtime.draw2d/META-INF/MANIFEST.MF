@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CIB Draw2D viewer
+Bundle-SymbolicName: de.tudresden.cib.vis.runtime.draw2d
+Bundle-Vendor: CIB TU Dresden
+Require-Bundle: org.eclipse.draw2d
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Export-Package: de.tudresden.cib.vis.runtime.draw2d

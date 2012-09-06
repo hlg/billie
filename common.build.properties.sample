@@ -1,1 +1,3 @@
 ivy.settings.file=D:/Nutzer/helga/ivysettings.xml
+osgi.target=D:/Nutzer/helga/dev/cib_framework/target
+version=0.3

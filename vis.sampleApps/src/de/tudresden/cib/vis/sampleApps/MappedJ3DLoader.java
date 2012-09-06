@@ -18,16 +18,16 @@ import javax.media.j3d.BranchGroup;
 import java.io.*;
 import java.net.URL;
 
-public class MappedJ3DLoader<T> implements Loader {
-    protected Mapper<T> mapper;
-    protected DataAccessor<T> data;
+public class MappedJ3DLoader<E> implements Loader {
+    protected Mapper<E> mapper;
+    protected DataAccessor<E> data;
 
-    public MappedJ3DLoader(DataAccessor<T> data) {
+    public MappedJ3DLoader(DataAccessor<E> data) {
         this.data = data;
-        this.mapper = new Mapper<T>(data, new Java3dFactory(), new Java3dBuilder());
+        this.mapper = new Mapper<E>(data, new Java3dFactory(), new Java3dBuilder());
     }
 
-    public <S, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
+    public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
         mapper.addMapping(propertyMap);
     }
 
@@ -86,7 +86,7 @@ public class MappedJ3DLoader<T> implements Loader {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public Mapper<T> getMapper() {
+    public Mapper<E> getMapper() {
         return mapper;
     }
 }

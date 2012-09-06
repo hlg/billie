@@ -1,5 +1,5 @@
 <ivy-module version="2.0">
-<info organisation="de.tudresden.cib" module="vis.configurations"/>
+<info organisation="de.tudresden.cib" module="vis.sampleApps"/>
 <dependencies>
     <!-- TODO: clean up -->
     <dependency org="org.bimserver" name="bimserver-emf" rev="1.1.0"/>

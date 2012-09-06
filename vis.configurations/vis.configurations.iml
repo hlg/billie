@@ -115,6 +115,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="vis.runtime.java3d" />
   </component>
 </module>
 

@@ -1,23 +1,23 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CIB visualization framework sample use cases
-Bundle-SymbolicName: de.tudresden.cib.vis.configurations
+Bundle-Name: CIB Draw2D viewer
+Bundle-SymbolicName: de.tudresden.cib.vis.sampleApps
 Bundle-Vendor: CIB TU Dresden
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ClassPath: .
-Bundle-Localization: plugin
-Export-Package: de.tudresden.cib.vis.configurations
 Require-Bundle: de.mefisto.container,
  cib.lib.gaeb.model,
- cib.lib.j3d,
  cib.mf.qto.model,
  cib.mf.schedule.model,
  org.eclipse.draw2d,
  de.tudresden.cib.vis,
+ de.tudresden.cib.vis.configurations,
  de.tudresden.cib.vis.data.bimserver,
  de.tudresden.cib.vis.data.multimodel,
  de.tudresden.cib.vis.scene.java3d,
  de.tudresden.cib.vis.scene.draw2d,
  de.tudresden.cib.vis.runtime.java3d,
- cib.lib.apache.commons,
- org.bimserver.ifcemf
+ de.tudresden.cib.vis.runtime.draw2d,
+ cib.lib.apache.commons
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Export-Package: de.tudresden.cib.vis.sampleApps

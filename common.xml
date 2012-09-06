@@ -15,7 +15,7 @@
     </target>
 
     <target name="config.module">
-        <ivy:settings file="${ivy.settings.file}"/>
+        <ivy:configure file="${ivy.settings.file}"/>
         <dirname property="module.basedir" file="${ant.file}"/>
         <property name="module.basedir" value="${basedir}"/>
         <property name="module.output.dir" value="${module.basedir}/out"/>
@@ -44,11 +44,11 @@
             </classpath>
         </javac>
 
-        <copy todir="${module.output.dir}/classes">
+        <!-- copy todir="${module.output.dir}/classes">
             <fileset dir="${module.basedir}/src">
                 <type type="file"/>
             </fileset>
-        </copy>
+        </copy -->
     </target>
 
     <target name="compile.tests" depends="check.tests, compile.module" if="tests.available">
@@ -128,6 +128,8 @@
     <target name="publish.module.OSGI" depends="dist.module, publish.module.OSGI.fast" />
 
     <target name="clean.module" description="cleanup module" depends="config.module">
+        <delete dir="${ivy.local.default.root}/de.tudresden.cib/${ant.project.name}/${version}" />
+        <delete dir="${ivy.cache.dir}/de.tudresden.cib/${ant.project.name}/${version}" />
         <delete dir="${module.output.dir}"/>
     </target>
 
