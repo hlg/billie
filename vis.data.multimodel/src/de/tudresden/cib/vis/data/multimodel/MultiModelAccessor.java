@@ -26,16 +26,25 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
 
     private Map<String, IndexedDataAccessor> elementaryModels = new HashMap<String, IndexedDataAccessor>();
     private Collection<LinkedObject<K>> groupedElements;
+    private ElementaryModelType keyModelType = ElementaryModelType.OBJECT;
 
     public MultiModelAccessor(PluginManager pm) {
         EMTypes.pm = pm;
+    }
+
+    public MultiModelAccessor(Map<ElementaryModel, IndexedDataAccessor> ems, LinkModel lm){
+        String groupingModelId = null;
+        for(Map.Entry<ElementaryModel, IndexedDataAccessor> model: ems.entrySet()){
+            if(model.getKey().getType().equals(keyModelType)) groupingModelId = model.getKey().getId();
+            elementaryModels.put(model.getKey().getId(), model.getValue());
+        }
+        if (groupingModelId!=null) groupBy(groupingModelId, lm);
     }
 
     private void readFromFolder(File folder) {
         File mmFile = new File(folder, "MultiModel.xml");
         assert folder.exists() && mmFile.exists();
         Container container = ContainerModelParser.readContainerModel(mmFile).getContainer();
-        ElementaryModelType keyModelType = ElementaryModelType.OBJECT;
         String firstAccesibleKeyModelId = null;
         EList<ElementaryModel> elementaryModels1 = container.getElementaryModelGroup().getElementaryModels();
         for (ElementaryModel elementaryModel : elementaryModels1) {
