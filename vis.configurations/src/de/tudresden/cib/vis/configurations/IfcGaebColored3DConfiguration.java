@@ -11,19 +11,18 @@ import de.tudresden.cib.vis.scene.VisFactory3D;
 import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 
+import javax.media.j3d.BranchGroup;
 import java.math.BigDecimal;
 import java.util.Collection;
 
-public class IfcGaebColored3DConfiguration {
-
-    private Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper;
+public class IfcGaebColored3DConfiguration extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> {
 
     public IfcGaebColored3DConfiguration(DataAccessor<LinkedObject<EMFIfcParser.EngineEObject>> data){
-        this.mapper = new Mapper<LinkedObject<EMFIfcParser.EngineEObject>>(data, new Java3dFactory(), new Java3dBuilder());
+        super(data, new Java3dFactory(), new Java3dBuilder());
     }
 
-    public IfcGaebColored3DConfiguration(Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
-        this.mapper = mapper;
+    public IfcGaebColored3DConfiguration(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper) {
+        super(mapper);
     }
 
     public void config() {

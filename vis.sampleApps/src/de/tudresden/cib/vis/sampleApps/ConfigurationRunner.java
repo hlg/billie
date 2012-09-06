@@ -62,7 +62,7 @@ public enum ConfigurationRunner {
             GaebBarchartConfiguration gaebBarchartConfig = new GaebBarchartConfiguration(big, input);
             gaebBarchartConfig.config();
             viewer.setSnapShotParams("D:/test.png", SWT.IMAGE_PNG);
-            viewer.showContent(gaebBarchartConfig.runMapper());
+            viewer.showContent(gaebBarchartConfig.execute());
             big.dispose();
         }
     }, IFC_2D {
@@ -72,7 +72,7 @@ public enum ConfigurationRunner {
             InputStream input = viewer.getClass().getResourceAsStream("/resources/carport2.ifc");
             Ifc2DConfiguration ifc2DConfiguration = new Ifc2DConfiguration(viewer.getDefaultFont(), input);
             ifc2DConfiguration.config();
-            viewer.showContent(ifc2DConfiguration.runMapper());
+            viewer.showContent(ifc2DConfiguration.execute());
         }
     };
 

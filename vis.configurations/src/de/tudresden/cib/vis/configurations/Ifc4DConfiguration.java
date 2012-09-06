@@ -20,16 +20,14 @@ import java.util.*;
 
 import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
-public class Ifc4DConfiguration {
-
-    private Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper;
+public class Ifc4DConfiguration extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> {
 
     public Ifc4DConfiguration(DataAccessor<LinkedObject<EMFIfcParser.EngineEObject>> data){
-        this.mapper = new Mapper<LinkedObject<EMFIfcParser.EngineEObject>>(data, new Java3dFactory(), new Java3dBuilder());
+        super(data, new Java3dFactory(), new Java3dBuilder());
     }
 
-    public Ifc4DConfiguration(Mapper<LinkedObject<EMFIfcParser.EngineEObject>> mapper) {
-        this.mapper = mapper;
+    public Ifc4DConfiguration(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper) {
+        super(mapper);
     }
 
     public void config() {

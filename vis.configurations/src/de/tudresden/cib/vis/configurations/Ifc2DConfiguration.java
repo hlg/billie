@@ -3,9 +3,7 @@ package de.tudresden.cib.vis.configurations;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
-import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
-import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import de.tudresden.cib.vis.scene.draw2d.Draw2dBuilder;
 import de.tudresden.cib.vis.scene.draw2d.Draw2dFactory;
@@ -18,16 +16,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-public class Ifc2DConfiguration {
-
-    private Mapper<EMFIfcParser.EngineEObject> mapper;
+public class Ifc2DConfiguration extends Configuration<EMFIfcParser.EngineEObject, Draw2dFactory.Draw2dObject, Panel> {
 
     public Ifc2DConfiguration(Font font, InputStream input) throws IOException {
-        EMFIfcAccessor data = new EMFIfcAccessor(new SimplePluginManager());
-        data.read(input);
-        Draw2dFactory visFactory = new Draw2dFactory(font);
-        Draw2dBuilder visBuilder = new Draw2dBuilder();
-        mapper = new Mapper<EMFIfcParser.EngineEObject>(data, visFactory, visBuilder);
+        super(new EMFIfcAccessor(new SimplePluginManager(), input), new Draw2dFactory(font), new Draw2dBuilder());
     }
 
     public void configSemantic() {
@@ -124,10 +116,6 @@ public class Ifc2DConfiguration {
                 return yo1 / (yo1 - data.getGeometry().vertizes.get(i + single + dim)) / interpol;
             }
         });
-    }
-
-    public Panel runMapper() throws TargetCreationException {
-        return (Panel) mapper.map();
     }
 
 }

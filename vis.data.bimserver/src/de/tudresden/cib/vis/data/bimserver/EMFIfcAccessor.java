@@ -21,6 +21,11 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObje
         parser = new EMFIfcParser(pluginManager);
     }
 
+    public EMFIfcAccessor(SimplePluginManager simplePluginManager, InputStream input) throws IOException {
+        this(simplePluginManager);
+        read(input);
+    }
+
     public void read(InputStream inputStream) throws IOException {
         parser.read(inputStream);
     }

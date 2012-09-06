@@ -7,17 +7,17 @@ import de.tudresden.cib.vis.scene.VisFactory2D;
 
 import java.util.*;
 
-public class Mapper<E> {
+public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     ClassMap propertyMaps = new ClassMap();
     private DataAccessor<E> dataAccessor;
     private VisFactory2D visFactory;
-    private VisBuilder visBuilder;
+    private VisBuilder<G, S> visBuilder;
     private SceneManager<E> sceneManager = new SceneManager<E>();
 
     private Map<String, DataAccessor.Folding<E, ? extends Number>> statistics = new HashMap<String, DataAccessor.Folding<E, ? extends Number>>();
     private Map<String, PreProcessing<Double>> globals = new HashMap<String, PreProcessing<Double>>();
 
-    public Mapper(DataAccessor<E> dataAccessor, VisFactory2D visFactory, VisBuilder visBuilder) {
+    public Mapper(DataAccessor<E> dataAccessor, VisFactory2D visFactory, VisBuilder<G,S> visBuilder) {
         this.dataAccessor = dataAccessor;
         this.visFactory = visFactory;
         this.visBuilder = visBuilder;
@@ -30,7 +30,7 @@ public class Mapper<E> {
     }
 
 
-    public Object map() throws TargetCreationException {
+    public S map() throws TargetCreationException {
         visBuilder.init();
         preProcess();
         mainPass();
@@ -63,7 +63,7 @@ public class Mapper<E> {
             if (propertyMap.checkCondition(source)) {
                 matchedAny = true;
                 propertyMap.map(source, mappingIndex);
-                visBuilder.addPart(propertyMap.graphObject);
+                visBuilder.addPart((G)propertyMap.graphObject); // TODO: make sure provider is the right one
             }
         }
         return matchedAny;

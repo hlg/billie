@@ -19,12 +19,12 @@ import java.io.*;
 import java.net.URL;
 
 public class MappedJ3DLoader<E> implements Loader {
-    protected Mapper<E> mapper;
+    protected Mapper<E, Java3dFactory.Java3DGraphObject, BranchGroup> mapper;
     protected DataAccessor<E> data;
 
     public MappedJ3DLoader(DataAccessor<E> data) {
         this.data = data;
-        this.mapper = new Mapper<E>(data, new Java3dFactory(), new Java3dBuilder());
+        this.mapper = new Mapper<E, Java3dFactory.Java3DGraphObject, BranchGroup>(data, new Java3dFactory(), new Java3dBuilder());
     }
 
     public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
@@ -40,7 +40,7 @@ public class MappedJ3DLoader<E> implements Loader {
         try {
             data.read(inputStream);
             result = new IfcScene();
-            result.setSceneGroup((BranchGroup) mapper.map());
+            result.setSceneGroup(mapper.map());
             mapper.getSceneManager().animate();
         } catch (IOException e) {
             throw new FileNotFoundException(e.getMessage());
@@ -86,7 +86,7 @@ public class MappedJ3DLoader<E> implements Loader {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public Mapper<E> getMapper() {
+    public Mapper<E, Java3dFactory.Java3DGraphObject, BranchGroup> getMapper() {
         return mapper;
     }
 }

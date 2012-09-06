@@ -9,16 +9,16 @@ import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 import org.bimserver.models.ifc2x3tc1.IfcBuildingElement;
 
-public class Ifc3DConfiguration {
+import javax.media.j3d.BranchGroup;
 
-    private Mapper<EMFIfcParser.EngineEObject> mapper;
+public class Ifc3DConfiguration extends Configuration<EMFIfcParser.EngineEObject, Java3dFactory.Java3DGraphObject, BranchGroup> {
 
     public Ifc3DConfiguration(DataAccessor<EMFIfcParser.EngineEObject> data){
-       this.mapper = new Mapper<EMFIfcParser.EngineEObject>(data, new Java3dFactory(), new Java3dBuilder());
+       super(data, new Java3dFactory(), new Java3dBuilder());
     }
 
-    public Ifc3DConfiguration(Mapper<EMFIfcParser.EngineEObject> mapper) {
-        this.mapper = mapper;
+    public Ifc3DConfiguration(Mapper<EMFIfcParser.EngineEObject, Java3dFactory.Java3DGraphObject, BranchGroup> mapper) {
+        super(mapper);
     }
 
     public void config() {

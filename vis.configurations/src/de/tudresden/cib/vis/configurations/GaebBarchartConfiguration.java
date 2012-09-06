@@ -6,7 +6,6 @@ import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.multimodel.EMFGaebAccessor;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
-import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import de.tudresden.cib.vis.scene.draw2d.Draw2dBuilder;
 import de.tudresden.cib.vis.scene.draw2d.Draw2dFactory;
@@ -18,15 +17,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 
-public class GaebBarchartConfiguration {
-
-    private Mapper<EObject> mapper;
+public class GaebBarchartConfiguration extends Configuration<EObject, Draw2dFactory.Draw2dObject, Panel> {
 
     public GaebBarchartConfiguration(Font font, InputStream input) throws IOException {
-        EMFGaebAccessor data = new EMFGaebAccessor(input);
-        Draw2dFactory visFactory = new Draw2dFactory(font);
-        Draw2dBuilder visBuilder = new Draw2dBuilder();
-        mapper = new Mapper<EObject>(data, visFactory, visBuilder);
+        super(new EMFGaebAccessor(input), new Draw2dFactory(font), new Draw2dBuilder());
     }
 
     public void config() {
@@ -68,10 +62,6 @@ public class GaebBarchartConfiguration {
                 graphObject.setTop(index * 100);
             }
         });
-    }
-
-    public Panel runMapper() throws TargetCreationException {
-        return (Panel) mapper.map();
     }
 
 }

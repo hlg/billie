@@ -38,7 +38,7 @@ public class MapperTest extends MappingTestCase {
     @Test
     public void testMapping() throws TargetCreationException {
         FakeVisBuilder builder = new FakeVisBuilder();
-        Mapper<DataElement> test = makeMapper(builder);
+        Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
         test.addMapping(
                 new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
                     @Override
@@ -55,10 +55,10 @@ public class MapperTest extends MappingTestCase {
         assertEquals(d, test.getSceneManager().getData(expected));
     }
 
-    private Mapper makeMapper(FakeVisBuilder builder) {
-        DataAccessor data = new CollectionAccessor(Collections.singletonList(d));
+    private Mapper<DataElement, FakeRectangle, Object> makeMapper(FakeVisBuilder builder) {
+        DataAccessor<DataElement> data = new CollectionAccessor(Collections.singletonList(d));
         VisFactory2D factory = new FakeVisFactoy();
-        return new Mapper(data, factory, builder);
+        return new Mapper<DataElement, FakeRectangle, Object>(data, factory, builder);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class MapperTest extends MappingTestCase {
            }
         });
         test.map();
-        VisFactory2D.Rectangle generatedGraph = (VisFactory2D.Rectangle) builder.parts.get(0);
+        VisFactory2D.Rectangle generatedGraph = builder.parts.get(0);
         List<Change> changes = test.getSceneManager().getChanges(0, generatedGraph);
         assertTrue(changes.contains(theChange));
         assertEquals(1, changes.size());
@@ -89,7 +89,7 @@ public class MapperTest extends MappingTestCase {
     @Test
     public void testTriggerSelf() throws TargetCreationException {
         FakeVisBuilder builder = new FakeVisBuilder();
-        Mapper<DataElement> test = makeMapper(builder);
+        Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
         test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
@@ -103,7 +103,7 @@ public class MapperTest extends MappingTestCase {
             }
         });
         test.map();
-        FakeRectangle graph = (FakeRectangle) builder.parts.get(0);
+        FakeRectangle graph = builder.parts.get(0);
         assertEquals(10, graph.a);
         test.getSceneManager().fire(Event.CLICK, graph);
         assertEquals(1000, graph.a);
@@ -112,7 +112,7 @@ public class MapperTest extends MappingTestCase {
     @Test
     public void testTriggerOther() throws TargetCreationException {
         FakeVisBuilder builder = new FakeVisBuilder();
-        Mapper<DataElement> test = makeMapper(builder);
+        Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
         test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
@@ -132,8 +132,8 @@ public class MapperTest extends MappingTestCase {
             }
         });
         test.map();
-        FakeRectangle receiving = (FakeRectangle) builder.parts.get(0);
-        FakeRectangle triggering = (FakeRectangle) builder.parts.get(1);
+        FakeRectangle receiving = builder.parts.get(0);
+        FakeRectangle triggering = builder.parts.get(1);
         assertEquals(10, receiving.a);
         test.getSceneManager().fire(Event.CLICK, triggering);
         assertEquals(1000, receiving.a);
@@ -158,7 +158,7 @@ public class MapperTest extends MappingTestCase {
             }
         });
         test.map();
-        VisFactory2D.Rectangle generatedGraph = (VisFactory2D.Rectangle) builder.parts.get(0);
+        VisFactory2D.Rectangle generatedGraph = builder.parts.get(0);
         List<Change> changes = test.getSceneManager().getChanges(Event.CLICK, generatedGraph);
         assertTrue(changes.contains(theChange));
         assertEquals(1, changes.size());
@@ -185,13 +185,13 @@ public class MapperTest extends MappingTestCase {
             }
     }
 
-    public static class FakeVisBuilder implements VisBuilder<VisFactory2D.GraphObject, Object> {
-        List<VisFactory2D.GraphObject> parts = new ArrayList<VisFactory2D.GraphObject>();
+    public static class FakeVisBuilder implements VisBuilder<FakeRectangle, Object> {
+        List<FakeRectangle> parts = new ArrayList<FakeRectangle>();
 
         public void init() {
         }
 
-        public void addPart(VisFactory2D.GraphObject graphicalObject) {
+        public void addPart(FakeRectangle graphicalObject) {
             parts.add(graphicalObject);
         }
 
