@@ -106,7 +106,6 @@ public class SimpleViewer extends JFrame {
         return (returnVal == JFileChooser.APPROVE_OPTION) ? chooser.getSelectedFile() : null;
     }
 
-
     protected void setupBehaviour() {
         BranchGroup mainScene = scene.getSceneGroup();
         PickMouseBehavior pickMouseBehavior = new PickMouseBehavior(canvas, mainScene, null) {

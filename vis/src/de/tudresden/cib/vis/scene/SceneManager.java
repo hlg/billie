@@ -4,12 +4,13 @@ import de.tudresden.cib.vis.util.MultiBiMap;
 
 import java.util.*;
 
-public class SceneManager<E> {
+public class SceneManager<E, S> {
 
     private TreeMap<Integer, ChangeMap> scheduledChanges = new TreeMap<Integer, ChangeMap>();
     private Map<Event, ChangeMap> triggeredChanges = new HashMap<Event, ChangeMap>();
     private Map<Event, Collection<VisFactory2D.GraphObject>> triggers = new HashMap<Event, Collection<VisFactory2D.GraphObject>>();
     private MultiBiMap<E, VisFactory2D.GraphObject> mapped = MultiBiMap.create();
+    private S scene;
 
     // TODO: use animation facilities of scene graph library if possible
     // TODO: initial state and reset
@@ -103,5 +104,13 @@ public class SceneManager<E> {
 
     public void addMapped(E source, VisFactory2D.GraphObject target) {
         mapped.put(source, target);
+    }
+
+    public void setScene(S scene) {
+        this.scene = scene;
+    }
+
+    public S getScene() {
+        return scene;
     }
 }

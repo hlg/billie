@@ -13,4 +13,4 @@ Specification-Title: CIB visualization framework
 Specification-Version: 0.1
 Implementation-Title: snapshot
 Implementation-Version: 0.1
-
+Require-Bundle: com.google.guava

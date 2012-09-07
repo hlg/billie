@@ -23,6 +23,10 @@ public class GaebBarchartConfiguration extends Configuration<EObject, Draw2dFact
         super(new EMFGaebAccessor(input), new Draw2dFactory(font), new Draw2dBuilder());
     }
 
+    public GaebBarchartConfiguration(Font font, DataAccessor<EObject> data){
+        super(data, new Draw2dFactory(font), new Draw2dBuilder());
+    }
+
     public void config() {
         mapper.addStatistics("UPmax", new DataAccessor.Folding<EObject, BigDecimal>(new BigDecimal(0)) {
             @Override
@@ -39,10 +43,10 @@ public class GaebBarchartConfiguration extends Configuration<EObject, Draw2dFact
         mapper.addMapping(new PropertyMap<TgItem, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
-                graphObject.setHeight(75);
-                graphObject.setWidth((int) (data.getUP().intValue() * mapper.getGlobal("widthFactor") * 5));
-                graphObject.setLeft(1000);
-                graphObject.setTop(index * 100); // TODO: alternative to iterator index ? Layoutmanager, dataacessor sorting parameters
+                graphObject.setHeight(15);
+                graphObject.setWidth((int) (data.getUP().intValue() * mapper.getGlobal("widthFactor")));
+                graphObject.setLeft(200);
+                graphObject.setTop(index * 20); // TODO: alternative to iterator index ? Layoutmanager, dataacessor sorting parameters
             }
         });
         mapper.addMapping(new PropertyMap<TgItem, VisFactory2D.Label>() {
@@ -59,7 +63,7 @@ public class GaebBarchartConfiguration extends Configuration<EObject, Draw2dFact
                 labelText.append(data.getDescription().getCompleteText().getOutlineText().getOutlTxt().getTextOutlTxt().get(0).getP().get(0).getSpan().get(0).getValue());
                 graphObject.setText(labelText.toString());
                 graphObject.setLeft(0);
-                graphObject.setTop(index * 100);
+                graphObject.setTop(index * 20);
             }
         });
     }

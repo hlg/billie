@@ -13,10 +13,7 @@ import org.bimserver.plugins.PluginException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -58,21 +55,22 @@ public enum ConfigurationRunner {
         void run() throws IOException, PluginException, TargetCreationException {
             Draw2DViewer viewer = new Draw2DViewer();
             Font big = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 50, 0);
-            InputStream input = viewer.getClass().getResourceAsStream("/resources/LV1.X81");
-            GaebBarchartConfiguration gaebBarchartConfig = new GaebBarchartConfiguration(big, input);
+            Font normal = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 10, 0);
+            File input = viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "X81");
+            GaebBarchartConfiguration gaebBarchartConfig = new GaebBarchartConfiguration(normal, new FileInputStream(input));
             gaebBarchartConfig.config();
             viewer.setSnapShotParams("D:/test.png", SWT.IMAGE_PNG);
-            viewer.showContent(gaebBarchartConfig.execute());
+            viewer.showContent(gaebBarchartConfig.execute().getScene());
             big.dispose();
         }
     }, IFC_2D {
         @Override
         void run() throws IOException, PluginException, TargetCreationException {
             Draw2DViewer viewer = new Draw2DViewer();
-            InputStream input = viewer.getClass().getResourceAsStream("/resources/carport2.ifc");
-            Ifc2DConfiguration ifc2DConfiguration = new Ifc2DConfiguration(viewer.getDefaultFont(), input);
+            File input = viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "ifc");
+            Ifc2DConfiguration ifc2DConfiguration = new Ifc2DConfiguration(viewer.getDefaultFont(), new FileInputStream(input));
             ifc2DConfiguration.config();
-            viewer.showContent(ifc2DConfiguration.execute());
+            viewer.showContent(ifc2DConfiguration.execute().getScene());
         }
     };
 

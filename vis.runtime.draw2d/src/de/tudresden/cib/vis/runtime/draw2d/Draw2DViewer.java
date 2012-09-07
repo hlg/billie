@@ -8,7 +8,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class Draw2DViewer {
 
@@ -28,6 +32,14 @@ public class Draw2DViewer {
 
         canvas = new FigureCanvas(shell);
         ls = new LightweightSystem(canvas);
+    }
+
+    public File chooseFile(String directoryPath, final String fileType) throws FileNotFoundException {
+        FileDialog dialog = new FileDialog(shell, SWT.OPEN);
+        dialog.setFilterExtensions(new String[]{"*." + fileType});
+        dialog.setFilterPath(directoryPath);
+        String result = dialog.open();
+        return new File(result);
     }
 
     public Font getDefaultFont(){

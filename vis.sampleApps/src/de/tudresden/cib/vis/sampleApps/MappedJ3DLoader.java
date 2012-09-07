@@ -9,6 +9,7 @@ import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.java3d.loaders.IfcScene;
+import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
@@ -40,8 +41,9 @@ public class MappedJ3DLoader<E> implements Loader {
         try {
             data.read(inputStream);
             result = new IfcScene();
-            result.setSceneGroup(mapper.map());
-            mapper.getSceneManager().animate();
+            SceneManager<E,BranchGroup> sceneManager = mapper.map();
+            result.setSceneGroup(sceneManager.getScene());
+            sceneManager.animate();
         } catch (IOException e) {
             throw new FileNotFoundException(e.getMessage());
         } catch (TargetCreationException e) {

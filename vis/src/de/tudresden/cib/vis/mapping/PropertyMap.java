@@ -16,7 +16,7 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
     Class<T> graphClass;
 
     private Provider<T> provider;
-    private SceneManager<? super S> sceneManager;
+    private SceneManager<? super S, ?> sceneManager;
 
     protected PropertyMap() {
         Type[] actualTypeArguments = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments();
@@ -65,7 +65,7 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
         sceneManager.addTrigger(event, graphObject);
     }
 
-    public void with(SceneManager<? super S> sceneManager) {
+    public void with(SceneManager<? super S, ?> sceneManager) {
         this.sceneManager = sceneManager;
     }
 

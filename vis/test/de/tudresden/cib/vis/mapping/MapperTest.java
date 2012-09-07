@@ -2,10 +2,7 @@ package de.tudresden.cib.vis.mapping;
 
 import de.tudresden.cib.vis.data.CollectionAccessor;
 import de.tudresden.cib.vis.data.DataAccessor;
-import de.tudresden.cib.vis.scene.Change;
-import de.tudresden.cib.vis.scene.Event;
-import de.tudresden.cib.vis.scene.VisBuilder;
-import de.tudresden.cib.vis.scene.VisFactory2D;
+import de.tudresden.cib.vis.scene.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,12 +44,12 @@ public class MapperTest extends MappingTestCase {
                     }
                 }
         );
-        test.map();
+        SceneManager<DataElement,?> result = test.map();
         assertEquals(1, builder.parts.size());
         VisFactory2D.GraphObject expected = builder.parts.get(0);
         assertEquals(d.a, ((FakeRectangle) expected).a);
-        assertEquals(expected, test.getSceneManager().getFirstGraph(d));
-        assertEquals(d, test.getSceneManager().getData(expected));
+        assertEquals(expected, result.getFirstGraph(d));
+        assertEquals(d, result.getData(expected));
     }
 
     private Mapper<DataElement, FakeRectangle, Object> makeMapper(FakeVisBuilder builder) {
@@ -79,9 +76,9 @@ public class MapperTest extends MappingTestCase {
                 addChange(0, theChange);
            }
         });
-        test.map();
+        SceneManager result = test.map();
         VisFactory2D.Rectangle generatedGraph = builder.parts.get(0);
-        List<Change> changes = test.getSceneManager().getChanges(0, generatedGraph);
+        List<Change> changes = result.getChanges(0, generatedGraph);
         assertTrue(changes.contains(theChange));
         assertEquals(1, changes.size());
     }
@@ -102,10 +99,10 @@ public class MapperTest extends MappingTestCase {
                 });
             }
         });
-        test.map();
+        SceneManager result = test.map();
         FakeRectangle graph = builder.parts.get(0);
         assertEquals(10, graph.a);
-        test.getSceneManager().fire(Event.CLICK, graph);
+        result.fire(Event.CLICK, graph);
         assertEquals(1000, graph.a);
     }
 
@@ -131,11 +128,11 @@ public class MapperTest extends MappingTestCase {
                 addTrigger(Event.CLICK);
             }
         });
-        test.map();
+        SceneManager result = test.map();
         FakeRectangle receiving = builder.parts.get(0);
         FakeRectangle triggering = builder.parts.get(1);
         assertEquals(10, receiving.a);
-        test.getSceneManager().fire(Event.CLICK, triggering);
+        result.fire(Event.CLICK, triggering);
         assertEquals(1000, receiving.a);
     }
 
@@ -157,9 +154,9 @@ public class MapperTest extends MappingTestCase {
                 addChange(Event.CLICK, theChange);
             }
         });
-        test.map();
+        SceneManager result = test.map();
         VisFactory2D.Rectangle generatedGraph = builder.parts.get(0);
-        List<Change> changes = test.getSceneManager().getChanges(Event.CLICK, generatedGraph);
+        List<Change> changes = result.getChanges(Event.CLICK, generatedGraph);
         assertTrue(changes.contains(theChange));
         assertEquals(1, changes.size());
     }

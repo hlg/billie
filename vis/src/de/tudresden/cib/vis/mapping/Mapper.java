@@ -12,7 +12,7 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     private DataAccessor<E> dataAccessor;
     private VisFactory2D visFactory;
     private VisBuilder<G, S> visBuilder;
-    private SceneManager<E> sceneManager = new SceneManager<E>();
+    private SceneManager<E, S> sceneManager = new SceneManager<E, S>();
 
     private Map<String, DataAccessor.Folding<E, ? extends Number>> statistics = new HashMap<String, DataAccessor.Folding<E, ? extends Number>>();
     private Map<String, PreProcessing<Double>> globals = new HashMap<String, PreProcessing<Double>>();
@@ -30,15 +30,16 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     }
 
 
-    public S map() throws TargetCreationException {
+    public SceneManager<E, S> map() throws TargetCreationException {
         visBuilder.init();
         preProcess();
         mainPass();
         visBuilder.finish();
-        return visBuilder.getScene();
+        sceneManager.setScene(visBuilder.getScene());
+        return sceneManager;
     }
 
-    public SceneManager<E> getSceneManager(){
+    public SceneManager<E, S> getSceneManager(){
         return sceneManager;
     }
 
