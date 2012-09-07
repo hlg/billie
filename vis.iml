@@ -10,8 +10,8 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/visMapping/out/classes" />
-    <output-test url="file://$MODULE_DIR$/visMapping/out/testclasses" />
+    <output url="file://$MODULE_DIR$/vis/out/classes" />
+    <output-test url="file://$MODULE_DIR$/vis/out/testclasses" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/vis">
       <sourceFolder url="file://$MODULE_DIR$/vis/src" isTestSource="false" />
