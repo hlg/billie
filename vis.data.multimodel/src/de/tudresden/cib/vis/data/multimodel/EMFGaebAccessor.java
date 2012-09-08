@@ -9,7 +9,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,10 +16,6 @@ public class EMFGaebAccessor extends EMFGenericAccessor<TgItem> {
 
     public EMFGaebAccessor(){
 
-    }
-
-    public EMFGaebAccessor(URL url) throws IOException {
-        super(url);
     }
 
     public EMFGaebAccessor(InputStream inputStream) throws IOException {

@@ -8,27 +8,27 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.Iterator;
 
 public class EMFQtoAccessorTests {
 
-    URL resourceUrl;
+    InputStream resourceStream;
 
     @Before
     public void setup(){
-        resourceUrl = this.getClass().getResource("/resources/carport/QTO/xml/1_LV_VA.xml");
+        resourceStream = this.getClass().getResourceAsStream("/resources/carport/QTO/xml/1_LV_VA.xml");
     }
 
     @Test
     public void testAccessEMF() throws IOException {
-        DataAccessor<EObject> data = new EMFQtoAccessor(resourceUrl);
+        DataAccessor<EObject> data = new EMFQtoAccessor(resourceStream);
         check(data);
     }
 
     @Test
     public void testPreparsedEMF() throws IOException {
-        EMFGenericAccessor baseAccessor = new EMFQtoAccessor(resourceUrl);
+        EMFGenericAccessor baseAccessor = new EMFQtoAccessor(resourceStream);
         DataAccessor<EObject> accessor = new EMFQtoAccessor(baseAccessor.data);
         check(accessor);
     }

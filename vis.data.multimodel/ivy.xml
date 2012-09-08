@@ -4,6 +4,7 @@
     <dependency org="bundle" name="de.mefisto.container" rev="1.0.+"/>
     <dependency org="bundle" name="cib.lib.gaeb.model" rev="1.0.+" changing="true" />
     <dependency org="bundle" name="cib.mf.qto.model" rev="1.0.+"/>
+    <dependency org="bundle" name="cib.mf.risk.model" rev="1.0.+"/>
     <dependency org="bundle" name="cib.mf.schedule.model" rev="1.1.+"/>
     <dependency org="bundle" name="org.eclipse.emf.common" rev="2.7.+"/>
     <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true"/>

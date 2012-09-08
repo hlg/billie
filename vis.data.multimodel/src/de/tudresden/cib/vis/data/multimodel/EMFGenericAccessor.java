@@ -7,8 +7,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -16,10 +14,6 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
     EObject data;
     Map<String, T> index;   // todo: index for links on categories?
     protected String namespace = "";
-
-    EMFGenericAccessor(URL url) throws IOException {
-        setData(URI.createFileURI(URLDecoder.decode(url.getPath(),"UTF-8")));
-    }
 
     EMFGenericAccessor(EObject parsed){
         data = parsed;

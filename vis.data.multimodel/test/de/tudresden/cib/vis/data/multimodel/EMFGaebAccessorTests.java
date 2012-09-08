@@ -11,28 +11,28 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Iterator;
 
 public class EMFGaebAccessorTests {
 
-    URL resourceUrl;
+    InputStream resourceStream;
 
     @Before
     public void setup(){
-        resourceUrl = this.getClass().getResource("/resources/carport/BoQ/gaebxml/LV_1.X81");
+        resourceStream = this.getClass().getResourceAsStream("/resources/carport/BoQ/gaebxml/LV_1.X81");
     }
 
     @Test
     public void testAccessEMF() throws URISyntaxException, IOException {
-        DataAccessor<EObject> data = new EMFGaebAccessor(resourceUrl);
+        DataAccessor<EObject> data = new EMFGaebAccessor(resourceStream);
         check(data);
     }
 
     @Test
     public void testPreparsedEMF() throws IOException {
-        EMFGenericAccessor baseAccessor = new EMFGaebAccessor(resourceUrl);
+        EMFGenericAccessor baseAccessor = new EMFGaebAccessor(resourceStream);
         DataAccessor<EObject> accessor = new EMFGaebAccessor(baseAccessor.data);
         check(accessor);
     }

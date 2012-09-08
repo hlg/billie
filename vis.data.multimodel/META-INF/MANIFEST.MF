@@ -10,6 +10,7 @@ Require-Bundle: de.tudresden.cib.vis,
  cib.lib.gaeb.model,
  cib.mf.qto.model,
  cib.mf.schedule.model,
+ cib.mf.risk.model,
  org.eclipse.emf.common
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .

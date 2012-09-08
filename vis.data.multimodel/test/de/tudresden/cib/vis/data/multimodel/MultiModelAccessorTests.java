@@ -45,7 +45,7 @@ public class MultiModelAccessorTests {
 
     @Test
     public void testPreparsedAccess() throws IOException {
-        EMFScheduleAccessor schedule = new EMFScheduleAccessor(this.getClass().getResourceAsStream("/resources/carport/Activity/xml/Vorgangsmodell_1.xml"), "Activity1");
+        EMFScheduleAccessor schedule = new EMFSchedule10Accessor(this.getClass().getResourceAsStream("/resources/carport/Activity/xml/Vorgangsmodell_1.xml"), "Activity1");
         final EMFGaebAccessor gaeb = new EMFGaebAccessor(this.getClass().getResourceAsStream("/resources/carport/BoQ/gaebxml/LV_1.X81"), "BoQ1");
         EMFIfcAccessor ifc = new EMFIfcAccessor(new SimplePluginManager());
         ifc.read(this.getClass().getResourceAsStream("/resources/carport/Object/ifc/carport2.ifc"));

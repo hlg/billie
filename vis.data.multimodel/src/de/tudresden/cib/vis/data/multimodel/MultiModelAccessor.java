@@ -193,10 +193,22 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
                 return new EMFQtoAccessor();
             }
         },
-        ACTIVITY("Activity", "xml", "1.0") {
+        ACTIVITY10("Activity", "xml", "1.0") {
             @Override
             IndexedDataAccessor createAccessor() {
-                return new EMFScheduleAccessor();
+                return new EMFSchedule10Accessor();
+            }
+        },
+        ACTIVITY11("Activity", "xml", "1.1") {
+            @Override
+            IndexedDataAccessor createAccessor() {
+                return new EMFSchedule11Accessor();
+            }
+        },
+        RISK("Risk", "xml", "1.0") {
+            @Override
+            IndexedDataAccessor createAccessor() {
+                return new EMFRiskAccessor();
             }
         };
 

@@ -131,6 +131,7 @@
         <delete dir="${ivy.local.default.root}/de.tudresden.cib/${ant.project.name}/${version}" />
         <delete dir="${ivy.cache.dir}/de.tudresden.cib/${ant.project.name}/${version}" />
         <delete dir="${module.output.dir}"/>
+        <delete dir="${module.basedir}/lib"/>
     </target>
 
 </project>
