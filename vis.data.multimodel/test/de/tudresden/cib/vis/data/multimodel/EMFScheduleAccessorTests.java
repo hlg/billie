@@ -29,8 +29,7 @@ public class EMFScheduleAccessorTests {
         check(data);
     }
 
-    @Test
-    public void XXtestAccessEMF11() throws IOException {
+    public void testAccessEMF11() throws IOException {
         EMFSchedule11Accessor data = new EMFSchedule11Accessor(resource11);
         check(data);
     }
@@ -42,8 +41,7 @@ public class EMFScheduleAccessorTests {
         check(accessor);
     }
 
-    @Test
-    public void XXtestPreparsedEMF11() throws IOException {
+    public void testPreparsedEMF11() throws IOException {
         EMFGenericAccessor baseAccessor = new EMFSchedule11Accessor(resource11);
         EMFSchedule11Accessor accessor = new EMFSchedule11Accessor(baseAccessor.data);
         check(accessor);
