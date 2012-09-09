@@ -21,6 +21,7 @@ public class EMFScheduleAccessorTests {
     @Before
     public void setup(){
         resource10 = this.getClass().getResourceAsStream("/resources/carport/Activity/xml/Vorgangsmodell_1.xml");
+        resource11 = this.getClass().getResourceAsStream("/resources/carport/Activity/xml/Vorgangsmodell_1-11.xml");
     }
 
     @Test
@@ -29,6 +30,7 @@ public class EMFScheduleAccessorTests {
         check(data);
     }
 
+    @Test
     public void testAccessEMF11() throws IOException {
         EMFSchedule11Accessor data = new EMFSchedule11Accessor(resource11);
         check(data);
@@ -41,6 +43,7 @@ public class EMFScheduleAccessorTests {
         check(accessor);
     }
 
+    @Test
     public void testPreparsedEMF11() throws IOException {
         EMFGenericAccessor baseAccessor = new EMFSchedule11Accessor(resource11);
         EMFSchedule11Accessor accessor = new EMFSchedule11Accessor(baseAccessor.data);
