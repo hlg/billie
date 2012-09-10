@@ -16,7 +16,7 @@ import java.util.Iterator;
 public class EMFScheduleAccessorTests {
 
     private InputStream resource10;
-    private InputStream resource11; // TODO test data
+    private InputStream resource11;
 
     @Before
     public void setup(){

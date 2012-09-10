@@ -16,8 +16,6 @@ import java.io.FileNotFoundException;
 
 public class Draw2DViewer {
 
-    // todo: move to vis.runtime.draw2d
-
     private Shell shell;
     private FigureCanvas canvas;
     private LightweightSystem ls;
