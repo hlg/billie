@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.Collection;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertFalse;
 
 public class MultiModelAccessorTests {
 
@@ -68,11 +68,9 @@ public class MultiModelAccessorTests {
             Assert.assertTrue(theLink.getLinkedObject().isEmpty());
             assertEquals(1, theLink.getLinkedBoQ().size());
             assertEquals(1, theLink.getScheduleObjects().size());
-            assertNotNull(theLink.getLinkedBoQ().values().iterator().next());
-            assertNotNull(theLink.getScheduleObjects().values().iterator().next());
+            assertFalse(theLink.getLinkedBoQ().values().isEmpty());
+            assertFalse(theLink.getScheduleObjects().values().isEmpty());
         }
         Assert.assertEquals(5, linkSize);
     }
-
-
 }

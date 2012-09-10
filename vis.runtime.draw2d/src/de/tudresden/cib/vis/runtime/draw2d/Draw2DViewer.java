@@ -80,9 +80,6 @@ public class Draw2DViewer {
             if (!display.readAndDispatch()) display.sleep();
         }
         display.dispose();
-
-        // TODO: proper swt shutdown?
-
     }
 
     class SnapShotParams {

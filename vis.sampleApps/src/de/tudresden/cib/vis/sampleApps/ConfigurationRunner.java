@@ -85,6 +85,7 @@ public enum ConfigurationRunner {
             SceneManager<EObject,Panel> result = config.execute();
             result.animate();
             viewer.showContent(result.getScene());
+            result.dispose();
         }
     };
 

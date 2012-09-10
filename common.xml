@@ -2,7 +2,6 @@
 <project name="common" default="dist.module" xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <property file="../common.build.properties"/>
-    <property file="build.properties"/>
 
     <patternset id="library.patterns">
         <include name="*.jar"/>
@@ -30,7 +29,8 @@
 
     <target name="resolve.module" depends="config.module">
         <echo message="resolving: ${module.basedir}"/>
-        <ivy:resolve file="${module.basedir}/ivy.xml"/>
+        <property name="ivy.config" value="default" />
+        <ivy:resolve file="${module.basedir}/ivy.xml" conf="${ivy.config}"/>
         <ivy:cachepath pathid="ivy.classpath"/>
         <ivy:retrieve type="jar,bundle"/>
         <!-- ivy:report / -->
