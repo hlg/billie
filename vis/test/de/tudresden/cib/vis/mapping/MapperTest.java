@@ -198,6 +198,10 @@ public class MapperTest extends MappingTestCase {
         public Object getScene() {
             return null;
         }
+        @Override
+        public UIContext getUiContext() {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
 
     }
 

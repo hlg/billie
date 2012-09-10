@@ -21,11 +21,13 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
-      <library name="IvyIDEA-vis-default">
+      <library name="IvyIDEA">
         <CLASSES>
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/jars/junit-4.10.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.google.guava/guava/jars/guava-11.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.google.code.findbugs/jsr305/jars/jsr305-1.3.9.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.google.guava/guava-bootstrap/jars/guava-bootstrap-11.0.1.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/javadocs/junit-4.10-javadoc.jar!/" />

@@ -11,12 +11,20 @@ public class SceneManager<E, S> {
     private Map<Event, Collection<VisFactory2D.GraphObject>> triggers = new HashMap<Event, Collection<VisFactory2D.GraphObject>>();
     private MultiBiMap<E, VisFactory2D.GraphObject> mapped = MultiBiMap.create();
     private S scene;
+    private UIContext uiContext;
 
     // TODO: use animation facilities of scene graph library if possible
     // TODO: initial state and reset
 
-    private int advanceFrame(int current, int maxFrame) {
-        if(scheduledChanges.containsKey(current)) scheduledChanges.get(current).changeAll();
+    private int advanceFrame(final int current, int maxFrame) {
+        if(scheduledChanges.containsKey(current)) {
+            uiContext.runInUIContext(new Runnable() {
+                @Override
+                public void run() {
+                    scheduledChanges.get(current).changeAll();
+                }
+            });
+        }
         return  (current+1 == maxFrame) ? 0 : current+1;
     }
 
@@ -112,5 +120,9 @@ public class SceneManager<E, S> {
 
     public S getScene() {
         return scene;
+    }
+
+    public void setUiContext(UIContext uiContext) {
+        this.uiContext = uiContext;
     }
 }

@@ -36,6 +36,7 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
         mainPass();
         visBuilder.finish();
         sceneManager.setScene(visBuilder.getScene());
+        sceneManager.setUiContext(visBuilder.getUiContext());
         return sceneManager;
     }
 

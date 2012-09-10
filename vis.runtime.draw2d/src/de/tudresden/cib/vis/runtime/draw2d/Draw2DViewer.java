@@ -81,6 +81,7 @@ public class Draw2DViewer {
         }
         display.dispose();
 
+        // TODO: proper swt shutdown?
 
     }
 

@@ -1,5 +1,6 @@
 package de.tudresden.cib.vis.scene.java3d;
 
+import de.tudresden.cib.vis.scene.UIContext;
 import de.tudresden.cib.vis.scene.VisBuilder;
 
 import javax.media.j3d.BranchGroup;
@@ -9,6 +10,12 @@ import javax.media.j3d.TransformGroup;
 public class Java3dBuilder implements VisBuilder<Java3dFactory.Java3DGraphObject, BranchGroup> {
     private BranchGroup buildingBranchGroup;
     private TransformGroup buildingTransformGroup;
+    private UIContext uiContext = new UIContext() {
+        @Override
+        public void runInUIContext(Runnable runnable) {
+            runnable.run();
+        }
+    };
 
     public void init() {
         buildingTransformGroup = new TransformGroup();
@@ -26,5 +33,10 @@ public class Java3dBuilder implements VisBuilder<Java3dFactory.Java3DGraphObject
 
     public BranchGroup getScene() {
         return buildingBranchGroup;
+    }
+
+    @Override
+    public UIContext getUiContext() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

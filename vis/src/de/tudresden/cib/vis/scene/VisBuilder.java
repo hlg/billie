@@ -5,4 +5,5 @@ public interface VisBuilder<T extends VisFactory2D.GraphObject,S> {
     void addPart(T graphicalObject);
     void finish();
     S getScene();
+    UIContext getUiContext();
 }

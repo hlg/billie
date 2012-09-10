@@ -9,7 +9,10 @@ import de.tudresden.cib.vis.data.multimodel.MultiModelAccessor;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.draw2d.Draw2DViewer;
 import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
+import de.tudresden.cib.vis.scene.SceneManager;
 import org.bimserver.plugins.PluginException;
+import org.eclipse.draw2d.Panel;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 
@@ -72,6 +75,17 @@ public enum ConfigurationRunner {
             ifc2DConfiguration.config();
             viewer.showContent(ifc2DConfiguration.execute().getScene());
         }
+    }, GANTT {
+        @Override
+        void run() throws IOException, PluginException, TargetCreationException {
+            Draw2DViewer viewer = new Draw2DViewer();
+            File input = viewer.chooseFile(getClass().getResource(".").getPath(), "xml");
+            TimelineConfiguration config = new TimelineConfiguration(viewer.getDefaultFont(), new FileInputStream(input));
+            config.config();
+            SceneManager<EObject,Panel> result = config.execute();
+            result.animate();
+            viewer.showContent(result.getScene());
+        }
     };
 
     public static void main(String[] args) throws TargetCreationException, IOException, PluginException {
@@ -79,13 +93,13 @@ public enum ConfigurationRunner {
         for(ConfigurationRunner conf: values()){
             names.add(conf.name());
         }
+        System.out.println("available configurations:");
+        for(String name: names){
+            System.out.println(name);
+        }
         if (args.length >= 1 && names.contains(args[0])) {
+            System.out.println("\nrunning " + args[0]);
             valueOf(args[0]).run();
-        } else {
-            System.out.println("available configurations:");
-            for(String name: names){
-                System.out.println(name);
-            }
         }
     }
 
