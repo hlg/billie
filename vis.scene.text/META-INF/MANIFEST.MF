@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CIB visualization framework text implementation
+Bundle-SymbolicName: de.tudresden.cib.vis.scene.text
+Bundle-Vendor: CIB TU Dresden
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Export-Package: de.tudresden.cib.vis.scene.text
+Require-Bundle: de.tudresden.cib.vis

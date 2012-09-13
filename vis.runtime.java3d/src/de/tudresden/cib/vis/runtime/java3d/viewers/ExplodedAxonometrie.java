@@ -18,8 +18,6 @@ import javax.media.j3d.ViewSpecificGroup;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
 import java.util.Collection;
 
 /**
@@ -72,7 +70,7 @@ public class ExplodedAxonometrie extends SimpleViewer {
     }
 
     @Override
-    public void run(Reader input) throws PluginException, FileNotFoundException {
+    public void run(String input) throws FileNotFoundException {
         setupLoaderView();
         loadFile(input);
         setStoreys(((MultiLoader) loader).getSubScenes());  // TODO: remove downcast
@@ -89,7 +87,7 @@ public class ExplodedAxonometrie extends SimpleViewer {
         loader.setDefaultAppearance(noCullingAppearance);
         ExplodedAxonometrie ifcViewer = new ExplodedAxonometrie(loader);
         File file = ifcViewer.chooseFile(args.length > 0 ? args[0] : null, "ifc");
-        ifcViewer.run(new FileReader(file));
+        ifcViewer.run(file.getPath());
     }
 
     private void setStoreys(Collection<ViewSpecificGroup> storeyNodes) {

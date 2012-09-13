@@ -120,7 +120,7 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
                 for (ContainerFile contentFile : content.getFiles()) {
                     try {
                         File file = new File(mmFolder, new URL(contentFile.getValue()).getFile());
-                        accessor.read(new FileInputStream(file), contentFile.getNamespace()); // TODO: accessor should join multiple sucessively set/added files
+                        accessor.read(new FileInputStream(file), contentFile.getNamespace(), file.length()); // TODO: accessor should join multiple sucessively set/added files
                     } catch (MalformedURLException e) {
                         e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     } catch (IOException e) {
@@ -138,7 +138,7 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
         return groupedElements.iterator();
     }
 
-    public void read(InputStream inputStream) throws IOException {
+    public void read(InputStream inputStream, long size) throws IOException {
         readFromFolder(unzip(inputStream));
     }
 

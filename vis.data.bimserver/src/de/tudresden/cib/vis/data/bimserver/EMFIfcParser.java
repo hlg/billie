@@ -1,6 +1,6 @@
 package de.tudresden.cib.vis.data.bimserver;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.TeeInputStream;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.IfcElement;
 import org.bimserver.models.ifc2x3tc1.IfcProduct;
@@ -14,9 +14,7 @@ import org.bimserver.plugins.ifcengine.*;
 import org.bimserver.plugins.serializers.IfcModelInterface;
 import org.eclipse.emf.ecore.EObject;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 
@@ -45,19 +43,31 @@ public class EMFIfcParser {
         }
     }
 
-    public void read(InputStream inputStream) {
+    public void read(InputStream inputStream, final long size) {
         try {
-            byte[] bytes = IOUtils.toByteArray(inputStream); // todo: save memory by branching the stream with TeeInputStream
-            engineModel = engine.openModel(bytes);
+            final PipedInputStream piped = new PipedInputStream();
+            OutputStream out = new PipedOutputStream(piped);
+            final InputStream tee = new TeeInputStream(inputStream, out); // in read in new thread as it puts
+            Thread dataRead = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        data = deserializer.read(tee, "?", true, 16 * 58);
+                    } catch (DeserializeException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                }
+            });
+            dataRead.start();
+            engineModel = engine.openModel(piped, (int) size);
             engineModel.setPostProcessing(true);
             geometry = engineModel.finalizeModelling(engineModel.initializeModelling());
-            data = deserializer.read(new ByteArrayInputStream(bytes), "?", true, 16 * 58);
+            dataRead.join();
             adjustRelations();
-        } catch (IfcEngineException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (DeserializeException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IfcEngineException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }

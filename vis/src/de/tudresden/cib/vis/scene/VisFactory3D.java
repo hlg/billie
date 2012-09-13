@@ -19,8 +19,6 @@ public abstract class VisFactory3D extends VisFactory2D {
         void setNormals(List<Float> normals);
 
         void setIndizes(List<Integer> indizes);
-
-        void setColor(float R, float G, float B);
     }
 
 }

@@ -17,7 +17,7 @@ public class CollectionAccessor<T> extends DataAccessor<T> {
         return data.iterator();
     }
 
-    public void read(InputStream inputStream) throws IOException {
+    public void read(InputStream inputStream, long size) throws IOException {
         throw new UnsupportedOperationException();
         // TODO inheritance : FileAccessor, IndexableAccessor ...
     }

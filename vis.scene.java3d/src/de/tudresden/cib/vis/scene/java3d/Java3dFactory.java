@@ -73,7 +73,7 @@ public class Java3dFactory extends VisFactory3D {
             }
 
             private boolean validSizes() {
-                return vertizes.size() == normals.size() && ((Collections.max(indizes)+1)*3 <= vertizes.size());
+                return !indizes.isEmpty() && vertizes.size() == normals.size() && ((Collections.max(indizes)+1)*3 <= vertizes.size());
             }
 
             private boolean paramsFilled() {
@@ -97,7 +97,7 @@ public class Java3dFactory extends VisFactory3D {
             builder.build(this);
         }
 
-        public void setColor(float R, float G, float B) {
+        public void setColor(int R, int G, int B) {
             Appearance appearance = new Appearance();
             Color3f color3f = new Color3f(R,G,B);
             Material material = new Material(color3f, new Color3f(0f, 0f, 0f), color3f, color3f, 10f);

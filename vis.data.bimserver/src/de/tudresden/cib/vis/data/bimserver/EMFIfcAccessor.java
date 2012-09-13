@@ -21,17 +21,17 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObje
         parser = new EMFIfcParser(pluginManager);
     }
 
-    public EMFIfcAccessor(SimplePluginManager simplePluginManager, InputStream input) throws IOException {
+    public EMFIfcAccessor(SimplePluginManager simplePluginManager, InputStream input, long size) throws IOException {
         this(simplePluginManager);
-        read(input);
+        read(input, size);
     }
 
-    public void read(InputStream inputStream) throws IOException {
-        parser.read(inputStream);
+    public void read(InputStream inputStream, long size) throws IOException {
+        parser.read(inputStream, size);
     }
 
-    public void read(InputStream inputStream, String namespace) throws IOException {
-        read(inputStream);
+    public void read(InputStream inputStream, String namespace, long size) throws IOException {
+        read(inputStream, size);
         this.namespace = namespace + "::";
     }
 

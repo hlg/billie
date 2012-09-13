@@ -12,6 +12,7 @@
     <dependency org="de.tudresden.cib" name="vis.data.multimodel" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.scene.java3d" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.scene.draw2d" rev="latest.integration" changing="true"/>
+    <dependency org="de.tudresden.cib" name="vis.scene.text" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.runtime.java3d" rev="latest.integration" changing="true"/>
     <dependency org="bundle" name="de.mefisto.container" rev="1.0.+"/>
     <dependency org="bundle" name="cib.lib.gaeb.model" rev="1.0.+" changing="true" />

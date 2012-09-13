@@ -50,10 +50,10 @@ public class IfcGaebColored3DConfiguration extends Configuration<LinkedObject<EM
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
                 graphObject.setIndizes(geometry.indizes);
-                float price = calculateOveralPrice(data.getResolvedLinks()).floatValue();
-                float halfMaxTotal = mapper.getGlobal("halfMaxTotal").floatValue();
-                float red = price <= halfMaxTotal ? price / halfMaxTotal : 1;
-                float green = price > halfMaxTotal ? (1 - (price - halfMaxTotal) / halfMaxTotal) : 1;
+                int price = calculateOveralPrice(data.getResolvedLinks()).intValue();
+                int halfMaxTotal = mapper.getGlobal("halfMaxTotal").intValue();
+                int red = price <= halfMaxTotal ? price / halfMaxTotal : 1;
+                int green = price > halfMaxTotal ? (1 - (price - halfMaxTotal) / halfMaxTotal) : 1;
                 graphObject.setColor(red, green, 0);     // 0 1 0 green, 1 1 0 yellow, 1 0 0 red
             }
         });

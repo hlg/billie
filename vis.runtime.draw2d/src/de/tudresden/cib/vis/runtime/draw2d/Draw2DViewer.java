@@ -27,8 +27,7 @@ public class Draw2DViewer {
         display = new Display();
         shell = new Shell(display);
         shell.setLayout(new FillLayout());
-
-        canvas = new FigureCanvas(shell);
+        canvas = new FigureCanvas(shell, SWT.V_SCROLL|SWT.H_SCROLL);
         ls = new LightweightSystem(canvas);
     }
 
@@ -42,6 +41,10 @@ public class Draw2DViewer {
 
     public Font getDefaultFont(){
         return shell.getFont();
+    }
+
+    public Display getDisplay(){
+        return shell.getDisplay();
     }
 
     public void setSnapShotParams(String fileName, int imgType){

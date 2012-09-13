@@ -8,7 +8,6 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import de.tudresden.cib.vis.runtime.java3d.UniverseBuilder;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
 import de.tudresden.cib.vis.runtime.java3d.views.OrbitalView;
-import org.bimserver.plugins.PluginException;
 import org.slf4j.LoggerFactory;
 
 import javax.media.j3d.*;
@@ -18,7 +17,6 @@ import javax.vecmath.Point3d;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.Reader;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -58,13 +56,6 @@ public class SimpleViewer extends JFrame {
         validate();
     }
 
-    public void run(Reader input) throws PluginException, FileNotFoundException {
-        setupViews();
-        loadFile(input);
-        setupBehaviour();
-        showScene();
-    }
-
     public void run(String path) throws FileNotFoundException {
         setupViews();
         loadFile(path);
@@ -72,15 +63,9 @@ public class SimpleViewer extends JFrame {
         showScene();
     }
 
-    private void loadFile(String path) throws FileNotFoundException {
+    void loadFile(String path) throws FileNotFoundException {
         universe.showLoader();
         scene = loader.load(path);
-    }
-
-    protected void loadFile(Reader input) throws FileNotFoundException {
-        universe.showLoader();
-        scene = loader.load(input);
-        // Hashtable<IfcRoot, Shape3D> visMap = scene.getNamedObjects();
     }
 
     protected void showScene() {

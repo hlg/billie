@@ -15,7 +15,7 @@ public class SphereViewer {
 
     public static void main(String[] args) throws Exception {
         SimpleViewer viewer = new SimpleViewer(new SphereLoader());
-        viewer.run(new DummyReader());
+        viewer.run("");
     }
 
     private static class DummyReader extends Reader {

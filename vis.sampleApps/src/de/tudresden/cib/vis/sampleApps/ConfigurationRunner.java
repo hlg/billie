@@ -16,7 +16,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,7 +30,7 @@ public enum ConfigurationRunner {
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcAccessor(new SimplePluginManager()));
             new Ifc3DConfiguration(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
-            viewer.run(new FileReader(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc")));
+            viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc").getPath());
         }
     }, IFC_3DSPACE {
         @Override
@@ -35,7 +38,7 @@ public enum ConfigurationRunner {
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcAccessor(new SimplePluginManager()));
             new Ifc3DSpaceConfiguration(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
-            viewer.run(new FileReader(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle","ifc")));
+            viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle","ifc").getPath());
         }
     }, IFC_4D {
         @Override
@@ -71,7 +74,7 @@ public enum ConfigurationRunner {
         void run() throws IOException, PluginException, TargetCreationException {
             Draw2DViewer viewer = new Draw2DViewer();
             File input = viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "ifc");
-            Ifc2DConfiguration ifc2DConfiguration = new Ifc2DConfiguration(viewer.getDefaultFont(), new FileInputStream(input));
+            Ifc2DConfiguration ifc2DConfiguration = new Ifc2DConfiguration(viewer.getDefaultFont(), new FileInputStream(input), input.length());
             ifc2DConfiguration.config();
             viewer.showContent(ifc2DConfiguration.execute().getScene());
         }

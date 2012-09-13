@@ -11,7 +11,6 @@ public class Java3dBuilder implements VisBuilder<Java3dFactory.Java3DGraphObject
     private BranchGroup buildingBranchGroup;
     private TransformGroup buildingTransformGroup;
     private UIContext uiContext = new UIContext() {
-        @Override
         public void runInUIContext(Runnable runnable) {
             runnable.run();
         }
@@ -35,7 +34,6 @@ public class Java3dBuilder implements VisBuilder<Java3dFactory.Java3DGraphObject
         return buildingBranchGroup;
     }
 
-    @Override
     public UIContext getUiContext() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }

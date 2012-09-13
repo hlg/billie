@@ -18,8 +18,8 @@ import java.util.*;
 
 public class Ifc2DConfiguration extends Configuration<EMFIfcParser.EngineEObject, Draw2dFactory.Draw2dObject, Panel> {
 
-    public Ifc2DConfiguration(Font font, InputStream input) throws IOException {
-        super(new EMFIfcAccessor(new SimplePluginManager(), input), new Draw2dFactory(font), new Draw2dBuilder());
+    public Ifc2DConfiguration(Font font, InputStream input, long size) throws IOException {
+        super(new EMFIfcAccessor(new SimplePluginManager(), input, size), new Draw2dFactory(font), new Draw2dBuilder());
     }
 
     public void configSemantic() {

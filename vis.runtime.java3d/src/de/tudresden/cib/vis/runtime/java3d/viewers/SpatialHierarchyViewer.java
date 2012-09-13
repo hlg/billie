@@ -11,14 +11,11 @@ import de.tudresden.cib.vis.runtime.java3d.UniverseBuilder;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
 import de.tudresden.cib.vis.runtime.java3d.loaders.BimserverSpatialHierarchyLoader;
 import de.tudresden.cib.vis.runtime.java3d.views.OrbitalView;
-import org.bimserver.plugins.PluginException;
 
 import javax.media.j3d.*;
 import javax.vecmath.Point3d;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
 import java.util.Enumeration;
 
 /**
@@ -54,7 +51,7 @@ public class SpatialHierarchyViewer extends SimpleViewer {
     }
 
     @Override
-    public void run(Reader input) throws PluginException, FileNotFoundException {
+    public void run(String input) throws FileNotFoundException {
         loadFile(input);
         setupBehaviour();
         showScene();
@@ -66,7 +63,7 @@ public class SpatialHierarchyViewer extends SimpleViewer {
         loader.setDefaultPickability(false);
         SpatialHierarchyViewer ifcViewer = new SpatialHierarchyViewer(loader);
         File file = ifcViewer.chooseFile(args.length > 0 ? args[0] : null, "ifc");
-        ifcViewer.run(new FileReader(file));
+        ifcViewer.run(file.getPath());
     }
 
     public void setupBehaviour() {

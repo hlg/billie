@@ -19,8 +19,6 @@ import javax.vecmath.Point3d;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -92,7 +90,7 @@ public class AnimatedViewer extends SimpleViewer {
     }
 
     @Override
-    public void run(Reader input) throws PluginException, FileNotFoundException {
+    public void run(String input) throws FileNotFoundException {
         setupViews();
         loadFile(input);
         setUpAndRunAnimation();
@@ -104,7 +102,7 @@ public class AnimatedViewer extends SimpleViewer {
         pm.loadPluginsFromCurrentClassloader();
         AnimatedViewer ifcViewer = new AnimatedViewer(new BimserverJava3dLoader(pm));
         File file = ifcViewer.chooseFile(args.length > 0 ? args[0] : null, "ifc");
-        ifcViewer.run(new FileReader(file));
+        ifcViewer.run(file.getPath());
     }
 
     void setUpAndRunAnimation() {

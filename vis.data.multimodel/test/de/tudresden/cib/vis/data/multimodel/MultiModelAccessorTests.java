@@ -38,8 +38,9 @@ public class MultiModelAccessorTests {
 
     @Test
     public void testZipAccess() throws IOException {
-        InputStream testFile = this.getClass().getResourceAsStream("/resources/carport.zip");
-        mma.read(testFile);
+        String fileName = "/resources/carport.zip";
+        InputStream testFile = this.getClass().getResourceAsStream(fileName);
+        mma.read(testFile, getClass().getResource(fileName).getFile().length());
         check(mma);
     }
 
@@ -48,7 +49,10 @@ public class MultiModelAccessorTests {
         EMFScheduleAccessor schedule = new EMFSchedule10Accessor(this.getClass().getResourceAsStream("/resources/carport/Activity/xml/Vorgangsmodell_1.xml"), "Activity1");
         final EMFGaebAccessor gaeb = new EMFGaebAccessor(this.getClass().getResourceAsStream("/resources/carport/BoQ/gaebxml/LV_1.X81"), "BoQ1");
         EMFIfcAccessor ifc = new EMFIfcAccessor(new SimplePluginManager());
-        ifc.read(this.getClass().getResourceAsStream("/resources/carport/Object/ifc/carport2.ifc"));
+
+        String fileName = "/resources/carport/Object/ifc/carport2.ifc";
+        long size = new File(getClass().getResource(fileName).getFile()).length();
+        ifc.read(getClass().getResourceAsStream(fileName), size);
         mma.addAcessor("M1", gaeb);
         mma.addAcessor("M3",ifc);
         mma.addAcessor("M4",schedule);

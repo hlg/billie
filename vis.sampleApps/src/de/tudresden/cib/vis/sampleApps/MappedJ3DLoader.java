@@ -13,7 +13,6 @@ import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
-import org.apache.commons.io.input.ReaderInputStream;
 
 import javax.media.j3d.BranchGroup;
 import java.io.*;
@@ -33,13 +32,13 @@ public class MappedJ3DLoader<E> implements Loader {
     }
 
     public Scene load(String s) throws FileNotFoundException, IncorrectFormatException, ParsingErrorException {
-        return loadScene(new FileInputStream(s));
+        return loadScene(new FileInputStream(s), new File(s).length());
     }
 
-    private Scene loadScene(InputStream inputStream) throws FileNotFoundException {
+    private Scene loadScene(InputStream inputStream, long size) throws FileNotFoundException {
         IfcScene result = null;
         try {
-            data.read(inputStream);
+            data.read(inputStream, size);
             result = new IfcScene();
             SceneManager<E,BranchGroup> sceneManager = mapper.map();
             result.setSceneGroup(sceneManager.getScene());
@@ -54,14 +53,14 @@ public class MappedJ3DLoader<E> implements Loader {
 
     public Scene load(URL url) throws FileNotFoundException, IncorrectFormatException, ParsingErrorException {
         try {
-            return loadScene(url.openStream());  //To change body of implemented methods use File | Settings | File Templates.
+            return loadScene(url.openStream(), url.getFile().length());  //To change body of implemented methods use File | Settings | File Templates.
         } catch (IOException e) {
             throw new FileNotFoundException(e.getMessage());
         }
     }
 
     public Scene load(Reader reader) throws FileNotFoundException, IncorrectFormatException, ParsingErrorException {
-        return loadScene(new ReaderInputStream(reader));
+        throw new UnsupportedOperationException();
     }
 
     public void setBaseUrl(URL url) {

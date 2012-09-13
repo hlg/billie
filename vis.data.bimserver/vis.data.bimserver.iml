@@ -23,7 +23,7 @@
     <orderEntry type="module" module-name="vis" />
     <orderEntry type="module" module-name="org.bimserver.ifcemf" />
     <orderEntry type="module-library">
-      <library name="IvyIDEA">
+      <library name="IvyIDEA-vis.data.bimserver-default">
         <CLASSES>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.bimserver/bimserver-ifcplugins/jars/bimserver-ifcplugins-1.1.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.bimserver/bimserver-ifc/jars/bimserver-ifc-1.1.0.jar!/" />

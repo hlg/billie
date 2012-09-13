@@ -1,0 +1,6 @@
+<ivy-module version="2.0">
+<info organisation="de.tudresden.cib" module="vis.scene.text"/>
+<dependencies>
+    <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true"/>
+</dependencies>
+</ivy-module>

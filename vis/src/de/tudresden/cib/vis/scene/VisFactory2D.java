@@ -28,6 +28,7 @@ public abstract class VisFactory2D {
 
     public interface GraphObject {
         // TODO: separation of builder and actual object (problem of incompleteness during build)
+        void setColor(int r, int g, int b);
     }
     public interface Rectangle extends GraphObject {
         void setLeft(int X);

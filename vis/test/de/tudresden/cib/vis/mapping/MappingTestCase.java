@@ -20,5 +20,9 @@ public class MappingTestCase {
         public VisElement(){}
         int with;
         String label;
+
+        public void setColor(int r, int g, int b) {
+
+        }
     }
 }

@@ -198,7 +198,6 @@ public class MapperTest extends MappingTestCase {
         public Object getScene() {
             return null;
         }
-        @Override
         public UIContext getUiContext() {
             return null;  //To change body of implemented methods use File | Settings | File Templates.
         }
@@ -219,6 +218,9 @@ public class MapperTest extends MappingTestCase {
 
         public void setWidth(int width) {
             this.a = width;
+        }
+
+        public void setColor(int r, int g, int b) {
         }
     }
 }

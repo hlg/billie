@@ -54,7 +54,6 @@ public class Draw2dFactory extends VisFactory2D {
         public Draw2dRectangle(){
            setBackgroundColor(defaultColor);
         }
-        
         public void setLeft(int X){
             setLocation(getLocation().setX(X));
         }
@@ -66,6 +65,9 @@ public class Draw2dFactory extends VisFactory2D {
         }
         public void setWidth(int width) {
             setSize(getSize().setWidth(width));
+        }
+        public void setColor(int r, int g, int b){
+            setBackgroundColor(new Color(null, r, g, b));
         }
     }
     
@@ -84,7 +86,11 @@ public class Draw2dFactory extends VisFactory2D {
             setLabelAlignment(PositionConstants.LEFT);
             setSize(getTextSize());
         }
-   }
+
+        public void setColor(int r, int g, int b) {
+            setForegroundColor(new Color(null, r, g, b));
+        }
+    }
 
     class Draw2dPolyline extends org.eclipse.draw2d.Polyline implements Polyline, Draw2dObject {
 
@@ -93,6 +99,10 @@ public class Draw2dFactory extends VisFactory2D {
 
         public void addPoint(int x, int y) {
             addPoint(new Point(x, y));
+        }
+
+        public void setColor(int r, int g, int b) {
+            setForegroundColor(new Color(null, r, g, b));
         }
     }
 }
