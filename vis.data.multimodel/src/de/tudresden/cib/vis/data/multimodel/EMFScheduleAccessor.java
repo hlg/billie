@@ -1,14 +1,11 @@
 package de.tudresden.cib.vis.data.multimodel;
 
-import cib.mf.schedule.model.activity10.Activity;
 import org.eclipse.emf.ecore.EObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
-public abstract class EMFScheduleAccessor extends EMFGenericAccessor<Activity> {
+public abstract class EMFScheduleAccessor<T extends EObject> extends EMFGenericAccessor<T> {
 
     public EMFScheduleAccessor(){ }
 
@@ -24,15 +21,4 @@ public abstract class EMFScheduleAccessor extends EMFGenericAccessor<Activity> {
         super(data);
     }
 
-    @Override
-    protected Map<String, Activity> collectLookUp() {
-        Map<String, Activity> lookUp = new HashMap<String, Activity>();
-        for (EObject object : this) {
-            if (object instanceof Activity) {
-                Activity activity = (Activity) object;
-                lookUp.put(namespace + activity.getID(), activity);
-            }
-        }
-        return lookUp;
-    }
 }

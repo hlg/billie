@@ -98,14 +98,7 @@ public class TimelineConfiguration extends Configuration<EObject, Draw2dFactory.
             protected void configure() {
                 graphObject.setLeft((int) ((getTimeInMillis(data.getActivityData().getStart()) - mapper.getStats("earliestStart").longValue()) / scale) + 12);
                 graphObject.setTop(index * 25 + 2);
-                Activity curr = data;
-                StringBuilder sb = new StringBuilder(curr.getDesc());
-                while (curr.eContainer() instanceof Activity) {
-                    curr = (Activity) curr.eContainer();
-                    sb.insert(0, " / ");
-                    sb.insert(0, curr.getDesc());
-                }
-                graphObject.setText(sb.toString());
+                graphObject.setText(new ActivityHelper(data).extractActivityDescription());
             }
         });
     }
@@ -115,6 +108,5 @@ public class TimelineConfiguration extends Configuration<EObject, Draw2dFactory.
         long timeMillis = timeStamp.getTime().toGregorianCalendar().getTimeInMillis();
         return dateMillis + timeMillis;
     }
-
 
 }

@@ -2,13 +2,11 @@ package de.tudresden.cib.vis.sampleApps;
 
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.configurations.*;
-import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.data.multimodel.EMFQtoAccessor;
 import de.tudresden.cib.vis.data.multimodel.EMFSchedule11Accessor;
-import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.data.multimodel.MultiModelAccessor;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
@@ -99,19 +97,39 @@ public enum ConfigurationRunner {
         @Override
         void run() throws IOException, PluginException, TargetCreationException {
             MultiModelAccessor<Activity> dataAcessor = new MultiModelAccessor<Activity>(new SimplePluginManager());
-            String basePath = "/home/helga/src/visMapping.git/combined_Angebot_LF/";
-            dataAcessor.addAcessor("FM5", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 RE LE_04.xml"), "QTO2"));
-            dataAcessor.addAcessor("FM6", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 RE LE_05.xml"), "QTO2"));
-            dataAcessor.addAcessor("FM7", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 RE LE_06.xml"), "QTO2"));
-            dataAcessor.addAcessor("FM8", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 RE LE_07.xml"), "QTO2"));
-            dataAcessor.addAcessor("FM9", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 RE LE_08.xml"), "QTO2"));
+            String basePath = "D:/Nutzer/helga/div/mefisto-container/kongress_3/combined_Angebot_LF/";
             dataAcessor.addAcessor("FM3", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 LV VA.xml"), "QTO1"));
+            String[] lm_ids = {"FM5", "FM6", "FM7", "FM8", "FM9"};
+            for(int i = 4; i<=8; i++){
+                String location = basePath + String.format("QTO/1/1 RE LE_0%d.xml", i);
+                dataAcessor.addAcessor(lm_ids[i-4], new EMFQtoAccessor(new FileInputStream(location), "QTO2"));
+            }
             dataAcessor.addAcessor("FM4", new EMFSchedule11Accessor(new FileInputStream(basePath + "Activity/1/Vorgangsmodell 1.xml"), "Activity1"));
             dataAcessor.groupBy("FM4", new File(basePath, "links/links.xml"));
-            ProgressreportTextConfig config = new ProgressreportTextConfig(dataAcessor);
+            ProgressreportTextConfig config = new ProgressreportTextConfig(dataAcessor, lm_ids, "FM3");
             config.config();
             System.out.println(config.execute().getScene());
             System.out.println("--- finished ---");
+        }
+    }, PROGRESS_GANTT {
+        @Override
+        void run() throws IOException, PluginException, TargetCreationException {
+            MultiModelAccessor<Activity> dataAcessor = new MultiModelAccessor<Activity>(new SimplePluginManager());
+            String basePath = "D:/Nutzer/helga/div/mefisto-container/kongress_3/combined_Angebot_LF/";
+            dataAcessor.addAcessor("FM3", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 LV VA.xml"), "QTO1"));
+            String[] lm_ids = {"FM5", "FM6", "FM7", "FM8", "FM9"};
+            for(int i = 4; i<=8; i++){
+                String location = basePath + String.format("QTO/1/1 RE LE_0%d.xml", i);
+                dataAcessor.addAcessor(lm_ids[i-4], new EMFQtoAccessor(new FileInputStream(location), "QTO2"));
+            }
+            dataAcessor.addAcessor("FM4", new EMFSchedule11Accessor(new FileInputStream(basePath + "Activity/1/Vorgangsmodell 1.xml"), "Activity1"));
+            dataAcessor.groupBy("FM4", new File(basePath, "links/links.xml"));
+            Draw2DViewer viewer = new Draw2DViewer();
+            ProgressreportGanttConfig config = new ProgressreportGanttConfig(dataAcessor, lm_ids, "FM3",  viewer.getDefaultFont());
+            config.config();
+            SceneManager<LinkedObject<Activity>, Panel> scene =  config.execute();
+            scene.animate();
+            viewer.showContent(scene.getScene());
         }
     };
 
