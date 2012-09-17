@@ -67,6 +67,10 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
 
     private LinkModel readLinkModel(File folder, LinkModelDescriptor linkModelDesc) throws MalformedURLException {
         File linkFile = new File(folder, new URL(linkModelDesc.getFile()).getFile());
+        return readLinkModel(linkFile);
+    }
+
+    private LinkModel readLinkModel(File linkFile) {
         return LinkModelParser.readLinkModel(linkFile).getLinkModel();
     }
 
@@ -74,12 +78,18 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
         Map<K, LinkedObject<K>> trackMap = new HashMap<K, LinkedObject<K>>();
         for (LinkObject link : linkModel.getLinkObjects()) {
             K keyObject = resolveKey(link, groupingModelId);
-            if (!trackMap.containsKey(keyObject)) {
-                trackMap.put(keyObject, new LinkedObject<K>(keyObject));
+            if (keyObject != null) {
+                if(!trackMap.containsKey(keyObject)) {
+                    trackMap.put(keyObject, new LinkedObject<K>(keyObject));
+                }  
+                trackMap.get(keyObject).addLink(resolveLink(link, groupingModelId));
             }
-            trackMap.get(keyObject).addLink(resolveLink(link, groupingModelId));
         }
         groupedElements = trackMap.values();
+    }
+
+    public void groupBy(String groupingModelId, File linkModelFile){
+        groupBy(groupingModelId, readLinkModel(linkModelFile));
     }
 
     private LinkedObject.ResolvedLink resolveLink(LinkObject link, String groupingModelId) {

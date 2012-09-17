@@ -20,6 +20,10 @@ public class EMFQtoAccessor extends EMFGenericAccessor<AnsatzType> {
         super(inputStream);
     }
 
+    public EMFQtoAccessor(InputStream inputStream, String namespace) throws IOException {
+        super(inputStream, namespace);
+    }
+
     public EMFQtoAccessor(EObject data) {
         super(data);
     }

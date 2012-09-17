@@ -1,9 +1,14 @@
 package de.tudresden.cib.vis.sampleApps;
 
+import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.configurations.*;
+import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
+import de.tudresden.cib.vis.data.multimodel.EMFQtoAccessor;
+import de.tudresden.cib.vis.data.multimodel.EMFSchedule11Accessor;
+import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.data.multimodel.MultiModelAccessor;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
@@ -65,7 +70,7 @@ public enum ConfigurationRunner {
             File input = viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "X81");
             GaebBarchartConfiguration gaebBarchartConfig = new GaebBarchartConfiguration(normal, new FileInputStream(input));
             gaebBarchartConfig.config();
-            viewer.setSnapShotParams("D:/test.png", SWT.IMAGE_PNG);
+            viewer.setSnapShotParams("/home/helga/test.png", SWT.IMAGE_PNG);
             viewer.showContent(gaebBarchartConfig.execute().getScene());
             big.dispose();
         }
@@ -89,6 +94,24 @@ public enum ConfigurationRunner {
             result.animate();
             viewer.showContent(result.getScene());
             result.dispose();
+        }
+    }, PROGRESS_TEXT {
+        @Override
+        void run() throws IOException, PluginException, TargetCreationException {
+            MultiModelAccessor<Activity> dataAcessor = new MultiModelAccessor<Activity>(new SimplePluginManager());
+            String basePath = "/home/helga/src/visMapping.git/combined_Angebot_LF/";
+            dataAcessor.addAcessor("FM5", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 RE LE_04.xml"), "QTO2"));
+            dataAcessor.addAcessor("FM6", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 RE LE_05.xml"), "QTO2"));
+            dataAcessor.addAcessor("FM7", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 RE LE_06.xml"), "QTO2"));
+            dataAcessor.addAcessor("FM8", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 RE LE_07.xml"), "QTO2"));
+            dataAcessor.addAcessor("FM9", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 RE LE_08.xml"), "QTO2"));
+            dataAcessor.addAcessor("FM3", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 LV VA.xml"), "QTO1"));
+            dataAcessor.addAcessor("FM4", new EMFSchedule11Accessor(new FileInputStream(basePath + "Activity/1/Vorgangsmodell 1.xml"), "Activity1"));
+            dataAcessor.groupBy("FM4", new File(basePath, "links/links.xml"));
+            ProgressreportTextConfig config = new ProgressreportTextConfig(dataAcessor);
+            config.config();
+            System.out.println(config.execute().getScene());
+            System.out.println("--- finished ---");
         }
     };
 

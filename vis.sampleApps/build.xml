@@ -2,4 +2,20 @@
 <project name="vis.sampleApps" default="common.dist.module">
     <property file="build.properties"/>
     <import file="../common.xml" />
+ 
+    <target name="config.runner.fast" depends="config.module">
+        <property name="app" value="" />
+        <path id="module.lib.path">
+            <fileset dir="${module.basedir}/lib"><include name="*.jar" /></fileset>
+        </path>
+        <java fork="yes" className="de.tudresden.cib.vis.sampleApps.ConfigurationRunner">
+            <arg value="${app}" />
+            <classpath>
+                <path refid="module.lib.path" />
+                <pathelement path="${module.output.dir}/classes" />
+            </classpath>
+        </java>      
+    </target>
+
+    <target name="config.runner" depends="dist.module,config.runner.fast" />
 </project>

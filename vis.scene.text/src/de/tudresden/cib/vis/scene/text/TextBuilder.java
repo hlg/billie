@@ -25,6 +25,6 @@ public class TextBuilder implements VisBuilder<TextFactory.TextLabel, String> {
     }
 
     public UIContext getUiContext() {
-        throw new NotImplementedException();
+       return null; // TODO: scene managers with different capabilities
     }
 }

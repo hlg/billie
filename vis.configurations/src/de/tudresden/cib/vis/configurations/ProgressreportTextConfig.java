@@ -20,11 +20,11 @@ public class ProgressreportTextConfig extends Configuration<LinkedObject<Activit
             @Override
             protected boolean condition() {
                 for (LinkedObject.ResolvedLink link: data.getResolvedLinks()){
-                    for(String key: new String[]{"EM5","EM6","EM7","EM8","EM9"}){
-                        if(link.getLinkedQto().containsKey(key)) return true;
+                    for(String key: new String[]{"FM5","FM6","FM7","FM8","FM9"}){
+                        // if(link.getLinkedQto().containsKey(key)) return true;
                     }
                 }
-                return false;
+                return true;// false;
             }
 
             @Override
@@ -33,8 +33,10 @@ public class ProgressreportTextConfig extends Configuration<LinkedObject<Activit
                 text.append(data.getKeyObject().getDesc());
                 text.append(":\n");
                 for(LinkedObject.ResolvedLink link: data.getResolvedLinks()){
-                    for(String key: new String[]{"EM5","EM6","EM7","EM8","EM9"}){
+                    for(String key: new String[]{"FM5","FM6","FM7","FM8","FM9"}){
                         if(link.getLinkedQto().containsKey(key)) {
+                            text.append(key);
+                            text.append(": ");
                             text.append(link.getLinkedQto().get(key).getResult());
                             text.append(", ");
                         }
