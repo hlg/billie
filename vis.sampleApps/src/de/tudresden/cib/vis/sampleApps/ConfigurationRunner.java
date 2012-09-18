@@ -31,7 +31,7 @@ public enum ConfigurationRunner {
         @Override
         void run() throws FileNotFoundException, PluginException {
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcAccessor(new SimplePluginManager()));
-            new Ifc3DConfiguration(loader.getMapper()).config();
+            new Ifc_3D(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc").getPath());
         }
@@ -39,7 +39,7 @@ public enum ConfigurationRunner {
         @Override
         void run() throws FileNotFoundException, PluginException {
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcAccessor(new SimplePluginManager()));
-            new Ifc3DSpaceConfiguration(loader.getMapper()).config();
+            new Ifc_3D_Space(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle","ifc").getPath());
         }
@@ -47,7 +47,7 @@ public enum ConfigurationRunner {
         @Override
         void run() throws IOException, PluginException {
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager()));
-            new Ifc4DConfiguration(loader.getMapper()).config();
+            new IfcSched_Colored4D(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());  // or carport.zip
         }
@@ -55,7 +55,7 @@ public enum ConfigurationRunner {
         @Override
         void run() throws IOException, PluginException {
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager()));
-            new IfcGaebColored3DConfiguration(loader.getMapper()).config();
+            new IfcGaeb_Colored3D(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());
         }
@@ -66,7 +66,7 @@ public enum ConfigurationRunner {
             Font big = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 50, 0);
             Font normal = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 10, 0);
             File input = viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "X81");
-            GaebBarchartConfiguration gaebBarchartConfig = new GaebBarchartConfiguration(normal, new FileInputStream(input));
+            Gaeb_Barchart gaebBarchartConfig = new Gaeb_Barchart(normal, new FileInputStream(input));
             gaebBarchartConfig.config();
             viewer.setSnapShotParams("/home/helga/test.png", SWT.IMAGE_PNG);
             viewer.showContent(gaebBarchartConfig.execute().getScene());
@@ -77,7 +77,7 @@ public enum ConfigurationRunner {
         void run() throws IOException, PluginException, TargetCreationException {
             Draw2DViewer viewer = new Draw2DViewer();
             File input = viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "ifc");
-            Ifc2DConfiguration ifc2DConfiguration = new Ifc2DConfiguration(viewer.getDefaultFont(), new FileInputStream(input), input.length());
+            Ifc_2D ifc2DConfiguration = new Ifc_2D(viewer.getDefaultFont(), new FileInputStream(input), input.length());
             ifc2DConfiguration.config();
             viewer.showContent(ifc2DConfiguration.execute().getScene());
         }
@@ -86,7 +86,7 @@ public enum ConfigurationRunner {
         void run() throws IOException, PluginException, TargetCreationException {
             Draw2DViewer viewer = new Draw2DViewer();
             File input = viewer.chooseFile(getClass().getResource(".").getPath(), "xml");
-            TimelineConfiguration config = new TimelineConfiguration(viewer.getDefaultFont(), new FileInputStream(input));
+            Sched_Gantt config = new Sched_Gantt(viewer.getDefaultFont(), new FileInputStream(input));
             config.config();
             SceneManager<EObject,Panel> result = config.execute();
             result.animate();
@@ -106,7 +106,7 @@ public enum ConfigurationRunner {
             }
             dataAcessor.addAcessor("FM4", new EMFSchedule11Accessor(new FileInputStream(basePath + "Activity/1/Vorgangsmodell 1.xml"), "Activity1"));
             dataAcessor.groupBy("FM4", new File(basePath, "links/links.xml"));
-            ProgressreportTextConfig config = new ProgressreportTextConfig(dataAcessor, lm_ids, "FM3");
+            QtoSched_Text config = new QtoSched_Text(dataAcessor, lm_ids, "FM3");
             config.config();
             System.out.println(config.execute().getScene());
             System.out.println("--- finished ---");
@@ -125,7 +125,7 @@ public enum ConfigurationRunner {
             dataAcessor.addAcessor("FM4", new EMFSchedule11Accessor(new FileInputStream(basePath + "Activity/1/Vorgangsmodell 1.xml"), "Activity1"));
             dataAcessor.groupBy("FM4", new File(basePath, "links/links.xml"));
             Draw2DViewer viewer = new Draw2DViewer();
-            ProgressreportGanttConfig config = new ProgressreportGanttConfig(dataAcessor, lm_ids, "FM3",  viewer.getDefaultFont());
+            QtoSched_GanttAnim config = new QtoSched_GanttAnim(dataAcessor, lm_ids, "FM3",  viewer.getDefaultFont());
             config.config();
             SceneManager<LinkedObject<Activity>, Panel> scene =  config.execute();
             scene.animate();

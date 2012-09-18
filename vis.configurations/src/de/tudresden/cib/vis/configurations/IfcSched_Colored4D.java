@@ -2,8 +2,8 @@ package de.tudresden.cib.vis.configurations;
 
 import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
 import cib.lib.gaeb.model.gaeb.TgItem;
-import cib.mf.schedule.model.activity10.Activity;
-import cib.mf.schedule.model.activity10.Timestamp;
+import cib.mf.schedule.model.activity11.Activity;
+import cib.mf.schedule.model.activity11.Timestamp;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
@@ -20,13 +20,13 @@ import java.util.*;
 
 import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
-public class Ifc4DConfiguration extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> {
+public class IfcSched_Colored4D extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> {
 
-    public Ifc4DConfiguration(DataAccessor<LinkedObject<EMFIfcParser.EngineEObject>> data){
+    public IfcSched_Colored4D(DataAccessor<LinkedObject<EMFIfcParser.EngineEObject>> data){
         super(data, new Java3dFactory(), new Java3dBuilder());
     }
 
-    public Ifc4DConfiguration(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper) {
+    public IfcSched_Colored4D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper) {
         super(mapper);
     }
 

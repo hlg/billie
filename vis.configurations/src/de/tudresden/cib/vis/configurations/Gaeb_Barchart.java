@@ -17,13 +17,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 
-public class GaebBarchartConfiguration extends Configuration<EObject, Draw2dFactory.Draw2dObject, Panel> {
+public class Gaeb_Barchart extends Configuration<EObject, Draw2dFactory.Draw2dObject, Panel> {
 
-    public GaebBarchartConfiguration(Font font, InputStream input) throws IOException {
+    public Gaeb_Barchart(Font font, InputStream input) throws IOException {
         super(new EMFGaebAccessor(input), new Draw2dFactory(font), new Draw2dBuilder());
     }
 
-    public GaebBarchartConfiguration(Font font, DataAccessor<EObject> data){
+    public Gaeb_Barchart(Font font, DataAccessor<EObject> data){
         super(data, new Draw2dFactory(font), new Draw2dBuilder());
     }
 

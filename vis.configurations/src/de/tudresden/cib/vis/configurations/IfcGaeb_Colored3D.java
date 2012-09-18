@@ -15,13 +15,13 @@ import javax.media.j3d.BranchGroup;
 import java.math.BigDecimal;
 import java.util.Collection;
 
-public class IfcGaebColored3DConfiguration extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> {
+public class IfcGaeb_Colored3D extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> {
 
-    public IfcGaebColored3DConfiguration(DataAccessor<LinkedObject<EMFIfcParser.EngineEObject>> data){
+    public IfcGaeb_Colored3D(DataAccessor<LinkedObject<EMFIfcParser.EngineEObject>> data){
         super(data, new Java3dFactory(), new Java3dBuilder());
     }
 
-    public IfcGaebColored3DConfiguration(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper) {
+    public IfcGaeb_Colored3D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper) {
         super(mapper);
     }
 

@@ -10,12 +10,12 @@ import de.tudresden.cib.vis.scene.text.TextFactory;
 
 import java.util.Map;
 
-public class ProgressreportTextConfig extends Configuration<LinkedObject<Activity>, TextFactory.TextLabel, String> {
+public class QtoSched_Text extends Configuration<LinkedObject<Activity>, TextFactory.TextLabel, String> {
 
     private final String[] LM_IDS;
     private final String QTO_ID;
 
-    public ProgressreportTextConfig(DataAccessor<LinkedObject<Activity>> data, String[] lm_ids, String qto_id) {
+    public QtoSched_Text(DataAccessor<LinkedObject<Activity>> data, String[] lm_ids, String qto_id) {
         super(data, new TextFactory(), new TextBuilder());
         this.LM_IDS = lm_ids;
         this.QTO_ID = qto_id;

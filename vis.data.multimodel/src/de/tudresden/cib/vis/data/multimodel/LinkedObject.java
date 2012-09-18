@@ -2,7 +2,7 @@ package de.tudresden.cib.vis.data.multimodel;
 
 import cib.lib.gaeb.model.gaeb.TgItem;
 import cib.mf.qto.model.AnsatzType;
-import cib.mf.schedule.model.activity10.Activity;
+import cib.mf.schedule.model.activity11.Activity;
 import de.mefisto.model.container.ElementaryModelType;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 

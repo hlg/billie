@@ -14,14 +14,14 @@ import org.eclipse.swt.graphics.Font;
 
 import java.util.Map;
 
-public class ProgressreportGanttConfig extends Configuration<LinkedObject<Activity>, Draw2dFactory.Draw2dObject, Panel> {
+public class QtoSched_GanttAnim extends Configuration<LinkedObject<Activity>, Draw2dFactory.Draw2dObject, Panel> {
 
     private final String[] LM_IDS;
     private final String QTO_ID;
     private final int pxPerDay = 5;
     private final int scale = 1000 * 3600 * 24 / pxPerDay;
 
-    public ProgressreportGanttConfig(DataAccessor<LinkedObject<Activity>> data, String[] lm_ids, String qto_id, Font font) {
+    public QtoSched_GanttAnim(DataAccessor<LinkedObject<Activity>> data, String[] lm_ids, String qto_id, Font font) {
         super(data, new Draw2dFactory(font), new Draw2dBuilder());
         this.LM_IDS = lm_ids;
         this.QTO_ID = qto_id;

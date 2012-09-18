@@ -18,13 +18,13 @@ import org.eclipse.swt.graphics.Font;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class TimelineConfiguration extends Configuration<EObject, Draw2dFactory.Draw2dObject, Panel> {
+public class Sched_Gantt extends Configuration<EObject, Draw2dFactory.Draw2dObject, Panel> {
 
-    public TimelineConfiguration(Font font, InputStream inputStream) throws IOException {
+    public Sched_Gantt(Font font, InputStream inputStream) throws IOException {
         this(new EMFSchedule11Accessor(inputStream), font);
     }
 
-    public TimelineConfiguration(DataAccessor<EObject> data, Font font){
+    public Sched_Gantt(DataAccessor<EObject> data, Font font){
         super(data, new Draw2dFactory(font), new Draw2dBuilder());
     }
 

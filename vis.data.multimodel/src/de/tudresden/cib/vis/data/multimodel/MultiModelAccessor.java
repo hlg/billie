@@ -235,7 +235,7 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
 
         abstract IndexedDataAccessor createAccessor();
 
-        static EMTypes find(String modelType, String format, String formatVersion) {
+        public static EMTypes find(String modelType, String format, String formatVersion) {
             for (EMTypes type : EMTypes.values()) {
                 if (type.modelType.equals(modelType) && type.format.equals(format) && type.formatVersion.equals(formatVersion)) {
                     return type;

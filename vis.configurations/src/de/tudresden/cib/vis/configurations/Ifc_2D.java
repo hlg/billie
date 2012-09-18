@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-public class Ifc2DConfiguration extends Configuration<EMFIfcParser.EngineEObject, Draw2dFactory.Draw2dObject, Panel> {
+public class Ifc_2D extends Configuration<EMFIfcParser.EngineEObject, Draw2dFactory.Draw2dObject, Panel> {
 
-    public Ifc2DConfiguration(Font font, InputStream input, long size) throws IOException {
+    public Ifc_2D(Font font, InputStream input, long size) throws IOException {
         super(new EMFIfcAccessor(new SimplePluginManager(), input, size), new Draw2dFactory(font), new Draw2dBuilder());
     }
 

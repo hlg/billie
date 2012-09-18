@@ -11,13 +11,13 @@ import org.bimserver.models.ifc2x3tc1.IfcBuildingElement;
 
 import javax.media.j3d.BranchGroup;
 
-public class Ifc3DConfiguration extends Configuration<EMFIfcParser.EngineEObject, Java3dFactory.Java3DGraphObject, BranchGroup> {
+public class Ifc_3D extends Configuration<EMFIfcParser.EngineEObject, Java3dFactory.Java3DGraphObject, BranchGroup> {
 
-    public Ifc3DConfiguration(DataAccessor<EMFIfcParser.EngineEObject> data){
+    public Ifc_3D(DataAccessor<EMFIfcParser.EngineEObject> data){
        super(data, new Java3dFactory(), new Java3dBuilder());
     }
 
-    public Ifc3DConfiguration(Mapper<EMFIfcParser.EngineEObject, Java3dFactory.Java3DGraphObject, BranchGroup> mapper) {
+    public Ifc_3D(Mapper<EMFIfcParser.EngineEObject, Java3dFactory.Java3DGraphObject, BranchGroup> mapper) {
         super(mapper);
     }
 
