@@ -2,7 +2,7 @@
 <project name="common" default="dist.module" xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <property file="../common.build.properties"/>
-
+    <echo message="version from build.properties: ${version}" />
     <patternset id="library.patterns">
         <include name="*.jar"/>
     </patternset>
@@ -77,8 +77,12 @@
         <pathconvert property="run.classpath" pathsep="${path.separator}">
             <path refid="ivy.classpath"/>
         </pathconvert>
+	
+	<pathconvert property="run.classpath.lib" pathsep="${path.separator}">
+	    <path><fileset dir="${module.basedir}/lib/"><include name="*.jar" /></fileset></path>
+	</pathconvert>
 
-        <!-- echo message="-cp ${run.classpath}" /-->
+        <!-- echo message="-cp ${run.classpath.lib}" /-->
 
         <mkdir dir="${module.output.dir}/jar"/>
         <jar jarfile="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar"

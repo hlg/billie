@@ -15,10 +15,7 @@ import org.eclipse.emf.common.util.EList;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -90,6 +87,13 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
 
     public void groupBy(String groupingModelId, File linkModelFile){
         groupBy(groupingModelId, readLinkModel(linkModelFile));
+    }
+
+    public void sort(Comparator<LinkedObject<K>> comparator){
+        // todo: also for ordinary DataAccessors
+        SortedSet<LinkedObject<K>> sorted = new TreeSet<LinkedObject<K>>(comparator);
+        sorted.addAll(groupedElements);
+        groupedElements = sorted;
     }
 
     private LinkedObject.ResolvedLink resolveLink(LinkObject link, String groupingModelId) {

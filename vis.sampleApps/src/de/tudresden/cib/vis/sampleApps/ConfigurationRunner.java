@@ -1,5 +1,8 @@
 package de.tudresden.cib.vis.sampleApps;
 
+import cib.mf.qto.model.AnsatzType;
+import cib.mf.qto.model.AufmassType;
+import cib.mf.qto.model.impl.AnsaetzeTypeImpl;
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.configurations.*;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
@@ -23,6 +26,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -115,7 +120,7 @@ public enum ConfigurationRunner {
         @Override
         void run() throws IOException, PluginException, TargetCreationException {
             MultiModelAccessor<Activity> dataAcessor = new MultiModelAccessor<Activity>(new SimplePluginManager());
-            String basePath = "D:/Nutzer/helga/div/mefisto-container/kongress_3/combined_Angebot_LF/";
+            String basePath = "/home/helga/src/visMapping.git/combined_Angebot_LF/";
             dataAcessor.addAcessor("FM3", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 LV VA.xml"), "QTO1"));
             String[] lm_ids = {"FM5", "FM6", "FM7", "FM8", "FM9"};
             for(int i = 4; i<=8; i++){
@@ -124,10 +129,41 @@ public enum ConfigurationRunner {
             }
             dataAcessor.addAcessor("FM4", new EMFSchedule11Accessor(new FileInputStream(basePath + "Activity/1/Vorgangsmodell 1.xml"), "Activity1"));
             dataAcessor.groupBy("FM4", new File(basePath, "links/links.xml"));
+            dataAcessor.sort(new Comparator<LinkedObject<Activity>>() {
+                @Override
+                public int compare(LinkedObject<Activity> link, LinkedObject<Activity> otherLink) {
+                    String activityPath = new ActivityHelper(link.getKeyObject()).extractActivityDescription();
+                    String otherActivityPath = new ActivityHelper(otherLink.getKeyObject()).extractActivityDescription();
+                    return activityPath.compareTo(otherActivityPath);
+                }
+            });
             Draw2DViewer viewer = new Draw2DViewer();
             QtoSched_GanttAnim config = new QtoSched_GanttAnim(dataAcessor, lm_ids, "FM3",  viewer.getDefaultFont());
             config.config();
             SceneManager<LinkedObject<Activity>, Panel> scene =  config.execute();
+            scene.animate();
+            viewer.showContent(scene.getScene());
+        }
+    }, IFC_REPORTS_4D {
+        @Override
+        void run() throws IOException, PluginException, TargetCreationException {
+            MultiModelAccessor<EMFIfcParser.EngineEObject> dataAcessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
+            MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(dataAcessor);
+            Configuration config = new IfcQtoSched_Colored4D(loader.getMapper());
+            config.config();
+            SimpleViewer viewer = new SimpleViewer(loader);
+            viewer.run("/home/helga/src/visMapping.git/combined_Angebot_LF.zip");
+        }
+    }, LINKS_HEB {
+        @Override
+        void run() throws IOException, PluginException, TargetCreationException {
+            MultiModelAccessor<AnsatzType> dataAcessor = new MultiModelAccessor<AnsatzType>(new SimplePluginManager());
+            File input = new File("/home/helga/src/visMapping.git/combined_Angebot_LF.zip");
+            dataAcessor.read(new FileInputStream(input), input.length());
+            Draw2DViewer viewer = new Draw2DViewer();
+            Configuration<?,?,Panel> config = new IfcGaebQto_HEB(dataAcessor, viewer.getDefaultFont());
+            config.config();
+            SceneManager<?,Panel> scene = config.execute();
             scene.animate();
             viewer.showContent(scene.getScene());
         }

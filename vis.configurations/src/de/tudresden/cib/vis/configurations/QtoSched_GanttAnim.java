@@ -11,8 +11,14 @@ import de.tudresden.cib.vis.scene.draw2d.Draw2dBuilder;
 import de.tudresden.cib.vis.scene.draw2d.Draw2dFactory;
 import org.eclipse.draw2d.Panel;
 import org.eclipse.swt.graphics.Font;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Duration;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class QtoSched_GanttAnim extends Configuration<LinkedObject<Activity>, Draw2dFactory.Draw2dObject, Panel> {
 
@@ -38,25 +44,31 @@ public class QtoSched_GanttAnim extends Configuration<LinkedObject<Activity>, Dr
 
         mapper.addMapping(new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
             @Override
-            protected void configure() {
-                int left = (int) ((getStartDateInMillis(data) - mapper.getStats("earliestStart").longValue()) / scale);
-                int width = (int) ((getEndDateInMillis(data) - getStartDateInMillis(data)) / scale);
+            protected void configure() { // base activity
+                DateTime start = new DateTime(data.getKeyObject().getActivityData().getStart().getDate().toGregorianCalendar());
+                DateTime end = new DateTime(data.getKeyObject().getActivityData().getEnd().getDate().toGregorianCalendar());
+                DateTime earliestStart = new DateTime(new Date(mapper.getStats("earliestStart").longValue()));
+                int startDays = Days.daysBetween(earliestStart, start).getDays();
+                int durationDays = Days.daysBetween(start, end).getDays();
                 graphObject.setTop(index * 25);
                 graphObject.setHeight(20);
-                graphObject.setLeft(left);
-                graphObject.setWidth(width);
+                graphObject.setLeft((int) (startDays * pxPerDay));
+                graphObject.setWidth((int) (durationDays * pxPerDay));
             }
         });
 
         mapper.addMapping(new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>(){
             @Override
-            protected void configure() {
+            protected void configure() { // progress as should be
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
-                Map<String, ActivityHelper.SetActualComparison> activityData = activityHelper.collectAmounts(LM_IDS, QTO_ID, data.getResolvedLinks());
+                final Map<String, ActivityHelper.SetActualComparison> activityData = activityHelper.collectAmounts(LM_IDS, QTO_ID, data.getResolvedLinks());
                 graphObject.setTop(index * 25);
                 graphObject.setHeight(20);
                 graphObject.setColor(255,255,0);
-                final int left = (int) (( getStartDateInMillis(data) - mapper.getStats("earliestStart").longValue()) / scale);
+                DateTime start = new DateTime(data.getKeyObject().getActivityData().getStart().getDate().toGregorianCalendar());
+                DateTime earliestStart = new DateTime(new Date(mapper.getStats("earliestStart").longValue()));
+                int startDays = Days.daysBetween(earliestStart, start).getDays();
+                final int left = (int) startDays * pxPerDay;
                 graphObject.setLeft(left);
                 addChange(0, new Change<VisFactory2D.Rectangle>() {
                     @Override
@@ -64,26 +76,18 @@ public class QtoSched_GanttAnim extends Configuration<LinkedObject<Activity>, Dr
                         graph.setWidth(0);
                     }
                 });
-                for (final Map.Entry<String, ActivityHelper.SetActualComparison> entry : activityData.entrySet()) {
-                    if (!entry.getKey().equals(QTO_ID) && entry.getValue().amount > 0) {
-                        addChange((int) (entry.getValue().time), new Change<VisFactory2D.Rectangle>() {
+                for (final String lmid : LM_IDS) {
+                        addChange((int) (startDays + activityData.get(lmid).time), new Change<VisFactory2D.Rectangle>() {
                             @Override
                             protected void configure() {
-                                graph.setWidth((int) (entry.getValue().time * pxPerDay - left));
+                                graph.setWidth((int) (activityData.get(lmid).time * pxPerDay));
                             }
                         });
                         /*
-                        text.append("\t");
-                        text.append(entry.getKey());
-                        text.append(": actual ");
-                        text.append((int) (100 * entry.getValue().amount / activityData.get(QTO_ID).amount));
-                        text.append("%, expected ");
-                        text.append((int) (100 * entry.getValue().time / activityData.get(QTO_ID).time));
-                        text.append("%\n");
+                        actual:   100 * activityData.get(lmid).amount / activityData.get(QTO_ID).amount
+                        expected: 100 * activityData.get(lmid).time / activityData.get(QTO_ID).time
                          */
-                    }
                 }
-
             }
         });
         mapper.addMapping(new PropertyMap<LinkedObject<Activity>, VisFactory2D.Label>() {

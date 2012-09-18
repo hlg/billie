@@ -1,9 +1,6 @@
 package de.tudresden.cib.vis.runtime.draw2d;
 
-import org.eclipse.draw2d.FigureCanvas;
-import org.eclipse.draw2d.LightweightSystem;
-import org.eclipse.draw2d.Panel;
-import org.eclipse.draw2d.SWTGraphics;
+import org.eclipse.draw2d.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.FillLayout;
@@ -18,9 +15,9 @@ public class Draw2DViewer {
 
     private Shell shell;
     private FigureCanvas canvas;
-    private LightweightSystem ls;
     private Display display;
     private SnapShotParams snapShotParams = new SnapShotParams();
+    private ScrollPane scroller;
 
     public Draw2DViewer(){
 
@@ -28,7 +25,9 @@ public class Draw2DViewer {
         shell = new Shell(display);
         shell.setLayout(new FillLayout());
         canvas = new FigureCanvas(shell, SWT.V_SCROLL|SWT.H_SCROLL);
-        ls = new LightweightSystem(canvas);
+        scroller = new ScrollPane();
+        LightweightSystem ls = new LightweightSystem(canvas);
+        ls.setContents(scroller);
     }
 
     public File chooseFile(String directoryPath, final String fileType) throws FileNotFoundException {
@@ -69,7 +68,7 @@ public class Draw2DViewer {
     public void showContent(Panel content){
         canvas.setContents(content);
 
-        ls.setContents(canvas.getViewport());
+        scroller.setContents(canvas.getViewport());
 
         shell.open();
 

@@ -3,6 +3,7 @@ package de.tudresden.cib.vis.configurations;
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 
@@ -16,7 +17,7 @@ public class ActivityHelper {
 
     private Activity activity;
 
-    ActivityHelper(Activity activity){
+    public ActivityHelper(Activity activity){
         this.activity = activity;
     }
 
@@ -24,14 +25,14 @@ public class ActivityHelper {
         Date start = activity.getActivityData().getStart().getDate().toGregorianCalendar().getTime();
         Date end = activity.getActivityData().getEnd().getDate().toGregorianCalendar().getTime();
         Interval activityPeriod= new Interval(start.getTime(), end.getTime());
-        long overallTime = (end.getTime()-start.getTime())/(1000*60*60*24);
+        int overallTime = Days.daysBetween(new DateTime(start), new DateTime(end)).getDays();
         Map<String, SetActualComparison> amounts = new HashMap<String, SetActualComparison>();
         amounts.put(QTO_ID, new SetActualComparison(overallTime));
         long passedDays = 0;
         for(int month = 5; month<=9; month++){
             Interval billingPeriod = new Interval(new DateTime(2012, month, 1, 0, 0), new DateTime(2012, month+1, 1, 0, 0));
             if (activityPeriod.overlaps(billingPeriod)){
-                passedDays += new Duration(activityPeriod.overlap(billingPeriod)).getStandardDays();
+                passedDays += Days.daysIn(activityPeriod.overlap(billingPeriod)).getDays();
             }
             amounts.put(String.format("FM%d", month), new SetActualComparison(passedDays));
         }
@@ -55,7 +56,7 @@ public class ActivityHelper {
         text.append(":\n");
     }
 
-    String extractActivityDescription(){
+    public String extractActivityDescription(){
         Activity curr = activity;
         StringBuilder sb = new StringBuilder(curr.getDesc());
         while (curr.eContainer() instanceof Activity) {
