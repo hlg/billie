@@ -40,8 +40,8 @@
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
                type="Activity" id="M4">
-            <content format="xml" id="1" formatVersion="1.0">
-                <file namespace="Activity1">file:///Activity/xml/Vorgangsmodell_1.xml</file>
+            <content format="xml" id="1" formatVersion="1.1">
+                <file namespace="Activity1">file:///Activity/xml/Vorgangsmodell_1-11.xml</file>
             </content>
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
