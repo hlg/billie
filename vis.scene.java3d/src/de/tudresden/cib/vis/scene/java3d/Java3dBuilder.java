@@ -35,6 +35,6 @@ public class Java3dBuilder implements VisBuilder<Java3dFactory.Java3DGraphObject
     }
 
     public UIContext getUiContext() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return uiContext;
     }
 }

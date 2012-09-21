@@ -30,6 +30,7 @@
     <target name="resolve.module" depends="config.module">
         <echo message="resolving: ${module.basedir}"/>
         <property name="ivy.config" value="default" />
+        <echo message="resolving with config: ${ivy.config}" />
         <ivy:resolve file="${module.basedir}/ivy.xml" conf="${ivy.config}"/>
         <ivy:cachepath pathid="ivy.classpath"/>
         <ivy:retrieve type="jar,bundle"/>
@@ -82,7 +83,7 @@
 	    <path><fileset dir="${module.basedir}/lib/"><include name="*.jar" /></fileset></path>
 	</pathconvert>
 
-        <!-- echo message="-cp ${run.classpath.lib}" /-->
+        <echo message="-cp ${run.classpath.lib}" />
 
         <mkdir dir="${module.output.dir}/jar"/>
         <jar jarfile="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar"
@@ -124,9 +125,8 @@
     </target>
 
     <target name="publish.module.OSGI.fast" depends="config.module"> <!-- dependency is on master level -->
-        <copy tofile="${osgi.target}/dropins/plugins/de.tudresden.cib.${ant.project.name}_${version}.jar">
-            <file name="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar" />
-        </copy>
+        <echo message="from ${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar to ${osgi.target}/dropins/plugins/de.tudresden.cib.${ant.project.name}_${version}.jar" />
+        <copy verbose="true" includeEmptyDirs="true" failonerror="true" tofile="${osgi.target}/dropins/plugins/de.tudresden.cib.${ant.project.name}_${version}.jar" file="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar" />
     </target>
 
     <target name="publish.module.OSGI" depends="dist.module, publish.module.OSGI.fast" />

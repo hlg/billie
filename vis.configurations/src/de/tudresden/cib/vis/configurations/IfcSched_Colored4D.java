@@ -88,6 +88,7 @@ public class IfcSched_Colored4D extends Configuration<LinkedObject<EMFIfcParser.
         final Map<Set<ActivityType>, Change<Polyeder>> colorScale = new HashMap<Set<ActivityType>, Change<Polyeder>>();
         final AppearanceCache appearanceCache = new AppearanceCache();
 
+        /*
         PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, Polyeder> specialActiveMapping = new PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, Polyeder>() {
             @Override
             protected void configure() {
@@ -106,8 +107,9 @@ public class IfcSched_Colored4D extends Configuration<LinkedObject<EMFIfcParser.
                 }
             }
         };
-
-        mapper.addMapping(specialActiveMapping);
+        */
+ 
+        mapper.addMapping(anyActiveMapping);
 
 
     }
