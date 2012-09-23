@@ -38,7 +38,7 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
         if (groupingModelId!=null) groupBy(groupingModelId, lm);
     }
 
-    private void readFromFolder(File folder) {
+    public void readFromFolder(File folder) {
         File mmFile = new File(folder, "MultiModel.xml");
         assert folder.exists() && mmFile.exists();
         Container container = ContainerModelParser.readContainerModel(mmFile).getContainer();

@@ -13,6 +13,7 @@ import org.bimserver.plugins.deserializers.EmfDeserializer;
 import org.bimserver.plugins.ifcengine.*;
 import org.bimserver.plugins.serializers.IfcModelInterface;
 import org.eclipse.emf.ecore.EObject;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.*;
@@ -125,12 +126,16 @@ public class EMFIfcParser {
 
     public static class EngineEObject {
         private IdEObject idEObject;
-        private IfcEngineModel engineModel;
         private IfcEngineGeometry geometry;
+        private IfcEngineInstanceVisualisationProperties visProps;
 
         private EngineEObject(IdEObject object, IfcEngineModel ifcEngineModel, IfcEngineGeometry geometry) {
             this.idEObject = object;
-            this.engineModel = ifcEngineModel;
+            try {
+                this.visProps = ifcEngineModel.getInstanceFromExpressId((int) idEObject.getOid()).getVisualisationProperties();
+            } catch (IfcEngineException e) {
+                LoggerFactory.getLogger(getClass()).error("unable to retrieve engine object");
+            }
             this.geometry = geometry;
         }
 
@@ -141,33 +146,27 @@ public class EMFIfcParser {
         public Geometry getGeometry() {
             if (!(idEObject instanceof IfcProduct)) return null;
             Geometry objectGeometry = new Geometry();
-            try {
-                IfcEngineInstance instance = engineModel.getInstanceFromExpressId((int) idEObject.getOid());
-                IfcEngineInstanceVisualisationProperties visProps = instance.getVisualisationProperties();
-                objectGeometry.vertizes = new ArrayList<Float>();
-                objectGeometry.normals = new ArrayList<Float>();
-                objectGeometry.indizes = new ArrayList<Integer>(visProps.getPrimitiveCount());
-                Map<Integer, Integer> reindex = new HashMap<Integer, Integer>();
-                int newIndex = -1;
-                for (int i = 0; i < visProps.getPrimitiveCount() * 3; i++) {
-                    int oldIndex = geometry.getIndex(i + visProps.getStartIndex());
-                    if (reindex.containsKey(oldIndex)) {
-                        objectGeometry.indizes.add(reindex.get(oldIndex));
-                    } else {
-                        newIndex++;
-                        reindex.put(oldIndex, newIndex);
-                        objectGeometry.indizes.add(newIndex);
-                        int oldCoordIndex = oldIndex * 3;
-                        objectGeometry.normals.add(geometry.getNormal(oldCoordIndex));
-                        objectGeometry.vertizes.add(geometry.getVertex(oldCoordIndex));
-                        objectGeometry.normals.add(geometry.getNormal(oldCoordIndex + 1));
-                        objectGeometry.vertizes.add(geometry.getVertex(oldCoordIndex + 1));
-                        objectGeometry.normals.add(geometry.getNormal(oldCoordIndex + 2));
-                        objectGeometry.vertizes.add(geometry.getVertex(oldCoordIndex + 2));
-                    }
+            objectGeometry.vertizes = new ArrayList<Float>();
+            objectGeometry.normals = new ArrayList<Float>();
+            objectGeometry.indizes = new ArrayList<Integer>(visProps.getPrimitiveCount());
+            Map<Integer, Integer> reindex = new HashMap<Integer, Integer>();
+            int newIndex = -1;
+            for (int i = 0; i < visProps.getPrimitiveCount() * 3; i++) {
+                int oldIndex = geometry.getIndex(i + visProps.getStartIndex());
+                if (reindex.containsKey(oldIndex)) {
+                    objectGeometry.indizes.add(reindex.get(oldIndex));
+                } else {
+                    newIndex++;
+                    reindex.put(oldIndex, newIndex);
+                    objectGeometry.indizes.add(newIndex);
+                    int oldCoordIndex = oldIndex * 3;
+                    objectGeometry.normals.add(geometry.getNormal(oldCoordIndex));
+                    objectGeometry.vertizes.add(geometry.getVertex(oldCoordIndex));
+                    objectGeometry.normals.add(geometry.getNormal(oldCoordIndex + 1));
+                    objectGeometry.vertizes.add(geometry.getVertex(oldCoordIndex + 1));
+                    objectGeometry.normals.add(geometry.getNormal(oldCoordIndex + 2));
+                    objectGeometry.vertizes.add(geometry.getVertex(oldCoordIndex + 2));
                 }
-            } catch (IfcEngineException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
             return objectGeometry;
         }

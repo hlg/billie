@@ -87,6 +87,7 @@ public class SimpleViewer extends JFrame {
             }
         };
         chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         int returnVal = chooser.showOpenDialog(this);
         return (returnVal == JFileChooser.APPROVE_OPTION) ? chooser.getSelectedFile() : null;
     }

@@ -5,6 +5,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -46,6 +47,10 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
 
     public void read(InputStream inputStream, long size) throws IOException {
         setData(inputStream);
+    }
+
+    public void readFromFolder(File directory){
+        throw new UnsupportedOperationException();
     }
 
     protected void setData(URI fileUri) throws IOException {

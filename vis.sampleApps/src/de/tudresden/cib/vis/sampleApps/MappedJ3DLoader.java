@@ -32,19 +32,22 @@ public class MappedJ3DLoader<E> implements Loader {
     }
 
     public Scene load(String s) throws FileNotFoundException, IncorrectFormatException, ParsingErrorException {
-        return loadScene(new FileInputStream(s), new File(s).length());
-    }
-
-    private Scene loadScene(InputStream inputStream, long size) throws FileNotFoundException {
-        IfcScene result = null;
         try {
-            data.read(inputStream, size);
-            result = new IfcScene();
-            SceneManager<E,BranchGroup> sceneManager = mapper.map();
-            result.setSceneGroup(sceneManager.getScene());
-            sceneManager.animate();
+            data.read(new File(s));
         } catch (IOException e) {
             throw new FileNotFoundException(e.getMessage());
+        }
+        return loadScene();
+    }
+
+    private Scene loadScene() throws FileNotFoundException {
+        IfcScene result = null;
+        try {
+            result = new IfcScene();
+            SceneManager<E,BranchGroup> sceneManager = mapper.map();
+            mapper = null; // release resources
+            result.setSceneGroup(sceneManager.getScene());
+            sceneManager.animate();
         } catch (TargetCreationException e) {
             throw new ParsingErrorException(e.getMessage());
         }
@@ -53,7 +56,8 @@ public class MappedJ3DLoader<E> implements Loader {
 
     public Scene load(URL url) throws FileNotFoundException, IncorrectFormatException, ParsingErrorException {
         try {
-            return loadScene(url.openStream(), url.getFile().length());  //To change body of implemented methods use File | Settings | File Templates.
+            data.read(url.openStream(), url.getFile().length());
+            return loadScene();
         } catch (IOException e) {
             throw new FileNotFoundException(e.getMessage());
         }

@@ -3,6 +3,7 @@ package de.tudresden.cib.vis.data.bimserver;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import org.bimserver.plugins.PluginManager;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -28,6 +29,11 @@ public class EMFIfcAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObje
 
     public void read(InputStream inputStream, long size) throws IOException {
         parser.read(inputStream, size);
+    }
+
+    @Override
+    public void readFromFolder(File directory) {
+        throw new UnsupportedOperationException();
     }
 
     public void read(InputStream inputStream, String namespace, long size) throws IOException {

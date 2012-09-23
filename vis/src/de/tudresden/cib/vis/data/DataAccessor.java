@@ -1,5 +1,9 @@
 package de.tudresden.cib.vis.data;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -21,6 +25,16 @@ public abstract class DataAccessor<E> implements Iterable<E> {
     }
 
     public abstract void read(InputStream inputStream, long size) throws IOException;
+
+    public void read(File file) throws IOException {
+        if(!file.isDirectory()){
+            read(new FileInputStream(file), file.length());
+        } else {
+            readFromFolder(file);
+        }
+    }
+
+    public abstract void readFromFolder(File directory); // TODO: implemented in one subclass only -> this smells
 
     public static abstract class Folding<A, B> {
         private B result;

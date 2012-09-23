@@ -1,5 +1,6 @@
 package de.tudresden.cib.vis.data;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -19,6 +20,10 @@ public class CollectionAccessor<T> extends DataAccessor<T> {
 
     public void read(InputStream inputStream, long size) throws IOException {
         throw new UnsupportedOperationException();
-        // TODO inheritance : FileAccessor, IndexableAccessor ...
+    }
+
+    @Override
+    public void readFromFolder(File directory) {
+        throw new UnsupportedOperationException();
     }
 }
