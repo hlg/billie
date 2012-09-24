@@ -54,19 +54,22 @@ public class IfcSched_Colored4D extends Configuration<LinkedObject<EMFIfcParser.
             }
         });
         final int scale = 3600 * 1000; // scale to hours TODO: globals?
+        final Appearance inactive = TypeAppearance.INACTIVE.getAppearance();
         final Change<Polyeder> reset = new Change<Polyeder>() {
             protected void configure() {
-                ((Shape3D) graph).setAppearance(TypeAppearance.INACTIVE.getAppearance());
+                ((Shape3D) graph).setAppearance(inactive);
             }
         };
+        final Appearance activated = TypeAppearance.ACTIVATED.getAppearance();
         final Change<Polyeder> activate = new Change<Polyeder>() {
             public void configure() {
-                ((Shape3D) graph).setAppearance(TypeAppearance.ACTIVATED.getAppearance());
+                ((Shape3D) graph).setAppearance(activated);
             }
         };
+        final Appearance deactivated = TypeAppearance.DEACTIVATED.getAppearance();
         final Change<Polyeder> deactivate = new Change<Polyeder>() {
             public void configure() {
-                ((Shape3D) graph).setAppearance(TypeAppearance.DEACTIVATED.getAppearance());
+                ((Shape3D) graph).setAppearance(deactivated);
             }
         };
         PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, Polyeder> anyActiveMapping = new PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, Polyeder>() {

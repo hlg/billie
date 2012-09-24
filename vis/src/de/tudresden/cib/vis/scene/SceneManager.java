@@ -12,21 +12,9 @@ public class SceneManager<E, S> {
     private MultiBiMap<E, VisFactory2D.GraphObject> mapped = MultiBiMap.create();
     private S scene;
     private UIContext uiContext;
-    private Timer animationThread = new Timer();
 
     // TODO: use animation facilities of scene graph library if possible
     // TODO: initial state and reset
-
-    private int advanceFrame(final int current, int maxFrame) {
-        if(scheduledChanges.containsKey(current)) {
-            uiContext.runInUIContext(new Runnable() {
-                public void run() {
-                    scheduledChanges.get(current).changeAll();
-                }
-            });
-        }
-        return  (current+1 == maxFrame) ? 0 : current+1;
-    }
 
     private int getLongestTimeLine() {
         return scheduledChanges.lastKey();
@@ -42,24 +30,7 @@ public class SceneManager<E, S> {
 
     private void animate(long delay) {
         if (hasAnimations()) {
-            TimerTask animation = new TimerTask() {
-                int frame = 0;
-                int maxFrame = getLongestTimeLine();
-
-                @Override
-                public void run() {
-                    frame = advanceFrame(frame, maxFrame);
-                }
-            };
-            animationThread.schedule(animation, delay, 40);   // 1 frame = 1 hour schedule, 1 frame = 40 ms animation -> 1 s animation = 1 day schedule time
-        }
-    }
-
-    public void jumpToTime(int frame){
-        int current = 0;
-        int maxFrame = getLongestTimeLine();
-        while(current < frame){
-            current = advanceFrame(current, maxFrame);
+            uiContext.animate(scheduledChanges);
         }
     }
 
@@ -127,6 +98,7 @@ public class SceneManager<E, S> {
     }
 
     public void dispose() {
-        animationThread.cancel();
+        uiContext.dispose();
     }
+
 }
