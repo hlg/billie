@@ -13,6 +13,8 @@ import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
 import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
+import org.bimserver.models.ifc2x3tc1.IfcProduct;
+import org.eclipse.emf.ecore.EObject;
 
 import javax.media.j3d.*;
 import javax.vecmath.Color3f;
@@ -66,24 +68,31 @@ public class IfcSched_Colored4D extends Configuration<LinkedObject<EMFIfcParser.
                 ((Shape3D) graph).setAppearance(activated);
             }
         };
-        final Appearance deactivated = TypeAppearance.DEACTIVATED.getAppearance();
-        final Change<Polyeder> deactivate = new Change<Polyeder>() {
+        final Appearance finished = TypeAppearance.DEACTIVATED.getAppearance();
+        final Change<Polyeder> finish = new Change<Polyeder>() {
             public void configure() {
-                ((Shape3D) graph).setAppearance(deactivated);
+                ((Shape3D) graph).setAppearance(finished);
             }
         };
         PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, Polyeder> anyActiveMapping = new PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, Polyeder>() {
+
+            @Override
+            protected boolean condition() {
+                EObject ifcObject = data.getKeyObject().getObject();
+                return ifcObject instanceof IfcProduct && ((IfcProduct) ifcObject).isSetRepresentation();
+            }
+
             @Override
             protected void configure() {
                 graphObject.setNormals(data.getKeyObject().getGeometry().normals);
                 graphObject.setVertizes(data.getKeyObject().getGeometry().vertizes);
                 graphObject.setIndizes(data.getKeyObject().getGeometry().indizes);
-                ((Shape3D) graphObject).setAppearance(TypeAppearance.DEFAULT.getAppearance()); // TODO: generic model
+                ((Shape3D) graphObject).setAppearance(inactive);
                 long earliestStart = mapper.getStats("earliestStart").longValue();
-                Map<Integer, Integer> activityHistogram = getActivityHistogram(data.getResolvedLinks(), earliestStart);
-                if (!activityHistogram.containsKey(0)) addChange(0, reset);
-                for (Map.Entry<Integer, Integer> histEntry : activityHistogram.entrySet()) {
-                    addChange(histEntry.getKey() / scale, histEntry.getValue() > 0 ? activate : (histEntry.getValue() == 0 ? reset : deactivate));
+                Map<Long, Integer> activityHistogram = getActivityHistogram(data.getResolvedLinks(), earliestStart);
+                if (!activityHistogram.isEmpty() && !activityHistogram.containsKey((long)0)) addChange(0, reset);
+                for (Map.Entry<Long, Integer> histEntry : activityHistogram.entrySet()) {
+                    addChange((int)(histEntry.getKey() / scale), histEntry.getValue() > 0 ? activate : (histEntry.getValue() == 0 ? reset : finish));
                 }
             }
         };
@@ -130,25 +139,27 @@ public class IfcSched_Colored4D extends Configuration<LinkedObject<EMFIfcParser.
         };
     }
 
-    private Map<Integer, Integer> getActivityHistogram(Collection<LinkedObject.ResolvedLink> links, long earliestStart) {
-        TreeMap<Integer, Integer> result = new TreeMap<Integer, Integer>();
+    private Map<Long, Integer> getActivityHistogram(Collection<LinkedObject.ResolvedLink> links, long earliestStart) {
+        TreeMap<Long, Integer> result = new TreeMap<Long, Integer>();
         for (LinkedObject.ResolvedLink link : links) {
             for (Activity activity : link.getScheduleObjects().values()) {
-                int start = (int) (getTimeInMillis(activity.getActivityData().getStart()) - earliestStart);
+                long start = getTimeInMillis(activity.getActivityData().getStart()) - earliestStart;
                 result.put(start, result.containsKey(start) ? result.get(start) + 1 : 1);
-                int end = (int) (getTimeInMillis(activity.getActivityData().getEnd()) - earliestStart);
+                long end = getTimeInMillis(activity.getActivityData().getEnd()) - earliestStart;
                 result.put(end, result.containsKey(end) ? result.get(end) - 1 : -1);
             }
         }
-        int current = 0;
-        for (int time : result.keySet()) {
-            current += result.get(time);
-            result.put(time, current);
-        }
-        int currTime = result.lastKey();
-        while (result.get(currTime) == 0) {
-            result.put(currTime, -1);
-            currTime = result.lowerKey(currTime);
+        if(!result.isEmpty()){
+            int current = 0;
+            for (long time : result.keySet()) {
+                current += result.get(time);
+                result.put(time, current);
+            }
+            long currTime = result.lastKey();
+            while (result.get(currTime) == 0) {
+                result.put(currTime, -1);
+                currTime = result.lowerKey(currTime);
+            }
         }
         return result;
     }

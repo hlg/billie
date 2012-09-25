@@ -1,6 +1,7 @@
 package de.tudresden.cib.vis.scene;
 
 import de.tudresden.cib.vis.util.MultiBiMap;
+import org.slf4j.Logger;
 
 import java.util.*;
 
@@ -101,4 +102,34 @@ public class SceneManager<E, S> {
         uiContext.dispose();
     }
 
+    public void logStatistics(Logger logger) {
+        logger.info(String.format("mapped %d objects", mapped.size()));
+        logger.info(String.format("created %d scheduled changes at %d points", getNoOfScheduledChanges(), getNoOfSchedulePoints()));
+        if(!scheduledChanges.isEmpty()) logger.info(String.format("minFrame = %d, maxFrame = %d", scheduledChanges.firstKey(), scheduledChanges.lastKey()));
+        logger.info(String.format("created %d triggered changes for %d triggers", getNoOfTriggeredChanges(), getNoOfTriggers()));
+    }
+
+    private int getNoOfSchedulePoints(){
+        return scheduledChanges.size();
+    }
+
+    private int getNoOfTriggers(){
+        return triggeredChanges.size();
+    }
+
+    private int getNoOfScheduledChanges() {
+        int result = 0;
+        for(ChangeMap point : scheduledChanges.values()){
+            for(List<Change> val: point.values()) result += val.size();
+        }
+        return result;
+    }
+
+    private int getNoOfTriggeredChanges() {
+        int result = 0;
+        for(ChangeMap event : triggeredChanges.values()){
+            for(List<Change> val: event.values()) result += val.size();
+        }
+        return result;
+    }
 }

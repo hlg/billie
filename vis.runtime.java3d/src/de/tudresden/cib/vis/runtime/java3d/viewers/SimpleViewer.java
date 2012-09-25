@@ -34,6 +34,12 @@ public class SimpleViewer extends JFrame {
     Loader loader;
     private Set<Shape3D> selection = new HashSet<Shape3D>();
 
+    public void setPickingEnabled(boolean pickingEnabled) {
+        this.pickingEnabled = pickingEnabled;
+    }
+
+    private boolean pickingEnabled = true;
+
     public SimpleViewer(Loader loader) {
         logger = LoggerFactory.getLogger(this.getClass());
         selectedAppearance = TypeAppearance.ACTIVATED.getAppearance();
@@ -59,7 +65,7 @@ public class SimpleViewer extends JFrame {
     public void run(String path) throws FileNotFoundException {
         setupViews();
         loadFile(path);
-        setupBehaviour();
+        if (pickingEnabled) setupBehaviour();
         showScene();
     }
 

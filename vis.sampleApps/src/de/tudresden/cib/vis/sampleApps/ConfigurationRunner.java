@@ -1,8 +1,6 @@
 package de.tudresden.cib.vis.sampleApps;
 
 import cib.mf.qto.model.AnsatzType;
-import cib.mf.qto.model.AufmassType;
-import cib.mf.qto.model.impl.AnsaetzeTypeImpl;
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.configurations.*;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
@@ -26,7 +24,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -54,6 +51,7 @@ public enum ConfigurationRunner {
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager()));
             new IfcSched_Colored4D(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
+            viewer.setPickingEnabled(false);
             viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());  // or carport.zip
         }
     }, IFCGAEB_3D {

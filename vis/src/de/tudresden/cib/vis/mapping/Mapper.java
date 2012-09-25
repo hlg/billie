@@ -4,6 +4,8 @@ import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.VisBuilder;
 import de.tudresden.cib.vis.scene.VisFactory2D;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -13,6 +15,7 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     private VisFactory2D visFactory;
     private VisBuilder<G, S> visBuilder;
     private SceneManager<E, S> sceneManager = new SceneManager<E, S>();
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private Map<String, DataAccessor.Folding<E, ? extends Number>> statistics = new HashMap<String, DataAccessor.Folding<E, ? extends Number>>();
     private Map<String, PreProcessing<Double>> globals = new HashMap<String, PreProcessing<Double>>();
@@ -31,6 +34,7 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
 
 
     public SceneManager<E, S> map() throws TargetCreationException {
+        logger.info("start mapping data to scenegraph");
         visBuilder.init();
         preProcess();
         mainPass();
@@ -45,8 +49,9 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     }
 
     private void preProcess() {
-        for (DataAccessor.Folding<E, ?> stats : statistics.values()) {
-            stats.fold(dataAccessor);
+        for (Map.Entry<String, DataAccessor.Folding<E, ? extends Number>> stats : statistics.entrySet()) {
+            stats.getValue().fold(dataAccessor);
+            logger.info(String.format("preprocessed: %s = %s", stats.getKey(), stats.getValue().getResult()));
         }
     }
 
@@ -55,6 +60,7 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
         for (E source : dataAccessor) {
             if (mapAndBuild(source, mappingIndex)) mappingIndex++;
         }
+        sceneManager.logStatistics(logger);
     }
 
     private boolean mapAndBuild(E source, int mappingIndex) throws TargetCreationException {
@@ -65,7 +71,7 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
             if (propertyMap.checkCondition(source)) {
                 matchedAny = true;
                 propertyMap.map(source, mappingIndex);
-                visBuilder.addPart((G)propertyMap.graphObject); // TODO: make sure provider is the right one
+                visBuilder.addPart((G) propertyMap.graphObject); // TODO: make sure provider is the right one
             }
         }
         return matchedAny;

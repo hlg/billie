@@ -3,5 +3,6 @@
 <dependencies>
     <dependency org="junit" name="junit" rev="4.10"/>
     <dependency org="com.google.guava" name="guava" rev="11.0.1"/>
+    <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.2"/>
 </dependencies>
 </ivy-module>

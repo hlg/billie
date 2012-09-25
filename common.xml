@@ -45,11 +45,7 @@
             </classpath>
         </javac>
 
-        <!-- copy todir="${module.output.dir}/classes">
-            <fileset dir="${module.basedir}/src">
-                <type type="file"/>
-            </fileset>
-        </copy -->
+        <copy todir="${module.output.dir}/classes" file="${module.basedir}/log4j.xml" failonerror="false" />
     </target>
 
     <target name="compile.tests" depends="check.tests, compile.module" if="tests.available">
