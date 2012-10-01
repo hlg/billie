@@ -43,6 +43,11 @@ public class TextFactory extends VisFactory2D {
         public void setText(String text) {
             this.text = text;
         }
+
+        public void setRotation(int i) {
+            // ignore
+        }
+
         public void setColor(int r, int g, int b) {
             throw new NotImplementedException();
         }

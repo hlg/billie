@@ -8,7 +8,7 @@ import de.mefisto.model.parser.ContainerModelParser;
 import de.mefisto.model.parser.LinkModelParser;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
-import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
+import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor;
 import org.bimserver.plugins.PluginManager;
 import org.eclipse.emf.common.util.EList;
 
@@ -194,7 +194,7 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
     public enum EMTypes {
         IFC("Object", "ifc", "2x3") {
             IndexedDataAccessor createAccessor() {
-                return new EMFIfcAccessor(pm);
+                return new EMFIfcGeometricAccessor(pm);
             }
         },
         GAEB("BoQ", "gaebxml", "3.1") {

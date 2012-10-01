@@ -41,6 +41,7 @@ public abstract class VisFactory2D {
         void setLeft(int X);
         void setTop(int Y);
         void setText(String text);
+        void setRotation(int i);
     }
 
     public interface Polyline extends GraphObject {

@@ -3,6 +3,7 @@ package de.tudresden.cib.vis.configurations;
 import cib.lib.gaeb.model.gaeb.TgItem;
 import cib.mf.qto.model.AnsatzType;
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.data.Geometry;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.mapping.Mapper;
@@ -46,7 +47,7 @@ public class IfcGaeb_Colored3D extends Configuration<LinkedObject<EMFIfcParser.E
 
             @Override
             protected void configure() {
-                EMFIfcParser.Geometry geometry = data.getKeyObject().getGeometry();
+                Geometry geometry = data.getKeyObject().getGeometry();
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
                 graphObject.setIndizes(geometry.indizes);

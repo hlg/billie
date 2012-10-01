@@ -3,7 +3,7 @@ package de.tudresden.cib.vis.data.multimodel;
 import de.mefisto.model.container.ElementaryModelType;
 import de.mefisto.model.linkModel.LinkModel;
 import de.mefisto.model.parser.LinkModelParser;
-import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
+import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import org.junit.Assert;
@@ -48,7 +48,7 @@ public class MultiModelAccessorTests {
     public void testPreparsedAccess() throws IOException {
         EMFScheduleAccessor schedule = new EMFSchedule10Accessor(this.getClass().getResourceAsStream("/resources/carport/Activity/xml/Vorgangsmodell_1.xml"), "Activity1");
         final EMFGaebAccessor gaeb = new EMFGaebAccessor(this.getClass().getResourceAsStream("/resources/carport/BoQ/gaebxml/LV_1.X81"), "BoQ1");
-        EMFIfcAccessor ifc = new EMFIfcAccessor(new SimplePluginManager());
+        EMFIfcGeometricAccessor ifc = new EMFIfcGeometricAccessor(new SimplePluginManager());
 
         String fileName = "/resources/carport/Object/ifc/carport2.ifc";
         long size = new File(getClass().getResource(fileName).getFile()).length();

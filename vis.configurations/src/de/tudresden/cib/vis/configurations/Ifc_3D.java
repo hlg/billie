@@ -1,6 +1,7 @@
 package de.tudresden.cib.vis.configurations;
 
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.data.Geometry;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -34,7 +35,7 @@ public class Ifc_3D extends Configuration<EMFIfcParser.EngineEObject, Java3dFact
 
             @Override
             protected void configure() {
-                EMFIfcParser.Geometry geometry = data.getGeometry();
+                Geometry geometry = data.getGeometry();
                 assert geometry != null;
                 /* EList<IfcRelContainedInSpatialStructure> containedInStructure = ((IfcBuildingElement) data.getObject()).getContainedInStructure();
                 if (!containedInStructure.isEmpty() && containedInStructure.get(0).getRelatingStructure().getName().equals("E14"))

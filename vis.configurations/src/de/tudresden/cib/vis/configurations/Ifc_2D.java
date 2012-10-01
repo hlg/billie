@@ -1,6 +1,6 @@
 package de.tudresden.cib.vis.configurations;
 
-import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
+import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -19,7 +19,7 @@ import java.util.*;
 public class Ifc_2D extends Configuration<EMFIfcParser.EngineEObject, Draw2dFactory.Draw2dObject, Panel> {
 
     public Ifc_2D(Font font, InputStream input, long size) throws IOException {
-        super(new EMFIfcAccessor(new SimplePluginManager(), input, size), new Draw2dFactory(font), new Draw2dBuilder());
+        super(new EMFIfcGeometricAccessor(new SimplePluginManager(), input, size), new Draw2dFactory(font), new Draw2dBuilder());
     }
 
     public void configSemantic() {

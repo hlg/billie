@@ -3,7 +3,10 @@ package de.tudresden.cib.vis.sampleApps;
 import cib.mf.qto.model.AnsatzType;
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.configurations.*;
-import de.tudresden.cib.vis.data.bimserver.EMFIfcAccessor;
+import de.tudresden.cib.vis.data.Hierarchic;
+import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor;
+import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.data.multimodel.EMFQtoAccessor;
@@ -14,6 +17,7 @@ import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.draw2d.Draw2DViewer;
 import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
 import de.tudresden.cib.vis.scene.SceneManager;
+import org.bimserver.emf.IdEObject;
 import org.bimserver.plugins.PluginException;
 import org.eclipse.draw2d.Panel;
 import org.eclipse.emf.ecore.EObject;
@@ -32,7 +36,7 @@ public enum ConfigurationRunner {
     IFC_3D {
         @Override
         void run(String[] args) throws FileNotFoundException, PluginException {
-            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcAccessor(new SimplePluginManager()));
+            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager()));
             new Ifc_3D(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc").getPath());
@@ -40,7 +44,7 @@ public enum ConfigurationRunner {
     }, IFC_3DSPACE {
         @Override
         void run(String[] args) throws FileNotFoundException, PluginException {
-            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcAccessor(new SimplePluginManager()));
+            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager()));
             new Ifc_3D_Space(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle","ifc").getPath());
@@ -128,7 +132,6 @@ public enum ConfigurationRunner {
             dataAcessor.addAcessor("FM4", new EMFSchedule11Accessor(new FileInputStream(basePath + "Activity/1/Vorgangsmodell 1.xml"), "Activity1"));
             dataAcessor.groupBy("FM4", new File(basePath, "links/links.xml"));
             dataAcessor.sort(new Comparator<LinkedObject<Activity>>() {
-                @Override
                 public int compare(LinkedObject<Activity> link, LinkedObject<Activity> otherLink) {
                     String activityPath = new ActivityHelper(link.getKeyObject()).extractActivityDescription();
                     String otherActivityPath = new ActivityHelper(otherLink.getKeyObject()).extractActivityDescription();
@@ -165,6 +168,17 @@ public enum ConfigurationRunner {
             SceneManager<?,Panel> scene = config.execute();
             scene.animate();
             viewer.showContent(scene.getScene());
+        }
+    }, IFC_ICYCLE {
+        @Override
+        void run(String[] args) throws IOException, PluginException, TargetCreationException {
+            IndexedDataAccessor<Hierarchic<IdEObject>> data = new EMFIfcHierarchicAcessor(new SimplePluginManager());
+            Draw2DViewer viewer = new Draw2DViewer();
+            data.read(viewer.chooseFile("/home/dev/src", "ifc"));
+            data.index();
+            Configuration<?,?,Panel> config = new Ifc_Icycle(data, viewer.getDefaultFont());
+            config.config();
+            viewer.showContent(config.execute().getScene());
         }
     };
 

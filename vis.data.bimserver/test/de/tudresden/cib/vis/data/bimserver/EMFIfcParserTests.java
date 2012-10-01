@@ -13,13 +13,13 @@ import static org.junit.Assert.*;
 public class EMFIfcParserTests {
 
     private EMFIfcParser parser;
-    private EMFIfcAccessor accessor;
+    private EMFIfcGeometricAccessor accessor;
 
     @Before
     public void setUp(){
         SimplePluginManager pluginManager = new SimplePluginManager();
         parser = new EMFIfcParser(pluginManager);
-        accessor = new EMFIfcAccessor(pluginManager);
+        accessor = new EMFIfcGeometricAccessor(pluginManager);
     }
 
     @Test

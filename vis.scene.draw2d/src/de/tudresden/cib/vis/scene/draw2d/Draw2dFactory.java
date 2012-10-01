@@ -2,10 +2,7 @@ package de.tudresden.cib.vis.scene.draw2d;
 
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory2D;
-import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.PositionConstants;
-import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.*;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -72,9 +69,22 @@ public class Draw2dFactory extends VisFactory2D {
     }
     
     class Draw2dLabel extends org.eclipse.draw2d.Label implements Label, Draw2dObject {
+        private float rotation = 0;
+
         Draw2dLabel(){
             setFont(defaultFont);
         }
+
+        @Override
+        protected void paintFigure(Graphics graphics) {
+            org.eclipse.draw2d.geometry.Rectangle bounds = getBounds();
+            graphics.translate(bounds.x, bounds.y);
+            graphics.rotate(rotation);
+            graphics.setClip(new org.eclipse.draw2d.geometry.Rectangle(0,0,bounds.width, bounds.height));
+            graphics.drawText(getSubStringText(), getTextLocation());
+            graphics.translate(-bounds.x, -bounds.y);
+        }
+
         public void setLeft(int X) {
             setLocation(getLocation().setX(X));
         }
@@ -85,6 +95,10 @@ public class Draw2dFactory extends VisFactory2D {
             super.setText(text);
             setLabelAlignment(PositionConstants.LEFT);
             setSize(getTextSize());
+        }
+
+        public void setRotation(int i) {
+            this.rotation = i;
         }
 
         public void setColor(int r, int g, int b) {

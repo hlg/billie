@@ -1,6 +1,7 @@
 package de.tudresden.cib.vis.configurations;
 
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.data.Geometry;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -33,7 +34,7 @@ public class Ifc_3D_Space extends Configuration<EMFIfcParser.EngineEObject, Java
 
             @Override
             protected void configure() {
-                EMFIfcParser.Geometry geometry = data.getGeometry();
+                Geometry geometry = data.getGeometry();
                 assert geometry != null;
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);

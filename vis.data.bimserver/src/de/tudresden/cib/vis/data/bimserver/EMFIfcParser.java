@@ -1,42 +1,35 @@
 package de.tudresden.cib.vis.data.bimserver;
 
+import de.tudresden.cib.vis.data.Geometric;
+import de.tudresden.cib.vis.data.Geometry;
 import org.apache.commons.io.input.TeeInputStream;
 import org.bimserver.emf.IdEObject;
-import org.bimserver.models.ifc2x3tc1.IfcElement;
 import org.bimserver.models.ifc2x3tc1.IfcProduct;
-import org.bimserver.models.ifc2x3tc1.IfcRelContainedInSpatialStructure;
 import org.bimserver.models.ifc2x3tc1.IfcRoot;
 import org.bimserver.plugins.PluginException;
 import org.bimserver.plugins.PluginManager;
 import org.bimserver.plugins.deserializers.DeserializeException;
-import org.bimserver.plugins.deserializers.EmfDeserializer;
 import org.bimserver.plugins.ifcengine.*;
-import org.bimserver.plugins.serializers.IfcModelInterface;
-import org.eclipse.emf.ecore.EObject;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
-public class EMFIfcParser {
+public class EMFIfcParser extends EMFIfcPlainParser {
 
     private IfcEngineModel engineModel;
     private IfcEnginePlugin enginePlugin;
     private IfcEngine engine;
     private IfcEngineGeometry geometry;
 
-    private EmfDeserializer deserializer;
-
-    IfcModelInterface data;
-
     public EMFIfcParser(PluginManager pluginManager) {
-        pluginManager.loadPluginsFromCurrentClassloader();
-        pluginManager.initAllLoadedPlugins();
+        super(pluginManager);
         enginePlugin = pluginManager.getAllIfcEnginePlugins(true).iterator().next();
         try {
-            deserializer = pluginManager.getFirstDeserializer("ifc", true).createDeserializer();
-            deserializer.init(pluginManager.requireSchemaDefinition());
             engine = enginePlugin.createIfcEngine();
             engine.init();
         } catch (PluginException e) {
@@ -70,18 +63,6 @@ public class EMFIfcParser {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (IfcEngineException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-    }
-
-    private void adjustRelations() {
-        // due to http://code.google.com/p/bimserver/wiki/Known_issues
-        for (EObject eObject : data.getAllWithSubTypes(IfcRelContainedInSpatialStructure.class)) {
-            IfcRelContainedInSpatialStructure relation = (IfcRelContainedInSpatialStructure) eObject;
-            for (IfcProduct product : relation.getRelatedElements()) {
-                if (product instanceof IfcElement) {
-                    ((IfcElement) product).getContainedInStructure().add(relation);
-                }
-            }
         }
     }
 
@@ -124,7 +105,7 @@ public class EMFIfcParser {
         }
     }
 
-    public static class EngineEObject {
+    public static class EngineEObject implements Geometric<IdEObject> {
         private IdEObject idEObject;
         private IfcEngineGeometry geometry;
         private IfcEngineInstanceVisualisationProperties visProps;
@@ -139,7 +120,7 @@ public class EMFIfcParser {
             this.geometry = geometry;
         }
 
-        public EObject getObject() {
+        public IdEObject getObject() {
             return idEObject;
         }
 
@@ -171,12 +152,5 @@ public class EMFIfcParser {
             return objectGeometry;
         }
     }
-
-    public static class Geometry {
-        public List<Float> vertizes;
-        public List<Float> normals;
-        public List<Integer> indizes;
-    }
-
 
 }
