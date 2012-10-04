@@ -47,7 +47,7 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
         IfcProject project = (IfcProject) parser.data.get(IfcProject.class);
         if(project.isSetIsDecomposedBy()){
             IfcSpatialStructureElement root = findSpatialRoot(project);
-            if(root!=null) stepIn(root, new ArrayList<Integer>(), 0, 0);
+            if(root!=null) stepIn(root, new ArrayList<Integer>(), 0, 0, null);
         }
     }
 
@@ -61,21 +61,22 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
         return null;
     }
 
-    private int stepIn(final IfcSpatialStructureElement object, final List<Integer> path, final int nodesBefore, final int depth) {
+    private Hierarchic<IdEObject> stepIn(final IfcSpatialStructureElement object, final List<Integer> path, final int nodesBefore, final int depth, final Hierarchic<IdEObject> parentNode) {
         Hierarchic<IdEObject> node = new Hierarchic<IdEObject>() {
             public int nodeSize;
+            private Collection<Hierarchic<? extends IdEObject>> children = new HashSet<Hierarchic<? extends IdEObject>>();
+            private Hierarchic<IdEObject> parent = parentNode;
 
-            public IdEObject getParent() {
-                return object.isSetDecomposes() ? object.getDecomposes().iterator().next().getRelatingObject() : null;
+            public Hierarchic<IdEObject> getParent() {
+                return parent;
             }
 
-            public Collection<? extends IdEObject> getChildren() {
-                Collection<IdEObject> result = new ArrayList<IdEObject>();
-                if(object.isSetIsDecomposedBy()) result.addAll( object.getIsDecomposedBy().iterator().next().getRelatedObjects());
-                if(object.isSetContainsElements()) result.addAll(object.getContainsElements().iterator().next().getRelatedElements());
-                return result;
+            public Collection<Hierarchic<? extends IdEObject>> getChildren() {
+                return children;
             }
-
+            public void addChild(Hierarchic<IdEObject> child){
+                children.add(child);
+            }
             public List<Integer> getPath() {
                 return path;
             }
@@ -106,7 +107,9 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
             for(IfcObjectDefinition child: object.getIsDecomposedBy().iterator().next().getRelatedObjects()){
                 List<Integer> newPath = new ArrayList<Integer>(path);
                 newPath.add(pos);
-                size += stepIn((IfcSpatialStructureElement) child, newPath, nodesBefore + size, depth + 1);
+                Hierarchic<IdEObject> childNode = stepIn((IfcSpatialStructureElement) child, newPath, nodesBefore + size, depth + 1, node);
+                node.addChild(childNode);
+                size += childNode.getNodeSize();
                 pos++;
             }
         }
@@ -114,26 +117,30 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
             for(IfcProduct contained: object.getContainsElements().iterator().next().getRelatedElements()){
                 List<Integer> newPath = new ArrayList<Integer>(path);
                 newPath.add(pos);
-                stepIn((IfcElement) contained, newPath, nodesBefore + size, depth + 1);
+                Hierarchic<IdEObject> child = stepIn((IfcElement) contained, newPath, nodesBefore + size, depth + 1, node);
+                node.addChild(child);
                 size++;
                 pos++;
             }
         }
         if(size==0) size=1;
         node.setNodeSize(size);
-        return size;
+        return node;
     }
 
-    private void stepIn(final IfcElement contained, final List<Integer> path, final int nodesBefore, final int depth) {
+    private Hierarchic<IdEObject> stepIn(final IfcElement contained, final List<Integer> path, final int nodesBefore, final int depth, final Hierarchic<IdEObject> parent) {
         Hierarchic<IdEObject> node = new Hierarchic<IdEObject>() {
             public int nodeSize = 1;
 
-            public IdEObject getParent() {
-                return contained.isSetContainedInStructure() ? contained.getContainedInStructure().iterator().next().getRelatingStructure() : null;
+            public Hierarchic<IdEObject> getParent() {
+                return parent;
             }
 
-            public Collection<? extends IdEObject> getChildren() {
-                return Collections.<IdEObject>emptySet();
+            public Collection<Hierarchic<? extends IdEObject>> getChildren() {
+                return Collections.emptySet();
+            }
+
+            public void addChild(Hierarchic<IdEObject> child) {
             }
 
             public List<Integer> getPath() {
@@ -160,6 +167,7 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
             }
         };
         wrappedData.put(contained.getGlobalId().getWrappedValue(), node);
+        return node;
     }
 
     @Override
