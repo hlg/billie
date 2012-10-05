@@ -46,7 +46,7 @@ public class Ifc_Icycle extends Configuration<Hierarchic<IdEObject>, Draw2dFacto
                 graphObject.setLeft(data.getNodesBefore() * 15);
                 graphObject.setTop(data.getDepth() * 25 + 150);
                 String title = object.getName();
-                graphObject.setText(title.length() <=20 ? title : "... " + title.substring(title.length()-20,title.length()-1));
+                graphObject.setText(title==null ? "xxx" : title.length() <=20 ? title : "... " + title.substring(title.length()-20,title.length()-1));
                 graphObject.setRotation(-90);
             }
         });
@@ -62,7 +62,7 @@ public class Ifc_Icycle extends Configuration<Hierarchic<IdEObject>, Draw2dFacto
                 graphObject.setTop(data.getDepth() * 25 + 5);
                 String title = object.getName();
                 int doubleNodeSize = data.getNodeSize() * 2;
-                graphObject.setText(title.length() <= doubleNodeSize ? title : "... " + title.substring(title.length() - doubleNodeSize, title.length() - 1));
+                graphObject.setText(title==null ? "xxx" : title.length() <= doubleNodeSize ? title : "... " + title.substring(title.length() - doubleNodeSize, title.length() - 1));
             }
         });
         mapper.addMapping(new PropertyMap<EMFIfcHierarchicAcessor.HierarchicIfc, VisFactory2D.Polyline>() {
@@ -73,21 +73,21 @@ public class Ifc_Icycle extends Configuration<Hierarchic<IdEObject>, Draw2dFacto
                 path.add(current);
                 while(current.getParent()!=null){
                     current = current.getParent();
+                    path.add(current);
                 }
                 List<Point> layouted = new ArrayList<Point>();
                 int scale = 15;
                 for(Hierarchic<? extends IdEObject> pathEntry: path){
                     layouted.add(new Point(pathEntry.getNodesBefore()*scale+pathEntry.getNodeSize()*scale/2, 1200 - pathEntry.getDepth()*scale*20));
                 }
+                /*
                 Point first = layouted.get(0);
                 Point last = layouted.get(path.size()-1);
                 int n = layouted.size();
-                double b = 0.85;
                 double ax = (1-b) * (last.x - first.x) / (n-1);
                 double ay = (1-b) * (last.y - first.y) / (n-1);
                 double cx = (1-b) * first.x;
                 double cy = (1-b) * first.y;
-                /*
                 def first = layoutedLink[0]
                 def last = layoutedLink[-1]
                 def a = [x: (1 - b) * (last.x - first.x) / (n - 1), y: (1 - b) * (last.y - first.y) / (n - 1)]
@@ -96,10 +96,10 @@ public class Ifc_Icycle extends Configuration<Hierarchic<IdEObject>, Draw2dFacto
                         p.x = (b * p.x + c.x + i * a.x) as float
                     p.y = (b * p.y + c.y + i * a.y) as float
                 }
-                 */
                 // Pi' = b*Pi+(1-b)(P0+i/(n-1)*(Plast-P0) = Pi*b + c + i*a
-                for(int i=0; i<layouted.size(); i++){
-                    Point p = layouted.get(i);
+                */
+                double b = 0.85;
+                for (Point p : layouted) {
                     // graphObject.addPoint((int)(b * p.x + cx + i*ax), (int) (b*p.y() + cy + i*ay));
                     graphObject.addPoint(p.x, p.y);
                 }
