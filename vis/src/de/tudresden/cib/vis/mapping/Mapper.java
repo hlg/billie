@@ -106,7 +106,7 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
 
         public <S> Collection<PropertyMap<S, ?>> getPropertyMaps(Class<S> sourceClass) {
             Collection<PropertyMap<S, ?>> res = new ArrayList<PropertyMap<S, ?>>();
-            List<Class<?>> sourceInterfaces = Arrays.asList(sourceClass.getInterfaces());
+            List<Class<?>> sourceInterfaces = Arrays.asList(sourceClass.getInterfaces()); // TODO: traverse the whole inheritance tree?
             for (Map.Entry<Class, Collection<PropertyMap>> classMaps : this.entrySet()) {
                 if (sourceClass.equals(classMaps.getKey()) || sourceInterfaces.contains(classMaps.getKey())) {
                     for (PropertyMap pm : classMaps.getValue()) {

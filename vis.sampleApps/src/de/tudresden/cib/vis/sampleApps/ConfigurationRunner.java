@@ -9,10 +9,7 @@ import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
-import de.tudresden.cib.vis.data.multimodel.EMFQtoAccessor;
-import de.tudresden.cib.vis.data.multimodel.EMFSchedule11Accessor;
-import de.tudresden.cib.vis.data.multimodel.LinkedObject;
-import de.tudresden.cib.vis.data.multimodel.MultiModelAccessor;
+import de.tudresden.cib.vis.data.multimodel.*;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.draw2d.Draw2DViewer;
 import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
@@ -177,6 +174,17 @@ public enum ConfigurationRunner {
             data.read(viewer.chooseFile("/home/dev/src", "ifc"));
             data.index();
             Configuration<?,?,Panel> config = new Ifc_Icycle(data, viewer.getDefaultFont());
+            config.config();
+            viewer.showContent(config.execute().getScene());
+        }
+    }, GAEB_ICYCLE {
+        @Override
+        void run(String[] args) throws IOException, PluginException, TargetCreationException {
+            IndexedDataAccessor<Hierarchic<EObject>> data =new HierarchicGaebAccessor();
+            Draw2DViewer viewer = new Draw2DViewer();
+            data.read(viewer.chooseFile("/home/dev/src", "*"));
+            data.index();
+            Configuration<?,?,Panel> config = new Gaeb_Icycle(data, viewer.getDefaultFont());
             config.config();
             viewer.showContent(config.execute().getScene());
         }

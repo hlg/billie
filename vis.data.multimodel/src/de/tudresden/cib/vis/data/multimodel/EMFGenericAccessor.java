@@ -14,7 +14,6 @@ import java.util.Map;
 public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataAccessor<EObject> {
     EObject data;
     Map<String, T> index;   // todo: index for links on categories?
-    protected String namespace = "";
 
     EMFGenericAccessor(EObject parsed){
         data = parsed;
@@ -64,11 +63,6 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
     }
 
     protected abstract Map<String, T> collectLookUp();
-
-    public void read(InputStream inputStream, String namespace, long size) throws IOException {
-        read(inputStream, size);
-        this.namespace = namespace + "::";
-    }
 
     public T getIndexed(String objectID) {
         return index.get(objectID);

@@ -34,11 +34,6 @@ public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.En
         throw new UnsupportedOperationException();
     }
 
-    public void read(InputStream inputStream, String namespace, long size) throws IOException {
-        read(inputStream, size);
-        this.namespace = namespace + "::";
-    }
-
     public Iterator<EMFIfcParser.EngineEObject> iterator() {
         return parser.getIterator();
     }

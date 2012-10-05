@@ -3,13 +3,10 @@ package de.tudresden.cib.vis.data.multimodel;
 import cib.lib.gaeb.model.gaeb.TgItem;
 import cib.mf.qto.model.AnsatzType;
 import cib.mf.schedule.model.activity11.Activity;
-import de.mefisto.model.container.ElementaryModelType;
+import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class LinkedObject<T> {
     T keyObject;
@@ -32,41 +29,44 @@ public class LinkedObject<T> {
     }
 
     public static class ResolvedLink {
-        private Map<String, EMFIfcParser.EngineEObject> ifcObjects = new HashMap<String, EMFIfcParser.EngineEObject>();
-        private Map<String, TgItem> gaebObjects = new HashMap<String, TgItem>();
-        private Map<String, AnsatzType> qtoObjects = new HashMap<String, AnsatzType>();
-        private Map<String, Activity> scheduleObjects = new HashMap<String, Activity>();
+        private HashMap<MultiModelAccessor.EMTypes, Map<String, ?>> linkedObjects = new HashMap<MultiModelAccessor.EMTypes, Map<String, ?>>();
 
         public Map<String, AnsatzType> getLinkedQto() {
-            return qtoObjects;
+            return defaultEmptyList((Map<String, AnsatzType>) linkedObjects.get(MultiModelAccessor.EMTypes.QTO));
         }
 
         public Map<String, TgItem> getLinkedBoQ() {
-            return gaebObjects;
+            return defaultEmptyList((Map<String, TgItem>) linkedObjects.get(MultiModelAccessor.EMTypes.GAEB));
         }
 
         public Map<String, EMFIfcParser.EngineEObject> getLinkedObject() {
-            return ifcObjects;
+            return defaultEmptyList((Map<String, EMFIfcParser.EngineEObject>) linkedObjects.get(MultiModelAccessor.EMTypes.IFC));
         }
 
         public Map<String, Activity> getScheduleObjects() {
-            return scheduleObjects;
+            return defaultEmptyList((Map<String, Activity>) linkedObjects.get(MultiModelAccessor.EMTypes.ACTIVITY11));
         }
 
-        public Map<String, ?> getLinksOfType(ElementaryModelType elementaryModelType) {
-            if (elementaryModelType.equals(ElementaryModelType.BO_Q)) return gaebObjects;
-            if (elementaryModelType.equals(ElementaryModelType.OBJECT)) return ifcObjects;
-            if (elementaryModelType.equals(ElementaryModelType.QTO)) return qtoObjects;
-            if (elementaryModelType.equals(ElementaryModelType.ACTIVITY)) return scheduleObjects;
-            return null;
+        public Map<String,EMFIfcHierarchicAcessor.HierarchicIfc> getLinkedHierarchicIfc(){
+            return defaultEmptyList((Map<String, EMFIfcHierarchicAcessor.HierarchicIfc>) linkedObjects.get(MultiModelAccessor.EMTypes.IFCHIERARCHIC));
+        }
+
+        public Map<String, HierarchicGaebAccessor.HierarchicTgItemBoQCtgy> getLinkedHierarchicGaeb(){
+            return defaultEmptyList((Map<String, HierarchicGaebAccessor.HierarchicTgItemBoQCtgy>) linkedObjects.get(MultiModelAccessor.EMTypes.GAEBHIERARCHIC));
+        }
+
+        private <T> Map<String, T> defaultEmptyList(Map<String, T> stringAnsatzTypeMap) {
+            return stringAnsatzTypeMap == null ? Collections.<String, T>emptyMap() : stringAnsatzTypeMap;
         }
 
         public void addObject(String modelId, Object object) {
-            if (object instanceof TgItem) gaebObjects.put(modelId, (TgItem) object);
-            if (object instanceof EMFIfcParser.EngineEObject)
-                ifcObjects.put(modelId, (EMFIfcParser.EngineEObject) object);
-            if (object instanceof AnsatzType) qtoObjects.put(modelId, (AnsatzType) object);
-            if (object instanceof Activity) scheduleObjects.put(modelId, (Activity) object);
+            MultiModelAccessor.EMTypes type = MultiModelAccessor.EMTypes.find(object);
+            addObject(type, modelId, object);
+        }
+
+        private <T> void addObject(MultiModelAccessor.EMTypes type, String modelId, T object) {
+            if (!linkedObjects.containsKey(type)) linkedObjects.put(type, new HashMap<String, T>());
+            ((Map<String, T>) linkedObjects.get(type)).put(modelId, object);
         }
 
     }

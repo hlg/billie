@@ -1,6 +1,7 @@
 package de.tudresden.cib.vis.data.bimserver;
 
 import de.tudresden.cib.vis.data.Hierarchic;
+import de.tudresden.cib.vis.data.HierarchicBase;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.*;
@@ -9,7 +10,8 @@ import org.bimserver.plugins.PluginManager;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEObject>> {
 
@@ -35,11 +37,6 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
         throw new UnsupportedOperationException();
     }
 
-    public void read(InputStream inputStream, String namespace, long size) throws IOException {
-        read(inputStream, size);
-        this.namespace = namespace + "::";
-    }
-
     @Override
     public void index() {
         parser.data.indexGuids();
@@ -47,7 +44,7 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
         IfcProject project = (IfcProject) parser.data.get(IfcProject.class);
         if(project.isSetIsDecomposedBy()){
             IfcSpatialStructureElement root = findSpatialRoot(project);
-            if(root!=null) stepIn(root, new ArrayList<Integer>(), 0, 0, null);
+            if(root!=null) stepIn(root, 0, 0, null);
         }
     }
 
@@ -61,66 +58,22 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
         return null;
     }
 
-    private Hierarchic<IdEObject> stepIn(final IfcSpatialStructureElement object, final List<Integer> path, final int nodesBefore, final int depth, final Hierarchic<IdEObject> parentNode) {
-        Hierarchic<IdEObject> node = new Hierarchic<IdEObject>() {
-            public int nodeSize;
-            private Collection<Hierarchic<? extends IdEObject>> children = new HashSet<Hierarchic<? extends IdEObject>>();
-            private Hierarchic<IdEObject> parent = parentNode;
-
-            public Hierarchic<IdEObject> getParent() {
-                return parent;
-            }
-
-            public Collection<Hierarchic<? extends IdEObject>> getChildren() {
-                return children;
-            }
-            public void addChild(Hierarchic<IdEObject> child){
-                children.add(child);
-            }
-            public List<Integer> getPath() {
-                return path;
-            }
-            public void setNodeSize(int nodeSize){
-                this.nodeSize = nodeSize;
-            }
-
-            public int getNodesBefore() {
-                return nodesBefore;
-            }
-
-            public int getDepth() {
-                return depth;
-            }
-
-            public int getNodeSize() {
-                return nodeSize;
-            }
-
-            public IdEObject getObject() {
-                return object;
-            }
-        };
+    private Hierarchic<IdEObject> stepIn(final IfcSpatialStructureElement object, final int nodesBefore, final int depth, final Hierarchic<IdEObject> parentNode) {
+        Hierarchic<IdEObject> node = new HierarchicIfc(parentNode, nodesBefore, depth, object);
         wrappedData.put(object.getGlobalId().getWrappedValue(), node);
         int size = 0;
-        int pos = 0;
         if (object.isSetIsDecomposedBy()){
             for(IfcObjectDefinition child: object.getIsDecomposedBy().iterator().next().getRelatedObjects()){
-                List<Integer> newPath = new ArrayList<Integer>(path);
-                newPath.add(pos);
-                Hierarchic<IdEObject> childNode = stepIn((IfcSpatialStructureElement) child, newPath, nodesBefore + size, depth + 1, node);
+                Hierarchic<IdEObject> childNode = stepIn((IfcSpatialStructureElement) child, nodesBefore + size, depth + 1, node);
                 node.addChild(childNode);
                 size += childNode.getNodeSize();
-                pos++;
             }
         }
         if (object.isSetContainsElements()){
             for(IfcProduct contained: object.getContainsElements().iterator().next().getRelatedElements()){
-                List<Integer> newPath = new ArrayList<Integer>(path);
-                newPath.add(pos);
-                Hierarchic<IdEObject> child = stepIn((IfcElement) contained, newPath, nodesBefore + size, depth + 1, node);
+                Hierarchic<IdEObject> child = stepIn((IfcElement) contained, nodesBefore + size, depth + 1, node);
                 node.addChild(child);
                 size++;
-                pos++;
             }
         }
         if(size==0) size=1;
@@ -128,44 +81,9 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
         return node;
     }
 
-    private Hierarchic<IdEObject> stepIn(final IfcElement contained, final List<Integer> path, final int nodesBefore, final int depth, final Hierarchic<IdEObject> parent) {
-        Hierarchic<IdEObject> node = new Hierarchic<IdEObject>() {
-            public int nodeSize = 1;
-
-            public Hierarchic<IdEObject> getParent() {
-                return parent;
-            }
-
-            public Collection<Hierarchic<? extends IdEObject>> getChildren() {
-                return Collections.emptySet();
-            }
-
-            public void addChild(Hierarchic<IdEObject> child) {
-            }
-
-            public List<Integer> getPath() {
-                return path;
-            }
-            public void setNodeSize(int nodeSize){
-                this.nodeSize = nodeSize;
-            }
-
-            public int getNodesBefore() {
-                return nodesBefore;
-            }
-
-            public int getDepth() {
-                return depth;
-            }
-
-            public int getNodeSize() {
-                return nodeSize;
-            }
-
-            public IdEObject getObject() {
-                return contained;
-            }
-        };
+    private Hierarchic<IdEObject> stepIn(final IfcElement contained, final int nodesBefore, final int depth, final Hierarchic<IdEObject> parent) {
+        Hierarchic<IdEObject> node = new HierarchicIfc(parent, nodesBefore, depth, contained);
+        node.setNodeSize(1);
         wrappedData.put(contained.getGlobalId().getWrappedValue(), node);
         return node;
     }
@@ -177,5 +95,12 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
 
     public Iterator<Hierarchic<IdEObject>> iterator() {
         return wrappedData.values().iterator();
+    }
+
+    public static class HierarchicIfc extends HierarchicBase<IdEObject> {
+
+        public HierarchicIfc(Hierarchic<IdEObject> parentNode, int nodesBefore, int depth, IdEObject object) {
+            super(parentNode, nodesBefore, depth, object);
+        }
     }
 }

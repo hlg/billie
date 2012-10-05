@@ -40,7 +40,8 @@ public class Gaeb_Barchart extends Configuration<EObject, Draw2dFactory.Draw2dOb
                 return 1000. / mp.getStats("UPmax").doubleValue();
             }
         });
-        mapper.addMapping(new PropertyMap<TgItem, VisFactory2D.Rectangle>() {
+        mapper.addMapping(
+                new PropertyMap<TgItem, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
                 graphObject.setHeight(15);

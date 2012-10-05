@@ -1,4 +1,4 @@
 package de.tudresden.cib.vis.data.bimserver;
 
-public class EMFIFCAccessor {
+public class EMFIfcAccessor {
 }
