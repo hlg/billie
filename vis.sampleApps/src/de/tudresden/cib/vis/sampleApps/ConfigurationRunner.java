@@ -157,9 +157,9 @@ public enum ConfigurationRunner {
         @Override
         void run(String[] args) throws IOException, PluginException, TargetCreationException {
             MultiModelAccessor<AnsatzType> dataAcessor = new MultiModelAccessor<AnsatzType>(new SimplePluginManager());
-            File input = new File("/home/dev/src/visMapping.git/combined_Angebot_LF.zip");
-            dataAcessor.read(new FileInputStream(input), input.length());
             Draw2DViewer viewer = new Draw2DViewer();
+            File input = viewer.chooseFolder("/home/dev/src/visMapping.git/");
+            dataAcessor.readFromFolder(input, MultiModelAccessor.EMTypes.QTO, MultiModelAccessor.EMTypes.IFCHIERARCHIC, MultiModelAccessor.EMTypes.GAEBHIERARCHIC);
             Configuration<?,?,Panel> config = new IfcGaebQto_HEB(dataAcessor, viewer.getDefaultFont());
             config.config();
             SceneManager<?,Panel> scene = config.execute();

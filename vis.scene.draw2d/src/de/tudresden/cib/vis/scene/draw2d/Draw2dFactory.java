@@ -119,4 +119,54 @@ public class Draw2dFactory extends VisFactory2D {
             setForegroundColor(new Color(null, r, g, b));
         }
     }
+
+    static class BezierDimension {
+        double a, b, c, d;
+        /* based on: http://www.moshplant.com/direct-or/bezier/math.html
+           *
+           * given (in dimension):
+           *  p0 - start point
+           *  p1 - start control point
+           *  p2 - end control point
+           *  p3 - end point
+           *
+           * based on the spec:
+           *  value(t) = a.t.t.t + b.t.t + c.t + d
+           *  p0 = d
+           *  p1 = p0+c/3
+           *  p2 = p1+(c+b)/3
+           *  p3 = p0+c+b+a
+           */
+        public BezierDimension(int p0, int p1, int p2, int p3) {
+            d = p0;
+            c = 3 * (p1 - p0);
+            b = 3 * (p2 - p1) - c;
+            a = p3 - p0 - c - b;
+        }
+        public int getValue(double t) {
+            // added 0.5 so that floor is actually rounding
+            return (int) (a*t*t*t + b*t*t + c*t + d + 0.5);
+        }
+
+    }
+
+    static private void drawBezier(Graphics g,
+                                   Point startPt,
+                                   Point startCtrlPt,
+                                   Point endPt,
+                                   Point endCtrlPt,
+                                   double step) {
+        BezierDimension x = new BezierDimension(startPt.x, startCtrlPt.x, endCtrlPt.x, endPt.x);
+        BezierDimension y = new BezierDimension(startPt.y, startCtrlPt.y, endCtrlPt.y, endPt.y);
+        double t = 0;
+        Point midPt = startPt;
+        while (t < 1) {
+            Point nextPt = new Point();
+            nextPt.setLocation(x.getValue(t), y.getValue(t));
+            g.drawLine(midPt, nextPt);
+            t += step;
+            midPt = nextPt;
+        }
+        g.drawLine(midPt, endPt);
+    }
 }

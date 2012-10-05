@@ -9,7 +9,6 @@ import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import de.tudresden.cib.vis.scene.draw2d.Draw2dBuilder;
 import de.tudresden.cib.vis.scene.draw2d.Draw2dFactory;
-import org.bimserver.models.ifc2x3tc1.IfcSpatialStructureElement;
 import org.eclipse.draw2d.Panel;
 import org.eclipse.swt.graphics.Font;
 
@@ -28,16 +27,19 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject<AnsatzType>, Draw
                 EMFIfcHierarchicAcessor.HierarchicIfc hierarchicIfc = resolvedLinks.getLinkedHierarchicIfc().values().iterator().next();
                 graphObject.setLeft(hierarchicIfc.getNodesBefore()*15);
                 graphObject.setWidth(hierarchicIfc.getNodeSize()*15);
-                graphObject.setTop(hierarchicIfc.getDepth()*25);
+                graphObject.setTop(0);
                 graphObject.setHeight(25);
-                if(hierarchicIfc.getObject() instanceof IfcSpatialStructureElement) graphObject.setColor(200,200,100);
-
+            }
+        });
+        mapper.addMapping(new PropertyMap<LinkedObject<AnsatzType>, VisFactory2D.Rectangle>(){
+            @Override
+            protected void configure() {
+                LinkedObject.ResolvedLink resolvedLinks = data.getResolvedLinks().iterator().next(); // one and only
                 HierarchicGaebAccessor.HierarchicTgItemBoQCtgy hiearchicGaeb = resolvedLinks.getLinkedHierarchicGaeb().values().iterator().next();
-                graphObject.setLeft(hierarchicIfc.getNodesBefore()*15);
-                graphObject.setWidth(hierarchicIfc.getNodeSize()*15);
-                graphObject.setTop(hierarchicIfc.getDepth()*25);
+                graphObject.setLeft(hiearchicGaeb.getNodesBefore()*15);
+                graphObject.setWidth(hiearchicGaeb.getNodeSize()*15);
+                graphObject.setTop(200);
                 graphObject.setHeight(25);
-                if(hierarchicIfc.getObject() instanceof IfcSpatialStructureElement) graphObject.setColor(200,200,100);
 
             }
         });

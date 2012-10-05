@@ -68,6 +68,35 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
         }
     }
 
+    public void readFromFolder(File folder, EMTypes keyModel, EMTypes... requiredModels) {
+        File mmFile = new File(folder, "MultiModel.xml");
+        assert folder.exists() && mmFile.exists();
+        Container container = ContainerModelParser.readContainerModel(mmFile).getContainer();
+        EList<ElementaryModel> foundModels = container.getElementaryModelGroup().getElementaryModels();
+        for(EMTypes required: requiredModels){
+            IndexedDataAccessor accessor = required.createAccessor();
+            String modelId = findAndReadModel(folder, foundModels, required, accessor);
+            elementaryModels.put(modelId, accessor);
+        }
+        IndexedDataAccessor keyModelAccessor = keyModel.createAccessor();
+        String keyModelId = findAndReadModel(folder, foundModels, keyModel, keyModelAccessor);
+        groupBy(keyModelId, folder);
+    }
+
+    private String findAndReadModel(File folder, EList<ElementaryModel> foundModels, EMTypes required, IndexedDataAccessor accessor) {
+        for (ElementaryModel model: foundModels){
+            if(model.getType().getName().equals(required.modelType)) {
+                for(Content alternative: model.getContent()){
+                    if(alternative.getFormat().equals(required.format) && alternative.getFormatVersion().equals(required.formatVersion)){
+                        readEM(folder, alternative, accessor);
+                        return model.getId();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private LinkModel readLinkModel(File folder, LinkModelDescriptor linkModelDesc) throws MalformedURLException {
         File linkFile = new File(folder, new URL(linkModelDesc.getFile()).getFile());
         return readLinkModel(linkFile);
@@ -137,21 +166,25 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
             EMTypes recognizedType = EMTypes.find(elementaryModel.getType().getName(), content.getFormat(), content.getFormatVersion());
             if (recognizedType != null) {
                 IndexedDataAccessor accessor = recognizedType.createAccessor();
-                for (ContainerFile contentFile : content.getFiles()) {
-                    try {
-                        File file = new File(mmFolder, new URL(contentFile.getValue()).getFile());
-                        accessor.read(new FileInputStream(file), contentFile.getNamespace(), file.length()); // TODO: accessor should join multiple sucessively set/added files
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    } catch (IOException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
-                }
-                accessor.index();
+                readEM(mmFolder, content, accessor);
                 return accessor;
             }
         }
         return null;
+    }
+
+    private void readEM(File mmFolder, Content content, IndexedDataAccessor accessor) {
+        for (ContainerFile contentFile : content.getFiles()) {
+            try {
+                File file = new File(mmFolder, new URL(contentFile.getValue()).getFile());
+                accessor.read(new FileInputStream(file), contentFile.getNamespace(), file.length()); // TODO: accessor should join multiple sucessively set/added files
+            } catch (MalformedURLException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
+        accessor.index();
     }
 
     public Iterator<LinkedObject<K>> iterator() {
