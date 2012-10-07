@@ -1,5 +1,6 @@
 package de.tudresden.cib.vis.data.multimodel;
 
+import cib.mf.qto.model.AnsatzType;
 import de.mefisto.model.container.ElementaryModelType;
 import de.mefisto.model.linkModel.LinkModel;
 import de.mefisto.model.parser.LinkModelParser;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
 
@@ -76,5 +78,19 @@ public class MultiModelAccessorTests {
             assertFalse(theLink.getLinkedBoQ().values().isEmpty());
         }
         Assert.assertEquals(5, linkSize);
+    }
+
+    @Test
+    public void testHierarchic() throws MalformedURLException {
+        MultiModelAccessor<AnsatzType> multiModelAccessor = new MultiModelAccessor<AnsatzType>(new SimplePluginManager());
+        File input = new File(this.getClass().getResource("/resources/carport").getFile());
+        multiModelAccessor.readFromFolder(input, MultiModelAccessor.EMTypes.QTO, MultiModelAccessor.EMTypes.IFCHIERARCHIC, MultiModelAccessor.EMTypes.GAEBHIERARCHIC);
+        for(LinkedObject linkedObject : multiModelAccessor){
+            Collection<LinkedObject.ResolvedLink> links = linkedObject.getResolvedLinks();
+            assertFalse(links.isEmpty());
+            LinkedObject.ResolvedLink theLink = links.iterator().next();
+            assertFalse(theLink.getLinkedHierarchicGaeb().isEmpty());
+            assertFalse(theLink.getLinkedHierarchicIfc().isEmpty());
+        }
     }
 }

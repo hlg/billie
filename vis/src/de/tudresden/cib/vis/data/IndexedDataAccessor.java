@@ -12,7 +12,7 @@ public abstract class IndexedDataAccessor<E> extends DataAccessor<E> {
 
     public void read(InputStream inputStream, String namespace, long size) throws IOException {
         read(inputStream, size);
-        this.namespace = namespace + "::";
+        this.namespace = namespace==null ? "" : namespace + "::";
     }
 
     public abstract void read(InputStream inputStream, long size) throws IOException;

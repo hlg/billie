@@ -23,7 +23,6 @@ public class HierarchicGaebAccessor extends IndexedDataAccessor<Hierarchic<EObje
     public void index() {
         TgGAEB gaeb = ((DocumentRoot) baseAcessor.data).getGAEB();
         traverseAndCollectLookUp(gaeb.getAward().getBoQ().getBoQBody(), 0, 0, null, "");
-
         gaeb.getAward().getBoQ().getBoQBody().getBoQCtgy();
         gaeb.getAward().getBoQ().getBoQBody().getItemlist();
     }
@@ -55,7 +54,7 @@ public class HierarchicGaebAccessor extends IndexedDataAccessor<Hierarchic<EObje
         for (TgBoQCtgy ctgy : boQCtgys) {
             String id = parentId + ctgy.getRNoPart() + ".";
             HierarchicTgItemBoQCtgy node = new HierarchicTgItemBoQCtgy(parent, nodesBefore + size, depth, ctgy);
-            wrappedData.put(id, node);
+            wrappedData.put(namespace+id, node);
             int currSize = traverseAndCollectLookUp(ctgy.getBoQBody(), depth + 1, nodesBefore + size, node, id);
             size += currSize;
             node.setNodeSize(currSize);
@@ -65,7 +64,7 @@ public class HierarchicGaebAccessor extends IndexedDataAccessor<Hierarchic<EObje
         if (itemlist != null)
             for (TgItem item : itemlist.getItem()) {
                 HierarchicTgItemBoQCtgy node = new HierarchicTgItemBoQCtgy(parent, nodesBefore + size, depth, item);
-                wrappedData.put(parentId + item.getRNoPart() + ".", node);
+                wrappedData.put(namespace + parentId + item.getRNoPart() + ".", node);
                 size += 1;
                 node.setNodeSize(1);
                 parent.addChild(node);

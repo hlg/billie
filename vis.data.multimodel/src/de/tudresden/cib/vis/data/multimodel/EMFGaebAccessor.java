@@ -42,7 +42,7 @@ public class EMFGaebAccessor extends EMFGenericAccessor<TgItem> {
         // alternatively for(EObject object : this){ // collect rNoParts}
         TgGAEB gaeb = ((DocumentRoot)data).getGAEB();
         Map<String, TgItem> gaebLookUp = new HashMap<String, TgItem>();
-        traverseAndCollectLookUp(gaeb.getAward().getBoQ().getBoQBody(), 0, namespace, gaebLookUp);
+        traverseAndCollectLookUp(gaeb.getAward().getBoQ().getBoQBody(), 0, "", gaebLookUp);
         return gaebLookUp;
     }
 
@@ -55,7 +55,7 @@ public class EMFGaebAccessor extends EMFGenericAccessor<TgItem> {
         TgItemlist itemlist = boQBody.getItemlist();
         if (itemlist != null)
             for (TgItem item : itemlist.getItem()) {
-                lookup.put(parentId + item.getRNoPart() + ".", item);
+                lookup.put(namespace + parentId + item.getRNoPart() + ".", item);
             }
     }
 

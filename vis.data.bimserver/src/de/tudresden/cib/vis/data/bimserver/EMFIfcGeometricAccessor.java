@@ -13,7 +13,6 @@ import java.util.Map;
 public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObject> {
 
     Map<String,EMFIfcParser.EngineEObject> wrappedData;
-    private String namespace = "";
     private EMFIfcParser parser;
 
     public EMFIfcGeometricAccessor(PluginManager pluginManager) {

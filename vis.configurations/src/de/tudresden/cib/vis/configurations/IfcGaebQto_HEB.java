@@ -20,27 +20,14 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject<AnsatzType>, Draw
 
     @Override
     public void config() {
-        mapper.addMapping(new PropertyMap<LinkedObject<AnsatzType>, VisFactory2D.Rectangle>() {
+        mapper.addMapping(new PropertyMap<LinkedObject<AnsatzType>, VisFactory2D.Polyline>() {
             @Override
             protected void configure() {
                 LinkedObject.ResolvedLink resolvedLinks = data.getResolvedLinks().iterator().next(); // one and only
-                EMFIfcHierarchicAcessor.HierarchicIfc hierarchicIfc = resolvedLinks.getLinkedHierarchicIfc().values().iterator().next();
-                graphObject.setLeft(hierarchicIfc.getNodesBefore()*15);
-                graphObject.setWidth(hierarchicIfc.getNodeSize()*15);
-                graphObject.setTop(0);
-                graphObject.setHeight(25);
-            }
-        });
-        mapper.addMapping(new PropertyMap<LinkedObject<AnsatzType>, VisFactory2D.Rectangle>(){
-            @Override
-            protected void configure() {
-                LinkedObject.ResolvedLink resolvedLinks = data.getResolvedLinks().iterator().next(); // one and only
-                HierarchicGaebAccessor.HierarchicTgItemBoQCtgy hiearchicGaeb = resolvedLinks.getLinkedHierarchicGaeb().values().iterator().next();
-                graphObject.setLeft(hiearchicGaeb.getNodesBefore()*15);
-                graphObject.setWidth(hiearchicGaeb.getNodeSize()*15);
-                graphObject.setTop(200);
-                graphObject.setHeight(25);
-
+                EMFIfcHierarchicAcessor.HierarchicIfc hIfc = resolvedLinks.getLinkedHierarchicIfc().values().iterator().next();
+                HierarchicGaebAccessor.HierarchicTgItemBoQCtgy hGaeb = resolvedLinks.getLinkedHierarchicGaeb().values().iterator().next();
+                graphObject.addPoint((hIfc.getNodesBefore()+hIfc.getNodeSize()/2)*15 + 50, 50);
+                graphObject.addPoint((hGaeb.getNodesBefore()+hGaeb.getNodeSize()/2)*150 + 50, 650);
             }
         });
     }

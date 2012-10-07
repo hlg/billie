@@ -15,7 +15,6 @@ import java.util.Iterator;
 
 public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEObject>> {
 
-    private String namespace = "";
     private EMFIfcPlainParser parser;
     private HashMap<String, Hierarchic<IdEObject>> wrappedData;
 

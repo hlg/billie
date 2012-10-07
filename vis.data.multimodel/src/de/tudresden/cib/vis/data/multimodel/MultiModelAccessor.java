@@ -68,7 +68,7 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
         }
     }
 
-    public void readFromFolder(File folder, EMTypes keyModel, EMTypes... requiredModels) {
+    public void readFromFolder(File folder, EMTypes keyModel, EMTypes... requiredModels) throws MalformedURLException {
         File mmFile = new File(folder, "MultiModel.xml");
         assert folder.exists() && mmFile.exists();
         Container container = ContainerModelParser.readContainerModel(mmFile).getContainer();
@@ -76,11 +76,15 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
         for(EMTypes required: requiredModels){
             IndexedDataAccessor accessor = required.createAccessor();
             String modelId = findAndReadModel(folder, foundModels, required, accessor);
+            if(modelId==null) throw new RuntimeException(String.format("missing required model: type=%s, format=%s, version=%s", required.modelType, required.format, required.formatVersion));
             elementaryModels.put(modelId, accessor);
         }
         IndexedDataAccessor keyModelAccessor = keyModel.createAccessor();
         String keyModelId = findAndReadModel(folder, foundModels, keyModel, keyModelAccessor);
-        groupBy(keyModelId, folder);
+        if(keyModelId==null) throw new RuntimeException(String.format("missing key model: type=%s, format=%s, version=%s", keyModel.modelType, keyModel.format, keyModel.formatVersion));
+        elementaryModels.put(keyModelId, keyModelAccessor);
+        LinkModel linkModel = readLinkModel(folder, container.getLinkModelDescriptorGroup().getLinkModelDescriptors().get(0));
+        groupBy(keyModelId, linkModel);
     }
 
     private String findAndReadModel(File folder, EList<ElementaryModel> foundModels, EMTypes required, IndexedDataAccessor accessor) {
@@ -273,7 +277,7 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
                 return new EMFIfcHierarchicAcessor(pm);
             }
         },
-        GAEBHIERARCHIC("BoQ", "xml", "3.1", HierarchicGaebAccessor.HierarchicTgItemBoQCtgy.class, false) {
+        GAEBHIERARCHIC("BoQ", "gaebxml", "3.1", HierarchicGaebAccessor.HierarchicTgItemBoQCtgy.class, false) {
             @Override
             IndexedDataAccessor createAccessor() {
                 return new HierarchicGaebAccessor();
