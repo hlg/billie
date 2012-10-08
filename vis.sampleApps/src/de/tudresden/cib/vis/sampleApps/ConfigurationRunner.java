@@ -16,7 +16,11 @@ import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
 import de.tudresden.cib.vis.scene.SceneManager;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.plugins.PluginException;
+import org.eclipse.draw2d.GridLayout;
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.Panel;
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -160,11 +164,15 @@ public enum ConfigurationRunner {
             Draw2DViewer viewer = new Draw2DViewer();
             File input = viewer.chooseFolder("/home/dev/src/visMapping.git/");
             dataAcessor.readFromFolder(input, MultiModelAccessor.EMTypes.QTO, MultiModelAccessor.EMTypes.IFCHIERARCHIC, MultiModelAccessor.EMTypes.GAEBHIERARCHIC);
-            Configuration<?,?,Panel> config = new IfcGaebQto_HEB(dataAcessor, viewer.getDefaultFont());
-            config.config();
-            SceneManager<?,Panel> scene = config.execute();
-            scene.animate();
-            viewer.showContent(scene.getScene());
+            Panel container = new Panel();
+            container.setLayoutManager(new GridLayout(1,true));
+            Configuration<?,?,Panel> hebConfig = new IfcGaebQto_HEB(dataAcessor, viewer.getDefaultFont());
+            hebConfig.config();
+            SceneManager<?,Panel> hebScene = hebConfig.execute();
+            hebScene.animate();
+            container.add(hebScene.getScene());
+            // Configuration<?, ?, Panel> ifcIcycleConfig = new Ifc_Icycle();
+            viewer.showContent(container);
         }
     }, IFC_ICYCLE {
         @Override
