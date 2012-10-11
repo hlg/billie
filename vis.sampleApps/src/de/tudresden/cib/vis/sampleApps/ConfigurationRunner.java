@@ -3,6 +3,7 @@ package de.tudresden.cib.vis.sampleApps;
 import cib.mf.qto.model.AnsatzType;
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.configurations.*;
+import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor;
@@ -17,10 +18,7 @@ import de.tudresden.cib.vis.scene.SceneManager;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.plugins.PluginException;
 import org.eclipse.draw2d.GridLayout;
-import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.Panel;
-import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -31,6 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 public enum ConfigurationRunner {
@@ -162,16 +161,29 @@ public enum ConfigurationRunner {
         void run(String[] args) throws IOException, PluginException, TargetCreationException {
             MultiModelAccessor<AnsatzType> dataAcessor = new MultiModelAccessor<AnsatzType>(new SimplePluginManager());
             Draw2DViewer viewer = new Draw2DViewer();
-            File input = viewer.chooseFolder("/home/dev/src/visMapping.git/");
-            dataAcessor.readFromFolder(input, MultiModelAccessor.EMTypes.QTO, MultiModelAccessor.EMTypes.IFCHIERARCHIC, MultiModelAccessor.EMTypes.GAEBHIERARCHIC);
+            File input = args.length > 1 ? new File(args[1]) : viewer.chooseFolder("/home/dev/src/visMapping.git/");
+            LinkedList<String> ids = dataAcessor.readFromFolder(input, MultiModelAccessor.EMTypes.QTO, MultiModelAccessor.EMTypes.IFCHIERARCHIC, MultiModelAccessor.EMTypes.GAEBHIERARCHIC);
+            DataAccessor<Hierarchic<IdEObject>> hierarchicIfc = dataAcessor.getAccessor(ids.get(1));
+            DataAccessor<Hierarchic<EObject>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(2));
             Panel container = new Panel();
-            container.setLayoutManager(new GridLayout(1,true));
-            Configuration<?,?,Panel> hebConfig = new IfcGaebQto_HEB(dataAcessor, viewer.getDefaultFont());
+            GridLayout manager = new GridLayout(1, true);
+            container.setLayoutManager(manager);
+
+            IfcGaebQto_HEB hebConfig = new IfcGaebQto_HEB(dataAcessor, viewer.getDefaultFont());
             hebConfig.config();
-            SceneManager<?,Panel> hebScene = hebConfig.execute();
-            hebScene.animate();
-            container.add(hebScene.getScene());
-            // Configuration<?, ?, Panel> ifcIcycleConfig = new Ifc_Icycle();
+            Panel hebScene = hebConfig.execute().getScene();
+
+            Configuration<?,?,Panel> ifcIcycle = new Ifc_Icycle(hierarchicIfc, viewer.getDefaultFont(), hebConfig.getIfcScale());
+            ifcIcycle.config();
+
+            Configuration<?,?,Panel> gaebIcycle = new Gaeb_Icycle(hierarchicGaeb, viewer.getDefaultFont(), hebConfig.getGaebScale());
+            gaebIcycle.config();
+
+            container.add(ifcIcycle.execute().getScene());
+            container.add(hebScene);
+            container.add(gaebIcycle.execute().getScene());
+
+            container.validate();
             viewer.showContent(container);
         }
     }, IFC_ICYCLE {

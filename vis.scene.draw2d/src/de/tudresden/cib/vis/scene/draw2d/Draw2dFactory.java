@@ -70,7 +70,6 @@ public class Draw2dFactory extends VisFactory2D {
     
     class Draw2dLabel extends org.eclipse.draw2d.Label implements Label, Draw2dObject {
         private float rotation = 0;
-
         Draw2dLabel(){
             setFont(defaultFont);
         }
@@ -106,7 +105,7 @@ public class Draw2dFactory extends VisFactory2D {
         }
     }
 
-    class Draw2dPolyline extends org.eclipse.draw2d.Polyline implements Polyline, Draw2dObject {
+    class Draw2dPolyline extends PolylineShape implements Polyline, Draw2dObject {
 
         public void addLine(int x1, int y1, int x2, int y2) {
         }

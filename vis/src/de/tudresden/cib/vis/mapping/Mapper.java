@@ -56,6 +56,10 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
             stats.getValue().fold(dataAccessor);
             logger.info(String.format("preprocessed: %s = %s", stats.getKey(), stats.getValue().getResult()));
         }
+        for (Map.Entry<String, PreProcessing<Double>> global : globals.entrySet()){
+            global.getValue().evaluate();
+            logger.info(String.format("evaluated global: %s = %s", global.getKey(), global.getValue().getEvaluatedResult()));
+        }
     }
 
     private void mainPass() throws TargetCreationException {
@@ -94,7 +98,7 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     }
 
     public Double getGlobal(String name) {
-        return globals.get(name).getResult();
+        return globals.get(name).getEvaluatedResult();
     }
 
     class ClassMap extends HashMap<Class, Collection<PropertyMap>> {
@@ -117,9 +121,18 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
 
     public static abstract class PreProcessing<R> {
         protected Mapper mp;
+        private R result;
 
         protected void setMapper(Mapper mapper) {
             mp = mapper;
+        }
+
+        protected void evaluate(){
+            result = getResult();
+        }
+
+        protected R getEvaluatedResult(){
+            return result;
         }
 
         public abstract R getResult();

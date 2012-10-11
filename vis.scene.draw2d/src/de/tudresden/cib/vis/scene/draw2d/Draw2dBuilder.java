@@ -4,10 +4,8 @@ package de.tudresden.cib.vis.scene.draw2d;
 import de.tudresden.cib.vis.scene.ChangeMap;
 import de.tudresden.cib.vis.scene.UIContext;
 import de.tudresden.cib.vis.scene.VisBuilder;
-import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.MarginBorder;
-import org.eclipse.draw2d.Panel;
-import org.eclipse.draw2d.XYLayout;
+import org.eclipse.draw2d.*;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.widgets.Display;
 
@@ -68,8 +66,10 @@ public class Draw2dBuilder implements VisBuilder<Draw2dFactory.Draw2dObject, Pan
     }
 
     public void addPart(Draw2dFactory.Draw2dObject graphicalObject) {
-        chart.add(graphicalObject);
-        manager.setConstraint(graphicalObject, new Rectangle(graphicalObject.getBounds()));
+        Rectangle bounds = graphicalObject instanceof PolylineShape
+                ? new Rectangle(new Point(), ((PolylineShape) graphicalObject).getPoints().getBounds().getBottomRight())
+                : graphicalObject.getBounds();
+        chart.add(graphicalObject, bounds.getCopy());
     }
 
     public void finish() {

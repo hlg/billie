@@ -68,23 +68,28 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
         }
     }
 
-    public void readFromFolder(File folder, EMTypes keyModel, EMTypes... requiredModels) throws MalformedURLException {
+    public LinkedList<String> readFromFolder(File folder, EMTypes keyModel, EMTypes... requiredModels) throws MalformedURLException {
+        // TODO: specify model by ID or additional conditions?
         File mmFile = new File(folder, "MultiModel.xml");
         assert folder.exists() && mmFile.exists();
         Container container = ContainerModelParser.readContainerModel(mmFile).getContainer();
         EList<ElementaryModel> foundModels = container.getElementaryModelGroup().getElementaryModels();
+        LinkedList<String> modelIds = new LinkedList<String>();
         for(EMTypes required: requiredModels){
             IndexedDataAccessor accessor = required.createAccessor();
             String modelId = findAndReadModel(folder, foundModels, required, accessor);
             if(modelId==null) throw new RuntimeException(String.format("missing required model: type=%s, format=%s, version=%s", required.modelType, required.format, required.formatVersion));
             elementaryModels.put(modelId, accessor);
+            modelIds.add(modelId);
         }
         IndexedDataAccessor keyModelAccessor = keyModel.createAccessor();
         String keyModelId = findAndReadModel(folder, foundModels, keyModel, keyModelAccessor);
         if(keyModelId==null) throw new RuntimeException(String.format("missing key model: type=%s, format=%s, version=%s", keyModel.modelType, keyModel.format, keyModel.formatVersion));
         elementaryModels.put(keyModelId, keyModelAccessor);
+        modelIds.addFirst(keyModelId);
         LinkModel linkModel = readLinkModel(folder, container.getLinkModelDescriptorGroup().getLinkModelDescriptors().get(0));
         groupBy(keyModelId, linkModel);
+        return modelIds;
     }
 
     private String findAndReadModel(File folder, EList<ElementaryModel> foundModels, EMTypes required, IndexedDataAccessor accessor) {
@@ -227,6 +232,10 @@ public class MultiModelAccessor<K> extends DataAccessor<LinkedObject<K>> {
     public void addAcessor(String key, IndexedDataAccessor accessor) {
         accessor.index();
         elementaryModels.put(key, accessor);
+    }
+
+    public IndexedDataAccessor getAccessor(String modelId) {
+        return elementaryModels.get(modelId);
     }
 
     enum AccessModes {
