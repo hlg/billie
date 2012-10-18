@@ -34,6 +34,11 @@ public class Java3dFactory extends VisFactory3D {
     }
 
     @Override
+    protected PropertyMap.Provider<Bezier> setBezierProvider() {
+        return null;  //TODO: bezier on projection area
+    }
+
+    @Override
     protected PropertyMap.Provider<Polyeder> setPolyederProvider() {
         return new PropertyMap.Provider<Polyeder>() {
             public Polyeder create() {

@@ -28,6 +28,11 @@ public class TextFactory extends VisFactory2D {
         return null;  // TODO: default Polyline?
     }
 
+    @Override
+    protected PropertyMap.Provider<Bezier> setBezierProvider() {
+        return null;  // TODO: default Bezier?
+    }
+
     public class TextLabel implements Label, TextGraphObject { // TODO default?
         int x = 0;
         int y = 0;

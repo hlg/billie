@@ -16,11 +16,13 @@ public abstract class VisFactory2D {
         provMap.put(Rectangle.class, setRectangleProvider());
         provMap.put(Label.class, setLabelProvider());
         provMap.put(Polyline.class, setPolylineProvider());
+        provMap.put(Bezier.class, setBezierProvider());
     }
 
     protected abstract PropertyMap.Provider<Rectangle> setRectangleProvider();
     protected abstract PropertyMap.Provider<Label> setLabelProvider();
     protected abstract PropertyMap.Provider<Polyline> setPolylineProvider();
+    protected abstract PropertyMap.Provider<Bezier> setBezierProvider();
 
     public <G extends GraphObject> PropertyMap.Provider<G> getProvider(Class<G> elementClass) {
         return provMap.get(elementClass);
@@ -46,6 +48,10 @@ public abstract class VisFactory2D {
 
     public interface Polyline extends GraphObject {
         void addLine(int x1, int y1, int x2, int y2);
+        void addPoint(int x, int y);
+    }
+
+    public interface Bezier extends GraphObject {
         void addPoint(int x, int y);
     }
 

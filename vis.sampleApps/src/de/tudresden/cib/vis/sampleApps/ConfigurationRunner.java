@@ -162,7 +162,7 @@ public enum ConfigurationRunner {
             MultiModelAccessor<AnsatzType> dataAcessor = new MultiModelAccessor<AnsatzType>(new SimplePluginManager());
             Draw2DViewer viewer = new Draw2DViewer();
             File input = args.length > 1 ? new File(args[1]) : viewer.chooseFolder("/home/dev/src/visMapping.git/");
-            LinkedList<String> ids = dataAcessor.readFromFolder(input, MultiModelAccessor.EMTypes.QTO, MultiModelAccessor.EMTypes.IFCHIERARCHIC, MultiModelAccessor.EMTypes.GAEBHIERARCHIC);
+            LinkedList<String> ids = dataAcessor.readFromFolder(input, MultiModelAccessor.EMTypes.QTO, MultiModelAccessor.EMTypes.IFCHIERARCHIC, MultiModelAccessor.EMTypes.GAEBHIERARCHIC, MultiModelAccessor.EMTypes.ACTIVITY11);
             DataAccessor<Hierarchic<IdEObject>> hierarchicIfc = dataAcessor.getAccessor(ids.get(1));
             DataAccessor<Hierarchic<EObject>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(2));
             Panel container = new Panel();
@@ -189,11 +189,14 @@ public enum ConfigurationRunner {
     }, IFC_ICYCLE {
         @Override
         void run(String[] args) throws IOException, PluginException, TargetCreationException {
-            IndexedDataAccessor<Hierarchic<IdEObject>> data = new EMFIfcHierarchicAcessor(new SimplePluginManager());
+            EMFIfcHierarchicAcessor data = new EMFIfcHierarchicAcessor(new SimplePluginManager());
+            data.setSkipLastLevel(false);
             Draw2DViewer viewer = new Draw2DViewer();
             data.read(viewer.chooseFile("/home/dev/src", "ifc"));
             data.index();
-            Configuration<?,?,Panel> config = new Ifc_Icycle(data, viewer.getDefaultFont());
+            Ifc_Icycle config = new Ifc_Icycle(data, viewer.getDefaultFont());
+            config.setSkipLastLevel(false);
+            config.setWithLastLevelLabels(true);
             config.config();
             viewer.showContent(config.execute().getScene());
         }

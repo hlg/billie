@@ -16,7 +16,8 @@ import org.eclipse.swt.graphics.Font;
 public class Ifc_Icycle extends Configuration<Hierarchic<IdEObject>, Draw2dFactory.Draw2dObject, Panel> {
 
     private int scale;
-    private boolean withLabels = false;
+    private static boolean WITH_LABELS = false;
+    private static boolean SKIP_LAST_LEVEL = true;
 
     public Ifc_Icycle(DataAccessor<Hierarchic<IdEObject>> accessor, Font font){
         super(accessor, new Draw2dFactory(font), new Draw2dBuilder());
@@ -31,15 +32,20 @@ public class Ifc_Icycle extends Configuration<Hierarchic<IdEObject>, Draw2dFacto
     public void config() {
         mapper.addMapping(new PropertyMap<EMFIfcHierarchicAcessor.HierarchicIfc, VisFactory2D.Rectangle>() {
             @Override
+            protected boolean condition() {
+                return !SKIP_LAST_LEVEL || !data.getChildren().isEmpty();
+            }
+
+            @Override
             protected void configure() {
-                graphObject.setLeft((int) (data.getNodesBefore()*scale));
-                graphObject.setWidth((int) (data.getNodeSize()*scale));
+                graphObject.setLeft(data.getNodesBefore()*scale);
+                graphObject.setWidth(data.getNodeSize()*scale);
                 graphObject.setTop(data.getDepth()*25);
                 graphObject.setHeight(25);
                 if(data.getObject() instanceof IfcSpatialStructureElement) graphObject.setColor(200,200,100);
             }
         });
-        if (withLabels) mapper.addMapping(new PropertyMap<EMFIfcHierarchicAcessor.HierarchicIfc, VisFactory2D.Label>() {
+        if (WITH_LABELS) mapper.addMapping(new PropertyMap<EMFIfcHierarchicAcessor.HierarchicIfc, VisFactory2D.Label>() {
             @Override
             protected boolean condition() {
                 return data.getChildren().isEmpty();
@@ -62,12 +68,20 @@ public class Ifc_Icycle extends Configuration<Hierarchic<IdEObject>, Draw2dFacto
             @Override
             protected void configure() {
                 IfcSpatialStructureElement object = (IfcSpatialStructureElement ) data.getObject();
-                graphObject.setLeft((int) (data.getNodesBefore() * scale + 5));
+                graphObject.setLeft(data.getNodesBefore() * scale + 5);
                 graphObject.setTop(data.getDepth() * 25 +5);
                 String title = object.getName();
                 int doubleNodeSize = data.getNodeSize() * 2;
                 graphObject.setText(title==null ? "xxx" : title.length() <= doubleNodeSize ? title : "... " + title.substring(title.length() - doubleNodeSize, title.length() - 1));
             }
         });
+    }
+
+    public void setSkipLastLevel(boolean skipLastLevel) {
+        SKIP_LAST_LEVEL = skipLastLevel;
+    }
+
+    public void setWithLastLevelLabels(boolean withLabels) {
+        WITH_LABELS = withLabels;
     }
 }

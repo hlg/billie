@@ -4,6 +4,7 @@ import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.eclipse.draw2d.*;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 
@@ -40,6 +41,16 @@ public class Draw2dFactory extends VisFactory2D {
         return new PropertyMap.Provider<Polyline>(){
             public Polyline create() {
                 return new Draw2dPolyline();
+            }
+        };
+    }
+
+    @Override
+    protected PropertyMap.Provider<Bezier> setBezierProvider() {
+        return new PropertyMap.Provider<Bezier>() {
+            @Override
+            public Bezier create() {
+                return new Draw2dBezier();
             }
         };
     }
@@ -116,6 +127,37 @@ public class Draw2dFactory extends VisFactory2D {
 
         public void setColor(int r, int g, int b) {
             setForegroundColor(new Color(null, r, g, b));
+        }
+    }
+
+    class Draw2dBezier extends org.eclipse.draw2d.Polyline implements Bezier, Draw2dObject{
+
+        @Override
+        public void addPoint(int x, int y) {
+            addPoint(new Point(x, y));
+        }
+
+        @Override
+        public void setColor(int r, int g, int b) {
+            setForegroundColor(new Color(null, r, g, b));
+        }
+
+        @Override
+        protected void outlineShape(Graphics g) {
+            PointList pointList = getPoints();
+
+            Point prevCtrl = pointList.getPoint(0);
+            Point currCtrl = pointList.getPoint(1);
+            Point pt1 = new Point((prevCtrl.x+currCtrl.x)/2, (prevCtrl.y+currCtrl.y)/2);
+            g.drawLine(prevCtrl, pt1);
+            if (pointList.size()>2) for (int i = 2; i < pointList.size(); i++) {
+                Point nextCtrl = pointList.getPoint(i);
+                Point pt2 = new Point((currCtrl.x+nextCtrl.x)/2, (currCtrl.y+nextCtrl.y)/2);
+                drawBezier(g, pt1, currCtrl, pt2, currCtrl, 0.1);
+                currCtrl = nextCtrl;
+                pt1 = pt2;
+            }
+            g.drawLine(pt1, currCtrl);
         }
     }
 

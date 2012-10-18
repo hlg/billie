@@ -1,9 +1,9 @@
 package de.tudresden.cib.vis.configurations;
 
+import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
 import cib.mf.qto.model.AnsatzType;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.Hierarchic;
-import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
 import de.tudresden.cib.vis.data.multimodel.HierarchicGaebAccessor;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.mapping.Mapper;
@@ -22,7 +22,9 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject<AnsatzType>, Draw
 
     private int ifcScale;
     private int gaebScale;
-    private static int SMALLSIZE = 4;
+    private static int SMALLSIZE = 20;
+    private static double BUNDLING = 0.4;
+    private static boolean SKIP_LAST_LEVEL = true;
 
     public IfcGaebQto_HEB(DataAccessor<LinkedObject<AnsatzType>> accessor, Font font){
         super(accessor, new Draw2dFactory(font), new Draw2dBuilder());
@@ -34,7 +36,8 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject<AnsatzType>, Draw
             @Override
             public Integer function(Integer number, LinkedObject<AnsatzType> ansatzTypeLinkedObject) {
                 LinkedObject.ResolvedLink link = ansatzTypeLinkedObject.getResolvedLinks().iterator().next();
-                EMFIfcHierarchicAcessor.HierarchicIfc ifc =link.getLinkedHierarchicIfc().values().iterator().next();
+                Hierarchic ifc =link.getLinkedHierarchicIfc().values().iterator().next();
+                if (SKIP_LAST_LEVEL) ifc = ifc.getParent();
                 int ifcPos = ifc.getNodesBefore() + ifc.getNodeSize() / 2;
                 return Math.max(number, ifcPos);
             }
@@ -58,58 +61,52 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject<AnsatzType>, Draw
                 return ratio;
             }
         });
-        mapper.addMapping(new PropertyMap<LinkedObject<AnsatzType>, VisFactory2D.Polyline>() {
+        mapper.addMapping(new PropertyMap<LinkedObject<AnsatzType>, VisFactory2D.Bezier>() {
             @Override
             protected void configure() {
                 LinkedObject.ResolvedLink resolvedLinks = data.getResolvedLinks().iterator().next(); // one and only
-                EMFIfcHierarchicAcessor.HierarchicIfc hIfc = resolvedLinks.getLinkedHierarchicIfc().values().iterator().next();
-                HierarchicGaebAccessor.HierarchicTgItemBoQCtgy hGaeb = resolvedLinks.getLinkedHierarchicGaeb().values().iterator().next();
-                assert hIfc.getNodeSize() == 1;
-                assert hGaeb.getNodeSize() == 1;
-                graphObject.addPoint((int) ((.5+hIfc.getNodesBefore())*ifcScale), 0);
-                graphObject.addPoint((int) ((.5+hGaeb.getNodesBefore())*gaebScale), 600);
-
-
-                List<Hierarchic> ifcPath = new ArrayList<Hierarchic>();
-                Hierarchic current = data.getResolvedLinks().iterator().next().getLinkedHierarchicIfc().values().iterator().next();
-                ifcPath.add(current);
-                while(current.getParent()!=null){
-                    current = current.getParent();
-                    ifcPath.add(current); // TODO: dont add it, if it has no parent (skip the root)
+                Hierarchic currentIfc = resolvedLinks.getLinkedHierarchicIfc().values().iterator().next();
+                Hierarchic currentGaeb = resolvedLinks.getLinkedHierarchicGaeb().values().iterator().next();
+                assert currentGaeb.getNodeSize() == 1;
+                assert currentIfc.getNodeSize() == 1;
+                List<Point> layouted = new ArrayList<Point>();
+                if (!SKIP_LAST_LEVEL) layouted.add(pointFor(currentIfc, ifcScale, -100, 450));
+                while(currentIfc.getParent()!=null){
+                    currentIfc = currentIfc.getParent();
+                    if(currentIfc.getParent()!=null) layouted.add(pointFor(currentIfc, ifcScale, -100, 450)); // skip root
                 }
-                List<Point> layoutedIfc = new ArrayList<Point>();
-                for(Hierarchic pathEntry: ifcPath){
-                    layoutedIfc.add(new Point(pathEntry.getNodesBefore() * ifcScale + pathEntry.getNodeSize() * ifcScale / 2, pathEntry.getDepth() * ifcScale * 20));
+                List<Hierarchic> gaebPath = new ArrayList<Hierarchic>();
+                gaebPath.add(currentGaeb);
+                while(currentGaeb.getParent()!=null){
+                    currentGaeb = currentGaeb.getParent();
+                    if(currentGaeb.getParent()!=null) gaebPath.add(currentGaeb); //skip root
                 }
-                Point first = layoutedIfc.get(0);
-                Point last = layoutedIfc.get(ifcPath.size()-1);
-                int n = layoutedIfc.size();
-                double bundlingStrength = 0.85;
-                double ax = (1-bundlingStrength) * (last.x - first.x) / (n-1);
-                double ay = (1-bundlingStrength) * (last.y - first.y) / (n-1);
-                double cx = (1-bundlingStrength) * first.x;
-                double cy = (1-bundlingStrength) * first.y;
-                /*
-                def first = layoutedLink[0]
-                def last = layoutedLink[-1]
-                def a = [x: (1 - bundlingStrength) * (last.x - first.x) / (n - 1), y: (1 - bundlingStrength) * (last.y - first.y) / (n - 1)]
-                def c = [x: (1 - bundlingStrength) * first.x, y: (1 - bundlingStrength) * first.y]
-                layoutedLink.eachWithIndex {p, i ->
-                        p.x = (bundlingStrength * p.x + c.x + i * a.x) as float
-                    p.y = (bundlingStrength * p.y + c.y + i * a.y) as float
-                }
-                 */
-                // Pi' = bundlingStrength*Pi+(1-bundlingStrength)(P0+i/(n-1)*(Plast-P0) = Pi*bundlingStrength + c + i*a
-                for (Point p : layoutedIfc) {
-                    // graphObject.addPoint((int)(bundlingStrength * p.x + cx + i*ax), (int) (bundlingStrength*p.y() + cy + i*ay));
-                    graphObject.addPoint(p.x, p.y);
+                for(int i = gaebPath.size()-1; i>= 0; i--){
+                    layouted.add(pointFor(gaebPath.get(i), gaebScale, 100, 450));
                 }
 
-
-
+                Point first = layouted.get(0);
+                int n = layouted.size();
+                Point last = layouted.get(n - 1);
+                double ax = (1- BUNDLING) * (last.x - first.x) / (n-1);
+                double ay = (1- BUNDLING) * (last.y - first.y) / (n-1);
+                double cx = (1- BUNDLING) * first.x;
+                double cy = (1- BUNDLING) * first.y;
+                for (int i = 0; i<layouted.size(); i++) {
+                    Point p = layouted.get(i);
+                    graphObject.addPoint((int)(BUNDLING * p.x + cx + i*ax), (int) (BUNDLING *p.y() + cy + i*ay));
+                }
+                TgBoQCtgy parent = ((TgBoQCtgy)data.getResolvedLinks().iterator().next().getLinkedHierarchicGaeb().values().iterator().next().getParent().getObject());
+                if (parent.getID().equals("ILAGFNBA")) graphObject.setColor(220,100,0);
+                // data.getResolvedLinks().iterator().next().getScheduleObjects().values().iterator().next().getActivityData().getEnd();
             }
         });
     }
+
+    private Point pointFor(Hierarchic current, int scale, int distance, int offset) {
+        return new Point(current.getNodesBefore() * scale + current.getNodeSize() * scale / 2, current.getDepth() * distance + offset);
+    }
+
     public int getIfcScale() {
         return ifcScale;
     }

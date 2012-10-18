@@ -180,6 +180,11 @@ public class MapperTest extends MappingTestCase {
             protected PropertyMap.Provider<Polyline> setPolylineProvider() {
                 return null;
             }
+
+        @Override
+        protected PropertyMap.Provider<Bezier> setBezierProvider() {
+            return null;
+        }
     }
 
     public static class FakeVisBuilder implements VisBuilder<FakeRectangle, Object> {

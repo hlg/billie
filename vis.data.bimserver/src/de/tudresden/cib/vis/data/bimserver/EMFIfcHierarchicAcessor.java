@@ -17,6 +17,7 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
 
     private EMFIfcPlainParser parser;
     private HashMap<String, Hierarchic<IdEObject>> wrappedData;
+    private static boolean SKIP_LAST_LEVEL = true;
 
     public EMFIfcHierarchicAcessor(PluginManager pluginManager) {
         parser = new EMFIfcPlainParser(pluginManager);
@@ -72,7 +73,7 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
             for(IfcProduct contained: object.getContainsElements().iterator().next().getRelatedElements()){
                 Hierarchic<IdEObject> child = stepIn((IfcElement) contained, nodesBefore + size, depth + 1, node);
                 node.addChild(child);
-                size++;
+                if (! SKIP_LAST_LEVEL) size++;
             }
         }
         if(size==0) size=1;
@@ -94,6 +95,10 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
 
     public Iterator<Hierarchic<IdEObject>> iterator() {
         return wrappedData.values().iterator();
+    }
+
+    public void setSkipLastLevel(boolean skipLastLevel) {
+        SKIP_LAST_LEVEL = skipLastLevel;
     }
 
     public static class HierarchicIfc extends HierarchicBase<IdEObject> {
