@@ -69,10 +69,10 @@ public class Draw2dBuilder implements VisBuilder<Draw2dFactory.Draw2dObject, Pan
     }
 
     public void addPart(Draw2dFactory.Draw2dObject graphicalObject) {
-        Rectangle bounds = graphicalObject instanceof PolylineShape
-                ? new Rectangle(new Point(), ((PolylineShape) graphicalObject).getPoints().getBounds().getBottomRight())
-                : graphicalObject.getBounds();
-        chart.add(graphicalObject, bounds.getCopy());
+        Rectangle bounds = graphicalObject.getObject() instanceof PolylineShape
+                ? new Rectangle(new Point(), ((PolylineShape) graphicalObject.getObject()).getPoints().getBounds().getBottomRight())
+                : graphicalObject.getObject().getBounds();
+        chart.add(graphicalObject.getObject(), bounds.getCopy());
     }
 
     public void finish() {

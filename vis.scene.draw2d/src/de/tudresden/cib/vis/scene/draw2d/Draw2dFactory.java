@@ -55,56 +55,55 @@ public class Draw2dFactory extends VisFactory2D {
         };
     }
 
-    public interface Draw2dObject extends GraphObject, IFigure {}  // marker interface
+    public abstract class Draw2dObject<T extends Figure> implements GraphObject {
+        T figure;
 
-    class Draw2dRectangle extends RectangleFigure implements Rectangle, Draw2dObject {
-        
+        public Figure getObject() {
+            return figure;
+        }
+    }
+
+    class Draw2dRectangle extends Draw2dObject<RectangleFigure> implements Rectangle {
+
         public Draw2dRectangle(){
-           setBackgroundColor(defaultColor);
+            figure = new RectangleFigure();
+            figure.setBackgroundColor(defaultColor);
         }
         public void setLeft(int X){
-            setLocation(getLocation().setX(X));
+            figure.setLocation(figure.getLocation().setX(X));
         }
         public void setTop(int Y){
-            setLocation(getLocation().setY(Y));
+            figure.setLocation(figure.getLocation().setY(Y));
         }
         public void setHeight(int height){
-            setSize(getSize().setHeight(height));
+            figure.setSize(figure.getSize().setHeight(height));
         }
         public void setWidth(int width) {
-            setSize(getSize().setWidth(width));
+            figure.setSize(figure.getSize().setWidth(width));
         }
         public void setColor(int r, int g, int b){
-            setBackgroundColor(new Color(null, r, g, b));
+            figure.setBackgroundColor(new Color(null, r, g, b));
         }
     }
     
-    class Draw2dLabel extends org.eclipse.draw2d.Label implements Label, Draw2dObject {
+    class Draw2dLabel extends Draw2dObject<Draw2dLabel.RotatableLabel> implements Label {
         private float rotation = 0;
         Draw2dLabel(){
-            setFont(defaultFont);
-        }
-
-        @Override
-        protected void paintFigure(Graphics graphics) {
-            org.eclipse.draw2d.geometry.Rectangle bounds = getBounds();
-            graphics.translate(bounds.x, bounds.y);
-            graphics.rotate(rotation);
-            graphics.setClip(new org.eclipse.draw2d.geometry.Rectangle(0,0,bounds.width, bounds.height));
-            graphics.drawText(getSubStringText(), getTextLocation());
-            graphics.translate(-bounds.x, -bounds.y);
+            figure = new RotatableLabel();
+            figure.setFont(defaultFont);
+            figure.setLabelAlignment(PositionConstants.LEFT);
+            figure.setTextAlignment(PositionConstants.LEFT);
         }
 
         public void setLeft(int X) {
-            setLocation(getLocation().setX(X));
+            figure.setLocation(figure.getLocation().setX(X));
         }
         public void setTop(int Y) {
-            setLocation(getLocation().setY(Y));
+            figure.setLocation(figure.getLocation().setY(Y));
         }
         public void setText(String text){
-            super.setText(text);
-            setLabelAlignment(PositionConstants.LEFT);
-            setSize(getTextSize());
+            figure.setText(text);
+            figure.setSize(figure.getTextBounds().getSize());
         }
 
         public void setRotation(int i) {
@@ -112,52 +111,73 @@ public class Draw2dFactory extends VisFactory2D {
         }
 
         public void setColor(int r, int g, int b) {
-            setForegroundColor(new Color(null, r, g, b));
+            figure.setForegroundColor(new Color(null, r, g, b));
+        }
+
+        public class RotatableLabel extends org.eclipse.draw2d.Label {
+            protected void paintFigure(Graphics graphics) {
+                org.eclipse.draw2d.geometry.Rectangle bounds = getTextBounds();
+                graphics.translate(bounds.x, bounds.y);
+                graphics.rotate(rotation);
+                graphics.setClip(new org.eclipse.draw2d.geometry.Rectangle(0,0,bounds.width, bounds.height));
+                graphics.drawText(getSubStringText(), getTextLocation());
+                graphics.translate(-bounds.x, -bounds.y);
+            }
+
         }
     }
 
-    class Draw2dPolyline extends PolylineShape implements Polyline, Draw2dObject {
+    class Draw2dPolyline extends Draw2dObject<PolylineShape> implements Polyline {
+
+        public Draw2dPolyline(){
+            figure = new PolylineShape();
+        }
 
         public void addLine(int x1, int y1, int x2, int y2) {
         }
 
         public void addPoint(int x, int y) {
-            addPoint(new Point(x, y));
+            figure.addPoint(new Point(x, y));
         }
 
         public void setColor(int r, int g, int b) {
-            setForegroundColor(new Color(null, r, g, b));
+            figure.setForegroundColor(new Color(null, r, g, b));
         }
     }
 
-    class Draw2dBezier extends org.eclipse.draw2d.Polyline implements Bezier, Draw2dObject{
+    class Draw2dBezier extends Draw2dObject<Draw2dBezier.BezierPolyline> implements Bezier {
 
+        public Draw2dBezier(){
+            figure = new BezierPolyline();
+        }
         @Override
         public void addPoint(int x, int y) {
-            addPoint(new Point(x, y));
+            figure.addPoint(new Point(x, y));
         }
 
         @Override
         public void setColor(int r, int g, int b) {
-            setForegroundColor(new Color(null, r, g, b));
+            figure.setForegroundColor(new Color(null, r, g, b));
         }
 
-        @Override
-        protected void outlineShape(Graphics g) {
-            PointList pointList = getPoints();
+        public class BezierPolyline extends org.eclipse.draw2d.Polyline {
+            protected void outlineShape(Graphics g) {
+                PointList pointList = getPoints();
 
-            Point prevCtrl = pointList.getPoint(0);
-            Point currCtrl = pointList.getPoint(1);
-            Point pt1 = new Point((prevCtrl.x+currCtrl.x)/2, (prevCtrl.y+currCtrl.y)/2);
-            g.drawLine(prevCtrl, pt1);
-            if (pointList.size()>2) for (int i = 2; i < pointList.size(); i++) {
-                Point nextCtrl = pointList.getPoint(i);
-                Point pt2 = new Point((currCtrl.x+nextCtrl.x)/2, (currCtrl.y+nextCtrl.y)/2);
-                drawBezier(g, pt1, currCtrl, pt2, currCtrl, 0.1);
-                currCtrl = nextCtrl;
-                pt1 = pt2;
+                Point prevCtrl = pointList.getPoint(0);
+                Point currCtrl = pointList.getPoint(1);
+                Point pt1 = new Point((prevCtrl.x+currCtrl.x)/2, (prevCtrl.y+currCtrl.y)/2);
+                g.drawLine(prevCtrl, pt1);
+                if (pointList.size()>2) for (int i = 2; i < pointList.size(); i++) {
+                    Point nextCtrl = pointList.getPoint(i);
+                    Point pt2 = new Point((currCtrl.x+nextCtrl.x)/2, (currCtrl.y+nextCtrl.y)/2);
+                    drawBezier(g, pt1, currCtrl, pt2, currCtrl, 0.1);
+                    currCtrl = nextCtrl;
+                    pt1 = pt2;
+                }
+                g.drawLine(pt1, currCtrl);
             }
-            g.drawLine(pt1, currCtrl);
+
         }
     }
 
