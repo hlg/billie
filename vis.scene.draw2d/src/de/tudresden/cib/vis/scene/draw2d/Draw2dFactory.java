@@ -55,12 +55,22 @@ public class Draw2dFactory extends VisFactory2D {
         };
     }
 
-    public abstract class Draw2dObject<T extends Figure> implements GraphObject {
-        T figure;
+    public abstract class Draw2dObject<T extends Figure> implements GraphObject2D {
+        protected T figure;
+        private boolean background = false;
 
         public Figure getObject() {
             return figure;
         }
+
+        public void setBackground() {
+            background = true;
+        }
+
+        public boolean getBackground(){
+            return background;
+        }
+
     }
 
     class Draw2dRectangle extends Draw2dObject<RectangleFigure> implements Rectangle {

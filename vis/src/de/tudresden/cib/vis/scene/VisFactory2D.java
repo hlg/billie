@@ -32,6 +32,12 @@ public abstract class VisFactory2D {
         // TODO: separation of builder and actual object (problem of incompleteness during build)
         void setColor(int r, int g, int b);
     }
+
+    public interface GraphObject2D extends GraphObject {
+        void setBackground();
+        boolean getBackground();
+    }
+
     public interface Rectangle extends GraphObject {
         void setLeft(int X);
         void setTop(int Y);
@@ -51,7 +57,7 @@ public abstract class VisFactory2D {
         void addPoint(int x, int y);
     }
 
-    public interface Bezier extends GraphObject {
+    public interface Bezier extends GraphObject2D {
         void addPoint(int x, int y);
     }
 
