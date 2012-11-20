@@ -21,8 +21,8 @@ public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K
 
     private Collection<LinkedObject<K>> groupedElements;
     private ElementaryModelType keyModelType = ElementaryModelType.OBJECT;
-    private EMTypes keyModel = null;
-    private EMTypes[] requiredModels = null;
+    private EMTypeCondition keyModel = null;
+    private EMTypeCondition[] requiredModels = null;
 
     public MultiModelAccessor(PluginManager pm) {
         EMTypes.pm = pm;
@@ -64,18 +64,18 @@ public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K
         }
     }
 
-    public LinkedList<String> readFromFolder(File folder, EMTypes keyModel, EMTypes... requiredModels) throws MalformedURLException {
+    public LinkedList<String> readFromFolder(File folder, EMTypeCondition keyModel, EMTypeCondition... requiredModels) throws MalformedURLException {
        return readFromFolder(folder, null, keyModel, requiredModels);
     }
 
-    public LinkedList<String> readFromFolder(File folder, String linkModelId, EMTypes keyModel, EMTypes... requiredModels) throws MalformedURLException {
+    public LinkedList<String> readFromFolder(File folder, String linkModelId, EMCondition keyModel, EMCondition... requiredModels) throws MalformedURLException {
         // TODO: specify model by ID or additional conditions?
         Container container = readContainer(folder);
         EList<ElementaryModel> foundModels = container.getElementaryModelGroup().getElementaryModels();
         LinkedList<String> modelIds = new LinkedList<String>();
         String keyModelId = findModelOfType(folder, keyModel, foundModels);
         modelIds.add(keyModelId);
-        for(EMTypes required: requiredModels){
+        for(EMCondition required: requiredModels){
             modelIds.add(findModelOfType(folder, required, foundModels));
         }
         LinkModel linkModel = readLinkModel(folder, container, linkModelId);
@@ -155,7 +155,7 @@ public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K
         elementaryModels.put(key, accessor);
     }
 
-    public void setModels(EMTypes keyModel, EMTypes... requiredModels) {
+    public void setModels(EMTypeCondition keyModel, EMTypeCondition... requiredModels) {
         this.keyModel = keyModel;
         this.requiredModels = requiredModels;
     }

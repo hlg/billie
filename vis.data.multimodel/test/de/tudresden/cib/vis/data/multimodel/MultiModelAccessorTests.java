@@ -84,7 +84,7 @@ public class MultiModelAccessorTests {
     public void testHierarchic() throws MalformedURLException {
         MultiModelAccessor<AnsatzType> multiModelAccessor = new MultiModelAccessor<AnsatzType>(new SimplePluginManager());
         File input = new File(this.getClass().getResource("/resources/carport").getFile());
-        multiModelAccessor.readFromFolder(input, EMTypes.QTO, EMTypes.IFCHIERARCHIC, EMTypes.GAEBHIERARCHIC);
+        multiModelAccessor.readFromFolder(input, new EMTypeCondition(EMTypes.QTO), new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC));
         for(LinkedObject linkedObject : multiModelAccessor){
             Collection<LinkedObject.ResolvedLink> links = linkedObject.getResolvedLinks();
             assertFalse(links.isEmpty());

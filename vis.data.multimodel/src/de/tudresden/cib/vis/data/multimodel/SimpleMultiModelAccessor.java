@@ -45,14 +45,14 @@ public class SimpleMultiModelAccessor extends BaseMultiModelAccessor<LinkedObjec
         }
     }
 
-    public LinkedList<String> readFromFolder(File folder, EMTypes... requiredModels) throws MalformedURLException {
+    public LinkedList<String> readFromFolder(File folder, EMTypeCondition... requiredModels) throws MalformedURLException {
         return readFromFolder(folder, null, requiredModels);
     }
 
-    public LinkedList<String> readFromFolder(File folder, String linkModelId, EMTypes... requiredModels) throws MalformedURLException {
+    public LinkedList<String> readFromFolder(File folder, String linkModelId, EMTypeCondition... requiredModels) throws MalformedURLException {
         Container container = readContainer(folder);
         LinkedList<String> modelIds = new LinkedList<String>();
-        for(EMTypes type: requiredModels){
+        for(EMTypeCondition type: requiredModels){
             modelIds.add(findModelOfType(folder, type, container.getElementaryModelGroup().getElementaryModels()));
         }
         LinkModel linkModel = readLinkModel(folder, container, linkModelId);

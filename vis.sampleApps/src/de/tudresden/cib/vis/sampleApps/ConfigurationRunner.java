@@ -1,6 +1,8 @@
 package de.tudresden.cib.vis.sampleApps;
 
 import cib.mf.schedule.model.activity11.Activity;
+import de.mefisto.model.container.Content;
+import de.mefisto.model.container.I;
 import de.tudresden.cib.vis.configurations.*;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.Hierarchic;
@@ -62,7 +64,15 @@ public enum ConfigurationRunner {
         @Override
         void run(String[] args) throws IOException, PluginException {
             MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
-            mmAccessor.setModels(EMTypes.IFC, EMTypes.GAEB);
+            mmAccessor.setModels(new EMTypeCondition(EMTypes.IFC), new EMTypeCondition(EMTypes.GAEB){
+                @Override
+                public boolean isValidFor(Content alternative) {
+                    for (I option : alternative.getContentOptions().getI()){
+                        if(option.getK().equals("extension") && option.getV().equals("DA84")) return true;
+                    }
+                    return false;
+                }
+            });
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(mmAccessor);
             new IfcGaeb_Colored3D(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
@@ -164,7 +174,7 @@ public enum ConfigurationRunner {
             SimpleMultiModelAccessor dataAcessor = new SimpleMultiModelAccessor(new SimplePluginManager());
             Draw2DViewer viewer = new Draw2DViewer();
             File input = args.length > 1 ? new File(args[1]) : viewer.chooseFolder("/home/dev/src/visMapping.git/");
-            LinkedList<String> ids = dataAcessor.readFromFolder(input, "L2", EMTypes.QTO, EMTypes.IFCHIERARCHIC, EMTypes.GAEBHIERARCHIC);
+            LinkedList<String> ids = dataAcessor.readFromFolder(input, "L2", new EMTypeCondition(EMTypes.QTO), new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC));
             DataAccessor<Hierarchic<IdEObject>> hierarchicIfc = dataAcessor.getAccessor(ids.get(1));
             DataAccessor<Hierarchic<EObject>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(2));
             Panel container = new Panel();

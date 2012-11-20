@@ -25,11 +25,9 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
         return ContainerModelParser.readContainerModel(mmFile).getContainer();
     }
 
-    protected String findModelOfType(File folder, EMTypes modelType, EList<ElementaryModel> foundModels) {
-        IndexedDataAccessor modelAccessor = modelType.createAccessor();
-        String modelId = findAndReadModel(folder, foundModels, modelType, modelAccessor);
-        if(modelId==null) throw new RuntimeException(String.format("missing model: type=%s, format=%s, version=%s", modelType.modelType, modelType.format, modelType.formatVersion));
-        elementaryModels.put(modelId, modelAccessor);
+    protected String findModelOfType(File folder, EMCondition modelType, EList<ElementaryModel> foundModels) {
+        String modelId = findAndReadModel(folder, foundModels, modelType);
+        if(modelId==null) throw new RuntimeException(modelType.getErrorMessage());
         return modelId;
     }
 
@@ -44,12 +42,16 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
         return null;
     }
 
-    private String findAndReadModel(File folder, EList<ElementaryModel> foundModels, EMTypes required, IndexedDataAccessor accessor) {
+    private String findAndReadModel(File folder, EList<ElementaryModel> foundModels, EMCondition required){
         for (ElementaryModel model: foundModels){
-            if(model.getType().getName().equals(required.modelType)) {
+            if(required.isValidFor(model)){
                 for(Content alternative: model.getContent()){
-                    if(alternative.getFormat().equals(required.format) && alternative.getFormatVersion().equals(required.formatVersion)){
+                    if(required.isValidFor(alternative)){
+                        IndexedDataAccessor accessor = (required instanceof EMTypeCondition) ?
+                                ((EMTypeCondition)required).required.createAccessor() :
+                                EMTypes.find(model.getType().getName(), alternative.getFormat(), alternative.getFormatVersion()).createAccessor();
                         readEM(folder, alternative, accessor);
+                        elementaryModels.put(model.getId(), accessor);
                         return model.getId();
                     }
                 }
@@ -121,4 +123,11 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
     public IndexedDataAccessor getAccessor(String modelId) {
         return elementaryModels.get(modelId);
     }
+
+    interface EMCondition {
+        boolean isValidFor(ElementaryModel model);
+        boolean isValidFor(Content alternative);
+        String getErrorMessage();
+    }
+
 }

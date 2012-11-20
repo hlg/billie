@@ -27,14 +27,14 @@ public class SimpleMultiModelAccessorTests {
 
     @Test
     public void testPartialAccess() throws MalformedURLException {
-        List<String> modelIds = mma.readFromFolder(testResource, EMTypes.GAEB, EMTypes.QTO);
+        List<String> modelIds = mma.readFromFolder(testResource, new EMTypeCondition(EMTypes.GAEB), new EMTypeCondition(EMTypes.QTO));
         Assert.assertEquals(2, modelIds.size());
         checkPartialRead();
     }
 
     @Test
     public void testSpecificLinkModel() throws MalformedURLException {
-        List<String> modelIds = mma.readFromFolder(testResource, "L2", EMTypes.GAEB, EMTypes.QTO);
+        List<String> modelIds = mma.readFromFolder(testResource, "L2", new EMTypeCondition(EMTypes.GAEB), new EMTypeCondition(EMTypes.QTO));
         Assert.assertEquals(2, modelIds.size());
         checkOtherLinkModel();
     }
