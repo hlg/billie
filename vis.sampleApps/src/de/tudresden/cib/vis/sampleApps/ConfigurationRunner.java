@@ -1,6 +1,5 @@
 package de.tudresden.cib.vis.sampleApps;
 
-import cib.mf.qto.model.AnsatzType;
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.configurations.*;
 import de.tudresden.cib.vis.data.DataAccessor;
@@ -47,6 +46,7 @@ public enum ConfigurationRunner {
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager()));
             new Ifc_3D_Space(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
+            viewer.setPickingEnabled(false);
             viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle","ifc").getPath());
         }
     }, IFC_4D {
@@ -61,10 +61,12 @@ public enum ConfigurationRunner {
     }, IFCGAEB_3D {
         @Override
         void run(String[] args) throws IOException, PluginException {
-            MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager()));
+            MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
+            mmAccessor.setModels(EMTypes.IFC, EMTypes.GAEB);
+            MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(mmAccessor);
             new IfcGaeb_Colored3D(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
-            viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());
+            viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());
         }
     }, GAEB_BARCHART {
         @Override
@@ -159,10 +161,10 @@ public enum ConfigurationRunner {
     }, LINKS_HEB {
         @Override
         void run(String[] args) throws IOException, PluginException, TargetCreationException {
-            MultiModelAccessor<AnsatzType> dataAcessor = new MultiModelAccessor<AnsatzType>(new SimplePluginManager());
+            SimpleMultiModelAccessor dataAcessor = new SimpleMultiModelAccessor(new SimplePluginManager());
             Draw2DViewer viewer = new Draw2DViewer();
             File input = args.length > 1 ? new File(args[1]) : viewer.chooseFolder("/home/dev/src/visMapping.git/");
-            LinkedList<String> ids = dataAcessor.readFromFolder(input, MultiModelAccessor.EMTypes.QTO, MultiModelAccessor.EMTypes.IFCHIERARCHIC, MultiModelAccessor.EMTypes.GAEBHIERARCHIC, MultiModelAccessor.EMTypes.ACTIVITY11);
+            LinkedList<String> ids = dataAcessor.readFromFolder(input, "L2", EMTypes.QTO, EMTypes.IFCHIERARCHIC, EMTypes.GAEBHIERARCHIC);
             DataAccessor<Hierarchic<IdEObject>> hierarchicIfc = dataAcessor.getAccessor(ids.get(1));
             DataAccessor<Hierarchic<EObject>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(2));
             Panel container = new Panel();

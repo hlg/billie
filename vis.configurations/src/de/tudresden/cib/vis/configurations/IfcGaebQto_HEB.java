@@ -1,7 +1,6 @@
 package de.tudresden.cib.vis.configurations;
 
 import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
-import cib.mf.qto.model.AnsatzType;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.multimodel.HierarchicGaebAccessor;
@@ -18,34 +17,32 @@ import org.eclipse.swt.graphics.Font;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IfcGaebQto_HEB extends Configuration<LinkedObject<AnsatzType>, Draw2dFactory.Draw2dObject, Panel> {
+public class IfcGaebQto_HEB extends Configuration<LinkedObject.ResolvedLink, Draw2dFactory.Draw2dObject, Panel> {
 
     private int ifcScale;
     private int gaebScale;
     private static int SMALLSIZE = 20;
     private static double BUNDLING = 0.4;
-    private static boolean SKIP_LAST_LEVEL = true;
+    private static boolean SKIP_LAST_LEVEL = false;
 
-    public IfcGaebQto_HEB(DataAccessor<LinkedObject<AnsatzType>> accessor, Font font){
+    public IfcGaebQto_HEB(DataAccessor<LinkedObject.ResolvedLink> accessor, Font font){
         super(accessor, new Draw2dFactory(font), new Draw2dBuilder());
     }
 
     @Override
     public void config() {
-        mapper.addStatistics("maxIfcPos", new DataAccessor.Folding<LinkedObject<AnsatzType>, Integer>(0) {
+        mapper.addStatistics("maxIfcPos", new DataAccessor.Folding<LinkedObject.ResolvedLink, Integer>(0) {
             @Override
-            public Integer function(Integer number, LinkedObject<AnsatzType> ansatzTypeLinkedObject) {
-                LinkedObject.ResolvedLink link = ansatzTypeLinkedObject.getResolvedLinks().iterator().next();
+            public Integer function(Integer number, LinkedObject.ResolvedLink link) {
                 Hierarchic ifc =link.getLinkedHierarchicIfc().values().iterator().next();
                 if (SKIP_LAST_LEVEL) ifc = ifc.getParent();
                 int ifcPos = ifc.getNodesBefore() + ifc.getNodeSize() / 2;
                 return Math.max(number, ifcPos);
             }
         });
-        mapper.addStatistics("maxGaebPos", new DataAccessor.Folding<LinkedObject<AnsatzType>, Integer>(0) {
+        mapper.addStatistics("maxGaebPos", new DataAccessor.Folding<LinkedObject.ResolvedLink, Integer>(0) {
             @Override
-            public Integer function(Integer integer, LinkedObject<AnsatzType> ansatzTypeLinkedObject) {
-                LinkedObject.ResolvedLink link = ansatzTypeLinkedObject.getResolvedLinks().iterator().next();
+            public Integer function(Integer integer, LinkedObject.ResolvedLink link) {
                 HierarchicGaebAccessor.HierarchicTgItemBoQCtgy gaeb = link.getLinkedHierarchicGaeb().values().iterator().next();
                 int gaebPos = gaeb.getNodesBefore() + gaeb.getNodeSize() / 2;
                 return Math.max(integer, gaebPos);
@@ -61,12 +58,12 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject<AnsatzType>, Draw
                 return ratio;
             }
         });
-        mapper.addMapping(new PropertyMap<LinkedObject<AnsatzType>, VisFactory2D.Bezier>() {
+        mapper.addMapping(new PropertyMap<LinkedObject.ResolvedLink, VisFactory2D.Bezier>() {
             @Override
             protected void configure() {
-                LinkedObject.ResolvedLink resolvedLinks = data.getResolvedLinks().iterator().next(); // one and only
-                Hierarchic currentIfc = resolvedLinks.getLinkedHierarchicIfc().values().iterator().next();
-                Hierarchic currentGaeb = resolvedLinks.getLinkedHierarchicGaeb().values().iterator().next();
+                Hierarchic currentIfc = data.getLinkedHierarchicIfc().values().iterator().next();
+                Hierarchic currentGaeb = data.getLinkedHierarchicGaeb().values().iterator().next();
+                // TODO: sum up GAEB links
                 assert currentGaeb.getNodeSize() == 1;
                 assert currentIfc.getNodeSize() == 1;
                 List<Point> layouted = new ArrayList<Point>();
@@ -96,7 +93,7 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject<AnsatzType>, Draw
                     Point p = layouted.get(i);
                     graphObject.addPoint((int)(BUNDLING * p.x + cx + i*ax), (int) (BUNDLING *p.y() + cy + i*ay));
                 }
-                TgBoQCtgy parent = ((TgBoQCtgy)data.getResolvedLinks().iterator().next().getLinkedHierarchicGaeb().values().iterator().next().getParent().getObject());
+                TgBoQCtgy parent = ((TgBoQCtgy)data.getLinkedHierarchicGaeb().values().iterator().next().getParent().getObject());
                 if (parent.getID().equals("ILAGFNBA")) graphObject.setColor(220,100,0);
                 else graphObject.setBackground();
                 // data.getResolvedLinks().iterator().next().getScheduleObjects().values().iterator().next().getActivityData().getEnd();

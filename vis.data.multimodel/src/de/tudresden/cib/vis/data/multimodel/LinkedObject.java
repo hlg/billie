@@ -29,30 +29,30 @@ public class LinkedObject<T> {
     }
 
     public static class ResolvedLink {
-        private HashMap<MultiModelAccessor.EMTypes, Map<String, ?>> linkedObjects = new HashMap<MultiModelAccessor.EMTypes, Map<String, ?>>();
+        private HashMap<EMTypes, Map<String, ?>> linkedObjects = new HashMap<EMTypes, Map<String, ?>>();
 
         public Map<String, AnsatzType> getLinkedQto() {
-            return defaultEmptyList((Map<String, AnsatzType>) linkedObjects.get(MultiModelAccessor.EMTypes.QTO));
+            return defaultEmptyList((Map<String, AnsatzType>) linkedObjects.get(EMTypes.QTO));
         }
 
         public Map<String, TgItem> getLinkedBoQ() {
-            return defaultEmptyList((Map<String, TgItem>) linkedObjects.get(MultiModelAccessor.EMTypes.GAEB));
+            return defaultEmptyList((Map<String, TgItem>) linkedObjects.get(EMTypes.GAEB));
         }
 
         public Map<String, EMFIfcParser.EngineEObject> getLinkedObject() {
-            return defaultEmptyList((Map<String, EMFIfcParser.EngineEObject>) linkedObjects.get(MultiModelAccessor.EMTypes.IFC));
+            return defaultEmptyList((Map<String, EMFIfcParser.EngineEObject>) linkedObjects.get(EMTypes.IFC));
         }
 
         public Map<String, Activity> getScheduleObjects() {
-            return defaultEmptyList((Map<String, Activity>) linkedObjects.get(MultiModelAccessor.EMTypes.ACTIVITY11));
+            return defaultEmptyList((Map<String, Activity>) linkedObjects.get(EMTypes.ACTIVITY11));
         }
 
         public Map<String,EMFIfcHierarchicAcessor.HierarchicIfc> getLinkedHierarchicIfc(){
-            return defaultEmptyList((Map<String, EMFIfcHierarchicAcessor.HierarchicIfc>) linkedObjects.get(MultiModelAccessor.EMTypes.IFCHIERARCHIC));
+            return defaultEmptyList((Map<String, EMFIfcHierarchicAcessor.HierarchicIfc>) linkedObjects.get(EMTypes.IFCHIERARCHIC));
         }
 
         public Map<String, HierarchicGaebAccessor.HierarchicTgItemBoQCtgy> getLinkedHierarchicGaeb(){
-            return defaultEmptyList((Map<String, HierarchicGaebAccessor.HierarchicTgItemBoQCtgy>) linkedObjects.get(MultiModelAccessor.EMTypes.GAEBHIERARCHIC));
+            return defaultEmptyList((Map<String, HierarchicGaebAccessor.HierarchicTgItemBoQCtgy>) linkedObjects.get(EMTypes.GAEBHIERARCHIC));
         }
 
         private <T> Map<String, T> defaultEmptyList(Map<String, T> stringAnsatzTypeMap) {
@@ -60,11 +60,11 @@ public class LinkedObject<T> {
         }
 
         public void addObject(String modelId, Object object) {
-            MultiModelAccessor.EMTypes type = MultiModelAccessor.EMTypes.find(object);
+            EMTypes type = EMTypes.find(object);
             addObject(type, modelId, object);
         }
 
-        private <T> void addObject(MultiModelAccessor.EMTypes type, String modelId, T object) {
+        private <T> void addObject(EMTypes type, String modelId, T object) {
             if (!linkedObjects.containsKey(type)) linkedObjects.put(type, new HashMap<String, T>());
             ((Map<String, T>) linkedObjects.get(type)).put(modelId, object);
         }

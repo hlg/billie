@@ -68,6 +68,14 @@
             </models>
             <file>file:///links/links.xml</file>
         </linkModel>
+        <linkModel id="L2">
+            <models>
+                <model id="M1"/>
+                <model id="M2"/>
+                <model id="M4"/>
+            </models>
+            <file>file:///links/links_2.xml</file>
+        </linkModel>
     </linkModels>
     <context>
         <element type="Other" id="\Projekte">
