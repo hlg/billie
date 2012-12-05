@@ -16,35 +16,35 @@ public class ActivityHelper {
 
     private Activity activity;
 
-    public ActivityHelper(Activity activity){
+    public ActivityHelper(Activity activity) {
         this.activity = activity;
     }
 
     Map<String, SetActualComparison> collectAmounts(String[] LM_IDS, String QTO_ID, Collection<LinkedObject.ResolvedLink> resolvedLinks) {
         DateTime start = new DateTime(activity.getActivityData().getStart().getDate().toGregorianCalendar());
         DateTime end = new DateTime(activity.getActivityData().getEnd().getDate().toGregorianCalendar()).plus(Days.days(1));
-        Interval activityPeriod= new Interval(start, end);
+        Interval activityPeriod = new Interval(start, end);
         int overallTime = Days.daysBetween(start, end).getDays();
         Map<String, SetActualComparison> amounts = new HashMap<String, SetActualComparison>();
         amounts.put(QTO_ID, new SetActualComparison(overallTime));
         long passedDays = 0;
-        for(int month = 4; month<=8; month++){
-            Interval billingPeriod = new Interval(new DateTime(2012, month, 1, 0, 0), new DateTime(2012, month+1, 1, 0, 0));
-            if (activityPeriod.overlaps(billingPeriod)){
+        for (int month = 4; month <= 8; month++) {
+            Interval billingPeriod = new Interval(new DateTime(2012, month, 1, 0, 0), new DateTime(2012, month + 1, 1, 0, 0));
+            if (activityPeriod.overlaps(billingPeriod)) {
                 passedDays += Days.daysIn(activityPeriod.overlap(billingPeriod)).getDays();
             }
-            amounts.put(String.format("FM%d", month+1), new SetActualComparison(passedDays));
+            amounts.put(String.format("FM%d", month + 1), new SetActualComparison(passedDays));
         }
         double done = 0;
-        for(String key: LM_IDS){
-            for(LinkedObject.ResolvedLink link: resolvedLinks){
-                if(link.getLinkedQto().containsKey(key)) {
+        for (String key : LM_IDS) {
+            for (LinkedObject.ResolvedLink link : resolvedLinks) {
+                if (link.getLinkedQto().containsKey(key)) {
                     done += link.getLinkedQto().get(key).getResult();
                 }
             }
             amounts.get(key).amount = done;
         }
-        for(LinkedObject.ResolvedLink link: resolvedLinks){
+        for (LinkedObject.ResolvedLink link : resolvedLinks) {
             amounts.get(QTO_ID).amount += link.getLinkedQto().get(QTO_ID).getResult();
         }
         return amounts;
@@ -55,7 +55,7 @@ public class ActivityHelper {
         text.append(":\n");
     }
 
-    public String extractActivityDescription(){
+    public String extractActivityDescription() {
         Activity curr = activity;
         StringBuilder sb = new StringBuilder(curr.getDesc());
         while (curr.eContainer() instanceof Activity) {

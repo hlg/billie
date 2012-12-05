@@ -1,5 +1,6 @@
 package de.tudresden.cib.vis.data.bimserver;
 
+import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.HierarchicBase;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
@@ -19,16 +20,16 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
     private HashMap<String, Hierarchic<IdEObject>> wrappedData;
     private static boolean SKIP_LAST_LEVEL = true;
 
-    public EMFIfcHierarchicAcessor(PluginManager pluginManager) {
+    public EMFIfcHierarchicAcessor(PluginManager pluginManager) throws DataAccessException {
         parser = new EMFIfcPlainParser(pluginManager);
     }
 
-    public EMFIfcHierarchicAcessor(SimplePluginManager simplePluginManager, InputStream input, long size) throws IOException {
+    public EMFIfcHierarchicAcessor(SimplePluginManager simplePluginManager, InputStream input, long size) throws IOException, DataAccessException {
         this(simplePluginManager);
         read(input, size);
     }
 
-    public void read(InputStream inputStream, long size) throws IOException {
+    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
         parser.read(inputStream, size);
     }
 

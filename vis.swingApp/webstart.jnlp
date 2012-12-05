@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp>
+    <information>
+        <title>SwingSet2 Demo Application</title>
+        <vendor>Sun Microsystems, Inc.</vendor>
+    </information>
+    <resources>
+        <j2se version="1.5"/>
+        <jar href="antlr-2.7.7.jar"/>
+        <jar href="antlr-3.1.1.jar"/>
+        <jar href="antlr-runtime-3.1.1.jar"/>
+        <jar href="asm-4.0.jar"/>
+        <jar href="asm-analysis-4.0.jar"/>
+        <jar href="asm-commons-4.0.jar"/>
+        <jar href="asm-tree-4.0.jar"/>
+        <jar href="asm-util-4.0.jar"/>
+        <jar href="bimserver-buildingSMARTLibrary-1.1.0.jar"/>
+        <jar href="bimserver-emf-1.1.0.jar"/>
+        <jar href="bimserver-ifc-1.1.0.jar"/>
+        <jar href="bimserver-ifcengine-1.1.0.jar"/>
+        <jar href="bimserver-ifcplugins-1.1.0.jar"/>
+        <jar href="bimserver-plugins-1.1.0.jar"/>
+        <jar href="bimserver-utils-1.1.0.jar"/>
+        <jar href="cib.lib.gaeb.model-1.0.0.201209071948.jar"/>
+        <jar href="cib.mf.qto.model-1.0.0.201209071948.jar"/>
+        <jar href="cib.mf.risk.model-1.0.0.201209071948.jar"/>
+        <jar href="cib.mf.schedule.model-1.1.0.201209071948.jar"/>
+        <jar href="commons-codec-1.3.jar"/>
+        <jar href="commons-io-2.1.jar"/>
+        <jar href="commons-lang-2.4.jar"/>
+        <jar href="de.mefisto.container-1.0.0.201209071948.jar"/>
+        <jar href="geronimo-activation_1.1_spec-1.1.jar"/>
+        <jar href="geronimo-javamail_1.4_spec-1.7.1.jar"/>
+        <jar href="geronimo-osgi-locator-1.0.jar"/>
+        <jar href="geronimo-osgi-registry-1.0.jar"/>
+        <jar href="groovy-2.0.4.jar"/>
+        <jar href="groovy-swing-2.0.4.jar"/>
+        <jar href="guava-11.0.1.jar"/>
+        <jar href="guava-bootstrap-11.0.1.jar"/>
+        <jar href="hamcrest-core-1.1.jar"/>
+        <jar href="ifcNamespaces-1.0.jar"/>
+        <jar href="j3dcore-1.5.2.jar"/>
+        <jar href="j3dutils-1.5.2.jar"/>
+        <jar href="java-getopt-1.0.13.jar"/>
+        <jar href="javax.xml-1.3.4.v201005080400.jar"/>
+        <jar href="jna-3.2.5.jar"/>
+        <jar href="joda-convert-1.2.jar"/>
+        <jar href="joda-time-2.1.jar"/>
+        <jar href="jsr305-1.3.9.jar"/>
+        <jar href="junit-4.10.jar"/>
+        <jar href="log4j-1.2.16.jar"/>
+        <jar href="org.eclipse.ant.core-3.2.300.v20110511.jar"/>
+        <jar href="org.eclipse.core.contenttype-3.4.100.v20110423-0524.jar"/>
+        <jar href="org.eclipse.core.expressions-3.4.300.v20110228.jar"/>
+        <jar href="org.eclipse.core.filesystem-1.3.100.v20110423-0524.jar"/>
+        <jar href="org.eclipse.core.jobs-3.5.100.v20110404.jar"/>
+        <jar href="org.eclipse.core.resources-3.7.100.v20110510-0712.jar"/>
+        <jar href="org.eclipse.core.runtime-3.7.0.v20110110.jar"/>
+        <jar href="org.eclipse.core.variables-3.2.500.v20110511.jar"/>
+        <jar href="org.eclipse.emf.common-2.7.0.v20110605-0747.jar"/>
+        <jar href="org.eclipse.emf.ecore-2.7.0.v20110605-0747.jar"/>
+        <jar href="org.eclipse.emf.ecore.xmi-2.7.0.v20110520-1406.jar"/>
+        <jar href="org.eclipse.emf.edit-2.7.0.v20110606-0949.jar"/>
+        <jar href="org.eclipse.equinox.app-1.3.100.v20110321.jar"/>
+        <jar href="org.eclipse.equinox.common-3.6.0.v20110523.jar"/>
+        <jar href="org.eclipse.equinox.preferences-3.4.0.v20110502.jar"/>
+        <jar href="org.eclipse.equinox.registry-3.5.100.v20110502.jar"/>
+        <jar href="org.eclipse.osgi-3.7.0.v20110613.jar"/>
+        <jar href="org.osgi.compendium-4.2.0.jar"/>
+        <jar href="org.osgi.core-4.2.0.jar"/>
+        <jar href="slf4j-api-1.6.2.jar"/>
+        <jar href="slf4j-log4j12-1.6.2.jar"/>
+        <jar href="stax-api-1.0.1.jar"/>
+        <jar href="stringtemplate-3.2.jar"/>
+        <jar href="vecmath-1.5.2.jar"/>
+        <jar href="vis-0.4.jar"/>
+        <jar href="vis.configurations-0.4.jar"/>
+        <jar href="vis.data.bimserver-0.4.jar"/>
+        <jar href="vis.data.multimodel-0.4.jar"/>
+        <jar href="vis.runtime.java3d-0.4.jar"/>
+        <jar href="vis.scene.java2d-0.4.jar"/>
+        <jar href="vis.scene.java3d-0.4.jar"/>
+        <jar href="xmlbeans-2.4.0.jar"/>
+        <jar href="vis.swingApp-SNAPSHOT.jar"/>
+    </resources>
+    <application-desc main-class="MefistoDemo"/>
+</jnlp>

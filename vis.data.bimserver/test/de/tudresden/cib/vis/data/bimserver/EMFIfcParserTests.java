@@ -1,7 +1,7 @@
 package de.tudresden.cib.vis.data.bimserver;
 
+import de.tudresden.cib.vis.data.DataAccessException;
 import org.bimserver.models.ifc2x3tc1.IfcBuildingElement;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -12,19 +12,16 @@ import static org.junit.Assert.*;
 
 public class EMFIfcParserTests {
 
-    private EMFIfcParser parser;
-    private EMFIfcGeometricAccessor accessor;
-
-    @Before
-    public void setUp(){
-        SimplePluginManager pluginManager = new SimplePluginManager();
-        parser = new EMFIfcParser(pluginManager);
-        accessor = new EMFIfcGeometricAccessor(pluginManager);
+    private static SimplePluginManager pm = new SimplePluginManager();
+    static {
+        pm.loadPluginsFromCurrentClassloader();
+        pm.initAllLoadedPlugins();
     }
 
     @Test
-    public void testLazyLoad() {
-        String fileName = "/resources/carport2.ifc";
+    public void testLazyLoad() throws DataAccessException {
+        EMFIfcParser parser = new EMFIfcParser(pm);
+        String fileName = "/resources/carport2_.ifc";
         long size = new File(getClass().getResource(fileName).getFile()).length();
         parser.read(getClass().getResourceAsStream(fileName), size);
 //        assertNull(parser.data);
@@ -40,7 +37,8 @@ public class EMFIfcParserTests {
     }
 
     @Test
-    public void testAccessor() throws IOException {
+    public void testAccessor() throws IOException, DataAccessException {
+        EMFIfcGeometricAccessor accessor = new EMFIfcGeometricAccessor(pm);
         String fileName = "/resources/carport2.ifc";
         long size = new File(getClass().getResource(fileName).getFile()).length();
         accessor.read(getClass().getResourceAsStream(fileName), size);
@@ -50,4 +48,5 @@ public class EMFIfcParserTests {
         assertNotNull(accessor.iterator().next().getObject());
 
     }
+
 }

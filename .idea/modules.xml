@@ -11,8 +11,10 @@
       <module fileurl="file://$PROJECT_DIR$/vis.runtime.java3d/vis.runtime.java3d.iml" filepath="$PROJECT_DIR$/vis.runtime.java3d/vis.runtime.java3d.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.sampleApps/vis.sampleApps.iml" filepath="$PROJECT_DIR$/vis.sampleApps/vis.sampleApps.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.scene.draw2d/vis.scene.draw2d.iml" filepath="$PROJECT_DIR$/vis.scene.draw2d/vis.scene.draw2d.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vis.scene.java2d/vis.scene.java2d.iml" filepath="$PROJECT_DIR$/vis.scene.java2d/vis.scene.java2d.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.scene.java3d/vis.scene.java3d.iml" filepath="$PROJECT_DIR$/vis.scene.java3d/vis.scene.java3d.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.scene.text/vis.scene.text.iml" filepath="$PROJECT_DIR$/vis.scene.text/vis.scene.text.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vis.swingApp/vis.swingApp.iml" filepath="$PROJECT_DIR$/vis.swingApp/vis.swingApp.iml" />
     </modules>
   </component>
 </project>

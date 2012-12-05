@@ -1,5 +1,6 @@
 package de.tudresden.cib.vis.data.bimserver;
 
+import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import org.bimserver.plugins.PluginManager;
 
@@ -15,16 +16,16 @@ public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.En
     Map<String,EMFIfcParser.EngineEObject> wrappedData;
     private EMFIfcParser parser;
 
-    public EMFIfcGeometricAccessor(PluginManager pluginManager) {
+    public EMFIfcGeometricAccessor(PluginManager pluginManager) throws DataAccessException {
         parser = new EMFIfcParser(pluginManager);
     }
 
-    public EMFIfcGeometricAccessor(SimplePluginManager simplePluginManager, InputStream input, long size) throws IOException {
+    public EMFIfcGeometricAccessor(SimplePluginManager simplePluginManager, InputStream input, long size) throws IOException, DataAccessException {
         this(simplePluginManager);
         read(input, size);
     }
 
-    public void read(InputStream inputStream, long size) throws IOException {
+    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
         parser.read(inputStream, size);
     }
 

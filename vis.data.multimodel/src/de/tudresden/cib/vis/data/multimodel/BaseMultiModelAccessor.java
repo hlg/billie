@@ -4,6 +4,7 @@ import de.mefisto.model.container.*;
 import de.mefisto.model.linkModel.LinkModel;
 import de.mefisto.model.parser.ContainerModelParser;
 import de.mefisto.model.parser.LinkModelParser;
+import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import org.eclipse.emf.common.util.EList;
@@ -11,7 +12,9 @@ import org.eclipse.emf.common.util.EList;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -25,10 +28,23 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
         return ContainerModelParser.readContainerModel(mmFile).getContainer();
     }
 
-    protected String findModelOfType(File folder, EMCondition modelType, EList<ElementaryModel> foundModels) {
-        String modelId = findAndReadModel(folder, foundModels, modelType);
-        if(modelId==null) throw new RuntimeException(modelType.getErrorMessage());
-        return modelId;
+    protected List<String> findModelsOfType(File folder, EMCondition modelType, EList<ElementaryModel> candidateModels) throws DataAccessException {
+        List<String> matchingModels = new ArrayList<String>();
+        for (ElementaryModel model: candidateModels){
+            if(modelType.isValidFor(model)){
+                for(Content alternative: model.getContent()){
+                    if(modelType.isValidFor(alternative)){
+                        IndexedDataAccessor accessor = (modelType instanceof EMTypeCondition) ?
+                                ((EMTypeCondition) modelType).required.createAccessor() :
+                                EMTypes.find(model.getType().getName(), alternative.getFormat(), alternative.getFormatVersion()).createAccessor();
+                        readEM(folder, alternative, accessor);
+                        elementaryModels.put(model.getId(), accessor);
+                        matchingModels.add(model.getId());
+                    }
+                }
+            }
+        }
+        return matchingModels;
     }
 
     protected LinkModelDescriptor findLinkModel(Container container, String linkModelId) {
@@ -37,24 +53,6 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
         else {
             for (LinkModelDescriptor lmd : linkModelDescriptors){
                 if(lmd.getId().equals(linkModelId)) return lmd;
-            }
-        }
-        return null;
-    }
-
-    private String findAndReadModel(File folder, EList<ElementaryModel> foundModels, EMCondition required){
-        for (ElementaryModel model: foundModels){
-            if(required.isValidFor(model)){
-                for(Content alternative: model.getContent()){
-                    if(required.isValidFor(alternative)){
-                        IndexedDataAccessor accessor = (required instanceof EMTypeCondition) ?
-                                ((EMTypeCondition)required).required.createAccessor() :
-                                EMTypes.find(model.getType().getName(), alternative.getFormat(), alternative.getFormatVersion()).createAccessor();
-                        readEM(folder, alternative, accessor);
-                        elementaryModels.put(model.getId(), accessor);
-                        return model.getId();
-                    }
-                }
             }
         }
         return null;
@@ -73,7 +71,7 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
         return LinkModelParser.readLinkModel(linkFile).getLinkModel();
     }
 
-    protected void readEM(File mmFolder, Content content, IndexedDataAccessor accessor) {
+    protected void readEM(File mmFolder, Content content, IndexedDataAccessor accessor) throws DataAccessException {
         for (ContainerFile contentFile : content.getFiles()) {
             try {
                 File file = new File(mmFolder, new URL(contentFile.getValue()).getFile());
@@ -87,7 +85,7 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
         accessor.index();
     }
 
-    protected IndexedDataAccessor firstAccessible(File mmFolder, ElementaryModel elementaryModel) {
+    protected IndexedDataAccessor firstAccessible(File mmFolder, ElementaryModel elementaryModel) throws DataAccessException {
         for (Content content : elementaryModel.getContent()) {
             EMTypes recognizedType = EMTypes.find(elementaryModel.getType().getName(), content.getFormat(), content.getFormatVersion());
             if (recognizedType != null) {

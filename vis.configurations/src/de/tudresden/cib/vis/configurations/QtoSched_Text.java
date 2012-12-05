@@ -1,24 +1,22 @@
 package de.tudresden.cib.vis.configurations;
 
 import cib.mf.schedule.model.activity11.Activity;
-import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
+import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory2D;
-import de.tudresden.cib.vis.scene.text.TextBuilder;
-import de.tudresden.cib.vis.scene.text.TextFactory;
 
 import java.util.Map;
 
-public class QtoSched_Text extends Configuration<LinkedObject<Activity>, TextFactory.TextLabel, String> {
+public class QtoSched_Text<S> extends Configuration<LinkedObject<Activity>, S> {
 
     private final String[] LM_IDS;
     private final String QTO_ID;
 
-    public QtoSched_Text(DataAccessor<LinkedObject<Activity>> data, String[] lm_ids, String qto_id) {
-        super(data, new TextFactory(), new TextBuilder());
-        this.LM_IDS = lm_ids;
-        this.QTO_ID = qto_id;
+    public QtoSched_Text(Mapper<LinkedObject<Activity>, ?, S> mapper, String[] LM_IDS, String QTO_ID) {
+        super(mapper);
+        this.LM_IDS = LM_IDS;
+        this.QTO_ID = QTO_ID;
     }
 
     @Override
@@ -27,9 +25,9 @@ public class QtoSched_Text extends Configuration<LinkedObject<Activity>, TextFac
 
             @Override
             protected boolean condition() {
-                for (LinkedObject.ResolvedLink link: data.getResolvedLinks()){
-                    for(String key: LM_IDS){
-                        if(link.getLinkedQto().containsKey(key)) return true;
+                for (LinkedObject.ResolvedLink link : data.getResolvedLinks()) {
+                    for (String key : LM_IDS) {
+                        if (link.getLinkedQto().containsKey(key)) return true;
                     }
                 }
                 return false;

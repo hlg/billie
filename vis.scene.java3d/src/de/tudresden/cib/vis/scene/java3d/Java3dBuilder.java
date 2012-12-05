@@ -1,5 +1,7 @@
 package de.tudresden.cib.vis.scene.java3d;
 
+import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.scene.ChangeMap;
 import de.tudresden.cib.vis.scene.UIContext;
 import de.tudresden.cib.vis.scene.VisBuilder;
@@ -68,5 +70,8 @@ public class Java3dBuilder implements VisBuilder<Java3dFactory.Java3DGraphObject
 
     public UIContext getUiContext() {
         return uiContext;
+    }
+    public static <E> Mapper<E, Java3dFactory.Java3DGraphObject, BranchGroup> createMapper(DataAccessor<E> data){
+        return new Mapper<E, Java3dFactory.Java3DGraphObject, BranchGroup>(data, new Java3dFactory(), new Java3dBuilder());
     }
 }

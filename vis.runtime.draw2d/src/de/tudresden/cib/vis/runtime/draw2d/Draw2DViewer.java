@@ -23,7 +23,6 @@ public class Draw2DViewer {
     private SnapShotParams snapShotParams = new SnapShotParams();
 
     public Draw2DViewer(){
-
         display = new Display();
         shell = new Shell(display);
         shell.setLayout(new FillLayout());
@@ -85,6 +84,7 @@ public class Draw2DViewer {
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch()) display.sleep();
         }
+        canvas.dispose();
         display.dispose();
     }
 

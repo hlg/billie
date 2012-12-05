@@ -4,28 +4,17 @@ import cib.mf.schedule.model.activity11.Activity;
 import cib.mf.schedule.model.activity11.ActivityData;
 import cib.mf.schedule.model.activity11.Timestamp;
 import de.tudresden.cib.vis.data.DataAccessor;
-import de.tudresden.cib.vis.data.multimodel.EMFSchedule11Accessor;
+import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.VisFactory2D;
-import de.tudresden.cib.vis.scene.draw2d.Draw2dBuilder;
-import de.tudresden.cib.vis.scene.draw2d.Draw2dFactory;
-import org.eclipse.draw2d.Panel;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.swt.graphics.Font;
 
-import java.io.IOException;
-import java.io.InputStream;
+public class Sched_Gantt<S> extends Configuration<EObject, S> {
 
-public class Sched_Gantt extends Configuration<EObject, Draw2dFactory.Draw2dObject, Panel> {
-
-    public Sched_Gantt(Font font, InputStream inputStream) throws IOException {
-        this(new EMFSchedule11Accessor(inputStream), font);
-    }
-
-    public Sched_Gantt(DataAccessor<EObject> data, Font font){
-        super(data, new Draw2dFactory(font), new Draw2dBuilder());
+    public Sched_Gantt(Mapper<EObject, ?, S> mapper) {
+        super(mapper);
     }
 
     @Override
@@ -56,32 +45,33 @@ public class Sched_Gantt extends Configuration<EObject, Draw2dFactory.Draw2dObje
             protected boolean condition() {
                 return EcoreUtil.equals(data.getActivityData().getStart(), data.getActivityData().getEnd());
             }
+
             @Override
             protected void configure() {
                 graphObject.setLeft((int) ((getTimeInMillis(data.getActivityData().getStart()) - mapper.getStats("earliestStart").longValue()) / scale) - 10);
                 graphObject.setWidth(20);
                 graphObject.setTop(index * 25);
                 graphObject.setHeight(20);
-                graphObject.setColor(255,255,0);
+                graphObject.setColor(255, 255, 0);
             }
         });
-        mapper.addMapping(new PropertyMap<Activity, VisFactory2D.Rectangle>(){
+        mapper.addMapping(new PropertyMap<Activity, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
-                final int left = (int) ((getTimeInMillis(data.getActivityData().getStart()) - mapper.getStats("earliestStart").longValue())/scale);
-                final int maxWidth = (int) ((getTimeInMillis(data.getActivityData().getEnd())-getTimeInMillis(data.getActivityData().getStart()))/scale);
+                final int left = (int) ((getTimeInMillis(data.getActivityData().getStart()) - mapper.getStats("earliestStart").longValue()) / scale);
+                final int maxWidth = (int) ((getTimeInMillis(data.getActivityData().getEnd()) - getTimeInMillis(data.getActivityData().getStart())) / scale);
                 graphObject.setLeft(left);
                 graphObject.setTop(index * 25);
                 graphObject.setHeight(20);
                 graphObject.setColor(255, 0, 0);
-                int startTime = left/10 + 1;
-                int endTime = (left+maxWidth)/10 + 1;
-                for(int i=startTime; i<endTime; i++){
-                    final int right = i*10;
-                    addChange(i*25, new Change<VisFactory2D.Rectangle>() {
+                int startTime = left / 10 + 1;
+                int endTime = (left + maxWidth) / 10 + 1;
+                for (int i = startTime; i < endTime; i++) {
+                    final int right = i * 10;
+                    addChange(i * 25, new Change<VisFactory2D.Rectangle>() {
                         @Override
                         protected void configure() {
-                            graph.setWidth(right-left);
+                            graph.setWidth(right - left);
                         }
                     });
                 }

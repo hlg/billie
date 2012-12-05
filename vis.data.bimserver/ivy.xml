@@ -4,6 +4,7 @@
     <dependency org="org.bimserver" name="bimserver-ifcplugins" rev="1.1.0"/>
     <dependency org="org.bimserver" name="bimserver-buildingSMARTLibrary" rev="1.1.0"/>
     <dependency org="org.bimserver" name="bimserver-ifcengine" rev="1.1.0"/>
+    <!--dependency org="org.ifcopenshell" name="bimserver-ifcengine" rev="0.3RC3"/-->
     <dependency org="org.bimserver" name="bimserver-plugins" rev="1.1.0"/>
     <dependency org="bundle" name="org.eclipse.emf.ecore" rev="2.7.+"/>
     <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true" />

@@ -8,16 +8,11 @@ import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory2D;
-import de.tudresden.cib.vis.scene.draw2d.Draw2dBuilder;
-import de.tudresden.cib.vis.scene.draw2d.Draw2dFactory;
-import org.eclipse.draw2d.Panel;
-import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.swt.graphics.Font;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IfcGaebQto_HEB extends Configuration<LinkedObject.ResolvedLink, Draw2dFactory.Draw2dObject, Panel> {
+public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, S> {
 
     private int ifcScale;
     private int gaebScale;
@@ -25,8 +20,8 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject.ResolvedLink, Dra
     private static double BUNDLING = 0.4;
     private static boolean SKIP_LAST_LEVEL = false;
 
-    public IfcGaebQto_HEB(DataAccessor<LinkedObject.ResolvedLink> accessor, Font font){
-        super(accessor, new Draw2dFactory(font), new Draw2dBuilder());
+    public IfcGaebQto_HEB(Mapper<LinkedObject.ResolvedLink, ?, S> mapper) {
+        super(mapper);
     }
 
     @Override
@@ -34,7 +29,7 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject.ResolvedLink, Dra
         mapper.addStatistics("maxIfcPos", new DataAccessor.Folding<LinkedObject.ResolvedLink, Integer>(0) {
             @Override
             public Integer function(Integer number, LinkedObject.ResolvedLink link) {
-                Hierarchic ifc =link.getLinkedHierarchicIfc().values().iterator().next();
+                Hierarchic ifc = link.getLinkedHierarchicIfc().values().iterator().next();
                 if (SKIP_LAST_LEVEL) ifc = ifc.getParent();
                 int ifcPos = ifc.getNodesBefore() + ifc.getNodeSize() / 2;
                 return Math.max(number, ifcPos);
@@ -53,7 +48,7 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject.ResolvedLink, Dra
             public Double getResult() {
                 double ratio = Double.valueOf((Integer) mp.getStats("maxIfcPos")) / (Integer) mp.getStats("maxGaebPos");
                 boolean topBigger = ratio > 1;
-                ifcScale = topBigger ? SMALLSIZE : (int) (1./ratio * SMALLSIZE);
+                ifcScale = topBigger ? SMALLSIZE : (int) (1. / ratio * SMALLSIZE);
                 gaebScale = topBigger ? (int) (ratio * SMALLSIZE) : SMALLSIZE;
                 return ratio;
             }
@@ -67,34 +62,35 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject.ResolvedLink, Dra
                 assert currentGaeb.getNodeSize() == 1;
                 assert currentIfc.getNodeSize() == 1;
                 List<Point> layouted = new ArrayList<Point>();
-                if (!SKIP_LAST_LEVEL) layouted.add(pointFor(currentIfc, ifcScale, -100, 450));
-                while(currentIfc.getParent()!=null){
+                if (!SKIP_LAST_LEVEL) layouted.add(pointFor(currentIfc, ifcScale, -100, 300));
+                while (currentIfc.getParent() != null) {
                     currentIfc = currentIfc.getParent();
-                    if(currentIfc.getParent()!=null) layouted.add(pointFor(currentIfc, ifcScale, -100, 450)); // skip root
+                    if (currentIfc.getParent() != null)
+                        layouted.add(pointFor(currentIfc, ifcScale, -100, 300)); // skip root
                 }
                 List<Hierarchic> gaebPath = new ArrayList<Hierarchic>();
                 gaebPath.add(currentGaeb);
-                while(currentGaeb.getParent()!=null){
+                while (currentGaeb.getParent() != null) {
                     currentGaeb = currentGaeb.getParent();
-                    if(currentGaeb.getParent()!=null) gaebPath.add(currentGaeb); //skip root
+                    if (currentGaeb.getParent() != null) gaebPath.add(currentGaeb); //skip root
                 }
-                for(int i = gaebPath.size()-1; i>= 0; i--){
-                    layouted.add(pointFor(gaebPath.get(i), gaebScale, 100, 450));
+                for (int i = gaebPath.size() - 1; i >= 0; i--) {
+                    layouted.add(pointFor(gaebPath.get(i), gaebScale, 100, 300));
                 }
 
                 Point first = layouted.get(0);
                 int n = layouted.size();
                 Point last = layouted.get(n - 1);
-                double ax = (1- BUNDLING) * (last.x - first.x) / (n-1);
-                double ay = (1- BUNDLING) * (last.y - first.y) / (n-1);
-                double cx = (1- BUNDLING) * first.x;
-                double cy = (1- BUNDLING) * first.y;
-                for (int i = 0; i<layouted.size(); i++) {
+                double ax = (1 - BUNDLING) * (last.x - first.x) / (n - 1);
+                double ay = (1 - BUNDLING) * (last.y - first.y) / (n - 1);
+                double cx = (1 - BUNDLING) * first.x;
+                double cy = (1 - BUNDLING) * first.y;
+                for (int i = 0; i < layouted.size(); i++) {
                     Point p = layouted.get(i);
-                    graphObject.addPoint((int)(BUNDLING * p.x + cx + i*ax), (int) (BUNDLING *p.y() + cy + i*ay));
+                    graphObject.addPoint((int) (BUNDLING * p.x + cx + i * ax), (int) (BUNDLING * p.y + cy + i * ay));
                 }
-                TgBoQCtgy parent = ((TgBoQCtgy)data.getLinkedHierarchicGaeb().values().iterator().next().getParent().getObject());
-                if (parent.getID().equals("ILAGFNBA")) graphObject.setColor(220,100,0);
+                TgBoQCtgy parent = ((TgBoQCtgy) data.getLinkedHierarchicGaeb().values().iterator().next().getParent().getObject());
+                if (parent.getID().equals("ILAGFNBA")) graphObject.setColor(220, 100, 0);
                 else graphObject.setBackground();
                 // data.getResolvedLinks().iterator().next().getScheduleObjects().values().iterator().next().getActivityData().getEnd();
             }
@@ -113,4 +109,13 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject.ResolvedLink, Dra
         return gaebScale;
     }
 
+    private class Point {
+        int x;
+        int y;
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
 }

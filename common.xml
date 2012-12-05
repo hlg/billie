@@ -7,6 +7,10 @@
         <include name="*.jar"/>
     </patternset>
 
+    <taskdef name="groovyc"
+             classname="org.codehaus.groovy.ant.Groovyc"
+             classpath="C:/groovy-200/embeddable/groovy-all-2.0.0.jar"/>
+
     <dirname property="basedir" file="${ant.file}"/>
 
     <target name="check.tests">
@@ -44,8 +48,15 @@
                 <path refid="ivy.classpath"/>
             </classpath>
         </javac>
-
+        <groovyc destdir="${module.output.dir}/classes" srcdir="${module.basedir}/src">
+            <classpath>
+                <path refid="ivy.classpath"/>
+            </classpath>
+        </groovyc>
         <copy todir="${module.output.dir}/classes" file="${module.basedir}/log4j.xml" failonerror="false" />
+        <copy todir="${module.output.dir}/classes/resources" failonerror="false">
+            <fileset dir="${module.basedir}/src/resources"/>
+        </copy>
     </target>
 
     <target name="compile.tests" depends="check.tests, compile.module" if="tests.available">
@@ -99,7 +110,7 @@
     <target name="test.module" depends="compile.module, compile.tests" if="tests.available">
         <echo message="testing ${module.basedir}/test" />
         <mkdir dir="${module.output.dir}/testreports" />
-        <junit printsummary="yes" haltonfailure="yes" fork="yes" dir="${module.output.dir}/testclasses" forkmode="perBatch">
+        <junit printsummary="yes" haltonfailure="yes" fork="yes" dir="${module.output.dir}/testclasses">
             <classpath>
                 <path refid="ivy.classpath"/>
                 <pathelement path="${module.output.dir}/classes" />

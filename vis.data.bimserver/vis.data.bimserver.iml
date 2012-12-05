@@ -21,7 +21,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="vis" />
-    <orderEntry type="module" module-name="org.bimserver.ifcemf" />
     <orderEntry type="module-library">
       <library name="IvyIDEA-vis.data.bimserver-default">
         <CLASSES>

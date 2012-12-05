@@ -1,5 +1,6 @@
 package de.tudresden.cib.vis.data.bimserver;
 
+import de.tudresden.cib.vis.data.DataAccessException;
 import org.bimserver.models.ifc2x3tc1.IfcElement;
 import org.bimserver.models.ifc2x3tc1.IfcProduct;
 import org.bimserver.models.ifc2x3tc1.IfcRelContainedInSpatialStructure;
@@ -16,23 +17,21 @@ public class EMFIfcPlainParser {
     EmfDeserializer deserializer;
     IfcModelInterface data;
 
-    public EMFIfcPlainParser(PluginManager pluginManager) {
-        pluginManager.loadPluginsFromCurrentClassloader();
-        pluginManager.initAllLoadedPlugins();
+    public EMFIfcPlainParser(PluginManager pluginManager) throws DataAccessException {
         try {
             deserializer = pluginManager.getFirstDeserializer("ifc", true).createDeserializer();
             deserializer.init(pluginManager.requireSchemaDefinition());
         } catch (PluginException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new DataAccessException(e);
         }
 
     }
 
-    public void read(InputStream inputStream, final long size) {
+    public void read(InputStream inputStream, final long size) throws DataAccessException {
         try {
             data = deserializer.read(inputStream, "?", true, 16 * 58);
         } catch (DeserializeException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new DataAccessException(e);
         }
 
     }

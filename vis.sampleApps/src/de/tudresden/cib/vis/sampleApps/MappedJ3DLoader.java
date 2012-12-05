@@ -4,6 +4,7 @@ import com.sun.j3d.loaders.IncorrectFormatException;
 import com.sun.j3d.loaders.Loader;
 import com.sun.j3d.loaders.ParsingErrorException;
 import com.sun.j3d.loaders.Scene;
+import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -15,7 +16,10 @@ import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 
 import javax.media.j3d.BranchGroup;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Reader;
 import java.net.URL;
 
 public class MappedJ3DLoader<E> implements Loader {
@@ -36,6 +40,8 @@ public class MappedJ3DLoader<E> implements Loader {
             data.read(new File(s));
         } catch (IOException e) {
             throw new FileNotFoundException(e.getMessage());
+        } catch (DataAccessException e) {
+            throw new ParsingErrorException(e.getMessage());
         }
         return loadScene();
     }
@@ -60,6 +66,8 @@ public class MappedJ3DLoader<E> implements Loader {
             return loadScene();
         } catch (IOException e) {
             throw new FileNotFoundException(e.getMessage());
+        } catch (DataAccessException e) {
+            throw new ParsingErrorException(e.getMessage());
         }
     }
 

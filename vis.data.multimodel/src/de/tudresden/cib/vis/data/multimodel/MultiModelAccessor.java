@@ -6,6 +6,7 @@ import de.mefisto.model.container.ElementaryModelType;
 import de.mefisto.model.linkModel.Link;
 import de.mefisto.model.linkModel.LinkModel;
 import de.mefisto.model.linkModel.LinkObject;
+import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import org.bimserver.plugins.PluginManager;
 import org.eclipse.emf.common.util.EList;
@@ -37,11 +38,11 @@ public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K
         if (groupingModelId!=null) groupBy(groupingModelId, lm);
     }
 
-    public void readFromFolder(File folder) {
+    public void readFromFolder(File folder) throws DataAccessException {
         if (keyModel!=null && requiredModels != null) try {
             readFromFolder(folder, keyModel, requiredModels);
         } catch (MalformedURLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new DataAccessException(e);
         }
         Container container = readContainer(folder);
         String firstAccesibleKeyModelId = null;
@@ -64,19 +65,24 @@ public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K
         }
     }
 
-    public LinkedList<String> readFromFolder(File folder, EMTypeCondition keyModel, EMTypeCondition... requiredModels) throws MalformedURLException {
+    public LinkedList<String> readFromFolder(File folder, EMTypeCondition keyModel, EMTypeCondition... requiredModels) throws MalformedURLException, DataAccessException {
        return readFromFolder(folder, null, keyModel, requiredModels);
     }
 
-    public LinkedList<String> readFromFolder(File folder, String linkModelId, EMCondition keyModel, EMCondition... requiredModels) throws MalformedURLException {
+    public LinkedList<String> readFromFolder(File folder, String linkModelId, EMCondition keyModel, EMCondition... requiredModels) throws MalformedURLException, DataAccessException {
         // TODO: specify model by ID or additional conditions?
         Container container = readContainer(folder);
         EList<ElementaryModel> foundModels = container.getElementaryModelGroup().getElementaryModels();
         LinkedList<String> modelIds = new LinkedList<String>();
-        String keyModelId = findModelOfType(folder, keyModel, foundModels);
+        List<String> candidateKeyModels = findModelsOfType(folder, keyModel, foundModels);
+        if(candidateKeyModels.size()>1) throw new RuntimeException("ambiguous key model conditions");
+        if(candidateKeyModels.size()==0) throw new RuntimeException("no key model found");
+        String keyModelId = candidateKeyModels.get(0);
         modelIds.add(keyModelId);
         for(EMCondition required: requiredModels){
-            modelIds.add(findModelOfType(folder, required, foundModels));
+            List<String> modelsOfType = findModelsOfType(folder, required, foundModels);
+            if(modelsOfType.isEmpty()) throw new RuntimeException("required model missing: " + required.toString());
+            modelIds.addAll(modelsOfType);
         }
         LinkModel linkModel = readLinkModel(folder, container, linkModelId);
         groupBy(keyModelId, linkModel);
@@ -142,11 +148,11 @@ public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K
         return groupedElements.iterator();
     }
 
-    public void read(InputStream inputStream, long size) throws IOException {
+    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
         readFromFolder(unzip(inputStream));
     }
 
-    public void read(URL resource) {
+    public void read(URL resource) throws DataAccessException {
         readFromFolder(new File(resource.getFile()));
     }
 

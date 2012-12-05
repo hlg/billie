@@ -6,12 +6,14 @@
         <file name="vis.data.bimserver/build.xml"/>
         <file name="vis.data.multimodel/build.xml"/>
         <file name="vis.scene.text/build.xml"/>
+        <file name="vis.scene.java2d/build.xml"/>
         <file name="vis.runtime.draw2d/build.xml"/>
         <file name="vis.scene.draw2d/build.xml"/>
         <file name="vis.runtime.java3d/build.xml"/>
         <file name="vis.scene.java3d/build.xml"/>
         <file name="vis.configurations/build.xml"/>
         <file name="vis.sampleApps/build.xml"/>
+        <file name="vis.swingApp/build.xml"/>
     </filelist>
 
     <target name="test.all" depends="clean.all">

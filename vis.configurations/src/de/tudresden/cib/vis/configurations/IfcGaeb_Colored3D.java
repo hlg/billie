@@ -9,20 +9,16 @@ import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory3D;
-import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
-import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 
-import javax.media.j3d.BranchGroup;
 import java.math.BigDecimal;
 import java.util.Collection;
 
-public class IfcGaeb_Colored3D extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> {
+public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, S> {
 
-    public IfcGaeb_Colored3D(DataAccessor<LinkedObject<EMFIfcParser.EngineEObject>> data){
-        super(data, new Java3dFactory(), new Java3dBuilder());
-    }
+    public String gaebX84Id = "FM1";
+    public String gaebX83Id = "FM10";
 
-    public IfcGaeb_Colored3D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper) {
+    public IfcGaeb_Colored3D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, ?, S> mapper) {
         super(mapper);
     }
 
@@ -63,10 +59,10 @@ public class IfcGaeb_Colored3D extends Configuration<LinkedObject<EMFIfcParser.E
     private BigDecimal calculateOveralPrice(Collection<LinkedObject.ResolvedLink> resolvedLinks) {
         BigDecimal price = new BigDecimal(0);
         for (LinkedObject.ResolvedLink link : resolvedLinks) {
-            if(!link.getLinkedBoQ().isEmpty()&&!link.getLinkedQto().isEmpty()){
-                TgItem gaeb = link.getLinkedBoQ().values().iterator().next(); // TODO: implement getFirstLinkedBoQ ...
+            if (!link.getLinkedBoQ().isEmpty() && !link.getLinkedQto().isEmpty()) {
+                TgItem gaebAngebot = link.getLinkedBoQ().get(gaebX84Id);
                 AnsatzType qto = link.getLinkedQto().values().iterator().next();
-                price = price.add(gaeb.getUP().multiply(BigDecimal.valueOf(qto.getResult())));
+                price = price.add(gaebAngebot.getUP().multiply(BigDecimal.valueOf(qto.getResult())));
             }
         }
         return price;

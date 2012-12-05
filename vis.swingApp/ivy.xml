@@ -1,0 +1,13 @@
+<ivy-module version="2.0">
+<info organisation="de.tudresden.cib" module="vis.swingApp"/>
+<configurations>
+    <conf name="win" />
+    <conf name="linux" />
+</configurations>
+<dependencies>
+    <dependency org="de.tudresden.cib" name="vis.configurations" rev="latest.integration" changing="true"/>
+    <dependency org="de.tudresden.cib" name="vis.scene.java2d" rev="latest.integration" changing="true" />
+    <dependency org="de.tudresden.cib" name="vis.scene.java3d" rev="latest.integration" changing="true" />
+    <dependency org="org.codehaus.groovy" name="groovy-swing" rev="2.0.4" />
+</dependencies>
+</ivy-module>

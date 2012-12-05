@@ -7,20 +7,20 @@ import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.VisBuilder;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 
-public abstract class Configuration<E, G extends VisFactory2D.GraphObject, S> {
-    protected Mapper<E, G, S> mapper;
+public abstract class Configuration<E, F> {
+    protected Mapper<E, ?, F> mapper;
 
-    public Configuration(DataAccessor<E> data, VisFactory2D visFactory, VisBuilder<G,S> visBuilder) {
-        mapper = new Mapper<E, G, S>(data, visFactory, visBuilder);
+    public <Z extends VisFactory2D.GraphObject> Configuration(DataAccessor<E> data, VisFactory2D visFactory, VisBuilder<Z, F> visBuilder) {
+        mapper = new Mapper<E, Z, F>(data, visFactory, visBuilder);
     }
 
-    public Configuration(Mapper<E, G, S> mapper) {
+    public Configuration(Mapper<E, ?, F> mapper) {
         this.mapper = mapper;
     }
 
     public abstract void config();
 
-    public SceneManager<E, S> execute() throws TargetCreationException {
+    public SceneManager<E, F> execute() throws TargetCreationException {
         return mapper.map();
     }
 }

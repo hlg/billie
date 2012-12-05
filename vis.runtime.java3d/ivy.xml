@@ -7,7 +7,6 @@
         <dependency org="org.bimserver" name="bimserver-ifcplugins" rev="1.1.0"/>
         <dependency org="org.bimserver" name="bimserver-plugins" rev="1.1.0"/>
         <dependency org="org.bimserver" name="bimserver-buildingSMARTLibrary" rev="1.1.0"/>
-        <dependency org="org.bimserver" name="bimserver-ifcengine" rev="1.1.0"/>
         <dependency org="org.bimserver" name="bimserver-emf" rev="1.1.0"/>
         <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.2"/>
         <dependency org="bundle" name="org.eclipse.emf.common" rev="2.7.+"/>

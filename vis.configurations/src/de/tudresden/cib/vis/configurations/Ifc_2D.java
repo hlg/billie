@@ -1,25 +1,18 @@
 package de.tudresden.cib.vis.configurations;
 
-import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
-import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
+import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory2D;
-import de.tudresden.cib.vis.scene.draw2d.Draw2dBuilder;
-import de.tudresden.cib.vis.scene.draw2d.Draw2dFactory;
 import org.bimserver.models.ifc2x3tc1.*;
-import org.eclipse.draw2d.Panel;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.swt.graphics.Font;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
-public class Ifc_2D extends Configuration<EMFIfcParser.EngineEObject, Draw2dFactory.Draw2dObject, Panel> {
+public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, S> {
 
-    public Ifc_2D(Font font, InputStream input, long size) throws IOException {
-        super(new EMFIfcGeometricAccessor(new SimplePluginManager(), input, size), new Draw2dFactory(font), new Draw2dBuilder());
+    public Ifc_2D(Mapper<EMFIfcParser.EngineEObject, ?, S> mapper) {
+        super(mapper);
     }
 
     public void configSemantic() {
@@ -63,21 +56,22 @@ public class Ifc_2D extends Configuration<EMFIfcParser.EngineEObject, Draw2dFact
             @Override
             protected void configure() {
                 Set<Integer> above = new TreeSet<Integer>();
-                for(int i = 0, iz = 2; iz < data.getGeometry().vertizes.size(); i++, iz+=3){
-                    if(data.getGeometry().vertizes.get(iz) > level) above.add(i);
+                for (int i = 0, iz = 2; iz < data.getGeometry().vertizes.size(); i++, iz += 3) {
+                    if (data.getGeometry().vertizes.get(iz) > level) above.add(i);
                 }
                 Set<List<List<Integer>>> cuttingEdges = new HashSet<List<List<Integer>>>();
-                for(int i=0; i<data.getGeometry().indizes.size(); i+=3){
+                for (int i = 0; i < data.getGeometry().indizes.size(); i += 3) {
                     List<Integer> aboveCt = new ArrayList<Integer>();
                     List<Integer> belowCt = new ArrayList<Integer>();
-                    for(int pt = i; pt<3+i; pt++) {
+                    for (int pt = i; pt < 3 + i; pt++) {
                         Integer ind = data.getGeometry().indizes.get(pt);
-                        if(above.contains(ind)) aboveCt.add(ind); else belowCt.add(ind);
+                        if (above.contains(ind)) aboveCt.add(ind);
+                        else belowCt.add(ind);
                     }
-                    if(!(aboveCt.isEmpty() || belowCt.isEmpty())){
+                    if (!(aboveCt.isEmpty() || belowCt.isEmpty())) {
                         List<List<Integer>> lines = new ArrayList<List<Integer>>(2);
                         lines.add(Arrays.asList(aboveCt.get(0), belowCt.get(0)));
-                        if(aboveCt.size()==1) {
+                        if (aboveCt.size() == 1) {
                             lines.add(Arrays.asList(aboveCt.get(0), belowCt.get(1)));
                         } else {
                             lines.add(Arrays.asList(aboveCt.get(1), belowCt.get(0)));
@@ -86,13 +80,19 @@ public class Ifc_2D extends Configuration<EMFIfcParser.EngineEObject, Draw2dFact
                     }
                 }
                 List<Integer> current = cuttingEdges.iterator().next().get(0);
-                while(current!=null){
-                    double[] pt = interpolateXY(data.getGeometry().vertizes, current.get(0)*3, current.get(1)*3, level);
-                    graphObject.addPoint((int) (pt[0]*scale + offsetX), (int) (pt[1]*scale + offsetY));
+                while (current != null) {
+                    double[] pt = interpolateXY(data.getGeometry().vertizes, current.get(0) * 3, current.get(1) * 3, level);
+                    graphObject.addPoint((int) (pt[0] * scale + offsetX), (int) (pt[1] * scale + offsetY));
                     List<Integer> newCurrent = null;
-                    for(List<List<Integer>> edge: cuttingEdges){
-                        if(edge.get(0)!= current && edge.get(0).equals(current)) { newCurrent = edge.get(1); break; }
-                        if(edge.get(1)!= current && edge.get(1).equals(current)) { newCurrent = edge.get(0); break; }
+                    for (List<List<Integer>> edge : cuttingEdges) {
+                        if (edge.get(0) != current && edge.get(0).equals(current)) {
+                            newCurrent = edge.get(1);
+                            break;
+                        }
+                        if (edge.get(1) != current && edge.get(1).equals(current)) {
+                            newCurrent = edge.get(0);
+                            break;
+                        }
                     }
                     current = newCurrent;
                 }
@@ -100,13 +100,13 @@ public class Ifc_2D extends Configuration<EMFIfcParser.EngineEObject, Draw2dFact
 
             private double[] interpolateXY(List<Float> vertizes, Integer i1, Integer i2, int zLevel) {
                 Float z1 = vertizes.get(i1 + 2);
-                Float z2 = vertizes.get(i2+2);
+                Float z2 = vertizes.get(i2 + 2);
                 double interpol = (z1 - zLevel) / (z1 - z2);
-                Float y1 = vertizes.get(i1+1);
-                Float y2 = vertizes.get(i2+1);
+                Float y1 = vertizes.get(i1 + 1);
+                Float y2 = vertizes.get(i2 + 1);
                 double y = (y1 - y2) * interpol + y2;
                 Float x1 = vertizes.get(i1);
-                Float x2  = vertizes.get(i2);
+                Float x2 = vertizes.get(i2);
                 double x = (x1 - x2) * interpol + x2;
                 return new double[]{x, y};
             }

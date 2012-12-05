@@ -11,8 +11,6 @@ import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
 import de.tudresden.cib.vis.scene.Change;
-import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
-import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 import org.bimserver.models.ifc2x3tc1.IfcProduct;
 import org.eclipse.emf.ecore.EObject;
 
@@ -22,13 +20,9 @@ import java.util.*;
 
 import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
-public class IfcSched_Colored4D extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> {
+public class IfcSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, S> {
 
-    public IfcSched_Colored4D(DataAccessor<LinkedObject<EMFIfcParser.EngineEObject>> data){
-        super(data, new Java3dFactory(), new Java3dBuilder());
-    }
-
-    public IfcSched_Colored4D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper) {
+    public IfcSched_Colored4D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, ?, S> mapper) {
         super(mapper);
     }
 
@@ -90,9 +84,9 @@ public class IfcSched_Colored4D extends Configuration<LinkedObject<EMFIfcParser.
                 ((Shape3D) graphObject).setAppearance(inactive);
                 long earliestStart = mapper.getStats("earliestStart").longValue();
                 Map<Long, Integer> activityHistogram = getActivityHistogram(data.getResolvedLinks(), earliestStart);
-                if (!activityHistogram.isEmpty() && !activityHistogram.containsKey((long)0)) addChange(0, reset);
+                if (!activityHistogram.isEmpty() && !activityHistogram.containsKey((long) 0)) addChange(0, reset);
                 for (Map.Entry<Long, Integer> histEntry : activityHistogram.entrySet()) {
-                    addChange((int)(histEntry.getKey() / scale), histEntry.getValue() > 0 ? activate : (histEntry.getValue() == 0 ? reset : finish));
+                    addChange((int) (histEntry.getKey() / scale), histEntry.getValue() > 0 ? activate : (histEntry.getValue() == 0 ? reset : finish));
                 }
             }
         };
@@ -120,7 +114,7 @@ public class IfcSched_Colored4D extends Configuration<LinkedObject<EMFIfcParser.
             }
         };
         */
- 
+
         mapper.addMapping(anyActiveMapping);
 
 
@@ -149,7 +143,7 @@ public class IfcSched_Colored4D extends Configuration<LinkedObject<EMFIfcParser.
                 result.put(end, result.containsKey(end) ? result.get(end) - 1 : -1);
             }
         }
-        if(!result.isEmpty()){
+        if (!result.isEmpty()) {
             int current = 0;
             for (long time : result.keySet()) {
                 current += result.get(time);

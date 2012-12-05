@@ -40,12 +40,17 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/bundle/org.eclipse.emf.ecore.xmi/jars/org.eclipse.emf.ecore.xmi-2.7.0.v20110520-1406.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/bundle/cib.lib.gaeb.model/jars/cib.lib.gaeb.model-1.0.0.201209071948.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/bundle/cib.mf.qto.model/jars/cib.mf.qto.model-1.0.0.201209071948.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/bundle/cib.mf.risk.model/jars/cib.mf.risk.model-1.0.0.201209071948.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/bundle/org.eclipse.emf.edit/jars/org.eclipse.emf.edit-2.7.0.v20110606-0949.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/bundle/cib.mf.schedule.model/jars/cib.mf.schedule.model-1.1.0.201209071948.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/jars/junit-4.10.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.google.guava/guava/jars/guava-11.0.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.google.code.findbugs/jsr305/jars/jsr305-1.3.9.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.google.guava/guava-bootstrap/jars/guava-bootstrap-11.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-log4j12/jars/slf4j-log4j12-1.6.2.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.6.2.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/log4j/log4j/bundles/log4j-1.2.16.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.bimserver/bimserver-ifcplugins/jars/bimserver-ifcplugins-1.1.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.bimserver/bimserver-ifc/jars/bimserver-ifc-1.1.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.bimserver/bimserver-emf/jars/bimserver-emf-1.1.0.jar!/" />
@@ -55,7 +60,6 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/bundle/org.eclipse.ant.core/jars/org.eclipse.ant.core-3.2.300.v20110511.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/bundle/org.eclipse.core.variables/jars/org.eclipse.core.variables-3.2.500.v20110511.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.bimserver/bimserver-plugins/jars/bimserver-plugins-1.1.0.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.6.2.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.bimserver/bimserver-utils/jars/bimserver-utils-1.1.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.3.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.geronimo.specs/geronimo-javamail_1.4_spec/bundles/geronimo-javamail_1.4_spec-1.7.1.jar!/" />
@@ -76,25 +80,22 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/gnu.getopt/java-getopt/jars/java-getopt-1.0.13.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.bimserver/bimserver-ifcengine/jars/bimserver-ifcengine-1.1.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/net.java.dev.jna/jna/jars/jna-3.2.5.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-log4j12/jars/slf4j-log4j12-1.6.2.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/log4j/log4j/bundles/log4j-1.2.16.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/commons-io/commons-io/jars/commons-io-2.1.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/bundle/cib.mf.schedule.model/jars/cib.mf.schedule.model-1.1.0.201209071948.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/bundle/cib.mf.risk.model/jars/cib.mf.risk.model-1.0.0.201209071948.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/javadocs/junit-4.10-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.google.guava/guava/javadocs/guava-11.0.1-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-log4j12/javadocs/slf4j-log4j12-1.6.2-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-api/javadocs/slf4j-api-1.6.2-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/commons-codec/commons-codec/javadocs/commons-codec-1.3-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.geronimo.specs/geronimo-javamail_1.4_spec/javadocs/geronimo-javamail_1.4_spec-1.7.1-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/commons-lang/commons-lang/javadocs/commons-lang-2.4-javadoc.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-log4j12/javadocs/slf4j-log4j12-1.6.2-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/commons-io/commons-io/javadocs/commons-io-2.1-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/sources/junit-4.10-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.google.guava/guava/sources/guava-11.0.1-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-log4j12/sources/slf4j-log4j12-1.6.2-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-api/sources/slf4j-api-1.6.2-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/commons-codec/commons-codec/sources/commons-codec-1.3-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.geronimo.specs/geronimo-javamail_1.4_spec/sources/geronimo-javamail_1.4_spec-1.7.1-sources.jar!/" />
@@ -103,7 +104,6 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.antlr/antlr-runtime/sources/antlr-runtime-3.1.1-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/gnu.getopt/java-getopt/sources/java-getopt-1.0.13-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/net.java.dev.jna/jna/sources/jna-3.2.5-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-log4j12/sources/slf4j-log4j12-1.6.2-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/commons-io/commons-io/sources/commons-io-2.1-sources.jar!/" />
         </SOURCES>
       </library>

@@ -1,5 +1,6 @@
 package de.tudresden.cib.vis.data.bimserver;
 
+import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.Geometric;
 import de.tudresden.cib.vis.data.Geometry;
 import org.apache.commons.io.input.TeeInputStream;
@@ -10,6 +11,8 @@ import org.bimserver.plugins.PluginException;
 import org.bimserver.plugins.PluginManager;
 import org.bimserver.plugins.deserializers.DeserializeException;
 import org.bimserver.plugins.ifcengine.*;
+import org.bimserver.plugins.serializers.EmfSerializer;
+import org.bimserver.plugins.serializers.SerializerException;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
@@ -22,22 +25,45 @@ import java.util.Map;
 public class EMFIfcParser extends EMFIfcPlainParser {
 
     private IfcEngineModel engineModel;
-    private IfcEnginePlugin enginePlugin;
     private IfcEngine engine;
     private IfcEngineGeometry geometry;
+    private EmfSerializer serializer;
+    private PluginManager pluginManager;
 
-    public EMFIfcParser(PluginManager pluginManager) {
+    public EMFIfcParser(PluginManager pluginManager) throws DataAccessException {
         super(pluginManager);
-        enginePlugin = pluginManager.getAllIfcEnginePlugins(true).iterator().next();
+        this.pluginManager = pluginManager;
         try {
+            IfcEnginePlugin enginePlugin = pluginManager.requireIfcEngine();
+            serializer = pluginManager.requireIfcStepSerializer();
             engine = enginePlugin.createIfcEngine();
+            // if (engine instanceof FailSafeIfcEngine) ((FailSafeIfcEngine)engine).setUseSecondJvm(false);
             engine.init();
+        } catch (SerializerException e) {
+            throw new DataAccessException(e);
         } catch (PluginException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new DataAccessException(e);
         }
     }
 
-    public void read(InputStream inputStream, final long size) {
+    public void read(InputStream inputStream, final long size) throws DataAccessException {
+        try {
+            data = deserializer.read(inputStream, "?", true, 16*58);
+            serializer.init(data, null, pluginManager, engine);
+            engineModel = engine.openModel(serializer.getBytes());
+            engineModel.setPostProcessing(true);
+            geometry = engineModel.finalizeModelling(engineModel.initializeModelling());
+            adjustRelations();
+        } catch (DeserializeException e) {
+            throw new DataAccessException(e);
+        } catch (SerializerException e) {
+            throw new DataAccessException(e);
+        } catch (IfcEngineException e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public void read_TEE(InputStream inputStream, final long size) throws DataAccessException {
         try {
             final PipedInputStream piped = new PipedInputStream();
             OutputStream out = new PipedOutputStream(piped);
@@ -58,11 +84,11 @@ public class EMFIfcParser extends EMFIfcPlainParser {
             dataRead.join();
             adjustRelations();
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new DataAccessException(e);
         } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new DataAccessException(e);
         } catch (IfcEngineException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            throw new DataAccessException(e);
         }
     }
 

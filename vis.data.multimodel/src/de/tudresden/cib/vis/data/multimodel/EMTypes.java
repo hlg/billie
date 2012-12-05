@@ -4,6 +4,7 @@ import cib.lib.gaeb.model.gaeb.TgItem;
 import cib.mf.qto.model.AnsatzType;
 import cib.mf.risk.model.risk.RiskList;
 import cib.mf.schedule.model.activity11.Activity;
+import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
@@ -15,7 +16,7 @@ public enum EMTypes {
     // elment types must be unique!
 
     IFC("Object", "ifc", "2x3", EMFIfcParser.EngineEObject.class, true) {
-        IndexedDataAccessor createAccessor() {
+        IndexedDataAccessor createAccessor() throws DataAccessException {
             return new EMFIfcGeometricAccessor(pm);
         }
     },
@@ -49,7 +50,7 @@ public enum EMTypes {
     },
     IFCHIERARCHIC("Object", "ifc", "2x3", EMFIfcHierarchicAcessor.HierarchicIfc.class, false) {
         @Override
-        IndexedDataAccessor createAccessor() {
+        IndexedDataAccessor createAccessor() throws DataAccessException {
             return new EMFIfcHierarchicAcessor(pm);
         }
     },
@@ -75,7 +76,7 @@ public enum EMTypes {
         this.preferred = preferred;
     }
 
-    abstract IndexedDataAccessor createAccessor();
+    abstract IndexedDataAccessor createAccessor() throws DataAccessException;
 
     public static EMTypes find(String modelType, String format, String formatVersion) {
         for (EMTypes type : EMTypes.values()) {

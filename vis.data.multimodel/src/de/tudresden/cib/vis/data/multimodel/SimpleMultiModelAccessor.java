@@ -5,6 +5,7 @@ import de.mefisto.model.container.ElementaryModel;
 import de.mefisto.model.linkModel.Link;
 import de.mefisto.model.linkModel.LinkModel;
 import de.mefisto.model.linkModel.LinkObject;
+import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 
@@ -25,12 +26,12 @@ public class SimpleMultiModelAccessor extends BaseMultiModelAccessor<LinkedObjec
     }
 
     @Override
-    public void read(InputStream inputStream, long size) throws IOException {
+    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
         readFromFolder(unzip(inputStream));
     }
 
     @Override
-    public void readFromFolder(File directory) {
+    public void readFromFolder(File directory) throws DataAccessException {
         Container container = readContainer(directory);
         for(ElementaryModel em: container.getElementaryModelGroup().getElementaryModels()){
             IndexedDataAccessor data = firstAccessible(directory, em);
@@ -45,15 +46,17 @@ public class SimpleMultiModelAccessor extends BaseMultiModelAccessor<LinkedObjec
         }
     }
 
-    public LinkedList<String> readFromFolder(File folder, EMTypeCondition... requiredModels) throws MalformedURLException {
+    public LinkedList<String> readFromFolder(File folder, EMTypeCondition... requiredModels) throws MalformedURLException, DataAccessException {
         return readFromFolder(folder, null, requiredModels);
     }
 
-    public LinkedList<String> readFromFolder(File folder, String linkModelId, EMTypeCondition... requiredModels) throws MalformedURLException {
+    public LinkedList<String> readFromFolder(File folder, String linkModelId, EMTypeCondition... requiredModels) throws MalformedURLException, DataAccessException {
         Container container = readContainer(folder);
         LinkedList<String> modelIds = new LinkedList<String>();
         for(EMTypeCondition type: requiredModels){
-            modelIds.add(findModelOfType(folder, type, container.getElementaryModelGroup().getElementaryModels()));
+            List<String> modelsOfType = findModelsOfType(folder, type, container.getElementaryModelGroup().getElementaryModels());
+            if(modelsOfType.isEmpty()) throw new RuntimeException("missing required model: " + type.toString());
+            modelIds.addAll(modelsOfType);
         }
         LinkModel linkModel = readLinkModel(folder, container, linkModelId);
         resolveLinks(linkModel);
