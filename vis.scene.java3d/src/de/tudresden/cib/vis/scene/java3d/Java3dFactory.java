@@ -104,13 +104,12 @@ public class Java3dFactory extends VisFactory3D {
 
         public void setColor(int R, int G, int B) {
             Appearance appearance = new Appearance();
-            Color3f color3f = new Color3f(R,G,B);
+            Color3f color3f = new Color3f((float)R/255,(float)G/255,(float)B/255);
             Material material = new Material(color3f, new Color3f(0f, 0f, 0f), color3f, color3f, 10f);
             material.setLightingEnable(true);
             appearance.setMaterial(material);
-            PolygonAttributes pa = new PolygonAttributes();
-            pa.setCullFace(PolygonAttributes.CULL_NONE);
-            appearance.setPolygonAttributes(pa);
+            appearance.setPolygonAttributes(getAppearance().getPolygonAttributes());
+            appearance.setTransparencyAttributes(getAppearance().getTransparencyAttributes());
             setAppearance(appearance);
         }
 

@@ -28,6 +28,7 @@
     <orderEntry type="module" module-name="vis.runtime.java3d" />
     <orderEntry type="module" module-name="vis.scene.java2d" />
     <orderEntry type="module" module-name="vis.scene.java3d" />
+    <orderEntry type="library" name="groovy-1.8.0-embeddable" level="application" />
     <orderEntry type="module-library">
       <library name="IvyIDEA-vis.swingApp-win">
         <CLASSES>

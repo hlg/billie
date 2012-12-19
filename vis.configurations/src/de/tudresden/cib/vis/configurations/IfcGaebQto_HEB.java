@@ -92,7 +92,6 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
                 TgBoQCtgy parent = ((TgBoQCtgy) data.getLinkedHierarchicGaeb().values().iterator().next().getParent().getObject());
                 if (parent.getID().equals("ILAGFNBA")) graphObject.setColor(220, 100, 0);
                 else graphObject.setBackground();
-                // data.getResolvedLinks().iterator().next().getScheduleObjects().values().iterator().next().getActivityData().getEnd();
             }
         });
     }

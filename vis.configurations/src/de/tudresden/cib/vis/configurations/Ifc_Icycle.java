@@ -39,7 +39,7 @@ public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, S> {
                 graphObject.setWidth(data.getNodeSize() * scale);
                 graphObject.setTop(data.getDepth() * 25);
                 graphObject.setHeight(25);
-                if (data.getObject() instanceof IfcSpatialStructureElement) graphObject.setColor(200, 200, 100);
+                if (data.getObject() instanceof IfcSpatialStructureElement) graphObject.setColor(200, 200, 200);
             }
         });
         if (WITH_LABELS)

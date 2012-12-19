@@ -71,8 +71,8 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 for (int month = 4; month <= 8; month++) {
                     final String lmid = String.format("FM%d", month + 1);
                     // int daysTillActivityEnd = (int) (startDays + activityData.get(lmid).time);
-                    int daysTillBillingPeriodEnd = Days.daysBetween(earliestStart, new DateTime(2012, month + 2, 1, 0, 0)).getDays();  // TODO move to globals
-                    addChange(daysTillBillingPeriodEnd * 2, new Change<VisFactory2D.Rectangle>() {
+                    int billingPeriodEnd = Days.daysBetween(earliestStart, new DateTime(2012, month + 2, 1, 0, 0)).getDays();  // TODO move to globals
+                    addChange(billingPeriodEnd * 2, new Change<VisFactory2D.Rectangle>() {
                         @Override
                         protected void configure() {
                             int expectedTime = (int) activityData.get(lmid).time;
@@ -100,17 +100,17 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 final int duration = Days.daysBetween(start, end).getDays();
                 for (int month = 4; month <= 8; month++) {
                     final String lmid = String.format("FM%d", month + 1);
-                    final int daysTillBillingPeriodEnd = Days.daysBetween(earliestStart, new DateTime(2012, month + 2, 1, 0, 0)).getDays();  // TODO move to globals
+                    final int billingPeriodEnd = Days.daysBetween(earliestStart, new DateTime(2012, month + 2, 1, 0, 0)).getDays();  // TODO move to globals
                     addChange(0, new Change<VisFactory2D.Rectangle>() {
                         @Override
                         protected void configure() {
                             graph.setWidth(0);
                         }
                     });
-                    addChange(daysTillBillingPeriodEnd * 2, new Change<VisFactory2D.Rectangle>() {
+                    addChange(billingPeriodEnd * 2, new Change<VisFactory2D.Rectangle>() {
                         @Override
                         protected void configure() {
-                            double projectedAmount = activityData.get(lmid).amount / activityData.get("FM3").amount * duration;
+                            double projectedAmount = activityData.get(lmid).amount / activityData.get(QTO_ID).amount * duration;
                             int expectedTime = (int) activityData.get(lmid).time;
                             if (projectedAmount < expectedTime) {
                                 graph.setColor(255, 0, 0);

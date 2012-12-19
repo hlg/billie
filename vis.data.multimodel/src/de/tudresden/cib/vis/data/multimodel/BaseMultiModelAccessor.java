@@ -7,6 +7,7 @@ import de.mefisto.model.parser.LinkModelParser;
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import org.apache.commons.io.IOUtils;
 import org.eclipse.emf.common.util.EList;
 
 import java.io.*;
@@ -22,9 +23,9 @@ import java.util.zip.ZipInputStream;
 public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
     protected Map<String, IndexedDataAccessor> elementaryModels = new HashMap<String, IndexedDataAccessor>();
 
-    protected Container readContainer(File folder) {
+    protected Container readContainer(File folder) throws DataAccessException {
         File mmFile = new File(folder, "MultiModel.xml");
-        assert folder.exists() && mmFile.exists();
+        if(!mmFile.exists()) throw new DataAccessException("not a valid multi model container folder");
         return ContainerModelParser.readContainerModel(mmFile).getContainer();
     }
 
@@ -97,8 +98,9 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
         return null;
     }
 
-    protected File unzip(InputStream inputStream) throws IOException {
+    public File unzip(InputStream inputStream) throws IOException {
         File tmp = new File("tmpunzip");
+        if(tmp.exists()) tmp.delete();
         tmp.mkdir();
         tmp.deleteOnExit();
         ZipInputStream zip = new ZipInputStream(inputStream);
@@ -109,12 +111,12 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
             else {
                 file.getParentFile().mkdirs();
                 FileOutputStream fos = new FileOutputStream(file);
-                for (int c = zip.read(); c != -1; c = zip.read()) {
-                    fos.write(c);
-                }
+                IOUtils.copy(zip, fos);
+                fos.close();
             }
             zipEntry = zip.getNextEntry();
         }
+        zip.close();
         return tmp;
     }
 

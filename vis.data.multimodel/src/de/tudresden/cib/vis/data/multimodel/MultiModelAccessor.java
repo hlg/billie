@@ -12,6 +12,7 @@ import org.bimserver.plugins.PluginManager;
 import org.eclipse.emf.common.util.EList;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -69,19 +70,27 @@ public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K
        return readFromFolder(folder, null, keyModel, requiredModels);
     }
 
+    public LinkedList<String> read(File file, EMTypeCondition keyModel, EMTypeCondition... requiredModels) throws IOException, DataAccessException {
+       return readFromFolder(file.isDirectory() ? file : unzip(new FileInputStream(file)), keyModel, requiredModels);
+    }
+
+    public LinkedList<String> read(File file, String linkModelId, EMCondition keyModel, EMCondition... requiredModels) throws IOException, DataAccessException {
+        return readFromFolder(file.isDirectory() ? file : unzip(new FileInputStream(file)), linkModelId, keyModel, requiredModels);
+    }
+
     public LinkedList<String> readFromFolder(File folder, String linkModelId, EMCondition keyModel, EMCondition... requiredModels) throws MalformedURLException, DataAccessException {
         // TODO: specify model by ID or additional conditions?
         Container container = readContainer(folder);
         EList<ElementaryModel> foundModels = container.getElementaryModelGroup().getElementaryModels();
         LinkedList<String> modelIds = new LinkedList<String>();
         List<String> candidateKeyModels = findModelsOfType(folder, keyModel, foundModels);
-        if(candidateKeyModels.size()>1) throw new RuntimeException("ambiguous key model conditions");
-        if(candidateKeyModels.size()==0) throw new RuntimeException("no key model found");
+        if(candidateKeyModels.size()>1) throw new DataAccessException("ambiguous key model conditions");
+        if(candidateKeyModels.size()==0) throw new DataAccessException("no key model found");
         String keyModelId = candidateKeyModels.get(0);
         modelIds.add(keyModelId);
         for(EMCondition required: requiredModels){
             List<String> modelsOfType = findModelsOfType(folder, required, foundModels);
-            if(modelsOfType.isEmpty()) throw new RuntimeException("required model missing: " + required.toString());
+            if(modelsOfType.isEmpty()) throw new DataAccessException("required model missing: " + required.toString());
             modelIds.addAll(modelsOfType);
         }
         LinkModel linkModel = readLinkModel(folder, container, linkModelId);

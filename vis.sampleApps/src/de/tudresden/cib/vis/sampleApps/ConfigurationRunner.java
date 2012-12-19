@@ -38,15 +38,15 @@ public enum ConfigurationRunner {
     IFC_3D {
         @Override
         void run(String[] args) throws FileNotFoundException, DataAccessException {
-            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager()));
+            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(createPluginManager()));
             new Ifc_3D<BranchGroup>(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
-            viewer.run(viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc").getPath());
+            viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc").getPath());
         }
     }, IFC_3DSPACE {
         @Override
         void run(String[] args) throws FileNotFoundException, DataAccessException {
-            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager()));
+            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(createPluginManager()));
             new Ifc_3D_Space(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.setPickingEnabled(false);
@@ -55,7 +55,7 @@ public enum ConfigurationRunner {
     }, IFC_4D {
         @Override
         void run(String[] args) throws IOException {
-            MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager()));
+            MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager()));
             new IfcSched_Colored4D<BranchGroup>(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.setPickingEnabled(false);
@@ -64,7 +64,7 @@ public enum ConfigurationRunner {
     }, IFCGAEB_3D {
         @Override
         void run(String[] args) throws IOException {
-            MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
+            MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
             mmAccessor.setModels(new EMTypeCondition(EMTypes.IFC), new EMTypeCondition(EMTypes.GAEB){
                 @Override
                 public boolean isValidFor(Content alternative) {
@@ -97,7 +97,7 @@ public enum ConfigurationRunner {
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             Draw2DViewer viewer = new Draw2DViewer();
             File input = viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "ifc");
-            DataAccessor<EMFIfcParser.EngineEObject> data = new EMFIfcGeometricAccessor(new SimplePluginManager(), new FileInputStream(input), input.length());
+            DataAccessor<EMFIfcParser.EngineEObject> data = new EMFIfcGeometricAccessor(createPluginManager(), new FileInputStream(input), input.length());
             Ifc_2D<Panel> ifc2DConfiguration = new Ifc_2D<Panel>(Draw2dBuilder.createMapper(data, viewer.getDefaultFont()));
             ifc2DConfiguration.config();
             viewer.showContent(ifc2DConfiguration.execute().getScene());
@@ -117,7 +117,7 @@ public enum ConfigurationRunner {
     }, PROGRESS_TEXT {
         @Override
         void run(String[] args) throws IOException, TargetCreationException {
-            MultiModelAccessor<Activity> dataAcessor = new MultiModelAccessor<Activity>(new SimplePluginManager());
+            MultiModelAccessor<Activity> dataAcessor = new MultiModelAccessor<Activity>(createPluginManager());
             String basePath = "D:/Nutzer/helga/div/mefisto-container/kongress_3/combined_Angebot_LF/";
             dataAcessor.addAcessor("FM3", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 LV VA.xml"), "QTO1"));
             String[] lm_ids = {"FM5", "FM6", "FM7", "FM8", "FM9"};
@@ -135,7 +135,7 @@ public enum ConfigurationRunner {
     }, PROGRESS_GANTT {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
-            MultiModelAccessor<Activity> dataAcessor = new MultiModelAccessor<Activity>(new SimplePluginManager());
+            MultiModelAccessor<Activity> dataAcessor = new MultiModelAccessor<Activity>(createPluginManager());
             String basePath = args.length > 1 ? args[1] : "/home/dev/src/visMapping.git/combined_Angebot_LF/";
             LinkedList<String> modelIds = dataAcessor.readFromFolder(new File(basePath), new EMTypeCondition(EMTypes.ACTIVITY11),
                     new EMTypeCondition(EMTypes.QTO) {
@@ -168,18 +168,18 @@ public enum ConfigurationRunner {
     }, IFC_REPORTS_4D {
         @Override
         void run(String[] args) throws IOException, TargetCreationException {
-            MultiModelAccessor<EMFIfcParser.EngineEObject> dataAcessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
+            MultiModelAccessor<EMFIfcParser.EngineEObject> dataAcessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(dataAcessor);
             String[] lm_ids = {"FM5", "FM6", "FM7", "FM8", "FM9"};
             Configuration config = new IfcQtoSched_Colored4D<BranchGroup>(loader.getMapper(), lm_ids, "FM3");
             config.config();
             SimpleViewer viewer = new SimpleViewer(loader);
-            viewer.run("/home/dev/src/visMapping.git/combined_Angebot_LF.zip");
+            viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());
         }
     }, LINKS_HEB {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
-            SimpleMultiModelAccessor dataAcessor = new SimpleMultiModelAccessor(new SimplePluginManager());
+            SimpleMultiModelAccessor dataAcessor = new SimpleMultiModelAccessor(createPluginManager());
             Draw2DViewer viewer = new Draw2DViewer();
             File input = args.length > 1 ? new File(args[1]) : viewer.chooseFolder("/home/dev/src/visMapping.git/");
             LinkedList<String> ids = dataAcessor.readFromFolder(input, "L2", new EMTypeCondition(EMTypes.QTO) {
@@ -212,7 +212,7 @@ public enum ConfigurationRunner {
     }, IFC_ICYCLE {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
-            EMFIfcHierarchicAcessor data = new EMFIfcHierarchicAcessor(new SimplePluginManager());
+            EMFIfcHierarchicAcessor data = new EMFIfcHierarchicAcessor(createPluginManager());
             data.setSkipLastLevel(false);
             Draw2DViewer viewer = new Draw2DViewer();
             data.read(viewer.chooseFile("/home/dev/src", "ifc"));
@@ -249,6 +249,13 @@ public enum ConfigurationRunner {
             System.out.println("\nrunning " + args[0]);
             valueOf(args[0]).run(args);
         }
+    }
+
+    SimplePluginManager createPluginManager(){
+        SimplePluginManager pluginManager = new SimplePluginManager();
+        pluginManager.loadPluginsFromCurrentClassloader();
+        pluginManager.initAllLoadedPlugins();
+        return pluginManager;
     }
 
     abstract void run(String[] args) throws IOException, TargetCreationException, DataAccessException;
