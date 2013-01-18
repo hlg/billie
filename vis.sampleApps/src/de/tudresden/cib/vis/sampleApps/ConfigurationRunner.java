@@ -174,6 +174,7 @@ public enum ConfigurationRunner {
             Configuration config = new IfcQtoSched_Colored4D<BranchGroup>(loader.getMapper(), lm_ids, "FM3");
             config.config();
             SimpleViewer viewer = new SimpleViewer(loader);
+            viewer.setPickingEnabled(false);
             viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());
         }
     }, LINKS_HEB {

@@ -81,6 +81,10 @@ public class ActivityHelper {
         return dateMillis + timeMillis;
     }
 
+    public Interval getInterval() {
+        return new Interval(getStartDate(), getEndDate());
+    }
+
     class SetActualComparison {
         long time = 0;
         double amount = 0;

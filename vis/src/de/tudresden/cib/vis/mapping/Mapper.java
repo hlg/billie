@@ -92,9 +92,9 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
         return statistics.get(name).getResult();
     }
 
-    public void addGlobal(String name, PreProcessing<Double> uPmax) {
-        uPmax.setMapper(this);
-        globals.put(name, uPmax);
+    public void addGlobal(String name, PreProcessing<Double> preprocessing) {
+        preprocessing.setMapper(this);
+        globals.put(name, preprocessing);
     }
 
     public Double getGlobal(String name) {

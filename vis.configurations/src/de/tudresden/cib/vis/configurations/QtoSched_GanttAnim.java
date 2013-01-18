@@ -9,6 +9,7 @@ import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.Interval;
 
 import java.util.Date;
 import java.util.Map;
@@ -19,6 +20,9 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
     private final String QTO_ID;
     private final int pxPerDay = 5;
     private final int scale = 1000 * 3600 * 24 / pxPerDay;
+    private Interval billingPeriod = new Interval(new DateTime(2012, 4, 1, 0, 0), new DateTime(2012, 9, 1, 0, 0));
+    private boolean showAll = false;
+    private Type type = Type.ACTUAL;
 
     public QtoSched_GanttAnim(Mapper<LinkedObject<Activity>, ?, S> mapper, String[] LM_IDS, String QTO_ID) {
         super(mapper);
@@ -34,9 +38,9 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 return Math.min(aggregator, new ActivityHelper(element.getKeyObject()).getStartDateInMillis());
             }
         });
-        mapper.addMapping(new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
+        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> baseActivity = new ConditionedPropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
             @Override
-            protected void configure() { // base activity
+            protected void configure() {
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
                 DateTime start = activityHelper.getStartDate();
                 DateTime end = activityHelper.getEndDate();
@@ -48,16 +52,18 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 graphObject.setLeft((int) (startDays * pxPerDay));
                 graphObject.setWidth((int) (durationDays * pxPerDay));
             }
-        });
+        };
+        mapper.addMapping(baseActivity);
 
-        mapper.addMapping(new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
+        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> expected = new ConditionedPropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() { // progress as should be
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
                 final Map<String, ActivityHelper.SetActualComparison> activityData = activityHelper.collectAmounts(LM_IDS, QTO_ID, data.getResolvedLinks());
                 graphObject.setTop(index * 25);
                 graphObject.setHeight(20);
-                graphObject.setColor(255, 255, 0);
+                if(type == Type.COMPARISON) graphObject.setColor(255, 255, 0);
+                if(type == Type.EXPECTED) graphObject.setColor(255, 0, 0);
                 DateTime start = activityHelper.getStartDate();
                 DateTime earliestStart = new DateTime(new Date(mapper.getStats("earliestStart").longValue()));
                 int startDays = Days.daysBetween(earliestStart, start).getDays();
@@ -85,8 +91,10 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                     */
                 }
             }
-        });
-        mapper.addMapping(new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
+        };
+        if(type==Type.COMPARISON ||type==Type.EXPECTED) mapper.addMapping(expected);
+
+        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> diff = new ConditionedPropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {  // diff
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
@@ -125,8 +133,46 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                     });
                 }
             }
-        });
-        mapper.addMapping(new PropertyMap<LinkedObject<Activity>, VisFactory2D.Label>() {
+        };
+        if(type==Type.COMPARISON) mapper.addMapping(diff);
+
+
+        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> actual = new ConditionedPropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {  // diff
+                ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
+                final Map<String, ActivityHelper.SetActualComparison> activityData = activityHelper.collectAmounts(LM_IDS, QTO_ID, data.getResolvedLinks());
+                graphObject.setHeight(20);
+                graphObject.setTop(25 * index);
+                DateTime earliestStart = new DateTime(new Date(mapper.getStats("earliestStart").longValue()));
+                DateTime start = activityHelper.getStartDate();
+                final DateTime end = activityHelper.getEndDate();
+                final int startDays = Days.daysBetween(earliestStart, start).getDays();
+                final int duration = Days.daysBetween(start, end).getDays();
+                for (int month = 4; month <= 8; month++) {
+                    final String lmid = String.format("FM%d", month + 1);
+                    final int billingPeriodEnd = Days.daysBetween(earliestStart, new DateTime(2012, month + 2, 1, 0, 0)).getDays();  // TODO move to globals
+                    addChange(0, new Change<VisFactory2D.Rectangle>() {
+                        @Override
+                        protected void configure() {
+                            graph.setWidth(0);
+                        }
+                    });
+                    addChange(billingPeriodEnd * 2, new Change<VisFactory2D.Rectangle>() {
+                        @Override
+                        protected void configure() {
+                            double projectedAmount = activityData.get(lmid).amount / activityData.get(QTO_ID).amount * duration;
+                            graph.setColor(0, 255, 0);
+                            graph.setLeft(startDays * pxPerDay);
+                            graph.setWidth((int) (projectedAmount * pxPerDay));
+                        }
+                    });
+                }
+            }
+        };
+        if(type==Type.ACTUAL) mapper.addMapping(actual);
+
+        mapper.addMapping(new ConditionedPropertyMap<LinkedObject<Activity>, VisFactory2D.Label>() {
             @Override
             protected void configure() { // label
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
@@ -138,4 +184,12 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
 
     }
 
+    private abstract class ConditionedPropertyMap<A extends LinkedObject<Activity>,B extends VisFactory2D.GraphObject> extends PropertyMap<A,B> {
+        @Override
+        protected boolean condition() {
+            return showAll || billingPeriod.overlaps(new ActivityHelper(data.getKeyObject()).getInterval());
+        }
+    }
+
+    private enum Type { EXPECTED, ACTUAL, COMPARISON }
 }
