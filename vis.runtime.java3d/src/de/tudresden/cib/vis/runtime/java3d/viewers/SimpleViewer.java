@@ -46,7 +46,7 @@ public class SimpleViewer extends JFrame {
         defaultAppearance = TypeAppearance.DEFAULT.getAppearance();
         noAppearance = TypeAppearance.OFF.getAppearance();
         this.loader = loader;
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE);
         setTitle("IFC Visualiser");
         setVisible(true);

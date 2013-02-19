@@ -17,7 +17,7 @@ public enum EMTypes {
 
     IFC("Object", "ifc", "2x3", EMFIfcParser.EngineEObject.class, true) {
         IndexedDataAccessor createAccessor() throws DataAccessException {
-            return new EMFIfcGeometricAccessor(pm);
+            return new EMFIfcGeometricAccessor(pm, true);
         }
     },
     GAEB("BoQ", "gaebxml", "3.1", TgItem.class, true) {

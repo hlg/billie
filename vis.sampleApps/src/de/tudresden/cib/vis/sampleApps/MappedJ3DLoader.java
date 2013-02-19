@@ -28,7 +28,7 @@ public class MappedJ3DLoader<E> implements Loader {
 
     public MappedJ3DLoader(DataAccessor<E> data) {
         this.data = data;
-        this.mapper = new Mapper<E, Java3dFactory.Java3DGraphObject, BranchGroup>(data, new Java3dFactory(), new Java3dBuilder());
+        this.mapper = Java3dBuilder.createMapper(data);
     }
 
     public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {

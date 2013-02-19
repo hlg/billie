@@ -49,9 +49,9 @@ public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParse
                 graphObject.setIndizes(geometry.indizes);
                 int price = calculateOveralPrice(data.getResolvedLinks()).intValue();
                 int halfMaxTotal = mapper.getGlobal("halfMaxTotal").intValue();
-                int red = price <= halfMaxTotal ? price / halfMaxTotal : 1;
-                int green = price > halfMaxTotal ? (1 - (price - halfMaxTotal) / halfMaxTotal) : 1;
-                graphObject.setColor(red, green, 0);     // 0 1 0 green, 1 1 0 yellow, 1 0 0 red
+                int red = price <= halfMaxTotal ? price * 255 / halfMaxTotal : 255;
+                int green = price > halfMaxTotal ? (255 - (price - halfMaxTotal) * 255 / halfMaxTotal) : 255;
+                graphObject.setColor(red, green, 0, 0);     // 0 1 0 green, 1 1 0 yellow, 1 0 0 red
             }
         });
     }

@@ -38,7 +38,7 @@ public enum ConfigurationRunner {
     IFC_3D {
         @Override
         void run(String[] args) throws FileNotFoundException, DataAccessException {
-            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(createPluginManager()));
+            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(createPluginManager(), true));
             new Ifc_3D<BranchGroup>(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc").getPath());
@@ -46,7 +46,7 @@ public enum ConfigurationRunner {
     }, IFC_3DSPACE {
         @Override
         void run(String[] args) throws FileNotFoundException, DataAccessException {
-            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(createPluginManager()));
+            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(createPluginManager(), true));
             new Ifc_3D_Space(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.setPickingEnabled(false);
@@ -77,6 +77,7 @@ public enum ConfigurationRunner {
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(mmAccessor);
             new IfcGaeb_Colored3D<BranchGroup>(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
+            viewer.setPickingEnabled(false);
             viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());
         }
     }, GAEB_BARCHART {

@@ -16,12 +16,12 @@ public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.En
     Map<String,EMFIfcParser.EngineEObject> wrappedData;
     private EMFIfcParser parser;
 
-    public EMFIfcGeometricAccessor(PluginManager pluginManager) throws DataAccessException {
-        parser = new EMFIfcParser(pluginManager);
+    public EMFIfcGeometricAccessor(PluginManager pluginManager, boolean forkInput) throws DataAccessException {
+        parser = new EMFIfcParser(pluginManager, forkInput);
     }
 
     public EMFIfcGeometricAccessor(SimplePluginManager simplePluginManager, InputStream input, long size) throws IOException, DataAccessException {
-        this(simplePluginManager);
+        this(simplePluginManager, true);
         read(input, size);
     }
 

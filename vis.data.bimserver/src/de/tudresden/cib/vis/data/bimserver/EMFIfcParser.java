@@ -29,10 +29,12 @@ public class EMFIfcParser extends EMFIfcPlainParser {
     private IfcEngineGeometry geometry;
     private EmfSerializer serializer;
     private PluginManager pluginManager;
+    private boolean forkInput;
 
-    public EMFIfcParser(PluginManager pluginManager) throws DataAccessException {
+    public EMFIfcParser(PluginManager pluginManager, boolean forkInput) throws DataAccessException {
         super(pluginManager);
         this.pluginManager = pluginManager;
+        this.forkInput = forkInput;
         try {
             IfcEnginePlugin enginePlugin = pluginManager.requireIfcEngine();
             serializer = pluginManager.requireIfcStepSerializer();
@@ -47,8 +49,12 @@ public class EMFIfcParser extends EMFIfcPlainParser {
     }
 
     public void read(InputStream inputStream, final long size) throws DataAccessException {
+        if (forkInput) readPiped(inputStream, size);
+        else readMemCopy(inputStream, size);
+    }
+        public void readMemCopy(InputStream inputStream, final long size) throws DataAccessException {
         try {
-            data = deserializer.read(inputStream, "?", true, 16*58);
+            data = deserializer.read(inputStream, "?", true, size);
             serializer.init(data, null, pluginManager, engine);
             engineModel = engine.openModel(serializer.getBytes());
             engineModel.setPostProcessing(true);
@@ -63,7 +69,7 @@ public class EMFIfcParser extends EMFIfcPlainParser {
         }
     }
 
-    public void read_TEE(InputStream inputStream, final long size) throws DataAccessException {
+    public void readPiped(InputStream inputStream, final long size) throws DataAccessException {
         try {
             final PipedInputStream piped = new PipedInputStream();
             OutputStream out = new PipedOutputStream(piped);
@@ -71,7 +77,7 @@ public class EMFIfcParser extends EMFIfcPlainParser {
             Thread dataRead = new Thread(new Runnable() {
                 public void run() {
                     try {
-                        data = deserializer.read(tee, "?", true, 16 * 58);
+                        data = deserializer.read(tee, "?", true, size);
                     } catch (DeserializeException e) {
                         e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     }

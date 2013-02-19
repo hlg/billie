@@ -68,7 +68,9 @@ public class Java3dFactory extends VisFactory3D {
                     IndexedTriangleArray geometry = getGeometryWithDefault(vertizes.size() / 3, indizes.size());
                     geometry.setCoordinates(0, ArrayUtils.toPrimitive(vertizes.toArray(new Float[vertizes.size()])));
                     geometry.setNormals(0, ArrayUtils.toPrimitive(normals.toArray(new Float[normals.size()])));
-                    geometry.setCoordinateIndices(0, ArrayUtils.toPrimitive(indizes.toArray(new Integer[indizes.size()])));
+                    int[] indizesPrimitive = ArrayUtils.toPrimitive(indizes.toArray(new Integer[indizes.size()]));
+                    geometry.setCoordinateIndices(0, indizesPrimitive);
+                    geometry.setNormalIndices(0, indizesPrimitive);
                     toBuild.setGeometry(geometry);
                 }
             }
@@ -111,7 +113,10 @@ public class Java3dFactory extends VisFactory3D {
         private Appearance createAppearance(float R, float G, float B) {
             Appearance appearance = new Appearance();
             Color3f color3f = new Color3f(R /255, G /255, B /255);
-            Material material = new Material(color3f, new Color3f(0f, 0f, 0f), color3f, color3f, 10f);
+            Color3f ambient = new Color3f(color3f);
+            ambient.scale(0.5f);
+            Color3f noColor = new Color3f(0f, 0f, 0f);
+            Material material = new Material(noColor, noColor, color3f, noColor, 1);  //  ambient, emissive, diffuse, specular, shininess
             material.setLightingEnable(true);
             appearance.setMaterial(material);
             appearance.setPolygonAttributes(getAppearance().getPolygonAttributes());
@@ -121,7 +126,7 @@ public class Java3dFactory extends VisFactory3D {
         @Override
         public void setColor(int R, int G, int B, int alpha) {
             Appearance appearance = createAppearance(R,G,B);
-            appearance.setTransparencyAttributes(new TransparencyAttributes(TransparencyAttributes.NICEST, alpha/255));
+            if(alpha>0) appearance.setTransparencyAttributes(new TransparencyAttributes(TransparencyAttributes.NICEST, alpha/255));
             setAppearance(appearance);
         }
     }

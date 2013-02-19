@@ -20,7 +20,7 @@ public class EMFIfcParserTests {
 
     @Test
     public void testLazyLoad() throws DataAccessException {
-        EMFIfcParser parser = new EMFIfcParser(pm);
+        EMFIfcParser parser = new EMFIfcParser(pm, true);
         String fileName = "/resources/carport2_.ifc";
         long size = new File(getClass().getResource(fileName).getFile()).length();
         parser.read(getClass().getResourceAsStream(fileName), size);
@@ -38,7 +38,7 @@ public class EMFIfcParserTests {
 
     @Test
     public void testAccessor() throws IOException, DataAccessException {
-        EMFIfcGeometricAccessor accessor = new EMFIfcGeometricAccessor(pm);
+        EMFIfcGeometricAccessor accessor = new EMFIfcGeometricAccessor(pm, true);
         String fileName = "/resources/carport2.ifc";
         long size = new File(getClass().getResource(fileName).getFile()).length();
         accessor.read(getClass().getResourceAsStream(fileName), size);
