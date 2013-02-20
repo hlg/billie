@@ -69,6 +69,17 @@ public class SceneManager<E, S> {
         }
     }
 
+    public void fire(Event event, E dataObject){
+        triggeredChanges.get(event).change(getGraphs(dataObject));
+    }
+
+    public void fire(Event event, Collection<E> dataObjects){
+        ChangeMap changeMap = triggeredChanges.get(event);
+        for(E dataObject: dataObjects){
+            changeMap.change(getGraphs(dataObject));
+        }
+    }
+
     public VisFactory2D.GraphObject getFirstGraph(E data) {
         Collection<VisFactory2D.GraphObject> graphObjects = mapped.get(data);
         return graphObjects.isEmpty() ? null : graphObjects.iterator().next();

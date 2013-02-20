@@ -141,13 +141,13 @@ public class MapperTest extends MappingTestCase {
         // TODO: tests to much (integration tests?)
        FakeVisBuilder builder = new FakeVisBuilder();
        Mapper test = makeMapper(builder);
-       final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>() {
+       final Change<FakeRectangle> theChange = new Change<FakeRectangle>() {
            @Override
            protected void configure() {
                graph.setWidth(100);
            }
        };
-        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+        test.addMapping(new PropertyMap<DataElement, FakeRectangle>() {
             @Override
             protected void configure() {
                 graphObject.setWidth(data.a);
@@ -159,6 +159,30 @@ public class MapperTest extends MappingTestCase {
         List<Change> changes = result.getChanges(Event.CLICK, generatedGraph);
         assertTrue(changes.contains(theChange));
         assertEquals(1, changes.size());
+    }
+
+    @Test
+    public void testDataEvent() throws TargetCreationException {
+        FakeVisBuilder builder = new FakeVisBuilder();
+        Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
+        final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                graph.setWidth(100);
+            }
+        };
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
+            @Override
+            protected void configure() {
+                graphObject.setWidth(data.a);
+                addChange(Event.HIGHLIGHT, theChange);
+            }
+        });
+        SceneManager result = test.map();
+        FakeRectangle generatedGraph = builder.parts.get(0);
+        assertEquals(5, generatedGraph.a);
+        result.fire(Event.HIGHLIGHT, d);
+        assertEquals(100,generatedGraph.a);
     }
 
     public static class FakeVisFactoy extends VisFactory2D {

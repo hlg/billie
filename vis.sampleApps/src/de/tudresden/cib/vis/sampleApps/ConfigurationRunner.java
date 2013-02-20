@@ -41,6 +41,7 @@ public enum ConfigurationRunner {
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(createPluginManager(), true));
             new Ifc_3D<BranchGroup>(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
+            viewer.setPickingEnabled(false);
             viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc").getPath());
         }
     }, IFC_3DSPACE {
