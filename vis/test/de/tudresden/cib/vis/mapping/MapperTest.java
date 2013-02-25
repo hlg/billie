@@ -91,18 +91,19 @@ public class MapperTest extends MappingTestCase {
             @Override
             protected void configure() {
                 graphObject.setWidth(10);
-                addChange(Event.CLICK, new Change<VisFactory2D.Rectangle>() {
+                addChange(EventX.CLICK, new Change<VisFactory2D.Rectangle>() {
                     @Override
                     protected void configure() {
                         graph.setWidth(1000);
                     }
                 });
+                addTrigger(EventX.CLICK);
             }
         });
         SceneManager result = test.map();
         FakeRectangle graph = builder.parts.get(0);
         assertEquals(10, graph.a);
-        result.fire(Event.CLICK, graph);
+        result.fire(EventX.CLICK, graph);
         assertEquals(1000, graph.a);
     }
 
@@ -114,7 +115,7 @@ public class MapperTest extends MappingTestCase {
             @Override
             protected void configure() {
                 graphObject.setWidth(10);
-                addChange(Event.CLICK, new Change<VisFactory2D.Rectangle>() {
+                addChange(EventX.CLICK, new Change<VisFactory2D.Rectangle>() {
                     @Override
                     protected void configure() {
                         graph.setWidth(1000);
@@ -125,44 +126,44 @@ public class MapperTest extends MappingTestCase {
         test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
-                addTrigger(Event.CLICK);
+                addTrigger(EventX.CLICK);
             }
         });
         SceneManager result = test.map();
         FakeRectangle receiving = builder.parts.get(0);
         FakeRectangle triggering = builder.parts.get(1);
         assertEquals(10, receiving.a);
-        result.fire(Event.CLICK, triggering);
+        result.fire(EventX.CLICK, triggering);
         assertEquals(1000, receiving.a);
     }
 
     @Test
-    public void testEvent() throws TargetCreationException {
+    public void testEventX() throws TargetCreationException {
         // TODO: tests to much (integration tests?)
        FakeVisBuilder builder = new FakeVisBuilder();
        Mapper test = makeMapper(builder);
-       final Change<FakeRectangle> theChange = new Change<FakeRectangle>() {
+       final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>() {
            @Override
            protected void configure() {
                graph.setWidth(100);
            }
        };
-        test.addMapping(new PropertyMap<DataElement, FakeRectangle>() {
+        test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
                 graphObject.setWidth(data.a);
-                addChange(Event.CLICK, theChange);
+                addChange(EventX.CLICK, theChange);
             }
         });
         SceneManager result = test.map();
         VisFactory2D.Rectangle generatedGraph = builder.parts.get(0);
-        List<Change> changes = result.getChanges(Event.CLICK, generatedGraph);
+        List<Change> changes = result.getChanges(EventX.CLICK, generatedGraph);
         assertTrue(changes.contains(theChange));
         assertEquals(1, changes.size());
     }
 
     @Test
-    public void testDataEvent() throws TargetCreationException {
+    public void testDataEventX() throws TargetCreationException {
         FakeVisBuilder builder = new FakeVisBuilder();
         Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
         final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>() {
@@ -175,13 +176,13 @@ public class MapperTest extends MappingTestCase {
             @Override
             protected void configure() {
                 graphObject.setWidth(data.a);
-                addChange(Event.HIGHLIGHT, theChange);
+                addChange(EventX.HIGHLIGHT, theChange);
             }
         });
         SceneManager result = test.map();
         FakeRectangle generatedGraph = builder.parts.get(0);
         assertEquals(5, generatedGraph.a);
-        result.fire(Event.HIGHLIGHT, d);
+        result.fire(EventX.HIGHLIGHT, d);
         assertEquals(100,generatedGraph.a);
     }
 
@@ -251,5 +252,9 @@ public class MapperTest extends MappingTestCase {
 
         public void setColor(int r, int g, int b) {
         }
+    }
+
+    public enum EventX implements Event  {
+        HIGHLIGHT, CLICK
     }
 }

@@ -26,7 +26,6 @@ import javax.swing.filechooser.FileFilter
 import java.awt.*
 import java.awt.BorderLayout as BL
 import java.awt.FlowLayout as FL
-import java.util.List
 
 public class MefistoDemo {
 

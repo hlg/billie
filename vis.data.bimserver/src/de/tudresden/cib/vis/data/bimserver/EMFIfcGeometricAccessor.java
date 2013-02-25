@@ -20,8 +20,8 @@ public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.En
         parser = new EMFIfcParser(pluginManager, forkInput);
     }
 
-    public EMFIfcGeometricAccessor(SimplePluginManager simplePluginManager, InputStream input, long size) throws IOException, DataAccessException {
-        this(simplePluginManager, true);
+    public EMFIfcGeometricAccessor(PluginManager pluginManager, InputStream input, long size) throws IOException, DataAccessException {
+        this(pluginManager, true);
         read(input, size);
     }
 
