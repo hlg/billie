@@ -1,8 +1,6 @@
-package de.tudresden.cib.vis.configurations;
+package de.tudresden.cib.vis.mapping;
 
 import de.tudresden.cib.vis.data.DataAccessor;
-import de.tudresden.cib.vis.mapping.Mapper;
-import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.VisBuilder;
 import de.tudresden.cib.vis.scene.VisFactory2D;

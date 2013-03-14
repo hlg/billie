@@ -4,6 +4,7 @@ import cib.mf.schedule.model.activity11.Activity;
 import cib.mf.schedule.model.activity11.ActivityData;
 import cib.mf.schedule.model.activity11.Timestamp;
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.Change;

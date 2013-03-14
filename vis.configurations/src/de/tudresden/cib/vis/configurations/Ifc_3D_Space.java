@@ -2,6 +2,7 @@ package de.tudresden.cib.vis.configurations;
 
 import de.tudresden.cib.vis.data.Geometry;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
+import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory3D;

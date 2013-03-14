@@ -2,6 +2,7 @@ package de.tudresden.cib.vis.data.bimserver;
 
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import org.bimserver.models.ifc2x3tc1.IfcRoot;
 import org.bimserver.plugins.PluginManager;
 
 import java.io.File;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObject> {
 
-    Map<String,EMFIfcParser.EngineEObject> wrappedData;
+    Map<String,EMFIfcParser.EngineEObject> indexedData;
     private EMFIfcParser parser;
 
     public EMFIfcGeometricAccessor(PluginManager pluginManager, boolean forkInput) throws DataAccessException {
@@ -39,8 +40,10 @@ public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.En
     }
 
     public void index() {
-        parser.data.indexGuids();
-        wrappedData = new HashMap<String, EMFIfcParser.EngineEObject>();
+        indexedData = new HashMap<String, EMFIfcParser.EngineEObject>();
+        for(EMFIfcParser.EngineEObject wrapped: parser.wrapped) {
+            if(wrapped.getObject() instanceof IfcRoot) indexedData.put(((IfcRoot)wrapped.getObject()).getGlobalId().getWrappedValue(), wrapped);
+        }
     }
 
     public EMFIfcParser.EngineEObject getIndexed(String objectID) {
@@ -49,13 +52,7 @@ public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.En
             assert idParts[0].equals(namespace);
             objectID = idParts[1];
         }
-        if (wrappedData.containsKey(objectID))
-            return wrappedData.get(objectID);
-        else {
-            EMFIfcParser.EngineEObject wrapped = parser.getWrappedObject(objectID);
-            wrappedData.put(objectID, wrapped);
-            return wrapped;
-        }
+        return indexedData.get(objectID);
     }
 
 }

@@ -2,6 +2,7 @@ package de.tudresden.cib.vis.configurations;
 
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
+import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory2D;

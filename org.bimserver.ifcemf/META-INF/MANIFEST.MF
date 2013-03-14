@@ -1,10 +1,26 @@
 Manifest-Version: 1.0
+Eclipse-BundleShape: dir
 Bundle-ManifestVersion: 2
 Bundle-Name: Extended Bimserver Plugin manager suitable for use in OSGI runtime
-Bundle-SymbolicName: org.bimserver.ifcemf.osgi
+Bundle-SymbolicName: org.bimserver.ifcemf
 Bundle-Vendor: CIB TU Dresden
-Require-Bundle: org.eclipse.equinox.common,
- org.eclipse.osgi
+Require-Bundle: org.eclipse.emf.ecore,
+  org.eclipse.emf.common,org.eclipse.emf.ecore.xmi,
+  org.eclipse.equinox.common,org.eclipse.osgi
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ClassPath: .
-Export-Package: org.bimserver.ifcemf
+Export-Package: org.bimserver.ifc.step.deserializer,
+  org.bimserver.ifc.step.serializer,
+  org.bimserver.ifc.xml.deserializer,
+  org.bimserver.ifc.xml.serializer,
+  nl.tue.buildingsmart.emf,
+  org.bimserver.emf,
+  org.bimserver.ifcengine,
+  org.bimserver.ifcengine.jvm,
+  org.bimserver.models.ifc2x3tc1,
+  org.bimserver.models.ifc2x3tc1.util,
+  org.bimserver.plugins.ifcengine,
+  org.bimserver.plugins.deserializers,
+  org.bimserver.plugins.serializers,
+  org.bimserver.plugins.schema,
+  org.bimserver.plugins,
+  org.bimserver.ifcemf

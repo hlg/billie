@@ -15,7 +15,7 @@ public class Java3dFactory extends VisFactory3D {
     Appearance defaultAppearance;
 
     public Java3dFactory(){
-        defaultAppearance = TypeAppearance.INACTIVE.createAppearance();
+        defaultAppearance = TypeAppearance.INACTIVE.getAppearance();
     }
 
     @Override
@@ -126,7 +126,7 @@ public class Java3dFactory extends VisFactory3D {
         @Override
         public void setColor(int R, int G, int B, int alpha) {
             Appearance appearance = createAppearance(R,G,B);
-            if(alpha>0) appearance.setTransparencyAttributes(new TransparencyAttributes(TransparencyAttributes.NICEST, alpha/255));
+            if(alpha>0) appearance.setTransparencyAttributes(new TransparencyAttributes(TransparencyAttributes.NICEST, (float)alpha/255));
             setAppearance(appearance);
         }
     }

@@ -6,7 +6,6 @@ import de.tudresden.cib.vis.data.Geometry;
 import org.apache.commons.io.input.TeeInputStream;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.IfcProduct;
-import org.bimserver.models.ifc2x3tc1.IfcRoot;
 import org.bimserver.plugins.PluginException;
 import org.bimserver.plugins.PluginManager;
 import org.bimserver.plugins.deserializers.DeserializeException;
@@ -16,10 +15,7 @@ import org.bimserver.plugins.serializers.SerializerException;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 
 public class EMFIfcParser extends EMFIfcPlainParser {
@@ -30,6 +26,7 @@ public class EMFIfcParser extends EMFIfcPlainParser {
     private EmfSerializer serializer;
     private PluginManager pluginManager;
     private boolean forkInput;
+    Collection<EngineEObject> wrapped;
 
     public EMFIfcParser(PluginManager pluginManager, boolean forkInput) throws DataAccessException {
         super(pluginManager);
@@ -60,6 +57,7 @@ public class EMFIfcParser extends EMFIfcPlainParser {
             engineModel.setPostProcessing(true);
             geometry = engineModel.finalizeModelling(engineModel.initializeModelling());
             adjustRelations();
+            wrapData();
         } catch (DeserializeException e) {
             throw new DataAccessException(e);
         } catch (SerializerException e) {
@@ -67,6 +65,11 @@ public class EMFIfcParser extends EMFIfcPlainParser {
         } catch (IfcEngineException e) {
             throw new DataAccessException(e);
         }
+    }
+
+    private void wrapData() {
+        wrapped = new HashSet<EngineEObject>();
+        for(IdEObject emfObject : data) wrapped.add(new EngineEObject(emfObject, engineModel, geometry));
     }
 
     public void readPiped(InputStream inputStream, final long size) throws DataAccessException {
@@ -89,6 +92,7 @@ public class EMFIfcParser extends EMFIfcPlainParser {
             geometry = engineModel.finalizeModelling(engineModel.initializeModelling());
             dataRead.join();
             adjustRelations();
+            wrapData();
         } catch (IOException e) {
             throw new DataAccessException(e);
         } catch (InterruptedException e) {
@@ -104,37 +108,8 @@ public class EMFIfcParser extends EMFIfcPlainParser {
         engine.close();
     }
 
-    public EngineEObject getWrappedObject(String objectID) {
-        return getWrappedObject(data.get(objectID));
-    }
-
-    public EngineEObject getWrappedObject(IfcRoot ifcRoot) {
-        return new EngineEObject(ifcRoot, engineModel, geometry);
-    }
-
     public Iterator<EngineEObject> getIterator() {
-        return data != null ? new EngineIterator(data.getValues().iterator()) : null;
-    }
-
-    class EngineIterator implements Iterator<EngineEObject> {
-
-        private Iterator<IdEObject> baseIterator;
-
-        EngineIterator(Iterator<IdEObject> baseIterator) {
-            this.baseIterator = baseIterator;
-        }
-
-        public boolean hasNext() {
-            return baseIterator.hasNext();
-        }
-
-        public EngineEObject next() {
-            return new EngineEObject(baseIterator.next(), engineModel, geometry);
-        }
-
-        public void remove() {
-            baseIterator.remove();
-        }
+        return wrapped != null ? wrapped.iterator() : null;
     }
 
     public static class EngineEObject implements Geometric<IdEObject> {

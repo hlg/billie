@@ -8,9 +8,10 @@ Bundle-ClassPath: .
 Bundle-Localization: plugin
 Export-Package: de.tudresden.cib.vis.data,
  de.tudresden.cib.vis.mapping,
- de.tudresden.cib.vis.scene
+ de.tudresden.cib.vis.scene,
+ de.tudresden.cib.vis.configurations
 Specification-Title: CIB visualization framework
 Specification-Version: 0.1
 Implementation-Title: snapshot
 Implementation-Version: 0.1
-Require-Bundle: com.google.guava
+Require-Bundle: com.google.guava,slf4j.api

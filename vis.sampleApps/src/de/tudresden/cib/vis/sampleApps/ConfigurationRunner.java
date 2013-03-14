@@ -14,6 +14,7 @@ import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.data.multimodel.*;
+import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.draw2d.Draw2DViewer;
 import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;

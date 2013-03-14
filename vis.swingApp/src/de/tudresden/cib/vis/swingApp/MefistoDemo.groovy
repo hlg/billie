@@ -10,6 +10,7 @@ import de.tudresden.cib.vis.data.Hierarchic
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager
 import de.tudresden.cib.vis.data.multimodel.*
+import de.tudresden.cib.vis.mapping.Configuration
 import de.tudresden.cib.vis.runtime.java3d.UniverseBuilder
 import de.tudresden.cib.vis.runtime.java3d.views.OrbitalView
 import de.tudresden.cib.vis.scene.SceneManager

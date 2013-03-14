@@ -3,7 +3,62 @@
     <property file="build.properties"/>
     <import file="../common.xml"/>
 
+    <target name="dist.module" depends="compile.module, test.module">
+        <tstamp/>
+        <property name="implversion" value="${DSTAMP}${TSTAMP}"/>
+
+        <pathconvert property="mf.classpath" pathsep=" ">
+            <path refid="ivy.classpath"/>
+            <flattenmapper/>
+        </pathconvert>
+
+        <deltree dir="lib"/>
+        <deltree dir="${bundle.dir}"/>
+        <ivy:resolve>
+            <ivy:dependency org="de.tudresden.cib" name="vis.data.bimserver" rev="latest.integration"/>
+            <ivy:exclude org="*" ext="*" type="source"/>
+            <ivy:exclude org="*" ext="*" type="javadoc"/>
+            <ivy:exclude org="bundle"/>
+            <ivy:exclude org="de.tudresden.cib"/>
+        </ivy:resolve>
+        <ivy:retrieve/>
+
+        <mkdir dir="${module.output.dir}/jar"/>
+
+        <copy todir="${module.output.dir}/classes">
+            <fileset dir="lib"/>
+        </copy>
+
+        <pathconvert property="bundle.classpath" pathsep=",">
+            <fileset dir="lib"/>
+            <flattenmapper/>
+        </pathconvert>
+
+        <jar jarfile="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar"
+             basedir="${module.output.dir}/classes"
+             manifest="${module.basedir}/META-INF/MANIFEST.MF">
+            <manifest>
+                <attribute name="Bundle-Classpath" value="${bundle.classpath},."/>
+                <attribute name="Specification-Vendor" value="TU Dresden, CIB"/>
+                <attribute name="Specification-Version" value="${version}"/>
+                <attribute name="Implementation-Vendor" value="TU Dresden, CIB"/>
+                <attribute name="Implementation-Version" value="${implversion}"/>
+                <attribute name="Bundle-Version" value="${version}"/>
+                <attribute name="Class-Path" value="${mf.classpath}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="publish.module.OSGI" depends="dist.module"> <!-- dependency is on master level -->
+        <echo message="exploding from ${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar to ${osgi.target}/dropins/plugins/de.tudresden.cib.${ant.project.name}_${version}" />
+        <mkdir dir="${osgi.target}/dropins/plugins/${ant.project.name}_${version}"/>
+        <unzip src="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar" dest="${osgi.target}/dropins/plugins/${ant.project.name}_${version}" />
+        <!-- copy verbose="true" includeEmptyDirs="true" failonerror="true" tofile="${osgi.target}/dropins/plugins/${ant.project.name}_${version}.jar" file="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar" /-->
+    </target>
+
+
     <target name="build.dep.module" depends="common.dist.module">
+        <!-- deprecated -->
         <property name="bundle.dir" value="${module.output.dir}/osgi/org.bimserver.ifcemf_0.1"/>
         <property name="adapter.jar" value="${ant.project.name}-${version}-SNAPSHOT.jar" />
 
@@ -33,7 +88,7 @@
                        value="org.eclipse.emf.ecore,org.eclipse.emf.common,org.eclipse.emf.ecore.xmi,
                        org.eclipse.equinox.common,org.eclipse.osgi"/>
             <attribute name="Bundle-SymbolicName" value="org.bimserver.ifcemf"/>
-            <attribute name="Bundle-Version" value="0.1"/>
+            <attribute name="Bundle-Version" value="0.2"/>
             <attribute name="Export-Package"
                        value="org.bimserver.ifc.step.deserializer,
  org.bimserver.ifc.step.serializer,

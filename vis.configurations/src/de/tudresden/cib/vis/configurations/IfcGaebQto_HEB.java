@@ -5,6 +5,7 @@ import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.multimodel.HierarchicGaebAccessor;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
+import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory2D;
