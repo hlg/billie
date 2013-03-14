@@ -238,6 +238,24 @@ public enum ConfigurationRunner {
             config.config();
             viewer.showContent(config.execute().getScene());
         }
+    }, IFC_GAEB_INTERACTION {
+        @Override
+        void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
+            SimplePluginManager pluginManager = createPluginManager();
+            MultiModelAccessor byIfc = new MultiModelAccessor<EObject>(pluginManager);
+            Draw2DViewer viewer = new Draw2DViewer();
+            File input = args.length > 1 ? new File(args[1]) : viewer.chooseFolder("/home/dev/src/visMapping.git/");
+            List<String> modelIds = byIfc.read(input, new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEB)); // check its the right GAEB
+            IndexedDataAccessor ifc =  byIfc.getAccessor(modelIds.get(0));
+            IndexedDataAccessor gaeb = byIfc.getAccessor(modelIds.get(1));
+            Configuration<?,Panel> gaebConfig = new Gaeb_Barchart<Panel>(Draw2dBuilder.createMapper(gaeb, viewer.getDefaultFont()));
+            gaebConfig.config();
+            SceneManager<?,Panel> gaebScene = gaebConfig.execute();
+            Panel container = new Panel();
+            GridLayout manager = new GridLayout(2, true);
+            container.setLayoutManager(manager);
+            container.add(gaebScene.getScene());
+        }
     };
 
     public static void main(String[] args) throws TargetCreationException, DataAccessException, IOException {
