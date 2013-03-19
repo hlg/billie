@@ -170,13 +170,15 @@ public class Draw2dFactory extends VisFactory2D {
             figure.setForegroundColor(new Color(null, r, g, b));
         }
 
-        public class BezierPolyline extends org.eclipse.draw2d.Polyline {
+        public class BezierPolyline extends PolylineShape {
             protected void outlineShape(Graphics g) {
                 PointList pointList = getPoints();
 
                 Point prevCtrl = pointList.getPoint(0);
                 Point currCtrl = pointList.getPoint(1);
                 Point pt1 = new Point((prevCtrl.x+currCtrl.x)/2, (prevCtrl.y+currCtrl.y)/2);
+                g.pushState();
+                g.translate(getLocation());
                 g.drawLine(prevCtrl, pt1);
                 if (pointList.size()>2) for (int i = 2; i < pointList.size(); i++) {
                     Point nextCtrl = pointList.getPoint(i);
@@ -186,6 +188,7 @@ public class Draw2dFactory extends VisFactory2D {
                     pt1 = pt2;
                 }
                 g.drawLine(pt1, currCtrl);
+                g.popState();
             }
 
         }

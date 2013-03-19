@@ -52,7 +52,7 @@ public abstract class VisFactory2D {
         void setRotation(int i);
     }
 
-    public interface Polyline extends GraphObject {
+    public interface Polyline extends GraphObject2D {
         void addLine(int x1, int y1, int x2, int y2);
         void addPoint(int x, int y);
     }
