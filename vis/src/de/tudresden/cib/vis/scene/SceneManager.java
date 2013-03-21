@@ -124,6 +124,10 @@ public class SceneManager<E, S> {
         return scheduledChanges.size();
     }
 
+    public Map<Event, Collection<VisFactory2D.GraphObject>> getTriggers() {
+        return triggers;
+    }
+
     private int getNoOfTriggers(){
         return triggeredChanges.size();
     }

@@ -1,6 +1,7 @@
 package de.tudresden.cib.vis.mapping;
 
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.scene.Event;
 import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.VisBuilder;
 import de.tudresden.cib.vis.scene.VisFactory2D;
@@ -41,6 +42,9 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
         visBuilder.init();
         preProcess();
         mainPass();
+        for (final Map.Entry<Event, Collection<VisFactory2D.GraphObject>> trigger : sceneManager.getTriggers().entrySet()) {
+           visBuilder.addTriggers(trigger.getKey(), trigger.getValue(), sceneManager);
+        }
         visBuilder.finish();
         sceneManager.setScene(visBuilder.getScene());
         sceneManager.setUiContext(visBuilder.getUiContext());

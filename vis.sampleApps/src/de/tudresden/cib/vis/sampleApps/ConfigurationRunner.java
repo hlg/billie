@@ -186,14 +186,15 @@ public enum ConfigurationRunner {
             SimpleMultiModelAccessor dataAcessor = new SimpleMultiModelAccessor(createPluginManager());
             Draw2DViewer viewer = new Draw2DViewer();
             File input = args.length > 1 ? new File(args[1]) : viewer.chooseFolder("/home/dev/src/visMapping.git/");
-            LinkedList<String> ids = dataAcessor.readFromFolder(input, "L2", new EMTypeCondition(EMTypes.QTO) {
+            EMTypeCondition angebotserstellung = new EMTypeCondition(EMTypes.QTO) {
                 @Override
                 public boolean isValidFor(ElementaryModel model) {
                     return super.isValidFor(model) && model.getMeta().getPhase().getPhaseDesc().equals("Angebotserstellung");
                 }
-            }, new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC));
-            DataAccessor<Hierarchic<IdEObject>> hierarchicIfc = dataAcessor.getAccessor(ids.get(1));
-            DataAccessor<Hierarchic<EObject>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(2));
+            };
+            LinkedList<String> ids = dataAcessor.readFromFolder(input, "L2", new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC), new EMTypeCondition(EMTypes.QTO));
+            DataAccessor<Hierarchic<IdEObject>> hierarchicIfc = dataAcessor.getAccessor(ids.get(0));
+            DataAccessor<Hierarchic<EObject>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(1));
             Panel container = new Panel();
             GridLayout manager = new GridLayout(1, true);
             container.setLayoutManager(manager);

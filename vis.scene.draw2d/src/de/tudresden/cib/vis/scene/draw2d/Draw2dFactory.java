@@ -8,6 +8,8 @@ import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 
+import java.util.List;
+
 public class Draw2dFactory extends VisFactory2D {
 
     private Font defaultFont;
@@ -58,6 +60,7 @@ public class Draw2dFactory extends VisFactory2D {
     public abstract class Draw2dObject<T extends Figure> implements GraphObject2D {
         protected T figure;
         private boolean background = false;
+        private boolean foreground = false;
 
         public Figure getObject() {
             return figure;
@@ -69,6 +72,19 @@ public class Draw2dFactory extends VisFactory2D {
 
         public boolean getBackground(){
             return background;
+        }
+
+        public void setForeground(){
+            foreground = true;
+            if(figure.getParent()!=null){
+                List children = figure.getParent().getChildren();
+                children.remove(figure);
+                children.add(figure);
+            }
+        }
+
+        public boolean getForeground(){
+            return foreground;
         }
 
     }

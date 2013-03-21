@@ -35,7 +35,9 @@ public abstract class VisFactory2D {
 
     public interface GraphObject2D extends GraphObject {
         void setBackground();
+        void setForeground();
         boolean getBackground();
+        boolean getForeground();
     }
 
     public interface Rectangle extends GraphObject {

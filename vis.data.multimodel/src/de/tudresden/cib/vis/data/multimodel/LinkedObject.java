@@ -55,8 +55,8 @@ public class LinkedObject<T> {
             return defaultEmptyList((Map<String, HierarchicGaebAccessor.HierarchicTgItemBoQCtgy>) linkedObjects.get(EMTypes.GAEBHIERARCHIC));
         }
 
-        private <T> Map<String, T> defaultEmptyList(Map<String, T> stringAnsatzTypeMap) {
-            return stringAnsatzTypeMap == null ? Collections.<String, T>emptyMap() : stringAnsatzTypeMap;
+        private <T> Map<String, T> defaultEmptyList(Map<String, T> groupedMap) {
+            return groupedMap == null ? Collections.<String, T>emptyMap() : groupedMap;
         }
 
         public void addObject(String modelId, Object object) {

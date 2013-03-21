@@ -8,6 +8,8 @@ import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
+import de.tudresden.cib.vis.scene.Change;
+import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
     private int ifcScale;
     private int gaebScale;
     private static int SMALLSIZE = 20;
-    private static double BUNDLING = 0.4;
+    private static double BUNDLING = 0.5;
     private static boolean SKIP_LAST_LEVEL = false;
 
     public IfcGaebQto_HEB(Mapper<LinkedObject.ResolvedLink, ?, S> mapper) {
@@ -90,11 +92,57 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
                     Point p = layouted.get(i);
                     graphObject.addPoint((int) (BUNDLING * p.x + cx + i * ax), (int) (BUNDLING * p.y + cy + i * ay));
                 }
-                TgBoQCtgy parent = ((TgBoQCtgy) data.getLinkedHierarchicGaeb().values().iterator().next().getParent().getObject());
-                if (parent.getID().equals("ILAGFNBA")) graphObject.setColor(220, 100, 0);
-                else graphObject.setBackground();
+                // colorBoQCategory(data, graphObject);
+                // colorStartDate(data, graphObject);
+                colorCompletion(data, graphObject);
+
+                Change<VisFactory2D.Bezier> highlight = new Change<VisFactory2D.Bezier>() {
+                    @Override
+                    protected void configure() {
+                        graph.setColor(150, 0, 0);
+                        graph.setForeground();
+                    }
+                };
+                addTrigger(DefaultEvent.CLICK);
+                addChange(DefaultEvent.CLICK, highlight);
+                addTrigger(DefaultEvent.DRAG);
+                addChange(DefaultEvent.DRAG, highlight);
             }
         });
+    }
+
+    private void colorCompletion(LinkedObject.ResolvedLink data, VisFactory2D.Bezier graphObject) {
+        double finished = 0;
+        for(String lmid: new String[]{"FM5","FM6","FM7","FM8","FM9"}){
+            if(data.getLinkedQto().get(lmid)!=null) finished+=data.getLinkedQto().get(lmid).getResult();
+        }
+        data.getLinkedQto().get("FM3");
+
+    }
+
+    private void colorBoQCategory(LinkedObject.ResolvedLink data, VisFactory2D.GraphObject2D graphObject) {
+        TgBoQCtgy parent = ((TgBoQCtgy) data.getLinkedHierarchicGaeb().values().iterator().next().getParent().getObject());
+        if (parent.getID().equals("ILAGFNBA")) graphObject.setColor(150, 0, 0); else graphObject.setBackground();
+    }
+
+    private void colorStartDate(LinkedObject.ResolvedLink data, VisFactory2D.GraphObject2D graphObject) {
+        String lmMonthSTartd = monthStarted(data);
+        if (lmMonthSTartd==null) {
+            graphObject.setColor(200,200,200);
+            graphObject.setBackground();
+        }
+        else if (lmMonthSTartd.equals("FM5"))graphObject.setColor(0,150,0);
+        else if (lmMonthSTartd.equals("FM6"))graphObject.setColor(150,150,0);
+        else if (lmMonthSTartd.equals("FM7"))graphObject.setColor(150,0,0);
+        else if (lmMonthSTartd.equals("FM8"))graphObject.setColor(150, 0,150);
+        else if (lmMonthSTartd.equals("FM9"))graphObject.setColor(0,0,150);
+    }
+
+    private String monthStarted(LinkedObject.ResolvedLink data) {
+        for(String lmid: new String[]{"FM5","FM6","FM7","FM8","FM9"}){
+            if(data.getLinkedQto().get(lmid)!=null) { return lmid; }
+        }
+        return null;
     }
 
     private Point pointFor(Hierarchic current, int scale, int distance, int offset) {
@@ -118,4 +166,7 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
             this.y = y;
         }
     }
+
+
+
 }

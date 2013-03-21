@@ -54,6 +54,7 @@ public class Java2dFactory extends VisFactory2D {
     public abstract class Java2DObject implements GraphObject2D {
         Color color = Color.LIGHT_GRAY;
         private boolean background = false;
+        private boolean foreground = false;
 
         @Override
         public void setColor(int r, int g, int b) {
@@ -70,6 +71,15 @@ public class Java2dFactory extends VisFactory2D {
             return background;
         }
 
+        @Override
+        public void setForeground() {
+            foreground = true;
+        }
+
+        @Override
+        public boolean getForeground() {
+            return foreground;
+        }
         abstract void paint(Graphics2D g);
         abstract java.awt.Rectangle calculateBounds(Graphics2D g);
     }

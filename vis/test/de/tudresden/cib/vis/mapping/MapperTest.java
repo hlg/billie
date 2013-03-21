@@ -6,10 +6,7 @@ import de.tudresden.cib.vis.scene.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -230,6 +227,11 @@ public class MapperTest extends MappingTestCase {
         }
         public UIContext getUiContext() {
             return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public void addTriggers(Event event, Collection<VisFactory2D.GraphObject> triggers, SceneManager<?, Object> sceneManager) {
+            //To change body of implemented methods use File | Settings | File Templates.
         }
 
     }

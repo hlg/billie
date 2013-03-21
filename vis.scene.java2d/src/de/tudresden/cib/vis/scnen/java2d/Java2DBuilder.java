@@ -2,14 +2,14 @@ package de.tudresden.cib.vis.scnen.java2d;
 
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.mapping.Mapper;
-import de.tudresden.cib.vis.scene.ChangeMap;
-import de.tudresden.cib.vis.scene.UIContext;
-import de.tudresden.cib.vis.scene.VisBuilder;
+import de.tudresden.cib.vis.scene.*;
+import de.tudresden.cib.vis.scene.Event;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
@@ -79,6 +79,11 @@ public class Java2DBuilder implements VisBuilder<Java2dFactory.Java2DObject, JPa
     @Override
     public UIContext getUiContext() {
         return uiContext;
+    }
+
+    @Override
+    public void addTriggers(Event event, Collection<VisFactory2D.GraphObject> triggers, SceneManager<?, JPanel> sceneManager) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
 
