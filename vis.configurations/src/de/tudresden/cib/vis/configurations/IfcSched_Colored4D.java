@@ -32,7 +32,7 @@ public class IfcSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcPars
             @Override
             public Long function(Long aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
                 for (LinkedObject.ResolvedLink link : element.getResolvedLinks()) {
-                    for (Activity activity : link.getScheduleObjects().values()) {
+                    for (Activity activity : link.getScheduleObject().values()) {
                         aggregator = Math.min(aggregator, getTimeInMillis(activity.getActivityData().getStart()));
                     }
                 }
@@ -43,7 +43,7 @@ public class IfcSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcPars
             @Override
             public Long function(Long aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
                 for (LinkedObject.ResolvedLink link : element.getResolvedLinks()) {
-                    for (Activity activity : link.getScheduleObjects().values()) {
+                    for (Activity activity : link.getScheduleObject().values()) {
                         aggregator = Math.max(aggregator, getTimeInMillis(activity.getActivityData().getEnd()));
                     }
                 }
@@ -137,7 +137,7 @@ public class IfcSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcPars
     private Map<Long, Integer> getActivityHistogram(Collection<LinkedObject.ResolvedLink> links, long earliestStart) {
         TreeMap<Long, Integer> result = new TreeMap<Long, Integer>();
         for (LinkedObject.ResolvedLink link : links) {
-            for (Activity activity : link.getScheduleObjects().values()) {
+            for (Activity activity : link.getScheduleObject().values()) {
                 long start = getTimeInMillis(activity.getActivityData().getStart()) - earliestStart;
                 result.put(start, result.containsKey(start) ? result.get(start) + 1 : 1);
                 long end = getTimeInMillis(activity.getActivityData().getEnd()) - earliestStart;
@@ -162,8 +162,8 @@ public class IfcSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcPars
     private Map<Integer, Event> getActivityList(Collection<LinkedObject.ResolvedLink> links, long earliestStart) {
         TreeMap<Integer, Event> result = new TreeMap<Integer, Event>();
         for (LinkedObject.ResolvedLink link : links) {
-            assert link.getScheduleObjects().size() == 1;
-            Collection<Activity> activities = link.getScheduleObjects().values();
+            assert link.getScheduleObject().size() == 1;
+            Collection<Activity> activities = link.getScheduleObject().values();
             if (!activities.isEmpty()) {
                 Activity theActivity = activities.iterator().next();
                 String descr = (link.getLinkedBoQ().size() >= 1)

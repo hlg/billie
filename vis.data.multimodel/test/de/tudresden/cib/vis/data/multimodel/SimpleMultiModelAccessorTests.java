@@ -61,7 +61,7 @@ public class SimpleMultiModelAccessorTests {
         int linkSize = 0;
         for(LinkedObject.ResolvedLink link: mma){
             linkSize++;
-            if (full) Assert.assertEquals(1, link.getScheduleObjects().size());
+            if (full) Assert.assertEquals(1, link.getScheduleObject().size());
             Assert.assertEquals(1, link.getLinkedBoQ().size());
             if (full) Assert.assertEquals(1, link.getLinkedObject().size());
             Assert.assertEquals(1, link.getLinkedQto().size());

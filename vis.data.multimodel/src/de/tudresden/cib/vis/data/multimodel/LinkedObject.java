@@ -29,34 +29,67 @@ public class LinkedObject<T> {
     }
 
     public static class ResolvedLink {
-        private HashMap<EMTypes, Map<String, ?>> linkedObjects = new HashMap<EMTypes, Map<String, ?>>();
+        private HashMap<EMTypes, Map<String, List<?>>> linkedObjects = new HashMap<EMTypes, Map<String, List<?>>>();
 
         public Map<String, AnsatzType> getLinkedQto() {
-            return defaultEmptyList((Map<String, AnsatzType>) linkedObjects.get(EMTypes.QTO));
+            return defaultEmptyList(linkedObjects.get(EMTypes.QTO));
         }
 
         public Map<String, TgItem> getLinkedBoQ() {
-            return defaultEmptyList((Map<String, TgItem>) linkedObjects.get(EMTypes.GAEB));
+            return defaultEmptyList(linkedObjects.get(EMTypes.GAEB));
         }
 
         public Map<String, EMFIfcParser.EngineEObject> getLinkedObject() {
-            return defaultEmptyList((Map<String, EMFIfcParser.EngineEObject>) linkedObjects.get(EMTypes.IFC));
+            return defaultEmptyList(linkedObjects.get(EMTypes.IFC));
         }
 
-        public Map<String, Activity> getScheduleObjects() {
-            return defaultEmptyList((Map<String, Activity>) linkedObjects.get(EMTypes.ACTIVITY11));
+        public Map<String, Activity> getScheduleObject() {
+            return defaultEmptyList(linkedObjects.get(EMTypes.ACTIVITY11));
         }
 
         public Map<String,EMFIfcHierarchicAcessor.HierarchicIfc> getLinkedHierarchicIfc(){
-            return defaultEmptyList((Map<String, EMFIfcHierarchicAcessor.HierarchicIfc>) linkedObjects.get(EMTypes.IFCHIERARCHIC));
+            return defaultEmptyList(linkedObjects.get(EMTypes.IFCHIERARCHIC));
         }
 
         public Map<String, HierarchicGaebAccessor.HierarchicTgItemBoQCtgy> getLinkedHierarchicGaeb(){
-            return defaultEmptyList((Map<String, HierarchicGaebAccessor.HierarchicTgItemBoQCtgy>) linkedObjects.get(EMTypes.GAEBHIERARCHIC));
+            return defaultEmptyList(linkedObjects.get(EMTypes.GAEBHIERARCHIC));
         }
 
-        private <T> Map<String, T> defaultEmptyList(Map<String, T> groupedMap) {
-            return groupedMap == null ? Collections.<String, T>emptyMap() : groupedMap;
+        private <T> Map<String, T> defaultEmptyList(Map<String, List<?>> groupedMap) {
+            if (groupedMap == null) return  Collections.emptyMap();
+            Map<String,T> firstElementMap = new HashMap<String, T>();
+            for(Map.Entry<String, List<?>> entry : groupedMap.entrySet()){
+                if (entry.getValue()!=null && !entry.getValue().isEmpty()) firstElementMap.put(entry.getKey(), (T) entry.getValue().get(0));
+            }
+            return firstElementMap;
+        }
+
+        public Collection<AnsatzType> getAllLinkedQtos(String modelId) {
+            return defaultEmptyAllList(linkedObjects.get(EMTypes.QTO), modelId);
+        }
+
+        public Collection<TgItem> getAllLinkedBoQs(String modelId) {
+            return defaultEmptyAllList(linkedObjects.get(EMTypes.GAEB), modelId);
+        }
+
+        public Collection<EMFIfcParser.EngineEObject> getAllLinkedObjects(String modelId) {
+            return defaultEmptyAllList(linkedObjects.get(EMTypes.IFC), modelId);
+        }
+
+        public Collection<Activity> getAllScheduleObjects(String modelId) {
+            return defaultEmptyAllList(linkedObjects.get(EMTypes.ACTIVITY11),modelId);
+        }
+
+        public Collection<EMFIfcHierarchicAcessor.HierarchicIfc> getAllLinkedHierarchicIfcs(String modelId){
+            return defaultEmptyAllList(linkedObjects.get(EMTypes.IFCHIERARCHIC), modelId);
+        }
+
+        public Collection<HierarchicGaebAccessor.HierarchicTgItemBoQCtgy> getAllLinkedHierarchicGaebs(String modelId){
+            return defaultEmptyAllList(linkedObjects.get(EMTypes.GAEBHIERARCHIC), modelId);
+        }
+
+        private <T> List<T> defaultEmptyAllList(Map<String, List<?>> groupedMap, String modelId) {
+            return groupedMap == null ? Collections.<T>emptyList() : (List<T>) groupedMap.get(modelId);
         }
 
         public void addObject(String modelId, Object object) {
@@ -65,8 +98,9 @@ public class LinkedObject<T> {
         }
 
         private <T> void addObject(EMTypes type, String modelId, T object) {
-            if (!linkedObjects.containsKey(type)) linkedObjects.put(type, new HashMap<String, T>());
-            ((Map<String, T>) linkedObjects.get(type)).put(modelId, object);
+            if (!linkedObjects.containsKey(type)) linkedObjects.put(type, new HashMap<String, List<?>>());
+            if (!linkedObjects.get(type).containsKey(modelId)) linkedObjects.get(type).put(modelId, new ArrayList<T>());
+            ((List<T>) linkedObjects.get(type).get(modelId)).add(object);
         }
 
     }

@@ -1,6 +1,7 @@
 package de.tudresden.cib.vis.configurations;
 
 import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
+import cib.mf.qto.model.AnsatzType;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.multimodel.HierarchicGaebAccessor;
@@ -13,6 +14,7 @@ import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, S> {
@@ -114,10 +116,18 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
     private void colorCompletion(LinkedObject.ResolvedLink data, VisFactory2D.Bezier graphObject) {
         double finished = 0;
         for(String lmid: new String[]{"FM5","FM6","FM7","FM8","FM9"}){
-            if(data.getLinkedQto().get(lmid)!=null) finished+=data.getLinkedQto().get(lmid).getResult();
+            Collection<AnsatzType> allLinkedQtos = data.getAllLinkedQtos(lmid);
+            if(allLinkedQtos!=null) for (AnsatzType ansatz: allLinkedQtos) if (ansatz!=null)finished += ansatz.getResult();
         }
-        data.getLinkedQto().get("FM3");
-
+        double planned = 0;
+        for (AnsatzType ansatzType : data.getAllLinkedQtos("FM3")){
+            planned += ansatzType.getResult();
+        }
+        double completion = finished / planned;
+        if (completion>1) completion = 1; // cutoff surplus quantities, TODO: check beforehand
+        int v = 150 - (int)(completion*150);
+        graphObject.setColor(v,150,0);
+        if(finished==0) { graphObject.setColor(220,220,220); graphObject.setBackground(); };
     }
 
     private void colorBoQCategory(LinkedObject.ResolvedLink data, VisFactory2D.GraphObject2D graphObject) {

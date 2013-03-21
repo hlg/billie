@@ -39,7 +39,7 @@ public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcP
             public Long function(Long aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
                 Collection<LinkedObject.ResolvedLink> resolvedLinks = element.getResolvedLinks();
                 if(!resolvedLinks.isEmpty()){
-                    Collection<Activity> activities = resolvedLinks.iterator().next().getScheduleObjects().values();
+                    Collection<Activity> activities = resolvedLinks.iterator().next().getScheduleObject().values();
                     if(!activities.isEmpty())
                         return Math.min(aggregator, new ActivityHelper(activities.iterator().next()).getStartDateInMillis());
                 }
@@ -49,8 +49,8 @@ public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcP
         mapper.addStatistics("accumulatedQto", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Double>(0d) {
             @Override
             public Double function(Double number, LinkedObject<EMFIfcParser.EngineEObject> object) {
-                if(!object.getResolvedLinks().isEmpty() && !object.getResolvedLinks().iterator().next().getScheduleObjects().isEmpty()){
-                    Activity theActivity = object.getResolvedLinks().iterator().next().getScheduleObjects().values().iterator().next();
+                if(!object.getResolvedLinks().isEmpty() && !object.getResolvedLinks().iterator().next().getScheduleObject().isEmpty()){
+                    Activity theActivity = object.getResolvedLinks().iterator().next().getScheduleObject().values().iterator().next();
                     if(!accumulatedQto.containsKey(theActivity)){
                         accumulatedQto.put(theActivity, new HashMap<String, Double>());
                         for (String lmid: lmids){ accumulatedQto.get(theActivity).put(lmid, 0d);}
@@ -85,7 +85,7 @@ public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcP
         PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, VisFactory3D.Polyeder> specialActiveMapping = new PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, VisFactory3D.Polyeder>() {
             @Override
             protected boolean condition() {
-                return  !data.getResolvedLinks().isEmpty() && !data.getResolvedLinks().iterator().next().getScheduleObjects().isEmpty();
+                return  !data.getResolvedLinks().isEmpty() && !data.getResolvedLinks().iterator().next().getScheduleObject().isEmpty();
             }
             @Override
             protected void configure() {
@@ -95,7 +95,7 @@ public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcP
                 addChange(0, reset);
 
                 DateTime earliestStart = new DateTime(new Date(mapper.getStats("earliestStart").longValue()));
-                Activity activity = data.getResolvedLinks().iterator().next().getScheduleObjects().values().iterator().next();
+                Activity activity = data.getResolvedLinks().iterator().next().getScheduleObject().values().iterator().next();
                 ActivityHelper activityHelper = new ActivityHelper(activity);
                 final DateTime end = activityHelper.getEndDate();
                 DateTime start = activityHelper.getStartDate();
