@@ -69,7 +69,7 @@ public class EMFIfcParser extends EMFIfcPlainParser {
 
     private void wrapData() {
         wrapped = new HashSet<EngineEObject>();
-        for(IdEObject emfObject : data) wrapped.add(new EngineEObject(emfObject, engineModel, geometry));
+        for(IdEObject emfObject : data.getAllWithSubTypes(IfcProduct.class)) wrapped.add(new EngineEObject(emfObject, engineModel, geometry));
     }
 
     public void readPiped(InputStream inputStream, final long size) throws DataAccessException {

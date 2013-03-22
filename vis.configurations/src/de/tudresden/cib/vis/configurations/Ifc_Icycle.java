@@ -1,10 +1,13 @@
 package de.tudresden.cib.vis.configurations;
 
+import de.tudresden.cib.vis.TriggerListener;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
+import de.tudresden.cib.vis.scene.Change;
+import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.IfcRoot;
@@ -36,6 +39,15 @@ public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, S> {
 
             @Override
             protected void configure() {
+                addTrigger(DefaultEvent.CLICK);
+                addChange(DefaultEvent.CLICK, new Change<VisFactory2D.Rectangle>() {
+                    private Hierarchic<IdEObject> d = data;
+                    @Override
+                    protected void configure() {
+                        graph.setColor(255, 0, 0);
+                        for (TriggerListener<Hierarchic<IdEObject>> listener: listeners) listener.notify(d);
+                    }
+                });
                 graphObject.setLeft(data.getNodesBefore() * scale);
                 graphObject.setWidth(data.getNodeSize() * scale);
                 graphObject.setTop(data.getDepth() * 25);
@@ -74,6 +86,7 @@ public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, S> {
                 String title = object.getName();
                 int doubleNodeSize = data.getNodeSize() * 2;
                 graphObject.setText(title == null ? "xxx" : title.length() <= doubleNodeSize ? title : "... " + title.substring(title.length() - doubleNodeSize, title.length() - 1));
+                addTrigger(DefaultEvent.CLICK);
             }
         });
     }

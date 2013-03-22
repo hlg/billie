@@ -10,8 +10,12 @@ import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.eclipse.emf.ecore.EObject;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 public class Gaeb_Barchart<S> extends Configuration<EObject, S> {
+
+    private List<String> highlightingIds = Arrays.asList("ILAFBAAA", "ILAFAGFA", "ILAFBFHA", "ILAFKNLA", "ILAFKIEA", "ILAFLDCA", "ILAFDAKA", "ILAFDGBA", "ILAFDLIA", "ILAFEAPA", "ILAFCLDA", "ILFCAGFA", "ILFCBFHA");
 
     public Gaeb_Barchart(Mapper<EObject, ?, S> mapper) {
         super(mapper);
@@ -38,6 +42,7 @@ public class Gaeb_Barchart<S> extends Configuration<EObject, S> {
                         graphObject.setWidth((int) (data.getUP().intValue() * mapper.getGlobal("widthFactor")));
                         graphObject.setLeft(200);
                         graphObject.setTop(index * 20); // TODO: alternative to iterator index ? Layoutmanager, dataacessor sorting parameters
+                        if(highlightingIds.contains(data.getID())) graphObject.setColor(150,0,0);
                     }
                 });
         mapper.addMapping(new PropertyMap<TgItem, VisFactory2D.Label>() {

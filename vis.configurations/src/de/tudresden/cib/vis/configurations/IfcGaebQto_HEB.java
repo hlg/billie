@@ -2,6 +2,7 @@ package de.tudresden.cib.vis.configurations;
 
 import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
 import cib.mf.qto.model.AnsatzType;
+import de.tudresden.cib.vis.TriggerListener;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.multimodel.HierarchicGaebAccessor;
@@ -96,13 +97,16 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
                 }
                 // colorBoQCategory(data, graphObject);
                 // colorStartDate(data, graphObject);
-                colorCompletion(data, graphObject);
+                // colorCompletion(data, graphObject);
 
                 Change<VisFactory2D.Bezier> highlight = new Change<VisFactory2D.Bezier>() {
+                    private LinkedObject.ResolvedLink d = data;
                     @Override
                     protected void configure() {
                         graph.setColor(150, 0, 0);
                         graph.setForeground();
+                        for (TriggerListener<LinkedObject.ResolvedLink> listener: listeners) listener.notify(d);
+
                     }
                 };
                 addTrigger(DefaultEvent.CLICK);
@@ -127,7 +131,7 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
         if (completion>1) completion = 1; // cutoff surplus quantities, TODO: check beforehand
         int v = 150 - (int)(completion*150);
         graphObject.setColor(v,150,0);
-        if(finished==0) { graphObject.setColor(220,220,220); graphObject.setBackground(); };
+        if(finished==0) { graphObject.setColor(220,220,220); graphObject.setBackground(); }
     }
 
     private void colorBoQCategory(LinkedObject.ResolvedLink data, VisFactory2D.GraphObject2D graphObject) {

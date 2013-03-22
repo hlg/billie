@@ -20,10 +20,6 @@ public class ChangeMap extends HashMap<VisFactory2D.GraphObject, List<Change>> {
         for (VisFactory2D.GraphObject toBeChanged: graphObjects) applyChanges(toBeChanged);
     }
 
-    public void change(VisFactory2D.GraphObject graphObject){
-        applyChanges(graphObject);
-    }
-
     private void applyChanges(VisFactory2D.GraphObject toBeChanged) {
         List<Change> changes = get(toBeChanged);
         if (changes!=null) for(Change change : changes) change.change(toBeChanged);

@@ -4,6 +4,7 @@ import cib.mf.schedule.model.activity11.Activity;
 import de.mefisto.model.container.Content;
 import de.mefisto.model.container.ElementaryModel;
 import de.mefisto.model.container.I;
+import de.tudresden.cib.vis.TriggerListener;
 import de.tudresden.cib.vis.configurations.*;
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.DataAccessor;
@@ -18,6 +19,7 @@ import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.draw2d.Draw2DViewer;
 import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
+import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.draw2d.Draw2dBuilder;
 import de.tudresden.cib.vis.scene.text.TextBuilder;
@@ -88,10 +90,10 @@ public enum ConfigurationRunner {
             Draw2DViewer viewer = new Draw2DViewer();
             Font big = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 50, 0);
             Font normal = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 10, 0);
-            File input = viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "X81");
+            File input = args.length>1 ? new File(args[1]) : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "X81");
             Gaeb_Barchart<Panel> gaebBarchartConfig = new Gaeb_Barchart<Panel>(Draw2dBuilder.createMapper(new EMFGaebAccessor(new FileInputStream(input)), normal));
             gaebBarchartConfig.config();
-            viewer.setSnapShotParams("/home/dev/test.png", SWT.IMAGE_PNG);
+            viewer.setSnapShotParams("D:\\Nutzer\\helga\\pub\\graphic\\yes.png", SWT.IMAGE_PNG);
             viewer.showContent(gaebBarchartConfig.execute().getScene());
             big.dispose();
         }
@@ -192,7 +194,7 @@ public enum ConfigurationRunner {
                     return super.isValidFor(model) && model.getMeta().getPhase().getPhaseDesc().equals("Angebotserstellung");
                 }
             };
-            LinkedList<String> ids = dataAcessor.readFromFolder(input, "L2", new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC), new EMTypeCondition(EMTypes.QTO));
+            final LinkedList<String> ids = dataAcessor.readFromFolder(input, "L2", new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC), new EMTypeCondition(EMTypes.QTO));
             DataAccessor<Hierarchic<IdEObject>> hierarchicIfc = dataAcessor.getAccessor(ids.get(0));
             DataAccessor<Hierarchic<EObject>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(1));
             Panel container = new Panel();
@@ -203,15 +205,26 @@ public enum ConfigurationRunner {
             hebConfig.config();
             SceneManager<LinkedObject.ResolvedLink, Panel> hebScene = hebConfig.execute();
 
-            Configuration<?,Panel> ifcIcycle = new Ifc_Icycle<Panel>(Draw2dBuilder.createMapper(hierarchicIfc, viewer.getDefaultFont()), hebConfig.getIfcScale());
+            Configuration<Hierarchic<IdEObject>,Panel> ifcIcycle = new Ifc_Icycle<Panel>(Draw2dBuilder.createMapper(hierarchicIfc, viewer.getDefaultFont()), hebConfig.getIfcScale());
             ifcIcycle.config();
 
-            Configuration<?,Panel> gaebIcycle = new Gaeb_Icycle<Panel>(Draw2dBuilder.createMapper(hierarchicGaeb, viewer.getDefaultFont()), hebConfig.getGaebScale());
+            final Configuration<Hierarchic<EObject>, Panel> gaebIcycle = new Gaeb_Icycle<Panel>(Draw2dBuilder.createMapper(hierarchicGaeb, viewer.getDefaultFont()), hebConfig.getGaebScale());
             gaebIcycle.config();
 
-            container.add(ifcIcycle.execute().getScene());
+            final SceneManager<Hierarchic<IdEObject>, Panel> ifcIcycleScene = ifcIcycle.execute();
+            final SceneManager<Hierarchic<EObject>, Panel> gaebIcycleScene = gaebIcycle.execute();
+
+            hebConfig.listeners.add(new TriggerListener<LinkedObject.ResolvedLink>() {
+                @Override
+                public void notify(LinkedObject.ResolvedLink data) {
+                    gaebIcycleScene.fire(DefaultEvent.CLICK, data.getLinkedHierarchicGaeb().get(ids.get(1)));
+                    ifcIcycleScene.fire(DefaultEvent.CLICK, data.getLinkedHierarchicIfc().get(ids.get(0)));
+                }
+            });
+
+            container.add(ifcIcycleScene.getScene());
             container.add(hebScene.getScene());
-            container.add(gaebIcycle.execute().getScene());
+            container.add(gaebIcycleScene.getScene());
             viewer.showContent(container);
         }
     }, IFC_ICYCLE {

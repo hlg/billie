@@ -7,6 +7,9 @@ import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory3D;
 import org.bimserver.models.ifc2x3tc1.IfcBuildingElement;
+import org.bimserver.models.ifc2x3tc1.IfcRelContainedInSpatialStructure;
+import org.bimserver.models.ifc2x3tc1.IfcRelDecomposes;
+import org.eclipse.emf.common.util.EList;
 
 public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, S> {
 
@@ -29,9 +32,15 @@ public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, S> {
             protected void configure() {
                 Geometry geometry = data.getGeometry();
                 assert geometry != null;
-                /* EList<IfcRelContainedInSpatialStructure> containedInStructure = ((IfcBuildingElement) data.getObject()).getContainedInStructure();
-                if (!containedInStructure.isEmpty() && containedInStructure.get(0).getRelatingStructure().getName().equals("E14"))
-                    graphObject.setColor(1, 0, 0); */
+                graphObject.setColor(220,220,220,230);
+                EList<IfcRelContainedInSpatialStructure> containedInStructure = ((IfcBuildingElement) data.getObject()).getContainedInStructure();
+                if (!containedInStructure.isEmpty()){
+                    EList<IfcRelDecomposes> containedIn = containedInStructure.get(0).getRelatingStructure().getDecomposes();
+                    if(!containedIn.isEmpty()) {
+                        String ancestorId = containedIn.get(0).getRelatingObject().getGlobalId().getWrappedValue();
+                        if(ancestorId.equals("31Ym9dOxj3JhclZuVA4A$p")||ancestorId.equals("3xXriqK0r02OQHfxL3VouW")) graphObject.setColor(150,0,0,0);
+                    }
+                }
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
                 graphObject.setIndizes(geometry.indizes);
