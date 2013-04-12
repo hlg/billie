@@ -1,0 +1,8 @@
+<ivy-module version="2.0">
+<info organisation="de.tudresden.cib" module="vis.data.mmqlserver"/>
+<dependencies>
+    <dependency org="bundle" name="cib.mmaa.language.mmql.transfer" rev="1.0.+"/>
+    <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true"/>
+    <dependency org="commons-io" name="commons-io" rev="2.1" />
+</dependencies>
+</ivy-module>

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Multi model parser
+Bundle-SymbolicName: de.tudresden.cib.vis.data.mmqlserver
+Bundle-Vendor: CIB TU Dresden
+Require-Bundle: vis,
+ cib.mmaa.language.mmql.transfer
+ cib.lib.apache.commons
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Export-Package: de.tudresden.cib.vis.data.mmqlserver

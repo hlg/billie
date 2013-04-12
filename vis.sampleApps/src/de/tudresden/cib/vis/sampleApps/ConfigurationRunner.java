@@ -14,6 +14,7 @@ import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
+import de.tudresden.cib.vis.data.mmqlserver.MmqlServerAccessor;
 import de.tudresden.cib.vis.data.multimodel.*;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
@@ -96,6 +97,26 @@ public enum ConfigurationRunner {
             viewer.setSnapShotParams("D:\\Nutzer\\helga\\pub\\graphic\\yes.png", SWT.IMAGE_PNG);
             viewer.showContent(gaebBarchartConfig.execute().getScene());
             big.dispose();
+        }
+    }, GAEB_BARCHART_MMQL {
+        @Override
+        void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
+            Draw2DViewer viewer = new Draw2DViewer();
+            // Font big = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 50, 0);
+            Font normal = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 10, 0);
+            File input = args.length>1 ? new File(args[1]) : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "mmaa");
+            MmqlServerAccessor mmqlAccessor = new MmqlServerAccessor();
+            mmqlAccessor.read("use editor \"carport.mmaa\"\n select" +
+                    "\titem.id as ID,\n" +
+                    "\titem ? (\"text\", \"outline\") as outline,\n" +
+                    "\titem.\"uP\" as UP\n" +
+                    "from\n" +
+                    "\t\"LV_1.X81\".\"Item\" as item\n");
+            Gaeb_Barchart_Mmql<Panel> gaebBarchartConfig = new Gaeb_Barchart_Mmql<Panel>(Draw2dBuilder.createMapper(mmqlAccessor, normal));
+            gaebBarchartConfig.config();
+            // viewer.setSnapShotParams("D:\\Nutzer\\helga\\pub\\graphic\\yes.png", SWT.IMAGE_PNG);
+            viewer.showContent(gaebBarchartConfig.execute().getScene());
+            normal.dispose();
         }
     }, IFC_2D {
         @Override

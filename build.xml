@@ -5,6 +5,7 @@
         <file name="vis/build.xml"/>
         <file name="vis.data.bimserver/build.xml"/>
         <file name="vis.data.multimodel/build.xml"/>
+        <file name="vis.data.mmqlserver/build.xml"/>
         <file name="vis.scene.text/build.xml"/>
         <file name="vis.scene.java2d/build.xml"/>
         <file name="vis.runtime.draw2d/build.xml"/>

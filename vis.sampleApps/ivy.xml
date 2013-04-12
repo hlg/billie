@@ -12,6 +12,7 @@
     <dependency org="de.tudresden.cib" name="vis.configurations" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.data.bimserver" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.data.multimodel" rev="latest.integration" changing="true"/>
+    <dependency org="de.tudresden.cib" name="vis.data.mmqlserver" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.scene.java3d" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.scene.draw2d" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.scene.java2d" rev="latest.integration" changing="true"/>
