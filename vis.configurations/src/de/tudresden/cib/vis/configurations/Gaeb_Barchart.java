@@ -22,16 +22,16 @@ public class Gaeb_Barchart<S> extends Configuration<EObject, S> {
     }
 
     public void config() {
-        mapper.addStatistics("UPmax", new DataAccessor.Folding<EObject, BigDecimal>(new BigDecimal(0)) {
+        mapper.addStatistics("ITmax", new DataAccessor.Folding<EObject, BigDecimal>(new BigDecimal(0)) {
             @Override
-            public BigDecimal function(BigDecimal aggregator, EObject elem) {
-                return elem instanceof TgItem ? aggregator.max(((TgItem) elem).getUP()) : aggregator;
+                public BigDecimal function(BigDecimal aggregator, EObject elem) {
+                return elem instanceof TgItem ? aggregator.max(((TgItem) elem).getIT()) : aggregator;
             }
         });
         mapper.addGlobal("widthFactor", new Mapper.PreProcessing<Double>() {
             @Override
             public Double getResult() {
-                return 1000. / mp.getStats("UPmax").doubleValue();
+                return 1000. / mp.getStats("ITmax").doubleValue();
             }
         });
         mapper.addMapping(
@@ -39,10 +39,11 @@ public class Gaeb_Barchart<S> extends Configuration<EObject, S> {
                     @Override
                     protected void configure() {
                         graphObject.setHeight(15);
-                        graphObject.setWidth((int) (data.getUP().intValue() * mapper.getGlobal("widthFactor")));
-                        graphObject.setLeft(200);
+                        graphObject.setForeground();
+                        graphObject.setWidth((int) (data.getIT().intValue() * mapper.getGlobal("widthFactor")));
+                        graphObject.setLeft(400);
                         graphObject.setTop(index * 20); // TODO: alternative to iterator index ? Layoutmanager, dataacessor sorting parameters
-                        if(highlightingIds.contains(data.getID())) graphObject.setColor(150,0,0);
+                        if (highlightingIds.contains(data.getID())) graphObject.setColor(150, 0, 0);
                     }
                 });
         mapper.addMapping(new PropertyMap<TgItem, VisFactory2D.Label>() {
@@ -56,8 +57,12 @@ public class Gaeb_Barchart<S> extends Configuration<EObject, S> {
                     container = container.eContainer().eContainer();
                 }
                 labelText.append(" ");
-                // labelText.append(data.getDescription().getCompleteText().getOutlineText().getOutlTxt().getTextOutlTxt().get(0).getP().get(0).getSpan().get(0).getValue());
+                // TODO: helper function for GAEB
+                String label = data.getDescription().getCompleteText().getOutlineText().getOutlTxt().getTextOutlTxt().get(0).getSpan().get(0).getValue().replaceAll("\\s+"," ");
+                labelText.append(label.substring(0,Math.min(label.length()-1,40)));
+                labelText.append(" ...");
                 graphObject.setText(labelText.toString());
+                graphObject.setBackground();
                 graphObject.setLeft(0);
                 graphObject.setTop(index * 20);
             }

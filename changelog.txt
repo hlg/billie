@@ -3,3 +3,8 @@
 0.6
 * wire specified trigger objects to scenegraph (implemented for Draw2D only, Java3D not working yet, others not at all)
 * added foreground (implemented in Draw2D only, lazy impl: background works in building scene, foreground in changing scene, to be fixed)
+
+0.7
+* resolve IfcRelAssociates abnormality (http://code.google.com/p/bimserver/wiki/Known_issues)
+* Foreground/background (GraphObject2D) options for all Draw2D objects
+* GAEB_Barchart config: clean and truncate text, use IT instead of UP

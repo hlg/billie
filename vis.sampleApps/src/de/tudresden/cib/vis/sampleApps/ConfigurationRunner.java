@@ -78,9 +78,11 @@ public enum ConfigurationRunner {
                     }
                     return false;
                 }
-            });
+            }, new EMTypeCondition(EMTypes.QTO));
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(mmAccessor);
-            new IfcGaeb_Colored3D<BranchGroup>(loader.getMapper()).config();
+            IfcGaeb_Colored3D config = new IfcGaeb_Colored3D<BranchGroup>(loader.getMapper());
+            // config.absolute=false;
+            config.config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.setPickingEnabled(false);
             viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());
@@ -91,7 +93,7 @@ public enum ConfigurationRunner {
             Draw2DViewer viewer = new Draw2DViewer();
             Font big = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 50, 0);
             Font normal = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 10, 0);
-            File input = args.length>1 ? new File(args[1]) : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "X81");
+            File input = args.length>1 ? new File(args[1]) : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "X8*");
             Gaeb_Barchart<Panel> gaebBarchartConfig = new Gaeb_Barchart<Panel>(Draw2dBuilder.createMapper(new EMFGaebAccessor(new FileInputStream(input)), normal));
             gaebBarchartConfig.config();
             viewer.setSnapShotParams("D:\\Nutzer\\helga\\pub\\graphic\\yes.png", SWT.IMAGE_PNG);

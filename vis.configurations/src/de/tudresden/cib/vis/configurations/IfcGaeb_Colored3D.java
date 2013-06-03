@@ -9,31 +9,37 @@ import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
+import de.tudresden.cib.vis.scene.Event;
 import de.tudresden.cib.vis.scene.VisFactory3D;
+import groovy.lang.GroovyShell;
+import org.bimserver.models.ifc2x3tc1.*;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 
 public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, S> {
 
-    public String gaebX84Id = "FM1";
-    public String gaebX83Id = "FM10";
+    public String gaebX84Id = "M3"; // "FM1";
+    public String gaebX83Id = "M3";
+    public boolean absolute = true;
+
+    private GroovyShell groovyShell = new GroovyShell();
 
     public IfcGaeb_Colored3D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, ?, S> mapper) {
         super(mapper);
     }
 
     public void config() {
-        mapper.addStatistics("maxTotal", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, BigDecimal>(new BigDecimal(0)) {
+        mapper.addStatistics("maxTotal", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Double>((double) 0) {
             @Override
-            public BigDecimal function(BigDecimal aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
-                return calculateOveralPrice(element.getResolvedLinks()).max(aggregator);
+            public Double function(Double aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
+                return Math.max(calculateValue(element), aggregator);
             }
         });
         mapper.addGlobal("halfMaxTotal", new Mapper.PreProcessing<Double>() {
             @Override
             public Double getResult() {
-                return mapper.getStats("maxTotal").doubleValue() * 0.5;
+                return mapper.getStats("maxTotal").doubleValue()*0.5;
             }
         });
         mapper.addMapping(new PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, VisFactory3D.Polyeder>() {
@@ -48,13 +54,37 @@ public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParse
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
                 graphObject.setIndizes(geometry.indizes);
-                int price = calculateOveralPrice(data.getResolvedLinks()).intValue();
-                int halfMaxTotal = mapper.getGlobal("halfMaxTotal").intValue();
-                int red = price <= halfMaxTotal ? price * 255 / halfMaxTotal : 255;
-                int green = price > halfMaxTotal ? (255 - (price - halfMaxTotal) * 255 / halfMaxTotal) : 255;
+                Double value = calculateValue(data);
+                Double halfMaxTotal = mapper.getGlobal("halfMaxTotal");
+                int red = value <= halfMaxTotal ? (int) (value * 255 / halfMaxTotal) : 255;
+                int green = value> halfMaxTotal ? (int) (255 - (value - halfMaxTotal) * 255 / halfMaxTotal) : 255;
                 graphObject.setColor(red, green, 0, 0);     // 0 1 0 green, 1 1 0 yellow, 1 0 0 red
             }
         });
+    }
+
+    private double calculateValue(LinkedObject<EMFIfcParser.EngineEObject> element) {
+        double price = calculateOveralPrice(element.getResolvedLinks()).doubleValue();
+        double volume = absolute ? 1 : extractVolume(element.getKeyObject());
+        return (volume > 0) ? (price / volume) : 0;
+    }
+
+    private double extractVolume(EMFIfcParser.EngineEObject keyObject) {
+        for(IfcRelDefines rel : ((IfcProduct) keyObject.getObject()).getIsDefinedBy()){
+            if(rel instanceof IfcRelDefinesByProperties && ((IfcRelDefinesByProperties) rel).getRelatingPropertyDefinition() instanceof IfcElementQuantity){
+                for(IfcPhysicalQuantity quantity :((IfcElementQuantity) ((IfcRelDefinesByProperties) rel).getRelatingPropertyDefinition()).getQuantities()){
+                    if(quantity.getName().equals("GrossVolume") && quantity instanceof IfcQuantityVolume) return ((IfcQuantityVolume) quantity).getVolumeValue();
+                }
+            }
+        }
+        return 1;
+    }
+
+    private double extractVolume(Collection<LinkedObject.ResolvedLink> resolvedLinks) {
+        for(LinkedObject.ResolvedLink resolvedLink: resolvedLinks){
+            if("m3".equals(resolvedLink.getLinkedBoQ().get(gaebX83Id).getQU())) return resolvedLink.getLinkedQto().values().iterator().next().getResult();
+        }
+        return 0;
     }
 
     private BigDecimal calculateOveralPrice(Collection<LinkedObject.ResolvedLink> resolvedLinks) {
@@ -67,5 +97,9 @@ public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParse
             }
         }
         return price;
+    }
+
+    enum CustomEvent implements Event {
+        NEW_COLOR_SCALE
     }
 }

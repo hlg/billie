@@ -40,14 +40,14 @@ public abstract class VisFactory2D {
         boolean getForeground();
     }
 
-    public interface Rectangle extends GraphObject {
+    public interface Rectangle extends GraphObject2D {
         void setLeft(int X);
         void setTop(int Y);
         void setHeight(int height);
         void setWidth(int width);
     }
 
-    public interface Label extends GraphObject {
+    public interface Label extends GraphObject2D {
         void setLeft(int X);
         void setTop(int Y);
         void setText(String text);
