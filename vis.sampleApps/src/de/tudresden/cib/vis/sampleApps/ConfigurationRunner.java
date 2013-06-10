@@ -79,13 +79,23 @@ public enum ConfigurationRunner {
                     return false;
                 }
             }, new EMTypeCondition(EMTypes.QTO));
+            // mmAccessor.setLinkModelId("L2"); // TODO: conditions!
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(mmAccessor);
-            IfcGaeb_Colored3D config = new IfcGaeb_Colored3D<BranchGroup>(loader.getMapper());
+            IfcGaeb_Colored3D config = null;
+            try {
+                config = args.length>2
+                        ? new IfcGaeb_Colored3D<BranchGroup>(loader.getMapper(), new File(args[2]))
+                        : new IfcGaeb_Colored3D<BranchGroup>(loader.getMapper());
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            } catch (InstantiationException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
             // config.absolute=false;
             config.config();
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.setPickingEnabled(false);
-            viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());
+            viewer.run((args.length > 1 && !args[1].equals("-")) ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());
         }
     }, GAEB_BARCHART {
         @Override

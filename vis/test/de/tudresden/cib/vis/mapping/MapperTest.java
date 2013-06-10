@@ -254,6 +254,26 @@ public class MapperTest extends MappingTestCase {
 
         public void setColor(int r, int g, int b) {
         }
+
+        @Override
+        public void setBackground() {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public void setForeground() {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public boolean getBackground() {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public boolean getForeground() {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+        }
     }
 
     public enum EventX implements Event  {

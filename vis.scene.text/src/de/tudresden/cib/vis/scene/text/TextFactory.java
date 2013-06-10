@@ -56,5 +56,25 @@ public class TextFactory extends VisFactory2D {
         public void setColor(int r, int g, int b) {
             throw new NotImplementedException();
         }
+
+        @Override
+        public void setBackground() {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public void setForeground() {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public boolean getBackground() {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public boolean getForeground() {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+        }
     }
 }
