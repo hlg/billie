@@ -1,0 +1,7 @@
+<ivy-module version="2.0">
+<info organisation="de.tudresden.cib" module="vis.data.jsdai"/>
+<dependencies>
+    <dependency org="de.tudresden.cib" name="bimfit" rev="1.5.2" />
+    <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true" />
+</dependencies>
+</ivy-module>

@@ -48,6 +48,7 @@ public class EMFIfcParser extends EMFIfcPlainParser {
     public void read(InputStream inputStream, final long size) throws DataAccessException {
         if (forkInput) readPiped(inputStream, size);
         else readMemCopy(inputStream, size);
+        // todo: get queryEngine via pluginmanager, queryengine#query(IfcModelInterface model, String code, Reporter reporter, ModelHelper modelHelper)
     }
         public void readMemCopy(InputStream inputStream, final long size) throws DataAccessException {
         try {
@@ -106,6 +107,7 @@ public class EMFIfcParser extends EMFIfcPlainParser {
     protected void finalize() throws Throwable {
         engineModel.close();
         engine.close();
+        super.finalize();
     }
 
     public Iterator<EngineEObject> getIterator() {

@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/vis/vis.iml" filepath="$PROJECT_DIR$/vis/vis.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.configurations/vis.configurations.iml" filepath="$PROJECT_DIR$/vis.configurations/vis.configurations.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.data.bimserver/vis.data.bimserver.iml" filepath="$PROJECT_DIR$/vis.data.bimserver/vis.data.bimserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vis.data.jsdai/vis.data.jsdai.iml" filepath="$PROJECT_DIR$/vis.data.jsdai/vis.data.jsdai.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.data.mmqlserver/vis.data.mmqlserver.iml" filepath="$PROJECT_DIR$/vis.data.mmqlserver/vis.data.mmqlserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.data.multimodel/vis.data.multimodel.iml" filepath="$PROJECT_DIR$/vis.data.multimodel/vis.data.multimodel.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.runtime.draw2d/vis.runtime.draw2d.iml" filepath="$PROJECT_DIR$/vis.runtime.draw2d/vis.runtime.draw2d.iml" />

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: IFC accessor based on JSDAI
+Bundle-SymbolicName: de.tudresden.cib.vis.data.jsdai
+Bundle-Vendor: CIB TU Dresden
+Require-Bundle: de.tudresden.cib.vis,
+  cib.lib.filter.ifc
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Export-Package: de.tudresden.cib.vis.data.jsdai
