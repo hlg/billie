@@ -5,48 +5,47 @@ import de.tudresden.bau.cib.model.StepDataModel;
 import de.tudresden.bau.cib.parser.StepParser;
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
-import jsdai.SIfc2x3.EIfcroot;
+import jsdai.SIfc2x3.EIfcproduct;
 import jsdai.lang.EEntity;
 import jsdai.lang.SdaiException;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class JsdaiIfcAccessor extends IndexedDataAccessor<EEntity> {
+public class JsdaiIfcGeometricAccessor extends IndexedDataAccessor<JsdaiIfcGeometricAccessor.GeomtricIfc>{
 
+    Map<String, GeomtricIfc> wrapped = new HashMap<String, GeomtricIfc>();
     StepParser parser = new StepParser(new File(System.getProperty("java.io.tmpdir"),"JSDAIrepo").getAbsolutePath());
-    StepDataModel data;
-    Map<String, EEntity> index = new HashMap<String, EEntity>();
 
     @Override
     public void index() throws DataAccessException {
-        index.clear();
-        try {
-            for(EIfcroot root : data.getEntitiesOf(EIfcroot.class)){
-                index.put(root.getGlobalid(null), root);
-            }
-        } catch (SdaiException e) {
-            throw new DataAccessException(e);
-        }
+        // indexing is done while reading and wrapping
     }
 
     @Override
-    public EEntity getIndexed(String objectID) {
-        return index.get(objectID);
+    public GeomtricIfc getIndexed(String objectID) {
+        return wrapped.get(objectID);
     }
 
     @Override
     public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
         try {
-            data = parser.loadStream(inputStream);
+            wrapped.clear();
+            StepDataModel data = parser.loadStream(inputStream);
+            for(EIfcproduct product: data.getEntitiesOf(EIfcproduct.class)){
+                wrapped.put(product.getGlobalid(null), new GeomtricIfc(product));
+            }
+
         } catch (ParsingException e) {
             throw new DataAccessException(e);
+        } catch (SdaiException e) {
+            throw new DataAccessException(e);
         }
+
     }
 
     @Override
@@ -55,11 +54,17 @@ public class JsdaiIfcAccessor extends IndexedDataAccessor<EEntity> {
     }
 
     @Override
-    public Iterator<EEntity> iterator() {
-        return Arrays.asList(data.getEntities()).iterator();
+    public Iterator<GeomtricIfc> iterator() {
+        return wrapped.values().iterator();
     }
 
-    protected void dispose() throws SdaiException {
-        parser.stop();
+    class GeomtricIfc {
+        EEntity oject;
+
+        public GeomtricIfc(EIfcproduct product) {
+            oject =  product;
+            // TODO -> fetch geometry
+        }
     }
 }
+

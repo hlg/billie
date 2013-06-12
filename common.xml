@@ -9,7 +9,7 @@
 
     <taskdef name="groovyc"
              classname="org.codehaus.groovy.ant.Groovyc"
-             classpath="C:/groovy-200/embeddable/groovy-all-2.0.0.jar"/>
+             classpath="${groovy.path}"/>
 
     <dirname property="basedir" file="${ant.file}"/>
 

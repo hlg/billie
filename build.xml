@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="vismapping.master" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
 
-    <filelist id="projects" dir=".">
+    <filelist id="projects.all" dir=".">
         <file name="vis/build.xml"/>
         <file name="vis.data.bimserver/build.xml"/>
         <file name="vis.data.jsdai/build.xml"/>
@@ -18,39 +18,60 @@
         <file name="vis.swingApp/build.xml"/>
     </filelist>
 
+    <filelist id="projects.framework" dir=".">
+        <file name="vis/build.xml"/>
+        <file name="vis.data.bimserver/build.xml"/>
+        <file name="vis.data.jsdai/build.xml"/>
+        <file name="vis.data.multimodel/build.xml"/>
+        <!-- file name="vis.data.mmqlserver/build.xml"/-->
+        <file name="vis.scene.text/build.xml"/>
+        <file name="vis.scene.java2d/build.xml"/>
+        <file name="vis.runtime.draw2d/build.xml"/>
+        <file name="vis.scene.draw2d/build.xml"/>
+        <file name="vis.runtime.java3d/build.xml"/>
+        <file name="vis.scene.java3d/build.xml"/>
+    </filelist>
+
     <target name="test.all" depends="clean.all">
         <subant target="test.module">
-            <filelist refid="projects" />
+            <filelist refid="projects.all" />
         </subant>
     </target>
 
     <target name="dist.all" depends="clean.all">
         <subant target="dist.module">
-            <filelist refid="projects" />
+            <filelist refid="projects.all" />
         </subant>
     </target>
 
     <target name="publish.all" depends="clean.all">
         <subant target="publish.module">
-            <filelist refid="projects" />
+            <filelist refid="projects.all" />
         </subant>
     </target>
 
+    <target name="publish.framework" depends="clean.all">
+        <subant target="publish.module">
+            <filelist refid="projects.framework" />
+        </subant>
+    </target>
+
+
     <target name="publish.all.OSGI" depends="publish.all">
         <subant target="publish.module.OSGI.fast">
-            <filelist refid="projects" />
+            <filelist refid="projects.all" />
         </subant>
     </target>
 
     <target name="publish.all.OSGI.fast">
         <subant target="publish.module.OSGI.fast">
-            <filelist refid="projects" />
+            <filelist refid="projects.all" />
         </subant>
     </target>
 
     <target name="clean.all">
         <subant target="clean.module">
-            <filelist refid="projects" />
+            <filelist refid="projects.all" />
         </subant>
     </target>
 

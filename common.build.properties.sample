@@ -1,3 +1,4 @@
 ivy.settings.file=D:/Nutzer/helga/ivysettings.xml
 osgi.target=D:/Nutzer/helga/dev/cib_framework/target
 version=0.3
+groovy.path=C:/groovy-200/embeddable/groovy-all-2.0.0.jar
