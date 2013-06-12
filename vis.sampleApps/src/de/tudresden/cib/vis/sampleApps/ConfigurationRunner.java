@@ -154,7 +154,7 @@ public enum ConfigurationRunner {
         }
     }, PROGRESS_TEXT {
         @Override
-        void run(String[] args) throws IOException, TargetCreationException {
+        void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             MultiModelAccessor<Activity> dataAcessor = new MultiModelAccessor<Activity>(createPluginManager());
             String basePath = "D:/Nutzer/helga/div/mefisto-container/kongress_3/combined_Angebot_LF/";
             dataAcessor.addAcessor("FM3", new EMFQtoAccessor(new FileInputStream(basePath + "QTO/1/1 LV VA.xml"), "QTO1"));

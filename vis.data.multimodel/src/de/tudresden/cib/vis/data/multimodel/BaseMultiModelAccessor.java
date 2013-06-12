@@ -78,9 +78,9 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
                 File file = new File(mmFolder, new URL(contentFile.getValue()).getFile());
                 accessor.read(new FileInputStream(file), contentFile.getNamespace(), file.length()); // TODO: accessor should join multiple sucessively set/added files
             } catch (MalformedURLException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                throw new DataAccessException(e);
             } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                throw new DataAccessException(e);
             }
         }
         accessor.index();

@@ -165,7 +165,7 @@ public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K
         readFromFolder(new File(resource.getFile()));
     }
 
-    public void addAcessor(String key, IndexedDataAccessor accessor) {
+    public void addAcessor(String key, IndexedDataAccessor accessor) throws DataAccessException {
         accessor.index();
         elementaryModels.put(key, accessor);
     }
