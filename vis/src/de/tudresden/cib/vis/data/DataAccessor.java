@@ -9,19 +9,6 @@ import java.util.Map;
 
 public abstract class DataAccessor<E> implements Iterable<E> {
 
-    private Map<String, Folding<E, Number>> stats = new HashMap<String, Folding<E, Number>>();
-
-
-    public void addPreprocessor(String name, Folding<E, Number> statisticsFunction) {
-        stats.put(name, statisticsFunction);
-    }
-
-    public void preProcess() {
-        for (Folding<E, Number> stat : stats.values()) {
-            stat.fold(this);
-        }
-    }
-
     public abstract void read(InputStream inputStream, long size) throws IOException, DataAccessException;
 
     public void read(File file) throws IOException, DataAccessException {

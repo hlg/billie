@@ -1,6 +1,9 @@
 package de.tudresden.cib.vis.mapping;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.filter.Filter;
 import de.tudresden.cib.vis.scene.Event;
 import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.VisBuilder;
@@ -8,19 +11,18 @@ import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     ClassMap propertyMaps = new ClassMap();
+    Multimap<Filter, PropertyMap> propertyMapsByFilters = HashMultimap.create();
     private DataAccessor<E> dataAccessor;
     private VisFactory2D visFactory;
     private VisBuilder<G, S> visBuilder;
     private SceneManager<E, S> sceneManager = new SceneManager<E, S>();
     private Logger logger = LoggerFactory.getLogger(getClass());
 
+    // TODO: move to data accessor?
     private Map<String, DataAccessor.Folding<E, ? extends Number>> statistics = new HashMap<String, DataAccessor.Folding<E, ? extends Number>>();
     private Map<String, PreProcessing<Double>> globals = new HashMap<String, PreProcessing<Double>>();
 
@@ -30,12 +32,18 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
         this.visBuilder = visBuilder;
     }
 
+    @Deprecated
     public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
         propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
         propertyMap.with(sceneManager);
         propertyMaps.addPropertyMap(propertyMap.dataClass, propertyMap);
     }
 
+    public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(Filter<?,?,Iterator<S>> filter, PropertyMap<S, T> propertyMap) {
+        propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
+        propertyMap.with(sceneManager);
+        propertyMapsByFilters.put(filter,propertyMap);
+    }
 
     public SceneManager<E, S> map() throws TargetCreationException {
         logger.info("start mapping data to scenegraph");
