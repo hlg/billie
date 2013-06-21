@@ -1,7 +1,5 @@
 package de.tudresden.cib.vis.configurations;
 
-import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
-import cib.lib.gaeb.model.gaeb.TgItem;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.mmqlserver.MmqlServerAccessor;
 import de.tudresden.cib.vis.mapping.Configuration;
@@ -10,11 +8,8 @@ import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.VisFactory2D;
-import org.eclipse.emf.ecore.EObject;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
 
 public class Gaeb_Barchart_Mmql<S> extends Configuration<MmqlServerAccessor.MMQLRow, S> {
 

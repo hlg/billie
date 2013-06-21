@@ -2,6 +2,7 @@ package de.tudresden.cib.vis.configurations;
 
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -22,10 +23,9 @@ public class QtoSched_Text<S> extends Configuration<LinkedObject<Activity>, S> {
 
     @Override
     public void config() {
-        mapper.addMapping(new PropertyMap<LinkedObject<Activity>, VisFactory2D.Label>() {
-
+        mapper.addMapping(new Condition<LinkedObject<Activity>>() {
             @Override
-            protected boolean condition() {
+            public boolean matches(LinkedObject<Activity> data) {
                 for (LinkedObject.ResolvedLink link : data.getResolvedLinks()) {
                     for (String key : LM_IDS) {
                         if (link.getLinkedQto().containsKey(key)) return true;
@@ -33,6 +33,7 @@ public class QtoSched_Text<S> extends Configuration<LinkedObject<Activity>, S> {
                 }
                 return false;
             }
+        }, new PropertyMap<LinkedObject<Activity>, VisFactory2D.Label>() {
 
             @Override
             protected void configure() {

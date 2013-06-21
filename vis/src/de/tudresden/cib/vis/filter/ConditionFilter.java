@@ -2,24 +2,46 @@ package de.tudresden.cib.vis.filter;
 
 import java.util.Iterator;
 
-public class ConditionFilter<I> implements Filter.EntityEntity<Condition,I> {
+public class ConditionFilter<I> implements Filter.EntityEntity<Condition<I>,I> {
+
     @Override
-    public Iterator<I> filter(Condition condition, final Iterator<I> toBefiltered) {
-        return new Iterator<I>() {
+    public Iterable<I> filter(final Condition<I> condition, final Iterable<I> toBefiltered) {
+        return new Iterable<I>() {
             @Override
-            public boolean hasNext() {
-                return toBefiltered.hasNext();
-            }
+            public Iterator<I> iterator() {
+                return new Iterator<I>() {
+                    boolean hasCached =false;
+                    I cached = null;
 
-            @Override
-            public I next() {
-                return toBefiltered.next();
-            }
+                    Iterator<I> parent = toBefiltered.iterator();
 
-            @Override
-            public void remove() {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
+                    @Override
+                    public boolean hasNext() {
+                        if (hasCached) return true;
+                        cached = findNextMatch();
+                        hasCached = cached != null;
+                        return hasCached;
+                    }
+
+                    private I findNextMatch() {
+                        I candidate = null;
+                        while (parent.hasNext() && (candidate == null||!condition.matches(candidate))) { candidate = parent.next(); }
+                        return candidate;
+                    }
+
+                    @Override
+                    public I next() {
+                        if (hasCached) {
+                            hasCached =false; return cached;
+                        }
+                        return findNextMatch();
+                    }
+
+                    @Override
+                    public void remove() {
+                        throw new UnsupportedOperationException();
+                    }
+                };            }
         };
     }
 }

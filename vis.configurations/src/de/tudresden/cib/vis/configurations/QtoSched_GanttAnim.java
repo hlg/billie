@@ -3,6 +3,7 @@ package de.tudresden.cib.vis.configurations;
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -39,7 +40,7 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 return Math.min(aggregator, new ActivityHelper(element.getKeyObject()).getStartDateInMillis());
             }
         });
-        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> baseActivity = new ConditionedPropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
+        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> baseActivity = new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
@@ -54,9 +55,15 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 graphObject.setWidth((int) (durationDays * pxPerDay));
             }
         };
-        mapper.addMapping(baseActivity);
+        Condition<LinkedObject<Activity>> condition = new Condition<LinkedObject<Activity>>() {
+            @Override
+            public boolean matches(LinkedObject<Activity> data) {
+                return showAll || billingPeriod.overlaps(new ActivityHelper(data.getKeyObject()).getInterval());
+            }
+        };
+        mapper.addMapping(condition, baseActivity);
 
-        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> expected = new ConditionedPropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
+        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> expected = new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() { // progress as should be
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
@@ -93,9 +100,9 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 }
             }
         };
-        if(type==Type.COMPARISON ||type==Type.EXPECTED) mapper.addMapping(expected);
+        if(type==Type.COMPARISON ||type==Type.EXPECTED) mapper.addMapping(condition, expected);
 
-        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> diff = new ConditionedPropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
+        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> diff = new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {  // diff
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
@@ -135,10 +142,10 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 }
             }
         };
-        if(type==Type.COMPARISON) mapper.addMapping(diff);
+        if(type==Type.COMPARISON) mapper.addMapping(condition, diff);
 
 
-        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> actual = new ConditionedPropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
+        PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> actual = new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {  // diff
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
@@ -171,9 +178,9 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 }
             }
         };
-        if(type==Type.ACTUAL) mapper.addMapping(actual);
+        if(type==Type.ACTUAL) mapper.addMapping(condition, actual);
 
-        mapper.addMapping(new ConditionedPropertyMap<LinkedObject<Activity>, VisFactory2D.Label>() {
+        mapper.addMapping(condition, new PropertyMap<LinkedObject<Activity>, VisFactory2D.Label>() {
             @Override
             protected void configure() { // label
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
@@ -183,13 +190,6 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
             }
         });
 
-    }
-
-    private abstract class ConditionedPropertyMap<A extends LinkedObject<Activity>,B extends VisFactory2D.GraphObject> extends PropertyMap<A,B> {
-        @Override
-        protected boolean condition() {
-            return showAll || billingPeriod.overlaps(new ActivityHelper(data.getKeyObject()).getInterval());
-        }
     }
 
     private enum Type { EXPECTED, ACTUAL, COMPARISON }

@@ -1,14 +1,15 @@
 package de.tudresden.cib.vis.configurations
 
-import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
-import de.tudresden.cib.vis.data.multimodel.LinkedObject;
-import de.tudresden.cib.vis.configurations.IfcGaeb_Colored3D.ColorScale;
-import org.bimserver.models.ifc2x3tc1.*;
-import cib.lib.gaeb.model.gaeb.TgItem;
-import cib.mf.qto.model.AnsatzType;
-
+import cib.lib.gaeb.model.gaeb.TgItem
+import cib.mf.qto.model.AnsatzType
+import de.tudresden.cib.vis.configurations.IfcGaeb_Colored3D.ColorScale
+import de.tudresden.cib.vis.data.bimserver.EMFIfcParser
+import de.tudresden.cib.vis.data.multimodel.LinkedObject
+import org.bimserver.models.ifc2x3tc1.*
 
 public class TestColorScale implements ColorScale {
+    // for IfcGaeb_Colored3D configuration
+
     public String gaebX84Id = "M1";
 	public boolean absolute = false;
 	public boolean adjustWalls = false;

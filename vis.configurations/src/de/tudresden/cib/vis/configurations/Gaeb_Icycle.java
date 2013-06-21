@@ -5,6 +5,7 @@ import cib.lib.gaeb.model.gaeb.TgItem;
 import de.tudresden.cib.vis.TriggerListener;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.multimodel.HierarchicGaebAccessor;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -49,12 +50,12 @@ public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, S> {
             }
         });
         if (withLabels)
-            mapper.addMapping(new PropertyMap<HierarchicGaebAccessor.HierarchicTgItemBoQCtgy, VisFactory2D.Label>() {
-                @Override
-                protected boolean condition() {
-                    return data.getChildren().isEmpty();
-                }
-
+            mapper.addMapping(new Condition<Hierarchic<EObject>>(){
+                                  @Override
+                                  public boolean matches(Hierarchic<EObject> data) {
+                                      return data.getChildren().isEmpty();
+                                  }
+                              }, new PropertyMap<HierarchicGaebAccessor.HierarchicTgItemBoQCtgy, VisFactory2D.Label>() {
                 @Override
                 protected void configure() {
                     TgItem object = (TgItem) data.getObject();
@@ -65,12 +66,12 @@ public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, S> {
                     graphObject.setRotation(90);
                 }
             });
-        mapper.addMapping(new PropertyMap<HierarchicGaebAccessor.HierarchicTgItemBoQCtgy, VisFactory2D.Label>() {
+        mapper.addMapping(new Condition<Hierarchic<EObject>>(){
             @Override
-            protected boolean condition() {
-                return !data.getChildren().isEmpty();
+            public boolean matches(Hierarchic<EObject> data) {
+                return data.getChildren().isEmpty();
             }
-
+        }, new PropertyMap<HierarchicGaebAccessor.HierarchicTgItemBoQCtgy, VisFactory2D.Label>() {
             @Override
             protected void configure() {
                 TgBoQCtgy object = (TgBoQCtgy) data.getObject();

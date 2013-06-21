@@ -3,6 +3,7 @@ package de.tudresden.cib.vis.configurations;
 import de.tudresden.cib.vis.TriggerListener;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -31,12 +32,12 @@ public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, S> {
 
     @Override
     public void config() {
-        mapper.addMapping(new PropertyMap<EMFIfcHierarchicAcessor.HierarchicIfc, VisFactory2D.Rectangle>() {
+        mapper.addMapping(new Condition<Hierarchic<IdEObject>>() {
             @Override
-            protected boolean condition() {
+            public boolean matches(Hierarchic<IdEObject> data) {
                 return !SKIP_LAST_LEVEL || !data.getChildren().isEmpty();
             }
-
+        }, new PropertyMap<EMFIfcHierarchicAcessor.HierarchicIfc, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
                 addTrigger(DefaultEvent.CLICK);
@@ -56,12 +57,12 @@ public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, S> {
             }
         });
         if (WITH_LABELS)
-            mapper.addMapping(new PropertyMap<EMFIfcHierarchicAcessor.HierarchicIfc, VisFactory2D.Label>() {
+            mapper.addMapping(new Condition<Hierarchic<IdEObject>>() {
                 @Override
-                protected boolean condition() {
+                public boolean matches(Hierarchic<IdEObject> data) {
                     return data.getChildren().isEmpty();
                 }
-
+            }, new PropertyMap<EMFIfcHierarchicAcessor.HierarchicIfc, VisFactory2D.Label>() {
                 @Override
                 protected void configure() {
                     IfcRoot object = (IfcRoot) data.getObject();
@@ -72,12 +73,12 @@ public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, S> {
                     graphObject.setRotation(-90);
                 }
             });
-        mapper.addMapping(new PropertyMap<EMFIfcHierarchicAcessor.HierarchicIfc, VisFactory2D.Label>() {
+        mapper.addMapping(new Condition<Hierarchic<IdEObject>>() {
             @Override
-            protected boolean condition() {
+            public boolean matches(Hierarchic<IdEObject> data) {
                 return !data.getChildren().isEmpty();
             }
-
+        }, new PropertyMap<EMFIfcHierarchicAcessor.HierarchicIfc, VisFactory2D.Label>() {
             @Override
             protected void configure() {
                 IfcSpatialStructureElement object = (IfcSpatialStructureElement) data.getObject();

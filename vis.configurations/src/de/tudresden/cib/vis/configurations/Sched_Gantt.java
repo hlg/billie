@@ -4,6 +4,7 @@ import cib.mf.schedule.model.activity11.Activity;
 import cib.mf.schedule.model.activity11.ActivityData;
 import cib.mf.schedule.model.activity11.Timestamp;
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -27,12 +28,12 @@ public class Sched_Gantt<S> extends Configuration<EObject, S> {
                 return (element instanceof ActivityData) ? Math.min(aggregator, getTimeInMillis(((ActivityData) element).getStart())) : aggregator;
             }
         });
-        mapper.addMapping(new PropertyMap<Activity, VisFactory2D.Rectangle>() {
+        mapper.addMapping(new Condition<EObject>() {
             @Override
-            protected boolean condition() {
-                return !data.getActivityData().getStart().equals(data.getActivityData().getEnd());
+            public boolean matches(EObject data) {
+                return data instanceof Activity && !((Activity)data).getActivityData().getStart().equals(((Activity)data).getActivityData().getEnd());
             }
-
+        }, new PropertyMap<Activity, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
                 graphObject.setLeft((int) ((getTimeInMillis(data.getActivityData().getStart()) - mapper.getStats("earliestStart").longValue()) / scale));
@@ -41,12 +42,12 @@ public class Sched_Gantt<S> extends Configuration<EObject, S> {
                 graphObject.setHeight(20);
             }
         });
-        mapper.addMapping(new PropertyMap<Activity, VisFactory2D.Rectangle>() {
+        mapper.addMapping(new Condition<EObject>() {
             @Override
-            protected boolean condition() {
-                return EcoreUtil.equals(data.getActivityData().getStart(), data.getActivityData().getEnd());
+            public boolean matches(EObject data) {
+                return data instanceof Activity && EcoreUtil.equals(((Activity)data).getActivityData().getStart(), ((Activity)data).getActivityData().getEnd());
             }
-
+        }, new PropertyMap<Activity, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
                 graphObject.setLeft((int) ((getTimeInMillis(data.getActivityData().getStart()) - mapper.getStats("earliestStart").longValue()) / scale) - 10);

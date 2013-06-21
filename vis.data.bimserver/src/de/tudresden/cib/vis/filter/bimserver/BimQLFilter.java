@@ -5,7 +5,8 @@ import org.bimserver.plugins.serializers.IfcModelInterface;
 
 public class BimQLFilter implements CodeFilter.ModelModel<IfcModelInterface> {
     @Override
-    public IfcModelInterface filter(IfcModelInterface toBeFiltered, String code) {
+    public IfcModelInterface filter(String condition, IfcModelInterface toBeFiltered) {
         return null;  // TODO: integrate
     }
+
 }

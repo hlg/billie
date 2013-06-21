@@ -48,9 +48,10 @@
                 <path refid="ivy.classpath"/>
             </classpath>
         </javac>
-        <groovyc destdir="${module.output.dir}/classes" srcdir="${module.basedir}/src">
+            <groovyc destdir="${module.output.dir}/classes" srcdir="${module.basedir}/src">
             <classpath>
                 <path refid="ivy.classpath"/>
+                <pathelement location="${module.output.dir}/classes"/>
             </classpath>
         </groovyc>
         <copy todir="${module.output.dir}/classes" file="${module.basedir}/log4j.xml" failonerror="false" />

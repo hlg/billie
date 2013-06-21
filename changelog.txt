@@ -8,3 +8,4 @@
 * resolve IfcRelAssociates abnormality (http://code.google.com/p/bimserver/wiki/Known_issues)
 * Foreground/background (GraphObject2D) options for all Draw2D objects
 * GAEB_Barchart config: clean and truncate text, use IT instead of UP
+* separate condition objects -> factor out filter libraries

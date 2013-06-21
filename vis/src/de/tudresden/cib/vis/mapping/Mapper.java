@@ -1,8 +1,7 @@
 package de.tudresden.cib.vis.mapping;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.filter.Filter;
 import de.tudresden.cib.vis.scene.Event;
 import de.tudresden.cib.vis.scene.SceneManager;
@@ -11,11 +10,14 @@ import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     ClassMap propertyMaps = new ClassMap();
-    Multimap<Filter, PropertyMap> propertyMapsByFilters = HashMultimap.create();
+    Map<Condition<E>, ClassMap> propertyMapsByConditions = new HashMap<Condition<E>, ClassMap>();
     private DataAccessor<E> dataAccessor;
     private VisFactory2D visFactory;
     private VisBuilder<G, S> visBuilder;
@@ -25,6 +27,7 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     // TODO: move to data accessor?
     private Map<String, DataAccessor.Folding<E, ? extends Number>> statistics = new HashMap<String, DataAccessor.Folding<E, ? extends Number>>();
     private Map<String, PreProcessing<Double>> globals = new HashMap<String, PreProcessing<Double>>();
+    private Filter.EntityEntity<Condition<E>, E> filter;
 
     public Mapper(DataAccessor<E> dataAccessor, VisFactory2D visFactory, VisBuilder<G,S> visBuilder) {
         this.dataAccessor = dataAccessor;
@@ -39,10 +42,15 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
         propertyMaps.addPropertyMap(propertyMap.dataClass, propertyMap);
     }
 
-    public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(Filter<?,?,Iterator<S>> filter, PropertyMap<S, T> propertyMap) {
+    public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(Condition<E> condition, PropertyMap<S, T> propertyMap) {
         propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
         propertyMap.with(sceneManager);
-        propertyMapsByFilters.put(filter,propertyMap);
+        if(!propertyMapsByConditions.containsKey(condition)) propertyMapsByConditions.put(condition, new ClassMap());
+        propertyMapsByConditions.get(condition).addPropertyMap(propertyMap.dataClass, propertyMap);
+    }
+
+    public void setFilter(Filter.EntityEntity<Condition<E>, E> filter){
+        this.filter = filter;
     }
 
     public SceneManager<E, S> map() throws TargetCreationException {
@@ -75,25 +83,22 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     }
 
     private void mainPass() throws TargetCreationException {
-        int mappingIndex = 0; // TODO: per class or even per property map index?
-        for (E source : dataAccessor) {
-            if (mapAndBuild(source, mappingIndex)) mappingIndex++;
+        for (Condition<E> condition: propertyMapsByConditions.keySet()){
+            int mappingIndex = 0; // TODO: per class or even per property map index?
+            for(E source : filter.filter(condition,dataAccessor)){
+                if(mapAndBuild(source, mappingIndex, propertyMapsByConditions.get(condition))) mappingIndex++;
+            }
         }
         sceneManager.logStatistics(logger);
     }
 
-    private boolean mapAndBuild(E source, int mappingIndex) throws TargetCreationException {
-        Collection<PropertyMap<E, ?>> matchingPropMaps = propertyMaps.getPropertyMaps(source);
-        boolean matchedAny = false;
+    private boolean mapAndBuild(E source, int mappingIndex, ClassMap classMap) throws TargetCreationException {
+        Collection<PropertyMap<E, ?>> matchingPropMaps = classMap.getPropertyMaps(source);
         for (PropertyMap<? super E, ?> propertyMap : matchingPropMaps) {
-            if (propertyMap.checkCondition(source)) {
-                matchedAny = true;
                 propertyMap.map(source, mappingIndex);
                 visBuilder.addPart((G) propertyMap.graphObject); // TODO: make sure provider is the right one
-            }
         }
-        return matchedAny;
-
+        return !matchingPropMaps.isEmpty();
     }
 
     public <T extends Number> void addStatistics(String name, DataAccessor.Folding<E, T> folder) {

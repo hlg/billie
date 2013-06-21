@@ -71,17 +71,6 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
 
     protected abstract void configure();
 
-    @Deprecated
-    public boolean checkCondition(S source) {
-        this.data = source;
-        return condition();
-    }
-
-    @Deprecated
-    protected boolean condition() {
-        return true;
-    }
-
     public interface Provider<T> {
         T create();
     }

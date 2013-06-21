@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<objects projectID="demo-cp_TAU1" createdBy="[iTWO64][2.3.456]" sourceApp="[iTWO64][2.3.456]" sourceFormat="rpd" created="2012-01-03T16:00:47" cpiversion="1.4">
+	<content version="1.2">
+		<section name="setSection"/>
+		<section name="bsSection"/>
+	</content>
+<IDMapping version="1.4">
+	<ID k="1" v="0ia$c9nzLC3PtXfEOT7pEG"/>
+<ID k="2" v="1$L8JrlYT8ruDFBcRPJb1h"/>
+<ID k="3" v="1EPzos_l944R3c7$OYniAT"/>
+<ID k="4" v="1HSgJIHprFnBhlSv26Prck"/>
+<ID k="5" v="1z174j70T5APfwnrpX_BVP"/>
+<ID k="6" v="26b66dd1-7762-4f2b-8fb0-2684976a379f"/>
+<ID k="7" v="36AXqPWkP8NQ5IFHd1NdDz"/>
+<ID k="8" v="3KPu7sYtT1VxHPeuGsobGD"/>
+<ID k="9" v="4fd1e65f-31b8-4ee8-9eeb-08f281ded96e"/>
+<ID k="10" v="608df74a-7ef8-4cea-865d-98d78d9926de"/>
+	<ID k="11" v="81e01633-9584-4c13-8a51-b68a73ece1aa"/>
+	<ID k="12" v="821ebc92-bcee-48fc-9c03-22057fd05771"/>
+	<ID k="13" v="a7c62b73-65e6-4b3b-bcc2-f617e5caaf21"/>
+	<ID k="14" v="b8265d2d-4671-45f5-ad25-aa2d051851bf"/>
+	<ID k="15" v="bb664e81-9ae2-4e15-943d-b03d52f14b52"/>
+	<ID k="16" v="c2b8b52b-ec33-490d-b8a9-c0715c1f408b"/>
+</IDMapping>
+<bsSection version="1.4">
+		<bsTypes>
+	<bsType ID="13" type="Building_Structure">
+	<bsType ID="14" type="Item_Level1">
+	<bsType ID="15" type="Item_Level2">
+						<bsType ID="11" type="Item_Level3">
+							<bsType ID="16" type="Item_Level4"/>
+	</bsType>
+					</bsType>
+				</bsType>
+			</bsType>
+	</bsTypes>
+	<bsItem ID="6" typeID="13">
+			<bsItem ID="9" name="IFC Test Cases" refID="7">
+			<bsItem ID="12" name="site" refID="8">
+			<bsSet refID="10"/>
+	</bsItem>
+			</bsItem>
+	</bsItem>
+	<setSection version="1.4">
+			<set ID="10" ctype="geometryObject">1 2 3 4 5</set>
+	</setSection>
+	</bsSection>
+</objects>

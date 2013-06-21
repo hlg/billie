@@ -1,6 +1,7 @@
 package de.tudresden.cib.vis.configurations;
 
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -48,12 +49,12 @@ public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, S> {
         final int offsetX = 200;
         final int offsetY = 200;
         final int level = 100;
-        mapper.addMapping(new PropertyMap<EMFIfcParser.EngineEObject, VisFactory2D.Polyline>() {
-            @Override
-            protected boolean condition() {
-                return data.getObject() instanceof IfcColumn;
-            }
-
+        mapper.addMapping(new Condition<EMFIfcParser.EngineEObject>(){
+                              @Override
+                              public boolean matches(EMFIfcParser.EngineEObject data) {
+                                  return data.getObject() instanceof IfcColumn;
+                              }
+                          }, new PropertyMap<EMFIfcParser.EngineEObject, VisFactory2D.Polyline>() {
             @Override
             protected void configure() {
                 Set<Integer> above = new TreeSet<Integer>();

@@ -31,7 +31,7 @@ public class MapperTest extends MappingTestCase {
 
     @Test
     public void testMapping() throws TargetCreationException {
-        FakeVisBuilder builder = new FakeVisBuilder();
+        FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
         Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
         test.addMapping(
                 new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
@@ -49,7 +49,7 @@ public class MapperTest extends MappingTestCase {
         assertEquals(d, result.getData(expected));
     }
 
-    private Mapper<DataElement, FakeRectangle, Object> makeMapper(FakeVisBuilder builder) {
+    private Mapper<DataElement, FakeRectangle, Object> makeMapper(FakeVisBuilder<FakeRectangle> builder) {
         DataAccessor<DataElement> data = new CollectionAccessor(Collections.singletonList(d));
         VisFactory2D factory = new FakeVisFactoy();
         return new Mapper<DataElement, FakeRectangle, Object>(data, factory, builder);
@@ -58,7 +58,7 @@ public class MapperTest extends MappingTestCase {
     @Test
     public void testChange() throws TargetCreationException {
         // TODO: tests to much (integration tests?)
-        FakeVisBuilder builder = new FakeVisBuilder();
+        FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
         Mapper test = makeMapper(builder);
         final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>(){
             @Override
@@ -82,7 +82,7 @@ public class MapperTest extends MappingTestCase {
 
     @Test
     public void testTriggerSelf() throws TargetCreationException {
-        FakeVisBuilder builder = new FakeVisBuilder();
+        FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
         Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
         test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
@@ -106,7 +106,7 @@ public class MapperTest extends MappingTestCase {
 
     @Test
     public void testTriggerOther() throws TargetCreationException {
-        FakeVisBuilder builder = new FakeVisBuilder();
+        FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
         Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
         test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
@@ -137,7 +137,7 @@ public class MapperTest extends MappingTestCase {
     @Test
     public void testEventX() throws TargetCreationException {
         // TODO: tests to much (integration tests?)
-       FakeVisBuilder builder = new FakeVisBuilder();
+       FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
        Mapper test = makeMapper(builder);
        final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>() {
            @Override
@@ -161,7 +161,7 @@ public class MapperTest extends MappingTestCase {
 
     @Test
     public void testDataEventX() throws TargetCreationException {
-        FakeVisBuilder builder = new FakeVisBuilder();
+        FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
         Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
         final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>() {
             @Override
@@ -209,13 +209,13 @@ public class MapperTest extends MappingTestCase {
         }
     }
 
-    public static class FakeVisBuilder implements VisBuilder<FakeRectangle, Object> {
-        List<FakeRectangle> parts = new ArrayList<FakeRectangle>();
+    public static class FakeVisBuilder<F extends VisFactory2D.GraphObject> implements VisBuilder<F, Object> {
+        public List<F> parts = new ArrayList<F>();
 
         public void init() {
         }
 
-        public void addPart(FakeRectangle graphicalObject) {
+        public void addPart(F graphicalObject) {
             parts.add(graphicalObject);
         }
 

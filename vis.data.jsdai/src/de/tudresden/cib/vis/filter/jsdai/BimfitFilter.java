@@ -5,12 +5,11 @@ import de.tudresden.cib.vis.filter.Filter;
 import jsdai.lang.EEntity;
 
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class BimfitFilter implements Filter.ModelEntity<BimfitFilter.BimfitCondition, StepDataModel,EEntity> {
     @Override
-    public Iterator<EEntity> filter(BimfitCondition condition, StepDataModel toBeFiltered) {
-        return Arrays.asList(condition.filter(toBeFiltered)).iterator();
+    public Iterable<EEntity> filter(BimfitCondition condition, StepDataModel toBeFiltered) {
+        return Arrays.asList(condition.filter(toBeFiltered));
     }
 
     public interface BimfitCondition {

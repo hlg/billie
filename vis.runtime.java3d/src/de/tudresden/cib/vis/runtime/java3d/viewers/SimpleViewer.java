@@ -34,6 +34,17 @@ public class SimpleViewer extends JFrame {
     Loader loader;
     private Set<Shape3D> selection = new HashSet<Shape3D>();
 
+    public SimpleViewer() {
+        logger = LoggerFactory.getLogger(this.getClass());
+        selectedAppearance = TypeAppearance.ACTIVATED.getAppearance();
+        defaultAppearance = TypeAppearance.DEFAULT.getAppearance();
+        noAppearance = TypeAppearance.OFF.getAppearance();
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.WHITE);
+        setTitle("IFC Visualiser");
+        setVisible(true);
+    }
+
     public void setPickingEnabled(boolean pickingEnabled) {
         this.pickingEnabled = pickingEnabled;
     }
@@ -41,15 +52,8 @@ public class SimpleViewer extends JFrame {
     private boolean pickingEnabled = true;
 
     public SimpleViewer(Loader loader) {
-        logger = LoggerFactory.getLogger(this.getClass());
-        selectedAppearance = TypeAppearance.ACTIVATED.getAppearance();
-        defaultAppearance = TypeAppearance.DEFAULT.getAppearance();
-        noAppearance = TypeAppearance.OFF.getAppearance();
+        this();
         this.loader = loader;
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE);
-        setTitle("IFC Visualiser");
-        setVisible(true);
     }
 
     protected void setupViews() {
@@ -67,6 +71,12 @@ public class SimpleViewer extends JFrame {
         loadFile(path);
         if (pickingEnabled) setupBehaviour();
         showScene();
+    }
+
+    public void run(BranchGroup scene){
+        setupViews();
+        universe.addLights(scene);
+        universe.showScene(scene);
     }
 
     void loadFile(String path) throws FileNotFoundException {

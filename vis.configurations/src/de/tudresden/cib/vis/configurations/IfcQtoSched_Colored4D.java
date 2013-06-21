@@ -5,6 +5,7 @@ import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -84,10 +85,6 @@ public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcP
         };
         PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, VisFactory3D.Polyeder> specialActiveMapping = new PropertyMap<LinkedObject<EMFIfcParser.EngineEObject>, VisFactory3D.Polyeder>() {
             @Override
-            protected boolean condition() {
-                return  !data.getResolvedLinks().isEmpty() && !data.getResolvedLinks().iterator().next().getScheduleObject().isEmpty();
-            }
-            @Override
             protected void configure() {
                 graphObject.setNormals(data.getKeyObject().getGeometry().normals);
                 graphObject.setVertizes(data.getKeyObject().getGeometry().vertizes);
@@ -113,7 +110,12 @@ public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcP
             }
         };
 
-        mapper.addMapping(specialActiveMapping);
+        mapper.addMapping(new Condition<LinkedObject<EMFIfcParser.EngineEObject>>() {
+            @Override
+            public boolean matches(LinkedObject<EMFIfcParser.EngineEObject> data) {
+                return !data.getResolvedLinks().isEmpty() && !data.getResolvedLinks().iterator().next().getScheduleObject().isEmpty();
+            }
+        },specialActiveMapping);
 
     }
 

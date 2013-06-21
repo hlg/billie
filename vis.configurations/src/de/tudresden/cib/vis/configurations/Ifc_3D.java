@@ -2,6 +2,7 @@ package de.tudresden.cib.vis.configurations;
 
 import de.tudresden.cib.vis.data.Geometry;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -18,16 +19,12 @@ public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, S> {
     }
 
     public void config() {
-        mapper.addMapping(new PropertyMap<EMFIfcParser.EngineEObject, VisFactory3D.Polyeder>() {
+        mapper.addMapping(new Condition<EMFIfcParser.EngineEObject>() {
             @Override
-            protected boolean condition() {
-                return data.getObject() instanceof IfcBuildingElement
-                        /* && ((IfcBuildingElement) data.getObject()).getRepresentation() != null
-                      && !((IfcBuildingElement) data.getObject()).getContainedInStructure().isEmpty()
-                      && ((IfcBuildingElement) data.getObject()).getContainedInStructure().get(0).getRelatingStructure().getName().equals("E14")*/
-                        ;
+            public boolean matches(EMFIfcParser.EngineEObject data) {
+                return data.getObject() instanceof IfcBuildingElement;
             }
-
+        }, new PropertyMap<EMFIfcParser.EngineEObject, VisFactory3D.Polyeder>() {
             @Override
             protected void configure() {
                 Geometry geometry = data.getGeometry();

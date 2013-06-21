@@ -17,12 +17,15 @@ import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.data.mmqlserver.MmqlServerAccessor;
 import de.tudresden.cib.vis.data.multimodel.*;
 import de.tudresden.cib.vis.mapping.Configuration;
+import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.draw2d.Draw2DViewer;
 import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
 import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.draw2d.Draw2dBuilder;
+import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
+import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 import de.tudresden.cib.vis.scene.text.TextBuilder;
 import org.bimserver.emf.IdEObject;
 import org.eclipse.draw2d.GridLayout;
@@ -68,9 +71,12 @@ public enum ConfigurationRunner {
         }
     }, IFCGAEB_3D {
         @Override
-        void run(String[] args) throws IOException {
+        void run(String[] args) throws IOException, DataAccessException, TargetCreationException {
             MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
-            mmAccessor.setModels(new EMTypeCondition(EMTypes.IFC), new EMTypeCondition(EMTypes.GAEB){
+            SimpleViewer viewer = new SimpleViewer();
+            viewer.setPickingEnabled(false);
+            String zip = (args.length > 1 && !args[1].equals("-")) ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath();
+            List<String> ids = mmAccessor.read(new File(zip),new EMTypeCondition(EMTypes.IFC), new EMTypeCondition(EMTypes.GAEB){
                 @Override
                 public boolean isValidFor(Content alternative) {
                     for (I option : alternative.getContentOptions().getI()){
@@ -80,22 +86,22 @@ public enum ConfigurationRunner {
                 }
             }, new EMTypeCondition(EMTypes.QTO));
             // mmAccessor.setLinkModelId("L2"); // TODO: conditions!
-            MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(mmAccessor);
-            IfcGaeb_Colored3D config = null;
+            Mapper<LinkedObject<EMFIfcParser.EngineEObject>,Java3dFactory.Java3DGraphObject,BranchGroup> mapper = Java3dBuilder.createMapper(mmAccessor);
+            IfcGaeb_Colored3D<BranchGroup> config = null;
             try {
                 config = args.length>2
-                        ? new IfcGaeb_Colored3D<BranchGroup>(loader.getMapper(), new File(args[2]))
-                        : new IfcGaeb_Colored3D<BranchGroup>(loader.getMapper());
+                        ? new IfcGaeb_Colored3D<BranchGroup>(mapper, new File(args[2]))
+                        : new IfcGaeb_Colored3D<BranchGroup>(mapper);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             } catch (InstantiationException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
             // config.absolute=false;
+            config.gaebX84Id = ids.get(1);
+            config.gaebX83Id = ids.get(1);
             config.config();
-            SimpleViewer viewer = new SimpleViewer(loader);
-            viewer.setPickingEnabled(false);
-            viewer.run((args.length > 1 && !args[1].equals("-")) ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());
+            viewer.run(config.execute().getScene());
         }
     }, GAEB_BARCHART {
         @Override
