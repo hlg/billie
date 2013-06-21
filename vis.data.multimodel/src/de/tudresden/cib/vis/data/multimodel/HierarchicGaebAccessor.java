@@ -4,6 +4,8 @@ import cib.lib.gaeb.model.gaeb.*;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.HierarchicBase;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
+import de.tudresden.cib.vis.filter.ConditionFilter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
@@ -14,8 +16,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class HierarchicGaebAccessor extends IndexedDataAccessor<Hierarchic<EObject>> {
+public class HierarchicGaebAccessor extends IndexedDataAccessor<Hierarchic<EObject>, Condition<Hierarchic<EObject>>> {
 
+    private final ConditionFilter<Hierarchic<EObject>> filter = new ConditionFilter<Hierarchic<EObject>>();
     private EMFGaebAccessor baseAcessor = new EMFGaebAccessor();
     private Map<String, Hierarchic<EObject>> wrappedData; // TgItem or BoQCtgy
 
@@ -41,6 +44,11 @@ public class HierarchicGaebAccessor extends IndexedDataAccessor<Hierarchic<EObje
     @Override
     public void readFromFolder(File directory) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Iterable<? extends Hierarchic<EObject>> filter(Condition<Hierarchic<EObject>> condition) {
+        return filter.filter(condition, this);
     }
 
     @Override

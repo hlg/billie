@@ -3,6 +3,7 @@ package de.tudresden.cib.vis.configurations;
 import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
 import cib.lib.gaeb.model.gaeb.TgItem;
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -13,11 +14,11 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-public class Gaeb_Barchart<S> extends Configuration<EObject, S> {
+public class Gaeb_Barchart<S> extends Configuration<EObject, Condition<EObject>, S> {
 
     private List<String> highlightingIds = Arrays.asList("ILAFBAAA", "ILAFAGFA", "ILAFBFHA", "ILAFKNLA", "ILAFKIEA", "ILAFLDCA", "ILAFDAKA", "ILAFDGBA", "ILAFDLIA", "ILAFEAPA", "ILAFCLDA", "ILFCAGFA", "ILFCBFHA");
 
-    public Gaeb_Barchart(Mapper<EObject, ?, S> mapper) {
+    public Gaeb_Barchart(Mapper<EObject, Condition<EObject>, ?, S> mapper) {
         super(mapper);
     }
 

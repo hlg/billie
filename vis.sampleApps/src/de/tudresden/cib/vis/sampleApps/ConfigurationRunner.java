@@ -16,6 +16,7 @@ import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.data.mmqlserver.MmqlServerAccessor;
 import de.tudresden.cib.vis.data.multimodel.*;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
@@ -86,7 +87,7 @@ public enum ConfigurationRunner {
                 }
             }, new EMTypeCondition(EMTypes.QTO));
             // mmAccessor.setLinkModelId("L2"); // TODO: conditions!
-            Mapper<LinkedObject<EMFIfcParser.EngineEObject>,Java3dFactory.Java3DGraphObject,BranchGroup> mapper = Java3dBuilder.createMapper(mmAccessor);
+            Mapper<LinkedObject<EMFIfcParser.EngineEObject>,Condition<LinkedObject<EMFIfcParser.EngineEObject>>, Java3dFactory.Java3DGraphObject,BranchGroup> mapper = Java3dBuilder.createMapper(mmAccessor);
             IfcGaeb_Colored3D<BranchGroup> config = null;
             try {
                 config = args.length>2
@@ -141,7 +142,7 @@ public enum ConfigurationRunner {
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             Draw2DViewer viewer = new Draw2DViewer();
             File input = viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "ifc");
-            DataAccessor<EMFIfcParser.EngineEObject> data = new EMFIfcGeometricAccessor(createPluginManager(), new FileInputStream(input), input.length());
+            DataAccessor<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>> data = new EMFIfcGeometricAccessor(createPluginManager(), new FileInputStream(input), input.length());
             Ifc_2D<Panel> ifc2DConfiguration = new Ifc_2D<Panel>(Draw2dBuilder.createMapper(data, viewer.getDefaultFont()));
             ifc2DConfiguration.config();
             viewer.showContent(ifc2DConfiguration.execute().getScene());
@@ -234,8 +235,8 @@ public enum ConfigurationRunner {
                 }
             };
             final LinkedList<String> ids = dataAcessor.readFromFolder(input, "L2", new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC), new EMTypeCondition(EMTypes.QTO));
-            DataAccessor<Hierarchic<IdEObject>> hierarchicIfc = dataAcessor.getAccessor(ids.get(0));
-            DataAccessor<Hierarchic<EObject>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(1));
+            DataAccessor<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>> hierarchicIfc = dataAcessor.getAccessor(ids.get(0));
+            DataAccessor<Hierarchic<EObject>, Condition<Hierarchic<EObject>>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(1));
             Panel container = new Panel();
             GridLayout manager = new GridLayout(1, true);
             container.setLayoutManager(manager);
@@ -244,10 +245,10 @@ public enum ConfigurationRunner {
             hebConfig.config();
             SceneManager<LinkedObject.ResolvedLink, Panel> hebScene = hebConfig.execute();
 
-            Configuration<Hierarchic<IdEObject>,Panel> ifcIcycle = new Ifc_Icycle<Panel>(Draw2dBuilder.createMapper(hierarchicIfc, viewer.getDefaultFont()), hebConfig.getIfcScale());
+            Configuration<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>, Panel> ifcIcycle = new Ifc_Icycle<Panel>(Draw2dBuilder.createMapper(hierarchicIfc, viewer.getDefaultFont()), hebConfig.getIfcScale());
             ifcIcycle.config();
 
-            final Configuration<Hierarchic<EObject>, Panel> gaebIcycle = new Gaeb_Icycle<Panel>(Draw2dBuilder.createMapper(hierarchicGaeb, viewer.getDefaultFont()), hebConfig.getGaebScale());
+            final Configuration<Hierarchic<EObject>, Condition<Hierarchic<EObject>>, Panel> gaebIcycle = new Gaeb_Icycle<Panel>(Draw2dBuilder.createMapper(hierarchicGaeb, viewer.getDefaultFont()), hebConfig.getGaebScale());
             gaebIcycle.config();
 
             final SceneManager<Hierarchic<IdEObject>, Panel> ifcIcycleScene = ifcIcycle.execute();
@@ -283,11 +284,11 @@ public enum ConfigurationRunner {
     }, GAEB_ICYCLE {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
-            IndexedDataAccessor<Hierarchic<EObject>> data =new HierarchicGaebAccessor();
+            IndexedDataAccessor<Hierarchic<EObject>, Condition<Hierarchic<EObject>>> data =new HierarchicGaebAccessor();
             Draw2DViewer viewer = new Draw2DViewer();
             data.read(viewer.chooseFile("/home/dev/src", "*"));
             data.index();
-            Configuration<?,Panel> config = new Gaeb_Icycle(Draw2dBuilder.createMapper(data, viewer.getDefaultFont()));
+            Gaeb_Icycle<Panel> config = new Gaeb_Icycle<Panel>(Draw2dBuilder.createMapper(data, viewer.getDefaultFont()));
             config.config();
             viewer.showContent(config.execute().getScene());
         }
@@ -301,7 +302,7 @@ public enum ConfigurationRunner {
             List<String> modelIds = byIfc.read(input, new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEB)); // check its the right GAEB
             IndexedDataAccessor ifc =  byIfc.getAccessor(modelIds.get(0));
             IndexedDataAccessor gaeb = byIfc.getAccessor(modelIds.get(1));
-            Configuration<?,Panel> gaebConfig = new Gaeb_Barchart<Panel>(Draw2dBuilder.createMapper(gaeb, viewer.getDefaultFont()));
+            Gaeb_Barchart<Panel> gaebConfig = new Gaeb_Barchart<Panel>(Draw2dBuilder.createMapper(gaeb, viewer.getDefaultFont()));
             gaebConfig.config();
             SceneManager<?,Panel> gaebScene = gaebConfig.execute();
             Panel container = new Panel();

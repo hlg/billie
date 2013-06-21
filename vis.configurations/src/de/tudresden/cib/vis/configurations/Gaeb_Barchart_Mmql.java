@@ -11,9 +11,9 @@ import de.tudresden.cib.vis.scene.VisFactory2D;
 
 import java.math.BigDecimal;
 
-public class Gaeb_Barchart_Mmql<S> extends Configuration<MmqlServerAccessor.MMQLRow, S> {
+public class Gaeb_Barchart_Mmql<S> extends Configuration<MmqlServerAccessor.MMQLRow, String, S> {
 
-    public Gaeb_Barchart_Mmql(Mapper<MmqlServerAccessor.MMQLRow, ?, S> mapper) {
+    public Gaeb_Barchart_Mmql(Mapper<MmqlServerAccessor.MMQLRow, String, ?, S> mapper) {
         super(mapper);
     }
 

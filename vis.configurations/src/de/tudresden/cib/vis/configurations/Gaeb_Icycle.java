@@ -14,16 +14,16 @@ import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.eclipse.emf.ecore.EObject;
 
-public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, S> {
+public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, Condition<Hierarchic<EObject>>, S> {
 
     private int scale = 1;
     private boolean withLabels = false;
 
-    public Gaeb_Icycle(Mapper<Hierarchic<EObject>, ?, S> mapper) {
+    public Gaeb_Icycle(Mapper<Hierarchic<EObject>, Condition<Hierarchic<EObject>>, ?, S> mapper) {
         super(mapper);
     }
 
-    public Gaeb_Icycle(Mapper<Hierarchic<EObject>, ?, S> mapper, int scale) {
+    public Gaeb_Icycle(Mapper<Hierarchic<EObject>, Condition<Hierarchic<EObject>>, ?, S> mapper, int scale) {
         super(mapper);
         this.scale = scale;
     }

@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
-public abstract class DataAccessor<E> implements Iterable<E> {
+public abstract class DataAccessor<E, C> implements Iterable<E> {
 
     public abstract void read(InputStream inputStream, long size) throws IOException, DataAccessException;
 
@@ -20,6 +18,8 @@ public abstract class DataAccessor<E> implements Iterable<E> {
     }
 
     public abstract void readFromFolder(File directory) throws DataAccessException; // TODO: implemented in one subclass only -> this smells
+
+    public abstract Iterable<? extends E> filter(C condition);
 
     public static abstract class Folding<A, B> {
         private B result;

@@ -7,6 +7,8 @@ import de.mefisto.model.parser.LinkModelParser;
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
+import de.tudresden.cib.vis.filter.ConditionFilter;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.emf.common.util.EList;
 
@@ -20,8 +22,9 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
+public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K, Condition<K>> {
     protected Map<String, IndexedDataAccessor> elementaryModels = new HashMap<String, IndexedDataAccessor>();
+    private ConditionFilter<K> filter = new ConditionFilter<K>();
 
     protected Container readContainer(File folder) throws DataAccessException {
         File mmFile = new File(folder, "MultiModel.xml");
@@ -122,6 +125,11 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K> {
 
     public IndexedDataAccessor getAccessor(String modelId) {
         return elementaryModels.get(modelId);
+    }
+
+    @Override
+    public Iterable<? extends K> filter(Condition<K> condition) {
+        return filter.filter(condition,this);
     }
 
     interface EMCondition {

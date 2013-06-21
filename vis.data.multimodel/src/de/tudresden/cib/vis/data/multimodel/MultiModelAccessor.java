@@ -8,6 +8,7 @@ import de.mefisto.model.linkModel.LinkModel;
 import de.mefisto.model.linkModel.LinkObject;
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
 import org.bimserver.plugins.PluginManager;
 import org.eclipse.emf.common.util.EList;
 
@@ -127,7 +128,7 @@ public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K
         LinkedObject.ResolvedLink resolved = new LinkedObject.ResolvedLink();
         for (Link linkedElement : link.getLinks()) {
             if (!linkedElement.getModelID().equals(groupingModelId)) {
-                IndexedDataAccessor<?> data = getAccessor(linkedElement.getModelID());
+                IndexedDataAccessor data = getAccessor(linkedElement.getModelID());
                 if (data != null) {
                     resolveAndAddObject(data, linkedElement, resolved);
                 }
@@ -136,7 +137,7 @@ public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K
         return resolved;
     }
 
-    private <I> void resolveAndAddObject(IndexedDataAccessor<I> dataAccessor, Link linkedElement, LinkedObject.ResolvedLink resolved) {
+    private <I> void resolveAndAddObject(IndexedDataAccessor<I, Condition<I>> dataAccessor, Link linkedElement, LinkedObject.ResolvedLink resolved) {
         I linkedObject = dataAccessor.getIndexed(linkedElement.getObjectID());
         resolved.addObject(linkedElement.getModelID(), linkedObject);
     }

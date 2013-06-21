@@ -1,8 +1,6 @@
 package de.tudresden.cib.vis.mapping;
 
 import de.tudresden.cib.vis.data.DataAccessor;
-import de.tudresden.cib.vis.filter.Condition;
-import de.tudresden.cib.vis.filter.Filter;
 import de.tudresden.cib.vis.scene.Event;
 import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.VisBuilder;
@@ -15,10 +13,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
+public class Mapper<E, C, G extends VisFactory2D.GraphObject,S> {
     ClassMap propertyMaps = new ClassMap();
-    Map<Condition<E>, ClassMap> propertyMapsByConditions = new HashMap<Condition<E>, ClassMap>();
-    private DataAccessor<E> dataAccessor;
+    Map<C, ClassMap> propertyMapsByConditions = new HashMap<C, ClassMap>();
+    private DataAccessor<E, C> dataAccessor;
     private VisFactory2D visFactory;
     private VisBuilder<G, S> visBuilder;
     private SceneManager<E, S> sceneManager = new SceneManager<E, S>();
@@ -27,9 +25,8 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     // TODO: move to data accessor?
     private Map<String, DataAccessor.Folding<E, ? extends Number>> statistics = new HashMap<String, DataAccessor.Folding<E, ? extends Number>>();
     private Map<String, PreProcessing<Double>> globals = new HashMap<String, PreProcessing<Double>>();
-    private Filter.EntityEntity<Condition<E>, E> filter;
 
-    public Mapper(DataAccessor<E> dataAccessor, VisFactory2D visFactory, VisBuilder<G,S> visBuilder) {
+    public Mapper(DataAccessor<E, C> dataAccessor, VisFactory2D visFactory, VisBuilder<G,S> visBuilder) {
         this.dataAccessor = dataAccessor;
         this.visFactory = visFactory;
         this.visBuilder = visBuilder;
@@ -42,15 +39,11 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
         propertyMaps.addPropertyMap(propertyMap.dataClass, propertyMap);
     }
 
-    public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(Condition<E> condition, PropertyMap<S, T> propertyMap) {
+    public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(C condition, PropertyMap<S, T> propertyMap) {
         propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
         propertyMap.with(sceneManager);
         if(!propertyMapsByConditions.containsKey(condition)) propertyMapsByConditions.put(condition, new ClassMap());
         propertyMapsByConditions.get(condition).addPropertyMap(propertyMap.dataClass, propertyMap);
-    }
-
-    public void setFilter(Filter.EntityEntity<Condition<E>, E> filter){
-        this.filter = filter;
     }
 
     public SceneManager<E, S> map() throws TargetCreationException {
@@ -83,9 +76,9 @@ public class Mapper<E,G extends VisFactory2D.GraphObject,S> {
     }
 
     private void mainPass() throws TargetCreationException {
-        for (Condition<E> condition: propertyMapsByConditions.keySet()){
+        for (C condition: propertyMapsByConditions.keySet()){
             int mappingIndex = 0; // TODO: per class or even per property map index?
-            for(E source : filter.filter(condition,dataAccessor)){
+            for(E source : dataAccessor.filter(condition)){
                 if(mapAndBuild(source, mappingIndex, propertyMapsByConditions.get(condition))) mappingIndex++;
             }
         }

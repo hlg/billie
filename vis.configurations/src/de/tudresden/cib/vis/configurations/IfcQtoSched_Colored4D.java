@@ -21,13 +21,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, S> {
+public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, S> {
 
     private String[] lmids;
     private String qtoid;
     private Map<Activity, Map<String, Double>> accumulatedQto = new HashMap<Activity, Map<String, Double>>();
 
-    public IfcQtoSched_Colored4D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, ?, S> mapper, String[] lmids, String qtoid) {
+    public IfcQtoSched_Colored4D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, ?, S> mapper, String[] lmids, String qtoid) {
         super(mapper);
         this.lmids = lmids;
         this.qtoid = qtoid;

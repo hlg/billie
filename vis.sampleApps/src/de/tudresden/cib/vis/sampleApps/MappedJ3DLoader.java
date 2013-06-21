@@ -6,6 +6,7 @@ import com.sun.j3d.loaders.ParsingErrorException;
 import com.sun.j3d.loaders.Scene;
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
@@ -23,10 +24,10 @@ import java.io.Reader;
 import java.net.URL;
 
 public class MappedJ3DLoader<E> implements Loader {
-    protected Mapper<E, Java3dFactory.Java3DGraphObject, BranchGroup> mapper;
-    protected DataAccessor<E> data;
+    protected Mapper<E, Condition<E>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper;
+    protected DataAccessor<E, Condition<E>> data;
 
-    public MappedJ3DLoader(DataAccessor<E> data) {
+    public MappedJ3DLoader(DataAccessor<E, Condition<E>> data) {
         this.data = data;
         this.mapper = Java3dBuilder.createMapper(data);
     }
@@ -99,7 +100,7 @@ public class MappedJ3DLoader<E> implements Loader {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public Mapper<E, Java3dFactory.Java3DGraphObject, BranchGroup> getMapper() {
+    public Mapper<E, Condition<E>, Java3dFactory.Java3DGraphObject, BranchGroup> getMapper() {
         return mapper;
     }
 }

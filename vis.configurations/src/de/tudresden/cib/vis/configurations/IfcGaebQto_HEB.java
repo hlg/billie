@@ -7,6 +7,7 @@ import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.multimodel.HierarchicGaebAccessor;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, S> {
+public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, Condition<LinkedObject.ResolvedLink>, S> {
 
     private int ifcScale;
     private int gaebScale;
@@ -26,7 +27,7 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
     private static double BUNDLING = 0.5;
     private static boolean SKIP_LAST_LEVEL = false;
 
-    public IfcGaebQto_HEB(Mapper<LinkedObject.ResolvedLink, ?, S> mapper) {
+    public IfcGaebQto_HEB(Mapper<LinkedObject.ResolvedLink, Condition<LinkedObject.ResolvedLink>, ?, S> mapper) {
         super(mapper);
     }
 

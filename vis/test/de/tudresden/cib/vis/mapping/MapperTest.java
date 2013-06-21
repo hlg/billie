@@ -2,6 +2,7 @@ package de.tudresden.cib.vis.mapping;
 
 import de.tudresden.cib.vis.data.CollectionAccessor;
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.scene.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +33,7 @@ public class MapperTest extends MappingTestCase {
     @Test
     public void testMapping() throws TargetCreationException {
         FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
-        Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
+        Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object> test = makeMapper(builder);
         test.addMapping(
                 new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
                     @Override
@@ -49,10 +50,10 @@ public class MapperTest extends MappingTestCase {
         assertEquals(d, result.getData(expected));
     }
 
-    private Mapper<DataElement, FakeRectangle, Object> makeMapper(FakeVisBuilder<FakeRectangle> builder) {
-        DataAccessor<DataElement> data = new CollectionAccessor(Collections.singletonList(d));
+    private Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object> makeMapper(FakeVisBuilder<FakeRectangle> builder) {
+        DataAccessor<DataElement, Condition<DataElement>> data = new CollectionAccessor(Collections.singletonList(d));
         VisFactory2D factory = new FakeVisFactoy();
-        return new Mapper<DataElement, FakeRectangle, Object>(data, factory, builder);
+        return new Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object>(data, factory, builder);
     }
 
     @Test
@@ -83,7 +84,7 @@ public class MapperTest extends MappingTestCase {
     @Test
     public void testTriggerSelf() throws TargetCreationException {
         FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
-        Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
+        Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object> test = makeMapper(builder);
         test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
@@ -107,7 +108,7 @@ public class MapperTest extends MappingTestCase {
     @Test
     public void testTriggerOther() throws TargetCreationException {
         FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
-        Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
+        Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object> test = makeMapper(builder);
         test.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
@@ -162,7 +163,7 @@ public class MapperTest extends MappingTestCase {
     @Test
     public void testDataEventX() throws TargetCreationException {
         FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
-        Mapper<DataElement, FakeRectangle, Object> test = makeMapper(builder);
+        Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object> test = makeMapper(builder);
         final Change<VisFactory2D.Rectangle> theChange = new Change<VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {

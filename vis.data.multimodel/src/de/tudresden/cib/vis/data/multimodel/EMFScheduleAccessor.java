@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 public abstract class EMFScheduleAccessor<T extends EObject> extends EMFGenericAccessor<T> {
 
-    public EMFScheduleAccessor(){ }
+    public EMFScheduleAccessor(){ super(); }
 
     public EMFScheduleAccessor(InputStream stream) throws IOException {
         super(stream);

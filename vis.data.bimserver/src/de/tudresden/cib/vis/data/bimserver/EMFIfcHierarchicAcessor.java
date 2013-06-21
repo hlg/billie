@@ -4,6 +4,8 @@ import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.HierarchicBase;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
+import de.tudresden.cib.vis.filter.ConditionFilter;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.*;
 import org.bimserver.plugins.PluginManager;
@@ -14,14 +16,16 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEObject>> {
+public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>> {
 
+    private final ConditionFilter<Hierarchic<IdEObject>> filter;
     private EMFIfcPlainParser parser;
     private HashMap<String, Hierarchic<IdEObject>> wrappedData;
     private static boolean SKIP_LAST_LEVEL = true;
 
     public EMFIfcHierarchicAcessor(PluginManager pluginManager) throws DataAccessException {
         parser = new EMFIfcPlainParser(pluginManager);
+        filter = new ConditionFilter<Hierarchic<IdEObject>>();
     }
 
     public EMFIfcHierarchicAcessor(SimplePluginManager simplePluginManager, InputStream input, long size) throws IOException, DataAccessException {
@@ -36,6 +40,11 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
     @Override
     public void readFromFolder(File directory) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Iterable<? extends Hierarchic<IdEObject>> filter(Condition<Hierarchic<IdEObject>> condition) {
+        return filter.filter(condition, this);
     }
 
     @Override

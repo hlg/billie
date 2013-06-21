@@ -22,9 +22,9 @@ import java.util.*;
 
 import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
-public class IfcSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, S> {
+public class IfcSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, S> {
 
-    public IfcSched_Colored4D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, ?, S> mapper) {
+    public IfcSched_Colored4D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, ?, S> mapper) {
         super(mapper);
     }
 

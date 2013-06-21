@@ -15,7 +15,7 @@ import java.util.Map;
 public class EMFGaebAccessor extends EMFGenericAccessor<TgItem> {
 
     public EMFGaebAccessor(){
-
+        super();
     }
 
     public EMFGaebAccessor(InputStream inputStream) throws IOException {

@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class EMFQtoAccessor extends EMFGenericAccessor<AnsatzType> {
 
-    public EMFQtoAccessor(){}
+    public EMFQtoAccessor(){ super();}
 
     public EMFQtoAccessor(InputStream inputStream) throws IOException {
         super(inputStream);

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class MmqlServerAccessor extends DataAccessor<MmqlServerAccessor.MMQLRow> {
+public class MmqlServerAccessor extends DataAccessor<MmqlServerAccessor.MMQLRow, String> {
 
     MMQLResultSet data;
 
@@ -37,6 +37,12 @@ public class MmqlServerAccessor extends DataAccessor<MmqlServerAccessor.MMQLRow>
     @Override
     public void readFromFolder(File directory) throws DataAccessException {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Iterable<? extends MMQLRow> filter(String condition) {
+        // TODO: make read only connect and filter by query?
+        return null;
     }
 
     @Override

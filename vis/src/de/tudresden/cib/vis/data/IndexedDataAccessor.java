@@ -3,7 +3,7 @@ package de.tudresden.cib.vis.data;
 import java.io.IOException;
 import java.io.InputStream;
 
-public abstract class IndexedDataAccessor<E> extends DataAccessor<E> {
+public abstract class IndexedDataAccessor<E, C> extends DataAccessor<E, C> {
 
     public String namespace;
 

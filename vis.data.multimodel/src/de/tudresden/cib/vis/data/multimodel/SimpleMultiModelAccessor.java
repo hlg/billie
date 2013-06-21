@@ -8,6 +8,7 @@ import de.mefisto.model.linkModel.LinkObject;
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
+import de.tudresden.cib.vis.filter.Condition;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -80,7 +81,7 @@ public class SimpleMultiModelAccessor extends BaseMultiModelAccessor<LinkedObjec
     private LinkedObject.ResolvedLink resolveLink(LinkObject link) {
         LinkedObject.ResolvedLink resolved = new LinkedObject.ResolvedLink();
         for (Link linkedElement : link.getLinks()) {
-            IndexedDataAccessor<?> data = getAccessor(linkedElement.getModelID());
+            IndexedDataAccessor<?, Condition<?>> data = getAccessor(linkedElement.getModelID());
             if (data != null) {
                 resolved.addObject(linkedElement.getModelID(), data.getIndexed(linkedElement.getObjectID()));
             }

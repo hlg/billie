@@ -106,7 +106,7 @@ public class Draw2dBuilder implements VisBuilder<Draw2dFactory.Draw2dObject, Pan
         }
     }
 
-    public static <E> Mapper<E, Draw2dFactory.Draw2dObject, Panel> createMapper(DataAccessor<E> accessor, Font font) {
-        return new Mapper<E, Draw2dFactory.Draw2dObject, Panel>(accessor, new Draw2dFactory(font), new Draw2dBuilder());
+    public static <E,C> Mapper<E, C, Draw2dFactory.Draw2dObject, Panel> createMapper(DataAccessor<E, C> accessor, Font font) {
+        return new Mapper<E, C, Draw2dFactory.Draw2dObject, Panel>(accessor, new Draw2dFactory(font), new Draw2dBuilder());
     }
 }

@@ -10,12 +10,12 @@ import de.tudresden.cib.vis.scene.VisFactory2D;
 
 import java.util.Map;
 
-public class QtoSched_Text<S> extends Configuration<LinkedObject<Activity>, S> {
+public class QtoSched_Text<S> extends Configuration<LinkedObject<Activity>, Condition<LinkedObject<Activity>>, S> {
 
     private final String[] LM_IDS;
     private final String QTO_ID;
 
-    public QtoSched_Text(Mapper<LinkedObject<Activity>, ?, S> mapper, String[] LM_IDS, String QTO_ID) {
+    public QtoSched_Text(Mapper<LinkedObject<Activity>, Condition<LinkedObject<Activity>>, ?, S> mapper, String[] LM_IDS, String QTO_ID) {
         super(mapper);
         this.LM_IDS = LM_IDS;
         this.QTO_ID = QTO_ID;

@@ -96,7 +96,7 @@ public class Java3dBuilder implements VisBuilder<Java3dFactory.Java3DGraphObject
         }
     }
 
-    public static <E> Mapper<E, Java3dFactory.Java3DGraphObject, BranchGroup> createMapper(DataAccessor<E> data){
-        return new Mapper<E, Java3dFactory.Java3DGraphObject, BranchGroup>(data, new Java3dFactory(), new Java3dBuilder());
+    public static <E,C> Mapper<E, C, Java3dFactory.Java3DGraphObject, BranchGroup> createMapper(DataAccessor<E, C> data){
+        return new Mapper<E, C, Java3dFactory.Java3DGraphObject, BranchGroup>(data, new Java3dFactory(), new Java3dBuilder());
     }
 }

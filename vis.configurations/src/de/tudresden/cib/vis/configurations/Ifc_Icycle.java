@@ -14,18 +14,18 @@ import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.IfcRoot;
 import org.bimserver.models.ifc2x3tc1.IfcSpatialStructureElement;
 
-public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, S> {
+public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>, S> {
 
     private int scale = 1;
     private static boolean WITH_LABELS = false;
     private static boolean SKIP_LAST_LEVEL = true;
 
-    public Ifc_Icycle(Mapper<Hierarchic<IdEObject>, ?, S> mapper, int scale) {
+    public Ifc_Icycle(Mapper<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>, ?, S> mapper, int scale) {
         super(mapper);
         this.scale = scale;
     }
 
-    public Ifc_Icycle(Mapper<Hierarchic<IdEObject>, ?, S> mapper) {
+    public Ifc_Icycle(Mapper<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>, ?, S> mapper) {
         super(mapper);
     }
 

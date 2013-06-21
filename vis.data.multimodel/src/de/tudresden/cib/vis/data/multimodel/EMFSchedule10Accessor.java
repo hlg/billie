@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class EMFSchedule10Accessor extends EMFScheduleAccessor<Activity> {
 
-    public EMFSchedule10Accessor(){ }
+    public EMFSchedule10Accessor(){ super();}
 
     public EMFSchedule10Accessor(InputStream stream) throws IOException {
         super(stream);

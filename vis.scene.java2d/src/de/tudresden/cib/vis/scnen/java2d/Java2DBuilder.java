@@ -113,7 +113,7 @@ public class Java2DBuilder implements VisBuilder<Java2dFactory.Java2DObject, JPa
         }
     }
 
-    public static <E> Mapper<E, Java2dFactory.Java2DObject, JPanel> createMapper(DataAccessor<E> data){
-        return new Mapper<E, Java2dFactory.Java2DObject, JPanel>(data, new Java2dFactory(), new Java2DBuilder());
+    public static <E,C> Mapper<E, C, Java2dFactory.Java2DObject, JPanel> createMapper(DataAccessor<E, C> data){
+        return new Mapper<E, C, Java2dFactory.Java2DObject, JPanel>(data, new Java2dFactory(), new Java2DBuilder());
     }
 }

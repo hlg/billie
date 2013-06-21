@@ -12,9 +12,9 @@ import org.bimserver.models.ifc2x3tc1.IfcRelContainedInSpatialStructure;
 import org.bimserver.models.ifc2x3tc1.IfcRelDecomposes;
 import org.eclipse.emf.common.util.EList;
 
-public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, S> {
+public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, S> {
 
-    public Ifc_3D(Mapper<EMFIfcParser.EngineEObject, ?, S> mapper) {
+    public Ifc_3D(Mapper<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, ?, S> mapper) {
         super(mapper);
     }
 

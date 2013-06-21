@@ -2,6 +2,8 @@ package de.tudresden.cib.vis.data.bimserver;
 
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
+import de.tudresden.cib.vis.filter.ConditionFilter;
 import org.bimserver.models.ifc2x3tc1.IfcRoot;
 import org.bimserver.plugins.PluginManager;
 
@@ -12,13 +14,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObject> {
+public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>> {
 
+    private final ConditionFilter<EMFIfcParser.EngineEObject> filter;
     Map<String,EMFIfcParser.EngineEObject> indexedData;
     private EMFIfcParser parser;
 
     public EMFIfcGeometricAccessor(PluginManager pluginManager, boolean forkInput) throws DataAccessException {
         parser = new EMFIfcParser(pluginManager, forkInput);
+        filter = new ConditionFilter<EMFIfcParser.EngineEObject>();
     }
 
     public EMFIfcGeometricAccessor(PluginManager pluginManager, InputStream input, long size) throws IOException, DataAccessException {
@@ -33,6 +37,11 @@ public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.En
     @Override
     public void readFromFolder(File directory) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Iterable<? extends EMFIfcParser.EngineEObject> filter(Condition<EMFIfcParser.EngineEObject> condition) {
+        return filter.filter(condition, this);
     }
 
     public Iterator<EMFIfcParser.EngineEObject> iterator() {

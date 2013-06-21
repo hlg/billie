@@ -11,9 +11,9 @@ import org.eclipse.emf.common.util.EList;
 
 import java.util.*;
 
-public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, S> {
+public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, S> {
 
-    public Ifc_2D(Mapper<EMFIfcParser.EngineEObject, ?, S> mapper) {
+    public Ifc_2D(Mapper<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, ?, S> mapper) {
         super(mapper);
     }
 

@@ -5,6 +5,8 @@ import de.tudresden.bau.cib.model.StepDataModel;
 import de.tudresden.bau.cib.parser.StepParser;
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
+import de.tudresden.cib.vis.filter.ConditionFilter;
 import jsdai.SIfc2x3.EIfcproduct;
 import jsdai.lang.EEntity;
 import jsdai.lang.SdaiException;
@@ -16,10 +18,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class JsdaiIfcGeometricAccessor extends IndexedDataAccessor<JsdaiIfcGeometricAccessor.GeomtricIfc>{
+public class JsdaiIfcGeometricAccessor extends IndexedDataAccessor<JsdaiIfcGeometricAccessor.GeomtricIfc, Condition<JsdaiIfcGeometricAccessor.GeomtricIfc>>{
 
     Map<String, GeomtricIfc> wrapped = new HashMap<String, GeomtricIfc>();
     StepParser parser = new StepParser(new File(System.getProperty("java.io.tmpdir"),"JSDAIrepo").getAbsolutePath());
+    private ConditionFilter<GeomtricIfc> filter = new ConditionFilter<GeomtricIfc>();
 
     @Override
     public void index() throws DataAccessException {
@@ -51,6 +54,11 @@ public class JsdaiIfcGeometricAccessor extends IndexedDataAccessor<JsdaiIfcGeome
     @Override
     public void readFromFolder(File directory) throws DataAccessException {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Iterable<? extends GeomtricIfc> filter(Condition<GeomtricIfc> condition) {
+        return filter.filter(condition, this);
     }
 
     @Override

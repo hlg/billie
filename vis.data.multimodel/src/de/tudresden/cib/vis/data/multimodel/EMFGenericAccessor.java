@@ -1,6 +1,8 @@
 package de.tudresden.cib.vis.data.multimodel;
 
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
+import de.tudresden.cib.vis.filter.ConditionFilter;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -11,22 +13,28 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Map;
 
-public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataAccessor<EObject> {
+public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataAccessor<EObject, Condition<EObject>> {
+    private final ConditionFilter<EObject> filter;
     EObject data;
     Map<String, T> index;   // todo: index for links on categories?
 
     EMFGenericAccessor(EObject parsed){
+        this();
         data = parsed;
     }
 
     protected EMFGenericAccessor() {
+        super();
+        filter = new ConditionFilter<EObject>();
     }
 
     public EMFGenericAccessor(InputStream inputStream) throws IOException {
+        this();
         setData(inputStream);
     }
 
     public EMFGenericAccessor(InputStream stream, String namespace) throws IOException {
+        this();
         this.namespace = namespace + "::";
         setData(stream);
     }
@@ -50,6 +58,11 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
 
     public void readFromFolder(File directory){
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Iterable<? extends EObject> filter(Condition<EObject> condition) {
+        return filter.filter(condition, this);
     }
 
     protected void setData(URI fileUri) throws IOException {

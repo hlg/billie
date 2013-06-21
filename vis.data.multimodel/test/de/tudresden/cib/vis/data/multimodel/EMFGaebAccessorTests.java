@@ -5,6 +5,7 @@ import cib.lib.gaeb.model.gaeb.TgGAEB;
 import cib.lib.gaeb.model.gaeb.TgGAEBInfo;
 import cib.lib.gaeb.model.gaeb.TgPrjInfo;
 import de.tudresden.cib.vis.data.DataAccessor;
+import de.tudresden.cib.vis.filter.Condition;
 import org.eclipse.emf.ecore.EObject;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,18 +27,18 @@ public class EMFGaebAccessorTests {
 
     @Test
     public void testAccessEMF() throws URISyntaxException, IOException {
-        DataAccessor<EObject> data = new EMFGaebAccessor(resourceStream);
+        DataAccessor<EObject, Condition<EObject>> data = new EMFGaebAccessor(resourceStream);
         check(data);
     }
 
     @Test
     public void testPreparsedEMF() throws IOException {
         EMFGenericAccessor baseAccessor = new EMFGaebAccessor(resourceStream);
-        DataAccessor<EObject> accessor = new EMFGaebAccessor(baseAccessor.data);
+        DataAccessor<EObject, Condition<EObject>> accessor = new EMFGaebAccessor(baseAccessor.data);
         check(accessor);
     }
 
-    private void check(DataAccessor<EObject> data) {
+    private void check(DataAccessor<EObject, Condition<EObject>> data) {
         Iterator<? extends EObject> iterator = data.iterator();
         Assert.assertTrue(iterator.hasNext());
         Assert.assertTrue(iterator.next() instanceof TgGAEB);

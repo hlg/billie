@@ -7,7 +7,6 @@ import de.tudresden.cib.vis.data.Geometry;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.filter.Condition;
-import de.tudresden.cib.vis.filter.ConditionFilter;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -20,18 +19,18 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collection;
 
-public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, S> {
+public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, S> {
 
     private ColorScale colorScale = new DefaultColorScale();
     public String gaebX84Id = "M3"; // "FM1";
     public String gaebX83Id = "M3";
     public boolean absolute = true;
 
-    public IfcGaeb_Colored3D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, ?, S> mapper) {
+    public IfcGaeb_Colored3D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, ?, S> mapper) {
         super(mapper);
     }
 
-    public IfcGaeb_Colored3D(Mapper <LinkedObject<EMFIfcParser.EngineEObject>, ?, S> mapper, File groovyColorScale) throws IllegalAccessException, InstantiationException, IOException {
+    public IfcGaeb_Colored3D(Mapper <LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, ?, S> mapper, File groovyColorScale) throws IllegalAccessException, InstantiationException, IOException {
         this(mapper);
         GroovyClassLoader gcl = new GroovyClassLoader();
         Class clazz = gcl.parseClass(groovyColorScale);
@@ -52,7 +51,6 @@ public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParse
                 return mapper.getStats("maxTotal").doubleValue() * 0.5;
             }
         });
-        mapper.setFilter(new ConditionFilter<LinkedObject<EMFIfcParser.EngineEObject>>());
         mapper.addMapping(
             new Condition<LinkedObject<EMFIfcParser.EngineEObject>>(){
                 @Override

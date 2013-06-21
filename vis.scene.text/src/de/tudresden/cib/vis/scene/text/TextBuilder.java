@@ -35,7 +35,7 @@ public class TextBuilder implements VisBuilder<TextFactory.TextLabel, String> {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public static <E> Mapper<E, TextFactory.TextLabel, String> createMapper(DataAccessor<E> data){
-        return new Mapper<E,TextFactory.TextLabel, String>(data, new TextFactory(), new TextBuilder());
+    public static <E,C> Mapper<E, C, TextFactory.TextLabel, String> createMapper(DataAccessor<E, C> data){
+        return new Mapper<E, C, TextFactory.TextLabel, String>(data, new TextFactory(), new TextBuilder());
     }
 }

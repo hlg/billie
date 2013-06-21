@@ -5,6 +5,7 @@ import de.tudresden.bau.cib.model.StepDataModel;
 import de.tudresden.bau.cib.parser.StepParser;
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import de.tudresden.cib.vis.filter.jsdai.BimfitFilter;
 import jsdai.SIfc2x3.EIfcroot;
 import jsdai.lang.EEntity;
 import jsdai.lang.SdaiException;
@@ -17,11 +18,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class JsdaiIfcAccessor extends IndexedDataAccessor<EEntity> {
+public class JsdaiIfcAccessor extends IndexedDataAccessor<EEntity, BimfitFilter.BimfitCondition> {
 
+    private final BimfitFilter filter;
     StepParser parser = new StepParser(new File(System.getProperty("java.io.tmpdir"),"JSDAIrepo").getAbsolutePath());
     StepDataModel data;
     Map<String, EEntity> index = new HashMap<String, EEntity>();
+
+    @Override
+    public Iterable<? extends EEntity> filter(BimfitFilter.BimfitCondition condition) {
+        return filter.filter(condition, data);
+    }
+
+    public JsdaiIfcAccessor() {
+        filter = new BimfitFilter();
+    }
 
     @Override
     public void index() throws DataAccessException {

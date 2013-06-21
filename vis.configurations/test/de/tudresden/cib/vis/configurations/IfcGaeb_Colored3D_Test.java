@@ -9,6 +9,7 @@ import de.tudresden.cib.vis.data.multimodel.EMTypeCondition;
 import de.tudresden.cib.vis.data.multimodel.EMTypes;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.data.multimodel.MultiModelAccessor;
+import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
@@ -71,7 +72,7 @@ public class IfcGaeb_Colored3D_Test {
             }
         };
         FakeVisBuilder<FakePolyeder> visBuilder = new FakeVisBuilder<FakePolyeder>();
-        Configuration config = new IfcGaeb_Colored3D<Object>(new Mapper<LinkedObject<EMFIfcParser.EngineEObject>, FakePolyeder, Object>(
+        Configuration config = new IfcGaeb_Colored3D<Object>(new Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, FakePolyeder, Object>(
                 mmAccessor,
                 visFactory,
                 visBuilder
