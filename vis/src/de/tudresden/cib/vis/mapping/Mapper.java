@@ -31,7 +31,6 @@ public class Mapper<E, C, G extends VisFactory2D.GraphObject,S> {
         this.visBuilder = visBuilder;
     }
 
-    @Deprecated
     public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
         addMapping(dataAccessor.getDefaultCondition(), propertyMap);
     }
