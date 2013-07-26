@@ -12,6 +12,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Iterator;
 
 public class GenericMultiModelAccessor extends DataAccessor<LinkedObject.ResolvedLink, Condition<LinkedObject.ResolvedLink>> {
@@ -24,8 +25,7 @@ public class GenericMultiModelAccessor extends DataAccessor<LinkedObject.Resolve
         MultiModel model = (MultiModel) resource.getContents().get(0);
         ElementaryModel first = model.getElementaryModels().get(0);
         if(first instanceof UriElementaryModel){
-           URI uri = URI.createURI(((UriElementaryModel) first).getUri()); // parse
-            resource.getResourceSet().getURIConverter().createInputStream(uri);
+           new URL(((UriElementaryModel) first).getUri()).openStream();
         } else {
             new ByteArrayInputStream(((EmbeddedElementaryModel)first).getData());
         }
@@ -40,6 +40,16 @@ public class GenericMultiModelAccessor extends DataAccessor<LinkedObject.Resolve
     @Override
     public Iterable<? extends LinkedObject.ResolvedLink> filter(Condition<LinkedObject.ResolvedLink> condition) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Condition<LinkedObject.ResolvedLink> getDefaultCondition() {
+        return new Condition<LinkedObject.ResolvedLink>() {
+            @Override
+            public boolean matches(LinkedObject.ResolvedLink data) {
+                return true;
+            }
+        };
     }
 
     @Override

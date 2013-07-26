@@ -48,6 +48,16 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
     }
 
     @Override
+    public Condition<Hierarchic<IdEObject>> getDefaultCondition() {
+        return new Condition<Hierarchic<IdEObject>>(){
+            @Override
+            public boolean matches(Hierarchic<IdEObject> data) {
+                return true;
+            }
+        };
+    }
+
+    @Override
     public void index() {
         parser.data.indexGuids();
         wrappedData = new HashMap<String, Hierarchic<IdEObject>>();

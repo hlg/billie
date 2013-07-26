@@ -1,5 +1,6 @@
 package de.tudresden.cib.vis.configurations;
 
+import cib.lib.gaeb.model.gaeb.TgBoQ;
 import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
 import cib.lib.gaeb.model.gaeb.TgItem;
 import de.tudresden.cib.vis.TriggerListener;
@@ -16,8 +17,8 @@ import org.eclipse.emf.ecore.EObject;
 
 public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, Condition<Hierarchic<EObject>>, S> {
 
-    private int scale = 1;
-    private boolean withLabels = false;
+    private int scale = 10;
+    private boolean withLabels = true;
 
     public Gaeb_Icycle(Mapper<Hierarchic<EObject>, Condition<Hierarchic<EObject>>, ?, S> mapper) {
         super(mapper);
@@ -37,6 +38,7 @@ public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, Condition
                 graphObject.setWidth(data.getNodeSize() * scale);
                 graphObject.setTop(data.getDepth() * 25);
                 graphObject.setHeight(25);
+                graphObject.setBackground();
                 addTrigger(DefaultEvent.CLICK);
                 addChange(DefaultEvent.CLICK, new Change<VisFactory2D.Rectangle>() {
                     private Hierarchic<EObject> d = data;
@@ -61,25 +63,25 @@ public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, Condition
                     TgItem object = (TgItem) data.getObject();
                     graphObject.setLeft(data.getNodesBefore() * scale + 15);
                     graphObject.setTop(data.getDepth() * 25 + 40);
-                    String title = object.getID();
-                    graphObject.setText(title.length() <= 20 ? title : "... " + title.substring(title.length() - 20, title.length() - 1));
+                    String title = object.getDescription().getOutlineText() != null ? object.getDescription().getOutlineText().getOutlTxt().getTextOutlTxt().get(0).getSpan().get(0).getValue() : object.getID();
+                    graphObject.setText(title.length() <= 20 ? title : title.substring(0, 20) + " ..");
                     graphObject.setRotation(90);
                 }
             });
         mapper.addMapping(new Condition<Hierarchic<EObject>>(){
             @Override
             public boolean matches(Hierarchic<EObject> data) {
-                return data.getChildren().isEmpty();
+                return !data.getChildren().isEmpty();
             }
         }, new PropertyMap<HierarchicGaebAccessor.HierarchicTgItemBoQCtgy, VisFactory2D.Label>() {
             @Override
             protected void configure() {
-                TgBoQCtgy object = (TgBoQCtgy) data.getObject();
                 graphObject.setLeft(data.getNodesBefore() * scale + 5);
                 graphObject.setTop(data.getDepth() * 25 + 5);
-                String title = object.getID();
-                int doubleNodeSize = data.getNodeSize() * 2;
-                graphObject.setText(title.length() <= doubleNodeSize ? title : "... " + title.substring(title.length() - doubleNodeSize, title.length() - 1));
+                String title = data.getObject() instanceof TgBoQCtgy ? ((TgBoQCtgy) data.getObject()).getLblTx().getSpan().get(0).getValue(): ((TgBoQ)data.getObject()).getBoQInfo().getName(); // object.getID();
+                int nodeSize = data.getNodeSize();
+                graphObject.setText(title.length() <= nodeSize ? title : title.substring(0, nodeSize) + " ..");
+                graphObject.setForeground();
                 addTrigger(DefaultEvent.CLICK);
             }
         });

@@ -36,4 +36,14 @@ public class CollectionAccessor<T> extends DataAccessor<T, Condition<T>> {
     public Iterable<? extends T> filter(Condition<T> condition) {
         return filter.filter(condition, this);
     }
+
+    @Override
+    public Condition<T> getDefaultCondition() {
+        return new Condition<T>() {
+            @Override
+            public boolean matches(T data) {
+                return true;
+            }
+        };
+    }
 }

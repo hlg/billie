@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Mapper<E, C, G extends VisFactory2D.GraphObject,S> {
-    ClassMap propertyMaps = new ClassMap();
     Map<C, ClassMap> propertyMapsByConditions = new HashMap<C, ClassMap>();
     private DataAccessor<E, C> dataAccessor;
     private VisFactory2D visFactory;
@@ -34,9 +33,7 @@ public class Mapper<E, C, G extends VisFactory2D.GraphObject,S> {
 
     @Deprecated
     public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
-        propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
-        propertyMap.with(sceneManager);
-        propertyMaps.addPropertyMap(propertyMap.dataClass, propertyMap);
+        addMapping(dataAccessor.getDefaultCondition(), propertyMap);
     }
 
     public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(C condition, PropertyMap<S, T> propertyMap) {

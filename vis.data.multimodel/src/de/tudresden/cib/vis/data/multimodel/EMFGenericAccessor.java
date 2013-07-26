@@ -65,6 +65,16 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
         return filter.filter(condition, this);
     }
 
+    @Override
+    public Condition<EObject> getDefaultCondition() {
+        return new Condition<EObject>(){
+            @Override
+            public boolean matches(EObject data) {
+                return true;
+            }
+        };
+    }
+
     protected void setData(URI fileUri) throws IOException {
         Resource resource = createResource(fileUri);
         resource.load(null);

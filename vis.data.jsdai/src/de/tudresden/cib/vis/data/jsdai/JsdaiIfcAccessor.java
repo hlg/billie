@@ -30,6 +30,16 @@ public class JsdaiIfcAccessor extends IndexedDataAccessor<EEntity, BimfitFilter.
         return filter.filter(condition, data);
     }
 
+    @Override
+    public BimfitFilter.BimfitCondition getDefaultCondition() {
+        return new BimfitFilter.BimfitCondition() {
+            @Override
+            public EEntity[] filter(StepDataModel model) {
+                return model.getEntities();
+            }
+        };
+    }
+
     public JsdaiIfcAccessor() {
         filter = new BimfitFilter();
     }

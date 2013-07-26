@@ -44,6 +44,16 @@ public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.En
         return filter.filter(condition, this);
     }
 
+    @Override
+    public Condition<EMFIfcParser.EngineEObject> getDefaultCondition() {
+        return new Condition<EMFIfcParser.EngineEObject>() {
+            @Override
+            public boolean matches(EMFIfcParser.EngineEObject data) {
+                return true;
+            }
+        };
+    }
+
     public Iterator<EMFIfcParser.EngineEObject> iterator() {
         return parser.getIterator();
     }

@@ -21,6 +21,8 @@ public abstract class DataAccessor<E, C> implements Iterable<E> {
 
     public abstract Iterable<? extends E> filter(C condition);
 
+    public abstract C getDefaultCondition();
+
     public static abstract class Folding<A, B> {
         private B result;
 

@@ -26,7 +26,7 @@ public class ConditionFilter<I> implements Filter.EntityEntity<Condition<I>,I> {
                     private I findNextMatch() {
                         I candidate = null;
                         while (parent.hasNext() && (candidate == null||!condition.matches(candidate))) { candidate = parent.next(); }
-                        return candidate;
+                        return candidate!=null && condition.matches(candidate) ? candidate : null;
                     }
 
                     @Override

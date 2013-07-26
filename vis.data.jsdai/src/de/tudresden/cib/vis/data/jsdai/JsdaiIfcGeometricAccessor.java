@@ -62,6 +62,16 @@ public class JsdaiIfcGeometricAccessor extends IndexedDataAccessor<JsdaiIfcGeome
     }
 
     @Override
+    public Condition<GeomtricIfc> getDefaultCondition() {
+        return new Condition<GeomtricIfc>() {
+            @Override
+            public boolean matches(GeomtricIfc data) {
+                return true;
+            }
+        } ;
+    }
+
+    @Override
     public Iterator<GeomtricIfc> iterator() {
         return wrapped.values().iterator();
     }

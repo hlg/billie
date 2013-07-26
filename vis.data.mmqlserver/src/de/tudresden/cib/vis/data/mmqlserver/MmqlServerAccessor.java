@@ -46,6 +46,11 @@ public class MmqlServerAccessor extends DataAccessor<MmqlServerAccessor.MMQLRow,
     }
 
     @Override
+    public String getDefaultCondition() {
+        throw new UnsupportedOperationException(); // TODO: does something else make sense?
+    }
+
+    @Override
     public Iterator<MMQLRow> iterator() {
         return new Iterator<MMQLRow>() {
             int i=0;

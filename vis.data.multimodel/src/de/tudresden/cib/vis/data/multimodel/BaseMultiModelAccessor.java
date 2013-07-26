@@ -132,6 +132,16 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K, Conditio
         return filter.filter(condition,this);
     }
 
+    @Override
+    public Condition<K> getDefaultCondition() {
+        return new Condition<K>() {
+            @Override
+            public boolean matches(K data) {
+                return true;
+            }
+        };
+    }
+
     interface EMCondition {
         boolean isValidFor(ElementaryModel model);
         boolean isValidFor(Content alternative);

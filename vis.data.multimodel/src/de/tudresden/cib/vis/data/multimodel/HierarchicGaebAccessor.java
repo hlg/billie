@@ -24,10 +24,10 @@ public class HierarchicGaebAccessor extends IndexedDataAccessor<Hierarchic<EObje
 
     @Override
     public void index() {
-        TgGAEB gaeb = ((DocumentRoot) baseAcessor.data).getGAEB();
-        traverseAndCollectLookUp(gaeb.getAward().getBoQ().getBoQBody(), 0, 0, null, "");
-        gaeb.getAward().getBoQ().getBoQBody().getBoQCtgy();
-        gaeb.getAward().getBoQ().getBoQBody().getItemlist();
+        TgBoQ boQ = ((DocumentRoot) baseAcessor.data).getGAEB().getAward().getBoQ();
+        HierarchicTgItemBoQCtgy root= new HierarchicTgItemBoQCtgy(null, 0, 0, boQ);
+        root.setNodeSize(traverseAndCollectLookUp(boQ.getBoQBody(), 1, 0, root, ""));
+        wrappedData.put("", root);
     }
 
     @Override
@@ -49,6 +49,16 @@ public class HierarchicGaebAccessor extends IndexedDataAccessor<Hierarchic<EObje
     @Override
     public Iterable<? extends Hierarchic<EObject>> filter(Condition<Hierarchic<EObject>> condition) {
         return filter.filter(condition, this);
+    }
+
+    @Override
+    public Condition<Hierarchic<EObject>> getDefaultCondition() {
+        return new Condition<Hierarchic<EObject>>() {
+            @Override
+            public boolean matches(Hierarchic<EObject> data) {
+                return true;
+            }
+        };
     }
 
     @Override

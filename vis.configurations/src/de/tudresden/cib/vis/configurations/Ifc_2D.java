@@ -1,5 +1,6 @@
 package de.tudresden.cib.vis.configurations;
 
+import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
@@ -45,14 +46,63 @@ public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
     }
 
     public void config() {
-        final double scale = 0.02;
-        final int offsetX = 200;
-        final int offsetY = 200;
-        final int level = 100;
+        final int level = 1; // 100;
+        mapper.addStatistics("minX",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MAX_VALUE) {
+            @Override
+            public Double function(Double number, EMFIfcParser.EngineEObject engineEObject) {
+                if(!(engineEObject.getObject() instanceof IfcWall || engineEObject.getObject() instanceof IfcColumn)) return number;
+                Double result = number;
+                for (int i = 0, ix = 0; ix < engineEObject.getGeometry().vertizes.size(); i++, ix += 3) {
+                    result = Math.min(number, engineEObject.getGeometry().vertizes.get(ix));
+                }
+                return result;
+            }
+        });
+        mapper.addStatistics("maxX",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MIN_VALUE) {
+            @Override
+            public Double function(Double number, EMFIfcParser.EngineEObject engineEObject) {
+                if(!(engineEObject.getObject() instanceof IfcWall || engineEObject.getObject() instanceof IfcColumn)) return number;
+                Double result = number;
+                for (int i = 0, ix = 0; ix < engineEObject.getGeometry().vertizes.size(); i++, ix += 3) {
+                    result = Math.max(number, engineEObject.getGeometry().vertizes.get(ix));
+                }
+                return result;
+            }
+        });
+        mapper.addStatistics("minY",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MAX_VALUE) {
+            @Override
+            public Double function(Double number, EMFIfcParser.EngineEObject engineEObject) {
+                if(!(engineEObject.getObject() instanceof IfcWall || engineEObject.getObject() instanceof IfcColumn)) return number;
+                Double result = number;
+                for (int i = 0, iy = 1; iy < engineEObject.getGeometry().vertizes.size(); i++, iy += 3) {
+                    result = Math.min(number, engineEObject.getGeometry().vertizes.get(iy));
+                }
+                return result;
+            }
+        });
+        mapper.addStatistics("maxY",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MIN_VALUE) {
+            @Override
+            public Double function(Double number, EMFIfcParser.EngineEObject engineEObject) {
+                if(!(engineEObject.getObject() instanceof IfcWall || engineEObject.getObject() instanceof IfcColumn)) return number;
+                Double result = number;
+                for (int i = 0, iy = 1; iy < engineEObject.getGeometry().vertizes.size(); i++, iy += 3) {
+                    result = Math.max(number, engineEObject.getGeometry().vertizes.get(iy));
+                }
+                return result;
+            }
+        });
+        mapper.addGlobal("scale", new Mapper.PreProcessing<Double>(){
+            @Override
+            public Double getResult() {
+                double xRatio = ((Double)mp.getStats("maxX") - (Double)mp.getStats("minX"))/1000;
+                double yRatio = ((Double)mp.getStats("maxY") - (Double)mp.getStats("minY"))/750;
+                return Math.min(xRatio,yRatio) * 1.1;
+            }
+        });
         mapper.addMapping(new Condition<EMFIfcParser.EngineEObject>(){
                               @Override
                               public boolean matches(EMFIfcParser.EngineEObject data) {
-                                  return data.getObject() instanceof IfcColumn;
+                                  return data.getObject() instanceof IfcWall || data.getObject() instanceof IfcColumn;
                               }
                           }, new PropertyMap<EMFIfcParser.EngineEObject, VisFactory2D.Polyline>() {
             @Override
@@ -81,10 +131,12 @@ public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
                         cuttingEdges.add(lines);
                     }
                 }
-                List<Integer> current = cuttingEdges.iterator().next().get(0);
+                List<Integer> current = cuttingEdges.isEmpty() ? null : cuttingEdges.iterator().next().get(0);
                 while (current != null) {
                     double[] pt = interpolateXY(data.getGeometry().vertizes, current.get(0) * 3, current.get(1) * 3, level);
-                    graphObject.addPoint((int) (pt[0] * scale + offsetX), (int) (pt[1] * scale + offsetY));
+                    graphObject.addPoint(
+                            (int) ((pt[0] - (Double) mapper.getStats("minX")) / mapper.getGlobal("scale")),
+                            (int) ((pt[1] - (Double) mapper.getStats("minY")) / mapper.getGlobal("scale")));
                     List<Integer> newCurrent = null;
                     for (List<List<Integer>> edge : cuttingEdges) {
                         if (edge.get(0) != current && edge.get(0).equals(current)) {

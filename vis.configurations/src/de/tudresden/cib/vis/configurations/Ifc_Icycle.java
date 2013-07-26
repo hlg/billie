@@ -12,11 +12,12 @@ import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.IfcRoot;
+import org.bimserver.models.ifc2x3tc1.IfcSpace;
 import org.bimserver.models.ifc2x3tc1.IfcSpatialStructureElement;
 
 public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>, S> {
 
-    private int scale = 1;
+    private int scale = 13;
     private static boolean WITH_LABELS = false;
     private static boolean SKIP_LAST_LEVEL = true;
 
@@ -54,6 +55,7 @@ public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, Conditio
                 graphObject.setTop(data.getDepth() * 25);
                 graphObject.setHeight(25);
                 if (data.getObject() instanceof IfcSpatialStructureElement) graphObject.setColor(200, 200, 200);
+                graphObject.setBackground();
             }
         });
         if (WITH_LABELS)
@@ -67,10 +69,12 @@ public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, Conditio
                 protected void configure() {
                     IfcRoot object = (IfcRoot) data.getObject();
                     graphObject.setLeft(data.getNodesBefore() * scale);
-                    graphObject.setTop(data.getDepth() * 25 + 150);
+                    graphObject.setTop(data.getDepth() * 25 + 40);
                     String title = object.getName();
-                    graphObject.setText(title == null ? "xxx" : title.length() <= 20 ? title : "... " + title.substring(title.length() - 20, title.length() - 1));
-                    graphObject.setRotation(-90);
+                    String subtitle = object instanceof IfcSpace ? ((IfcSpace)object).getLongName() : null;
+                    if(title!=null && subtitle!=null) title += " " + subtitle;
+                    graphObject.setText(title == null ? "xxx" : title.length() <= 20 ? title : title.substring(0, 20) + " ..");
+                    graphObject.setRotation(90);
                 }
             });
         mapper.addMapping(new Condition<Hierarchic<IdEObject>>() {
@@ -86,7 +90,8 @@ public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, Conditio
                 graphObject.setTop(data.getDepth() * 25 + 5);
                 String title = object.getName();
                 int doubleNodeSize = data.getNodeSize() * 2;
-                graphObject.setText(title == null ? "xxx" : title.length() <= doubleNodeSize ? title : "... " + title.substring(title.length() - doubleNodeSize, title.length() - 1));
+                graphObject.setText(title == null ? "xxx" : title.length() <= doubleNodeSize ? title : title.substring(0,doubleNodeSize));
+                graphObject.setForeground();
                 addTrigger(DefaultEvent.CLICK);
             }
         });
