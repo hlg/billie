@@ -51,7 +51,7 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K, Conditio
         return matchingModels;
     }
 
-    protected LinkModelDescriptor findLinkModel(Container container, String linkModelId) {
+    protected LinkModelDescriptor findLinkModel(Container container, String linkModelId) throws DataAccessException {
         EList<LinkModelDescriptor> linkModelDescriptors = container.getLinkModelDescriptorGroup().getLinkModelDescriptors();
         if(linkModelId==null) return linkModelDescriptors.get(0);
         else {
@@ -59,10 +59,10 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K, Conditio
                 if(lmd.getId().equals(linkModelId)) return lmd;
             }
         }
-        return null;
+        throw new DataAccessException("no link model with id " + linkModelId);
     }
 
-    protected LinkModel readLinkModel(File folder, Container container, String linkModelId) throws MalformedURLException {
+    protected LinkModel readLinkModel(File folder, Container container, String linkModelId) throws MalformedURLException, DataAccessException {
         return readLinkModel(folder, findLinkModel(container, linkModelId));
     }
 

@@ -132,7 +132,7 @@ public class Java2dFactory extends VisFactory2D {
         private int y;
         private int x;
         private String text;
-        private int rotation;
+        private boolean vertical;
 
         private Java2dLabel() {
             color = Color.BLACK;
@@ -154,21 +154,21 @@ public class Java2dFactory extends VisFactory2D {
         }
 
         @Override
-        public void setRotation(int i) {
-            this.rotation = i;
+        public void setVertical(boolean v) {
+            this.vertical = v;
         }
 
         void paint(Graphics2D g) {
             g.setColor(color);
             g.translate(x, y);
-            g.rotate(rotation);
+            if(vertical) g.rotate(90);
             g.drawString(text, 0, (int) g.getFont().getStringBounds(text, g.getFontRenderContext()).getHeight());
             g.translate(-x, -y);
         }
 
         @Override
         java.awt.Rectangle calculateBounds(Graphics2D g) {
-            AffineTransform rot = AffineTransform.getRotateInstance(rotation, x, y);
+            AffineTransform rot = AffineTransform.getRotateInstance(vertical?90:0, x, y);
             GlyphVector glyphVector = g.getFont().createGlyphVector(g.getFontRenderContext(), text);
             return rot.createTransformedShape(glyphVector.getOutline()).getBounds();
         }

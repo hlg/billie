@@ -12,17 +12,16 @@ import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.IfcRoot;
-import org.bimserver.models.ifc2x3tc1.IfcSpace;
 import org.bimserver.models.ifc2x3tc1.IfcSpatialStructureElement;
 
 public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>, S> {
 
     private int scale = 13;
-    private static boolean WITH_LABELS = false;
-    private static boolean SKIP_LAST_LEVEL = true;
+    private boolean WITH_LABELS = false;
+    private boolean SKIP_LAST_LEVEL = true;
 
     public Ifc_Icycle(Mapper<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>, ?, S> mapper, int scale) {
-        super(mapper);
+        this(mapper);
         this.scale = scale;
     }
 
@@ -70,11 +69,14 @@ public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, Conditio
                     IfcRoot object = (IfcRoot) data.getObject();
                     graphObject.setLeft(data.getNodesBefore() * scale);
                     graphObject.setTop(data.getDepth() * 25 + 40);
+/*
                     String title = object.getName();
                     String subtitle = object instanceof IfcSpace ? ((IfcSpace)object).getLongName() : null;
                     if(title!=null && subtitle!=null) title += " " + subtitle;
+*/
+                    String title= object.getGlobalId().getWrappedValue();
                     graphObject.setText(title == null ? "xxx" : title.length() <= 20 ? title : title.substring(0, 20) + " ..");
-                    graphObject.setRotation(90);
+                    graphObject.setVertical(true);
                 }
             });
         mapper.addMapping(new Condition<Hierarchic<IdEObject>>() {
@@ -88,7 +90,7 @@ public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, Conditio
                 IfcSpatialStructureElement object = (IfcSpatialStructureElement) data.getObject();
                 graphObject.setLeft(data.getNodesBefore() * scale + 5);
                 graphObject.setTop(data.getDepth() * 25 + 5);
-                String title = object.getName();
+                String title = object.getGlobalId().getWrappedValue(); // object.getName();
                 int doubleNodeSize = data.getNodeSize() * 2;
                 graphObject.setText(title == null ? "xxx" : title.length() <= doubleNodeSize ? title : title.substring(0,doubleNodeSize));
                 graphObject.setForeground();

@@ -70,7 +70,7 @@ public enum ConfigurationRunner {
             viewer.setPickingEnabled(false);
             viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());  // or carport.zip
         }
-    }, IFCGAEB_3D {
+    }, IFCGAEBQTO_3D {
         @Override
         void run(String[] args) throws IOException, DataAccessException, TargetCreationException {
             MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
@@ -101,6 +101,20 @@ public enum ConfigurationRunner {
             // config.absolute=false;
             config.gaebX84Id = ids.get(1);
             config.gaebX83Id = ids.get(1);
+            config.config();
+            viewer.run(config.execute().getScene());
+        }
+    }, IFCGAEBSPLIT_3D {
+        @Override
+        void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
+            MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
+            SimpleViewer viewer = new SimpleViewer();
+            viewer.setPickingEnabled(false);
+            String zip = (args.length > 1 && !args[1].equals("-")) ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div", "zip").getCanonicalPath();
+            List<String> ids = mmAccessor.read(new File(zip), new EMTypeCondition(EMTypes.IFC), new EMTypeCondition(EMTypes.GAEBSPLIT));
+            Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper = Java3dBuilder.createMapper(mmAccessor);
+            IfcGaebSplit_Colored3D<BranchGroup> config = new IfcGaebSplit_Colored3D<BranchGroup>(mapper);
+            config.gaebID = ids.get(1);
             config.config();
             viewer.run(config.execute().getScene());
         }
@@ -225,6 +239,7 @@ public enum ConfigurationRunner {
     }, LINKS_HEB {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
+            EMFIfcHierarchicAcessor.SKIP_LAST_LEVEL = false;
             SimpleMultiModelAccessor dataAcessor = new SimpleMultiModelAccessor(createPluginManager());
             Draw2DViewer viewer = new Draw2DViewer();
             File input = args.length > 1 ? new File(args[1]) : viewer.chooseFolder("/home/dev/src/visMapping.git/");
@@ -234,8 +249,9 @@ public enum ConfigurationRunner {
                     return super.isValidFor(model) && model.getMeta().getPhase().getPhaseDesc().equals("Angebotserstellung");
                 }
             };
-            final LinkedList<String> ids = dataAcessor.readFromFolder(input, "L2", new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC), new EMTypeCondition(EMTypes.QTO));
-            DataAccessor<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>> hierarchicIfc = dataAcessor.getAccessor(ids.get(0));
+            final LinkedList<String> ids = dataAcessor.readFromFolder(input, "L1", new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC), new EMTypeCondition(EMTypes.QTO));
+            EMFIfcHierarchicAcessor hierarchicIfc = (EMFIfcHierarchicAcessor) dataAcessor.getAccessor(ids.get(0));
+            hierarchicIfc.index();
             DataAccessor<Hierarchic<EObject>, Condition<Hierarchic<EObject>>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(1));
             Panel container = new Panel();
             GridLayout manager = new GridLayout(1, true);
@@ -245,7 +261,9 @@ public enum ConfigurationRunner {
             hebConfig.config();
             SceneManager<LinkedObject.ResolvedLink, Panel> hebScene = hebConfig.execute();
 
-            Configuration<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>, Panel> ifcIcycle = new Ifc_Icycle<Panel>(Draw2dBuilder.createMapper(hierarchicIfc, viewer.getDefaultFont()), hebConfig.getIfcScale());
+            Ifc_Icycle<Panel> ifcIcycle = new Ifc_Icycle<Panel>(Draw2dBuilder.createMapper(hierarchicIfc, viewer.getDefaultFont()), hebConfig.getIfcScale());
+            ifcIcycle.setSkipLastLevel(false);
+            ifcIcycle.setWithLastLevelLabels(true);
             ifcIcycle.config();
 
             final Configuration<Hierarchic<EObject>, Condition<Hierarchic<EObject>>, Panel> gaebIcycle = new Gaeb_Icycle<Panel>(Draw2dBuilder.createMapper(hierarchicGaeb, viewer.getDefaultFont()), hebConfig.getGaebScale());
@@ -270,8 +288,8 @@ public enum ConfigurationRunner {
     }, IFC_ICYCLE {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
+            EMFIfcHierarchicAcessor.SKIP_LAST_LEVEL = false;
             EMFIfcHierarchicAcessor data = new EMFIfcHierarchicAcessor(createPluginManager());
-            data.setSkipLastLevel(false);
             Draw2DViewer viewer = new Draw2DViewer();
             data.read(viewer.chooseFile("/home/dev/src", "ifc"));
             data.index();

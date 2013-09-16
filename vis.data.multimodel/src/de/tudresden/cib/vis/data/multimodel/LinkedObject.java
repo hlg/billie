@@ -1,6 +1,7 @@
 package de.tudresden.cib.vis.data.multimodel;
 
 import cib.lib.gaeb.model.gaeb.TgItem;
+import cib.lib.gaeb.model.gaeb.TgQtySplit;
 import cib.mf.qto.model.AnsatzType;
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
@@ -38,6 +39,11 @@ public class LinkedObject<T> {
         public Map<String, TgItem> getLinkedBoQ() {
             return defaultEmptyList(linkedObjects.get(EMTypes.GAEB));
         }
+
+        public Map<String, TgQtySplit> getLinkedBoQtySplit() {
+            return defaultEmptyList(linkedObjects.get(EMTypes.GAEBSPLIT));
+        }
+
 
         public Map<String, EMFIfcParser.EngineEObject> getLinkedObject() {
             return defaultEmptyList(linkedObjects.get(EMTypes.IFC));
@@ -86,6 +92,10 @@ public class LinkedObject<T> {
 
         public Collection<HierarchicGaebAccessor.HierarchicTgItemBoQCtgy> getAllLinkedHierarchicGaebs(String modelId){
             return defaultEmptyAllList(linkedObjects.get(EMTypes.GAEBHIERARCHIC), modelId);
+        }
+
+        public Collection<TgQtySplit> getAllLinkedQtySplits(String modelId){
+            return defaultEmptyAllList(linkedObjects.get(EMTypes.GAEBSPLIT), modelId);
         }
 
         private <T> List<T> defaultEmptyAllList(Map<String, List<?>> groupedMap, String modelId) {

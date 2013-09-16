@@ -23,7 +23,7 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
 
     private int ifcScale;
     private int gaebScale;
-    private static int SMALLSIZE = 20;
+    private static int SMALLSIZE = 10;
     private static double BUNDLING = 0.5;
     private static boolean SKIP_LAST_LEVEL = false;
 

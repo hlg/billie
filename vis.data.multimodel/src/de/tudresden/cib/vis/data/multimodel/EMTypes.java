@@ -1,6 +1,7 @@
 package de.tudresden.cib.vis.data.multimodel;
 
 import cib.lib.gaeb.model.gaeb.TgItem;
+import cib.lib.gaeb.model.gaeb.TgQtySplit;
 import cib.mf.qto.model.AnsatzType;
 import cib.mf.risk.model.risk.RiskList;
 import cib.mf.schedule.model.activity11.Activity;
@@ -23,6 +24,12 @@ public enum EMTypes {
     GAEB("BoQ", "gaebxml", "3.1", TgItem.class, true) {
         IndexedDataAccessor createAccessor() {
             return new EMFGaebAccessor();
+        }
+    },
+    GAEBSPLIT("BoQ","gaebxml","3.1", TgQtySplit.class,true) {
+        @Override
+        IndexedDataAccessor createAccessor() throws DataAccessException {
+            return new EMFGaebSplitAccessor();
         }
     },
     QTO("QTO", "xml", "1.0", AnsatzType.class, true) {

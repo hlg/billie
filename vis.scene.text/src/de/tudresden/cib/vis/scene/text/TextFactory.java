@@ -49,7 +49,7 @@ public class TextFactory extends VisFactory2D {
             this.text = text;
         }
 
-        public void setRotation(int i) {
+        public void setVertical(boolean v) {
             // ignore
         }
 

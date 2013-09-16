@@ -65,7 +65,7 @@ public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, Condition
                     graphObject.setTop(data.getDepth() * 25 + 40);
                     String title = object.getDescription().getOutlineText() != null ? object.getDescription().getOutlineText().getOutlTxt().getTextOutlTxt().get(0).getSpan().get(0).getValue() : object.getID();
                     graphObject.setText(title.length() <= 20 ? title : title.substring(0, 20) + " ..");
-                    graphObject.setRotation(90);
+                    graphObject.setVertical(true);
                 }
             });
         mapper.addMapping(new Condition<Hierarchic<EObject>>(){

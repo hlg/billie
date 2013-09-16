@@ -113,7 +113,7 @@ public class Draw2dFactory extends VisFactory2D {
     }
     
     class Draw2dLabel extends Draw2dObject<Draw2dLabel.RotatableLabel> implements Label {
-        private float rotation = 0;
+        private boolean vertical = false;
         Draw2dLabel(){
             figure = new RotatableLabel();
             figure.setFont(defaultFont);
@@ -129,11 +129,12 @@ public class Draw2dFactory extends VisFactory2D {
         }
         public void setText(String text){
             figure.setText(text);
-            figure.setSize(figure.getTextBounds().getSize());
+            figure.setBounds(figure.getTextBounds());
         }
 
-        public void setRotation(int i) {
-            this.rotation = i;
+        public void setVertical(boolean v) {
+            this.vertical = v;
+            figure.setBounds(figure.getTextBounds());
         }
 
         public void setColor(int r, int g, int b) {
@@ -141,13 +142,25 @@ public class Draw2dFactory extends VisFactory2D {
         }
 
         public class RotatableLabel extends org.eclipse.draw2d.Label {
+
             protected void paintFigure(Graphics graphics) {
-                org.eclipse.draw2d.geometry.Rectangle bounds = getTextBounds();
+                graphics.pushState();
+                org.eclipse.draw2d.geometry.Rectangle bounds = super.getTextBounds();
                 graphics.translate(bounds.x, bounds.y);
-                graphics.rotate(rotation);
+                if(vertical) {
+                    graphics.translate(bounds.height, 0);
+                    graphics.rotate(90);
+                }
                 graphics.setClip(new org.eclipse.draw2d.geometry.Rectangle(0,0,bounds.width, bounds.height));
-                graphics.drawText(getSubStringText(), getTextLocation());
-                graphics.translate(-bounds.x, -bounds.y);
+                Point location = getTextLocation().getTransposed();
+                graphics.drawText(getText(), new Point(-location.x, location.y));
+                graphics.popState();
+            }
+
+            @Override
+            public org.eclipse.draw2d.geometry.Rectangle getTextBounds() {
+                org.eclipse.draw2d.geometry.Rectangle baseBounds = super.getTextBounds();
+                return vertical ? new org.eclipse.draw2d.geometry.Rectangle(baseBounds.x, baseBounds.y, baseBounds.height, baseBounds.width) : baseBounds;
             }
 
         }
