@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <multimodel:MultiModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:multimodel="http://cib.tu-dresden.de/multimodel">
-  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:/D:/Nutzer/helga/tmp/m2a2/1372073073181/BoQ/gaebxml/LV_1.X81">
+  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:///D:/Nutzer/helga/dev/visMapping.git/vis.data.multimodel/test/resources/carport/BoQ/gaebxml/LV_1.X81">
     <metaDataEntries key="mmaa.model.name" value="LV_1.X81"/>
     <metaDataEntries key="mmaa.model.type" value="gaeb-da81-83-v2009"/>
     <metaDataEntries key="cib.model.featurePathCompoundID" value="[(BoQCtgy | Item).rNoPart + &quot;.&quot;]*"/>
@@ -28,7 +28,7 @@
     <metaDataEntries key="mf.file.namespace" value="BoQ1"/>
     <metaDataEntries key="mf.file.value" value="file:///BoQ/gaebxml/LV_1.X81"/>
   </elementaryModels>
-  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:/D:/Nutzer/helga/tmp/m2a2/1372073073181/QTO/xml/1_LV_VA.xml">
+  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:///D:/Nutzer/helga/dev/visMapping.git/vis.data.multimodel/test/resources/carport/QTO/xml/1_LV_VA.xml">
     <metaDataEntries key="mmaa.model.name" value="1_LV_VA.xml"/>
     <metaDataEntries key="mmaa.model.type" value="mefisto-qto-1.0"/>
     <metaDataEntries key="mf.em.type" value="QTO"/>
@@ -40,7 +40,7 @@
     <metaDataEntries key="mf.file.namespace" value="QTO1"/>
     <metaDataEntries key="mf.file.value" value="file:///QTO/xml/1_LV_VA.xml"/>
   </elementaryModels>
-  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:/D:/Nutzer/helga/tmp/m2a2/1372073073181/Object/cpixml/carport2.cpixml">
+  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:///D:/Nutzer/helga/dev/visMapping.git/vis.data.multimodel/test/resources/carport/Object/cpixml/carport2.cpixml">
     <metaDataEntries key="mmaa.model.name" value="carport2.cpixml"/>
     <metaDataEntries key="mmaa.model.type" value="unknown"/>
     <metaDataEntries key="mf.em.type" value="Object"/>
@@ -52,7 +52,7 @@
     <metaDataEntries key="mf.file.namespace"/>
     <metaDataEntries key="mf.file.value" value="file:///Object/cpixml/carport2.cpixml"/>
   </elementaryModels>
-  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:/D:/Nutzer/helga/tmp/m2a2/1372073073181/Object/cpixml/buildingStructure.cpixml">
+  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:///D:/Nutzer/helga/dev/visMapping.git/vis.data.multimodel/test/resources/carport/Object/cpixml/buildingStructure.cpixml">
     <metaDataEntries key="mmaa.model.name" value="buildingStructure.cpixml"/>
     <metaDataEntries key="mmaa.model.type" value="unknown"/>
     <metaDataEntries key="mf.em.type" value="Object"/>
@@ -64,7 +64,7 @@
     <metaDataEntries key="mf.file.namespace"/>
     <metaDataEntries key="mf.file.value" value="file:///Object/cpixml/buildingStructure.cpixml"/>
   </elementaryModels>
-  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:/D:/Nutzer/helga/tmp/m2a2/1372073073181/Object/ifc/carport2.ifc">
+  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:///D:/Nutzer/helga/dev/visMapping.git/vis.data.multimodel/test/resources/carport/Object/ifc/carport2.ifc">
     <metaDataEntries key="mmaa.model.name" value="carport2.ifc"/>
     <metaDataEntries key="mmaa.model.type" value="bim-ifc-2x3"/>
     <metaDataEntries key="mf.em.type" value="Object"/>
@@ -76,7 +76,7 @@
     <metaDataEntries key="mf.file.namespace"/>
     <metaDataEntries key="mf.file.value" value="file:///Object/ifc/carport2.ifc"/>
   </elementaryModels>
-  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:/D:/Nutzer/helga/tmp/m2a2/1372073073181/Activity/xml/Vorgangsmodell_1.xml">
+  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:///D:/Nutzer/helga/dev/visMapping.git/vis.data.multimodel/test/resources/carport/Activity/xml/Vorgangsmodell_1.xml">
     <metaDataEntries key="mmaa.model.name" value="Vorgangsmodell_1.xml"/>
     <metaDataEntries key="mmaa.model.type" value="mefisto-schedule-1.0"/>
     <metaDataEntries key="mf.em.type" value="Activity"/>
@@ -88,7 +88,7 @@
     <metaDataEntries key="mf.file.namespace" value="Activity1"/>
     <metaDataEntries key="mf.file.value" value="file:///Activity/xml/Vorgangsmodell_1.xml"/>
   </elementaryModels>
-  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:/D:/Nutzer/helga/tmp/m2a2/1372073073181/Activity/xml/Vorgangsmodell_2.xml">
+  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:///D:/Nutzer/helga/dev/visMapping.git/vis.data.multimodel/test/resources/carport/Activity/xml/Vorgangsmodell_2.xml">
     <metaDataEntries key="mmaa.model.name" value="Vorgangsmodell_2.xml"/>
     <metaDataEntries key="mmaa.model.type" value="mefisto-schedule-1.0"/>
     <metaDataEntries key="mf.em.type" value="Activity"/>
@@ -100,7 +100,7 @@
     <metaDataEntries key="mf.file.namespace" value="Activity2"/>
     <metaDataEntries key="mf.file.value" value="file:///Activity/xml/Vorgangsmodell_2.xml"/>
   </elementaryModels>
-  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:/D:/Nutzer/helga/tmp/m2a2/1372073073181/Plant/xml/Geraete.xml">
+  <elementaryModels xsi:type="multimodel:UriElementaryModel" uri="file:///D:/Nutzer/helga/dev/visMapping.git/vis.data.multimodel/test/resources/carport/Plant/xml/Geraete.xml">
     <metaDataEntries key="mmaa.model.name" value="Geraete.xml"/>
     <metaDataEntries key="mmaa.model.type" value="unknown"/>
     <metaDataEntries key="mf.em.type" value="Plant"/>

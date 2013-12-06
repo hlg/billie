@@ -1,13 +1,13 @@
 <ivy-module version="2.0">
 <info organisation="de.tudresden.cib" module="vis.data.multimodel"/>
 <dependencies>
+    <dependency org="bundle" name="cib.mmaa.multimodel" rev="1.0.+" />
     <dependency org="bundle" name="de.mefisto.container" rev="1.0.+"/>
     <dependency org="bundle" name="cib.lib.gaeb.model" rev="1.0.+" changing="true" />
     <dependency org="bundle" name="cib.mf.qto.model" rev="1.0.+"/>
     <dependency org="bundle" name="cib.mf.risk.model" rev="1.0.+"/>
     <dependency org="bundle" name="cib.mf.schedule.model" rev="1.1.+"/>
     <dependency org="bundle" name="org.eclipse.emf.common" rev="2.7.+"/>
-    <dependency org="bundle" name="cib.mmaa.multimodel" rev="1.0.+" />
     <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.data.bimserver" rev="latest.integration" changing="true"/>
     <dependency org="org.bimserver" name="bimserver-plugins" rev="1.1.0" />

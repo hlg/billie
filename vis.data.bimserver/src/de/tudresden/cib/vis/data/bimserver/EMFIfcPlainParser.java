@@ -21,7 +21,6 @@ public class EMFIfcPlainParser {
         } catch (PluginException e) {
             throw new DataAccessException(e);
         }
-
     }
 
     public void read(InputStream inputStream, final long size) throws DataAccessException {
@@ -30,7 +29,6 @@ public class EMFIfcPlainParser {
         } catch (DeserializeException e) {
             throw new DataAccessException(e);
         }
-
     }
 
     void adjustRelations() {

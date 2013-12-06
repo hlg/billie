@@ -16,52 +16,52 @@ public enum EMTypes {
 
     // elment types must be unique!
 
-    IFC("Object", "ifc", "2x3", EMFIfcParser.EngineEObject.class, true) {
+    IFC("Object", "ifc", "2x3", EMFIfcParser.EngineEObject.class, true, "bim-ifc-2x3") {
         IndexedDataAccessor createAccessor() throws DataAccessException {
             return new EMFIfcGeometricAccessor(pm, true);
         }
     },
-    GAEB("BoQ", "gaebxml", "3.1", TgItem.class, true) {
+    GAEB("BoQ", "gaebxml", "3.1", TgItem.class, true, "gaeb-da81-83-v2009") {
         IndexedDataAccessor createAccessor() {
             return new EMFGaebAccessor();
         }
     },
-    GAEBSPLIT("BoQ","gaebxml","3.1", TgQtySplit.class,true) {
+    GAEBSPLIT("BoQ","gaebxml","3.1", TgQtySplit.class,true, "gaeb-da81-83-v2009") {
         @Override
         IndexedDataAccessor createAccessor() throws DataAccessException {
             return new EMFGaebSplitAccessor();
         }
     },
-    QTO("QTO", "xml", "1.0", AnsatzType.class, true) {
+    QTO("QTO", "xml", "1.0", AnsatzType.class, true, "mefisto-qto-1.0") {
         IndexedDataAccessor createAccessor() {
             return new EMFQtoAccessor();
         }
     },
-    ACTIVITY10("Activity", "xml", "1.0", cib.mf.schedule.model.activity10.Activity.class, true) {
+    ACTIVITY10("Activity", "xml", "1.0", cib.mf.schedule.model.activity10.Activity.class, true, "mefisto-schedule-1.0") {
         @Override
         IndexedDataAccessor createAccessor() {
             return new EMFSchedule10Accessor();
         }
     },
-    ACTIVITY11("Activity", "xml", "1.1", Activity.class, true) {
+    ACTIVITY11("Activity", "xml", "1.1", Activity.class, true, "mefisto-schedule-1.1") {
         @Override
         IndexedDataAccessor createAccessor() {
             return new EMFSchedule11Accessor();
         }
     },
-    RISK("Risk", "xml", "1.0", RiskList.class, true) {
+    RISK("Risk", "xml", "1.0", RiskList.class, true, "risk-1.0") {
         @Override
         IndexedDataAccessor createAccessor() {
             return new EMFRiskAccessor();
         }
     },
-    IFCHIERARCHIC("Object", "ifc", "2x3", EMFIfcHierarchicAcessor.HierarchicIfc.class, false) {
+    IFCHIERARCHIC("Object", "ifc", "2x3", EMFIfcHierarchicAcessor.HierarchicIfc.class, false, "bim-ifc-2x3") {
         @Override
         IndexedDataAccessor createAccessor() throws DataAccessException {
             return new EMFIfcHierarchicAcessor(pm);
         }
     },
-    GAEBHIERARCHIC("BoQ", "gaebxml", "3.1", HierarchicGaebAccessor.HierarchicTgItemBoQCtgy.class, false) {
+    GAEBHIERARCHIC("BoQ", "gaebxml", "3.1", HierarchicGaebAccessor.HierarchicTgItemBoQCtgy.class, false, "gaeb-da81-83-v2009") {
         @Override
         IndexedDataAccessor createAccessor() {
             return new HierarchicGaebAccessor();
@@ -71,16 +71,18 @@ public enum EMTypes {
     protected String modelType;
     protected String format;
     String formatVersion;
+    protected final String typeFormatVersion; // modelType, format, formatversion from mf-container combined for generic mmaa
     static PluginManager pm;
     private Class allowedType;
     private boolean preferred;
 
-    EMTypes(String modelType, String format, String formatVersion, Class allowedType, boolean preferred) {
+    EMTypes(String modelType, String format, String formatVersion, Class allowedType, boolean preferred, String typeFormatVersion) {
         this.modelType = modelType;
         this.format = format;
         this.formatVersion = formatVersion;
         this.allowedType = allowedType;
         this.preferred = preferred;
+        this.typeFormatVersion = typeFormatVersion;
     }
 
     abstract IndexedDataAccessor createAccessor() throws DataAccessException;
@@ -97,6 +99,13 @@ public enum EMTypes {
             }
         }
         return null;
+    }
+
+    public static EMTypes find(String typeCode){
+        for  (EMTypes type:EMTypes.values()){
+            if(type.typeFormatVersion.equals(typeCode)) return type;
+        }
+        return null; // TODO: exceptions!
     }
 
     public static EMTypes find(Object element){
