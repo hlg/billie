@@ -5,6 +5,7 @@ import cib.mmaa.multimodel.util.MultimodelResourceFactoryImpl;
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
+import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.filter.Condition;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -22,11 +23,15 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
     private Map<ElementaryModel, IndexedDataAccessor> elementaryModels = new HashMap<ElementaryModel, IndexedDataAccessor>();
     private Collection<LinkedObject<K>> groupedElements = new HashSet<LinkedObject<K>>();
 
+    public GenericMultiModelAccessor(SimplePluginManager pm) {
+        EMTypes.pm = pm;
+    }
+
     @Override
     public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
         MultiModel model = readMultiModelMeta(inputStream);
         LinkModel firstLinkModel = model.getLinkModels().get(0);
-        for(ElementaryModel elementaryModel: firstLinkModel.getLinkedModels()) readElementaryModel(elementaryModel);
+        for (ElementaryModel elementaryModel : firstLinkModel.getLinkedModels()) readElementaryModel(elementaryModel);
         ElementaryModel firstElementaryModel = model.getElementaryModels().get(0);
         groupBy(firstElementaryModel, firstLinkModel);
     }
@@ -55,36 +60,37 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
 
     private ElementaryModel getElementaryModels(MultiModel multiModel, EMCondition keyModelCondition, EMCondition[] requiredModelConditions) throws DataAccessException, IOException {
         List<ElementaryModel> keyModelCandidates = new LinkedList<ElementaryModel>();
-        for(ElementaryModel elementaryModel : multiModel.getElementaryModels()){
-            if(keyModelCondition.isValidFor(elementaryModel))keyModelCandidates.add(elementaryModel);
-            for(EMCondition condition : requiredModelConditions) {
-                if(condition.isValidFor(elementaryModel)) {
+        for (ElementaryModel elementaryModel : multiModel.getElementaryModels()) {
+            if (keyModelCondition.isValidFor(elementaryModel)) keyModelCandidates.add(elementaryModel);
+            for (EMCondition condition : requiredModelConditions) {
+                if (condition.isValidFor(elementaryModel)) {
                     readElementaryModel(elementaryModel);
                 }
             }
         }
-        if(keyModelCandidates.size()>1) throw new DataAccessException("ambiguous key model conditions");
-        if(keyModelCandidates.size()==0) throw new DataAccessException("no key model found");
+        if (keyModelCandidates.size() > 1) throw new DataAccessException("ambiguous key model conditions");
+        if (keyModelCandidates.size() == 0) throw new DataAccessException("no key model found");
         readElementaryModel(keyModelCandidates.get(0));
         return keyModelCandidates.get(0);
     }
 
     private InputStream getElementaryModelInputStream(ElementaryModel elementaryModel) throws IOException, DataAccessException {
-        if(elementaryModel instanceof UriElementaryModel){
+        if (elementaryModel instanceof UriElementaryModel) {
             return new URL(((UriElementaryModel) elementaryModel).getUri()).openStream();  // TODO: handle relative URIs
         } else if (elementaryModel instanceof EmbeddedElementaryModel) {
-            return new ByteArrayInputStream(((EmbeddedElementaryModel)elementaryModel).getData());
+            return new ByteArrayInputStream(((EmbeddedElementaryModel) elementaryModel).getData());
         } else {
             throw new DataAccessException("unknown elementary model type, don't know how to access");
         }
     }
 
     private void readElementaryModel(ElementaryModel elementaryModel) throws DataAccessException, IOException {
-        if(elementaryModels.containsKey(elementaryModel)) return;
-        String typeCode = getEmTypeCode(elementaryModel);
-        IndexedDataAccessor accessor = EMTypes.find(typeCode).createAccessor();
-        if(accessor==null) throw new DataAccessException("no matching accessor found for " + typeCode);
+        if (elementaryModels.containsKey(elementaryModel)) return;
+        String typeCode = getMeta(elementaryModel,"mmaa.model.type");
+        EMTypes emType = EMTypes.find(typeCode);
+        if (emType == null) throw new DataAccessException("no matching accessor found for " + typeCode);
         else {
+            IndexedDataAccessor accessor = emType.createAccessor();
             InputStream elementaryModelInputStream = getElementaryModelInputStream(elementaryModel);
             accessor.read(elementaryModelInputStream, 0);
             accessor.index();
@@ -94,44 +100,39 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
 
     private LinkModel getLinkModel(LMCondition linkModelCondition, EList<LinkModel> linkModels) throws DataAccessException {
         List<LinkModel> linkModelCandidates = new LinkedList<LinkModel>();
-        for(LinkModel linkModel: linkModels){
+        for (LinkModel linkModel : linkModels) {
             if (linkModelCondition.isValidFor(linkModel)) linkModelCandidates.add(linkModel);
         }
-        if(linkModelCandidates.size()>1) throw new DataAccessException("ambiguous link model conditions");
-        if(linkModelCandidates.size()==0) throw new DataAccessException("no matching link model found");
+        if (linkModelCandidates.size() > 1) throw new DataAccessException("ambiguous link model conditions");
+        if (linkModelCandidates.size() == 0) throw new DataAccessException("no matching link model found");
         return linkModelCandidates.get(0);
     }
 
     private void groupBy(ElementaryModel keyModel, LinkModel linkModel) {
         Map<ElementaryModel, String> generatedModelIds = new HashMap<ElementaryModel, String>();
-        for(ElementaryModel elementaryModel: elementaryModels.keySet()){
+        for (ElementaryModel elementaryModel : elementaryModels.keySet()) {
             generatedModelIds.put(elementaryModel, Integer.toString(elementaryModel.hashCode()));
         }
-        for(Link link: linkModel.getLinks()){
+        Map<K, LinkedObject<K>> trackMap = new HashMap<K, LinkedObject<K>>();
+        for (Link link : linkModel.getLinks()) {
             K key = null;
-            Map<K, LinkedObject<K>> trackMap = new HashMap<K, LinkedObject<K>>();
-            LinkedObject.ResolvedLink resolvedLink =new LinkedObject.ResolvedLink();
-            for(LinkedElement linkedElement: link.getLinkedElements()){
-                if(elementaryModels.containsKey(linkedElement.getElementaryModel())){
-                    Object object =  elementaryModels.get(linkedElement.getElementaryModel()).getIndexed(linkedElement.getElementID());
-                    if(elementaryModels.equals(keyModel)) key = (K) object; // TODO make sure accessor matches!
+            LinkedObject.ResolvedLink resolvedLink = new LinkedObject.ResolvedLink();
+            for (LinkedElement linkedElement : link.getLinkedElements()) {
+                if (elementaryModels.containsKey(linkedElement.getElementaryModel())) {
+                    Object object = elementaryModels.get(linkedElement.getElementaryModel()).getIndexed(linkedElement.getElementID());
+                    if (linkedElement.getElementaryModel().equals(keyModel))
+                        key = (K) object; // TODO make sure accessor matches!
                     resolvedLink.addObject(generatedModelIds.get(linkedElement.getElementaryModel()), object);
                 }
             }
-            if(!trackMap.containsKey(key)){
+            if (!trackMap.containsKey(key)) {
                 trackMap.put(key, new LinkedObject<K>(key));
             }
             trackMap.get(key).addLink(resolvedLink);
         }
+        for (LinkedObject<K> linkedObject : trackMap.values()) groupedElements.add(linkedObject);
     }
 
-    private String getEmTypeCode(ElementaryModel elementaryModel) throws DataAccessException {
-        // TODO: SEF please change this to a proper map in the ecore model - like this http://wiki.eclipse.org/EMF/FAQ#How_do_I_create_a_Map_in_EMF.3F
-        for(MetaDataEntry metaDataEntry: elementaryModel.getMetaDataEntries()){
-            if(metaDataEntry.getKey().equals("mmaa.model.type")) return metaDataEntry.getValue();
-        }
-        throw new DataAccessException("missing EM type meta data - mmaa.model.type");
-    }
     @Override
     public void readFromFolder(File directory) throws DataAccessException { // TODO: move out of DataAccessor interface! plus: unravel access (folder, file, stream) and link resolution logic
         throw new UnsupportedOperationException();
@@ -161,25 +162,59 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
         boolean isValidFor(ElementaryModel model);
     }
 
-    class EMTypeCondition implements EMCondition {
+    static class EMTypeCondition implements EMCondition {
 
         private final EMTypes required;
 
-        public EMTypeCondition(EMTypes required){
+        public EMTypeCondition(EMTypes required) {
             this.required = required;
         }
 
         @Override
         public boolean isValidFor(ElementaryModel model) {
-            try {
-                return getEmTypeCode(model).equals(required.typeFormatVersion);
-            } catch (DataAccessException e) {
-                return false;
-            }
+            return this.required.typeFormatVersion.equals(getMeta(model,"mmaa.model.type"));
         }
     }
 
     interface LMCondition {
         boolean isValidFor(LinkModel linkModel);
+
+        class First implements LMCondition {
+            @Override
+            public boolean isValidFor(LinkModel linkModel) {
+                return true;
+            }
+        }
+
+        class ByName implements LMCondition {
+
+            private String name;
+
+            public ByName(String name) {
+                this.name = name;
+            }
+
+            @Override
+            public boolean isValidFor(LinkModel linkModel) {
+                return name.equals(getMeta(linkModel,"mmaa.linkmodel.name"));
+            }
+        }
+    }
+
+    static class MetaDataMap extends HashMap<String, String> {
+        MetaDataMap(EList<MetaDataEntry> metaDataEntryList) {
+            for (MetaDataEntry metaDataEntry : metaDataEntryList) {
+                this.put(metaDataEntry.getKey(), metaDataEntry.getValue());
+            }
+        }
+    }
+
+    static String getMeta(Annotatable annotatable, String key) {
+        for (MetaDataEntry metaDataEntry : annotatable.getMetaDataEntries()) {
+            if (metaDataEntry.getKey().equals(key)) {
+                return metaDataEntry.getValue();
+            }
+        }
+        return null;
     }
 }

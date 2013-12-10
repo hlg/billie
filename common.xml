@@ -13,7 +13,7 @@
 
     <dirname property="basedir" file="${ant.file}"/>
 
-    <target name="check.tests">
+    <target name="check.tests" depends="config.module">
         <available file="${module.basedir}/test" property="tests.available" />
     </target>
 

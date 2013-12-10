@@ -1,14 +1,30 @@
 package de.tudresden.cib.vis.data.multimodel;
 
+import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
+import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class GenericMultiModelTests {
+
+    private GenericMultiModelAccessor data;
+
+    @Before
+    public void setUp(){
+        SimplePluginManager pm = new SimplePluginManager();
+        pm.loadPluginsFromCurrentClassloader();
+        pm.initAllLoadedPlugins();
+        data = new GenericMultiModelAccessor(pm);
+    }
+
     @Test
-    public void testLoadFile() throws Exception {
-        GenericMultiModelAccessor data = new GenericMultiModelAccessor();
+    public void testKeyModelOnly() throws Exception {
         assertNotNull(data);
-        data.read(getClass().getResourceAsStream("/resources/carport.mmaa"),0);
+        data.read(getClass().getResourceAsStream("/resources/carport.mmaa"),0, new GenericMultiModelAccessor.LMCondition.First(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC));
+        int objectCount = 0;
+        for(Object object : data) objectCount++;
+        assertEquals(5, objectCount);
     }
 }
