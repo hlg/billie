@@ -7,6 +7,7 @@ import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
 import de.tudresden.cib.vis.filter.Condition;
+import de.tudresden.cib.vis.filter.ConditionFilter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -22,6 +23,7 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
 
     private Map<ElementaryModel, IndexedDataAccessor> elementaryModels = new HashMap<ElementaryModel, IndexedDataAccessor>();
     private Collection<LinkedObject<K>> groupedElements = new HashSet<LinkedObject<K>>();
+    private ConditionFilter<LinkedObject<K>> filter = new ConditionFilter<LinkedObject<K>>();
 
     public GenericMultiModelAccessor(SimplePluginManager pm) {
         EMTypes.pm = pm;
@@ -140,7 +142,7 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
 
     @Override
     public Iterable<? extends LinkedObject<K>> filter(Condition<LinkedObject<K>> condition) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return filter.filter(condition, this);
     }
 
     @Override
@@ -162,7 +164,7 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
         boolean isValidFor(ElementaryModel model);
     }
 
-    static class EMTypeCondition implements EMCondition {
+    public static class EMTypeCondition implements EMCondition {
 
         private final EMTypes required;
 

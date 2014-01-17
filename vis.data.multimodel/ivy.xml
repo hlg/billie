@@ -8,6 +8,7 @@
     <dependency org="bundle" name="cib.mf.risk.model" rev="1.0.+"/>
     <dependency org="bundle" name="cib.mf.schedule.model" rev="1.1.+"/>
     <dependency org="bundle" name="org.eclipse.emf.common" rev="2.7.+"/>
+    <dependency org="org.mnode.ical4j" name="ical4j" rev='1.0.4' />
     <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.data.bimserver" rev="latest.integration" changing="true"/>
     <dependency org="org.bimserver" name="bimserver-plugins" rev="1.1.0" />

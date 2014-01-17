@@ -70,6 +70,18 @@ public enum ConfigurationRunner {
             viewer.setPickingEnabled(false);
             viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());  // or carport.zip
         }
+    }, IFC_4D_MMAA {
+        @Override
+        void run(String[] args) throws IOException, DataAccessException, TargetCreationException {
+            GenericMultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
+            SimpleViewer viewer = new SimpleViewer();
+            viewer.setPickingEnabled(false);
+            String mmaa = args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\eworkBau\\mm", "mmaa").getCanonicalPath();
+            mmAccessor.read(new FileInputStream(mmaa), new File(mmaa).length(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.ICAL));
+            IfcSched_Colored4D<BranchGroup> config = new IfcSched_Colored4D<BranchGroup>(Java3dBuilder.createMapper(mmAccessor));
+            config.config();
+            viewer.run(config.execute().getScene());  // or carport.zip
+        }
     }, IFCGAEBQTO_3D {
         @Override
         void run(String[] args) throws IOException, DataAccessException, TargetCreationException {

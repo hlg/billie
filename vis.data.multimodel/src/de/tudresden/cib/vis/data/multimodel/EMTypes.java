@@ -10,11 +10,19 @@ import de.tudresden.cib.vis.data.IndexedDataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
+import net.fortuna.ical4j.model.component.VEvent;
 import org.bimserver.plugins.PluginManager;
 
 public enum EMTypes {
 
     // elment types must be unique!
+
+    ICAL("Calendar", "ical", "2.0", VEvent.class, true, "ical-2.0"){
+        @Override
+        IndexedDataAccessor createAccessor() throws DataAccessException {
+            return new IcalAccessor();
+        }
+    },
 
     IFC("Object", "ifc", "2x3", EMFIfcParser.EngineEObject.class, true, "bim-ifc-2x3") {
         IndexedDataAccessor createAccessor() throws DataAccessException {

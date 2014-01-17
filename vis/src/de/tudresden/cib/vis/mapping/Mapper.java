@@ -74,7 +74,7 @@ public class Mapper<E, C, G extends VisFactory2D.GraphObject,S> {
     private void mainPass() throws TargetCreationException {
         for (C condition: propertyMapsByConditions.keySet()){
             int mappingIndex = 0; // TODO: per class or even per property map index?
-            for(E source : dataAccessor.filter(condition)){
+            for(E source :  dataAccessor.filter(condition)){
                 if(mapAndBuild(source, mappingIndex, propertyMapsByConditions.get(condition))) mappingIndex++;
             }
         }
