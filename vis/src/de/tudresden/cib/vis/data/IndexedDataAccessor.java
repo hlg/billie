@@ -5,7 +5,7 @@ import java.io.InputStream;
 
 public abstract class IndexedDataAccessor<E, C> extends DataAccessor<E, C> {
 
-    public String namespace;
+    public String namespace = "";
 
     public abstract void index() throws DataAccessException;
     public abstract E getIndexed(String objectID);

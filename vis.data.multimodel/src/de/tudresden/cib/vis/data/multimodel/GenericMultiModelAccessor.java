@@ -160,7 +160,7 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
         return groupedElements.iterator();
     }
 
-    interface EMCondition {
+    public interface EMCondition {
         boolean isValidFor(ElementaryModel model);
     }
 

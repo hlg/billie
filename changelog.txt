@@ -9,3 +9,6 @@
 * Foreground/background (GraphObject2D) options for all Draw2D objects
 * GAEB_Barchart config: clean and truncate text, use IT instead of UP
 * separate condition objects -> factor out filter libraries
+* support generic MMAA multi model format
+* default empty string namespace for indexed elementary model accessors
+

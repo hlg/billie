@@ -77,10 +77,12 @@ public enum ConfigurationRunner {
             SimpleViewer viewer = new SimpleViewer();
             viewer.setPickingEnabled(false);
             String mmaa = args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\eworkBau\\mm", "mmaa").getCanonicalPath();
-            mmAccessor.read(new FileInputStream(mmaa), new File(mmaa).length(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.ICAL));
+            mmAccessor.read(new FileInputStream(mmaa), new File(mmaa).length(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.ACTIVITY11));
             IfcSched_Colored4D<BranchGroup> config = new IfcSched_Colored4D<BranchGroup>(Java3dBuilder.createMapper(mmAccessor));
             config.config();
-            viewer.run(config.execute().getScene());  // or carport.zip
+            SceneManager<LinkedObject<EMFIfcParser.EngineEObject>, BranchGroup> scene = config.execute();
+            scene.animate();
+            viewer.run(scene.getScene());  // or carport.zip
         }
     }, IFCGAEBQTO_3D {
         @Override

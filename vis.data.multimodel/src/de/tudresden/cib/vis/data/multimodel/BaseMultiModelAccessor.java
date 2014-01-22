@@ -142,7 +142,7 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K, Conditio
         };
     }
 
-    interface EMCondition {
+    public interface EMCondition {
         boolean isValidFor(ElementaryModel model);
         boolean isValidFor(Content alternative);
         String getErrorMessage();
