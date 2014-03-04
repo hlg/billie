@@ -6,6 +6,7 @@ import cib.mf.qto.model.AnsatzType;
 import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
+import net.fortuna.ical4j.model.component.VEvent;
 
 import java.util.*;
 
@@ -53,6 +54,10 @@ public class LinkedObject<T> {
             return defaultEmptyList(linkedObjects.get(EMTypes.ACTIVITY11));
         }
 
+        public Map<String, VEvent> getLinkedEvent(){
+            return defaultEmptyList(linkedObjects.get(EMTypes.ICAL));
+        }
+
         public Map<String,EMFIfcHierarchicAcessor.HierarchicIfc> getLinkedHierarchicIfc(){
             return defaultEmptyList(linkedObjects.get(EMTypes.IFCHIERARCHIC));
         }
@@ -84,6 +89,10 @@ public class LinkedObject<T> {
 
         public Collection<Activity> getAllScheduleObjects(String modelId) {
             return defaultEmptyAllList(linkedObjects.get(EMTypes.ACTIVITY11),modelId);
+        }
+
+        public Collection<VEvent> getAllLinkedEvents(String modelId) {
+            return defaultEmptyAllList(linkedObjects.get(EMTypes.ICAL), modelId);
         }
 
         public Collection<EMFIfcHierarchicAcessor.HierarchicIfc> getAllLinkedHierarchicIfcs(String modelId){

@@ -84,6 +84,20 @@ public enum ConfigurationRunner {
             scene.animate();
             viewer.run(scene.getScene());  // or carport.zip
         }
+    }, IFCICAL_4D {
+        @Override
+        void run(String[] args) throws IOException, DataAccessException, TargetCreationException {
+            GenericMultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
+            SimpleViewer viewer = new SimpleViewer();
+            viewer.setPickingEnabled(false);
+            String mmaa = args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\eworkBau\\mm", "mmaa").getCanonicalPath();
+            mmAccessor.read(new FileInputStream(mmaa), new File(mmaa).length(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.ICAL));
+            IfcIcal_Colored4D<BranchGroup> config = new IfcIcal_Colored4D<BranchGroup>(Java3dBuilder.createMapper(mmAccessor));
+            config.config();
+            SceneManager<LinkedObject<EMFIfcParser.EngineEObject>, BranchGroup> scene = config.execute();
+            scene.animate();
+            viewer.run(scene.getScene());  // or carport.zip
+        }
     }, IFCGAEBQTO_3D {
         @Override
         void run(String[] args) throws IOException, DataAccessException, TargetCreationException {

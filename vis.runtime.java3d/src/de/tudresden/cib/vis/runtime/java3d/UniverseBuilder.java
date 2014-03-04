@@ -80,7 +80,7 @@ public class UniverseBuilder {
         group.addChild(ambientLight);
 
         Color3f lightColor = new Color3f(1.0f, 1.0f, 1.0f);
-        Vector3f light1Direction = new Vector3f(4.0f, -7.0f, -12.0f);
+        Vector3f light1Direction = new Vector3f(4.0f, -8.0f, -16.0f);
         DirectionalLight light1 = new DirectionalLight(true, lightColor, light1Direction);
         light1.setInfluencingBounds(bounds);
         group.addChild(light1);

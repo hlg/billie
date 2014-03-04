@@ -29,7 +29,7 @@ public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
             protected void configure() {
                 Geometry geometry = data.getGeometry();
                 assert geometry != null;
-                graphObject.setColor(220,220,220,230);
+                graphObject.setColor(128,128,128,150);
                 EList<IfcRelContainedInSpatialStructure> containedInStructure = ((IfcBuildingElement) data.getObject()).getContainedInStructure();
                 if (!containedInStructure.isEmpty()){
                     EList<IfcRelDecomposes> containedIn = containedInStructure.get(0).getRelatingStructure().getDecomposes();
