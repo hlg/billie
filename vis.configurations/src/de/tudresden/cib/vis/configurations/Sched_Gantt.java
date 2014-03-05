@@ -40,6 +40,7 @@ public class Sched_Gantt<S> extends Configuration<EObject, Condition<EObject>, S
                 graphObject.setWidth((int) ((getTimeInMillis(data.getActivityData().getEnd()) - getTimeInMillis(data.getActivityData().getStart())) / scale));
                 graphObject.setTop(index * 25);
                 graphObject.setHeight(20);
+                graphObject.setBackground();
             }
         });
         mapper.addMapping(new Condition<EObject>() {
@@ -55,6 +56,7 @@ public class Sched_Gantt<S> extends Configuration<EObject, Condition<EObject>, S
                 graphObject.setTop(index * 25);
                 graphObject.setHeight(20);
                 graphObject.setColor(255, 255, 0);
+                graphObject.setBackground();
             }
         });
         mapper.addMapping(new PropertyMap<Activity, VisFactory2D.Rectangle>() {

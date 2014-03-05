@@ -57,11 +57,11 @@ public class ActivityHelper {
 
     public String extractActivityDescription() {
         Activity curr = activity;
-        StringBuilder sb = new StringBuilder(curr.getDesc());
+        StringBuilder sb = new StringBuilder(curr.getDesc()!=null ? curr.getDesc() : "");
         while (curr.eContainer() instanceof Activity) {
             curr = (Activity) curr.eContainer();
             sb.insert(0, " / ");
-            sb.insert(0, curr.getDesc());
+            sb.insert(0, curr.getDesc() != null ? curr.getDesc() : "");
         }
         return sb.toString();
     }

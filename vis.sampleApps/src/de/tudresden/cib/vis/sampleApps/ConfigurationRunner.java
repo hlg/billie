@@ -28,6 +28,7 @@ import de.tudresden.cib.vis.scene.draw2d.Draw2dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 import de.tudresden.cib.vis.scene.text.TextBuilder;
+import net.fortuna.ical4j.model.component.VEvent;
 import org.bimserver.emf.IdEObject;
 import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.Panel;
@@ -36,10 +37,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 
 import javax.media.j3d.BranchGroup;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public enum ConfigurationRunner {
@@ -193,10 +191,24 @@ public enum ConfigurationRunner {
         @Override
         void run(String[] args) throws IOException, TargetCreationException {
             Draw2DViewer viewer = new Draw2DViewer();
-            File input = viewer.chooseFile(getClass().getResource(".").getPath(), "xml");
+            File input = viewer.chooseFile(System.getProperty("user.dir"), "xml");
             Sched_Gantt<Panel> config = new Sched_Gantt<Panel>(Draw2dBuilder.createMapper(new EMFSchedule11Accessor(new FileInputStream(input)), viewer.getDefaultFont()));
             config.config();
             SceneManager<EObject,Panel> result = config.execute();
+            result.animate();
+            viewer.showContent(result.getScene());
+            result.dispose();
+        }
+    }, ICAL_GANTT {
+        @Override
+        void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
+            Draw2DViewer viewer = new Draw2DViewer();
+            InputStream input = viewer.chooseStream(System.getProperty("user.dir"), "ics");
+            IcalAccessor accessor = new IcalAccessor();
+            accessor.read(input, 0);
+            Ical_Gantt<Panel> config = new Ical_Gantt<Panel>(Draw2dBuilder.createMapper(accessor, viewer.getDefaultFont()));
+            config.config();
+            SceneManager<VEvent,Panel> result = config.execute();
             result.animate();
             viewer.showContent(result.getScene());
             result.dispose();

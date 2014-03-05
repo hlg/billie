@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Draw2DViewer {
@@ -32,11 +33,18 @@ public class Draw2DViewer {
     }
 
     public File chooseFile(String directoryPath, final String fileType) throws FileNotFoundException {
+        return new File(chooseFilePath(directoryPath, fileType));
+    }
+
+    public FileInputStream chooseStream(String directoryPath, String fileType) throws FileNotFoundException {
+        return new FileInputStream(chooseFilePath(directoryPath, fileType));
+    }
+
+    private String chooseFilePath(String directoryPath, String fileType) {
         FileDialog dialog = new FileDialog(shell, SWT.OPEN);
         dialog.setFilterExtensions(new String[]{"*." + fileType});
         dialog.setFilterPath(directoryPath);
-        String result = dialog.open();
-        return new File(result);
+        return dialog.open();
     }
 
     public File chooseFolder(String directoryPath) throws FileNotFoundException {
