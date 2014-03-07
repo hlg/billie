@@ -92,8 +92,8 @@ public class Ical_Gantt<S> extends Configuration<VEvent, Condition<VEvent>, S> {
         mapper.addMapping(new PropertyMap<VEvent, VisFactory2D.Label>() {
             @Override
             protected void configure() {
-                graphObject.setLeft((int) ((data.getStartDate().getDate().getTime() - mapper.getStats("earliestStart").longValue()) / scale) + 12);
-                graphObject.setTop(index * 25 + 2);
+                graphObject.setLeft((int) ((data.getEndDate().getDate().getTime() - mapper.getStats("earliestStart").longValue()) / scale) + 5);
+                graphObject.setTop(index * 25 + 5);
                 graphObject.setText(data.getSummary() != null ? data.getSummary().getValue() : data.getName());
             }
         });

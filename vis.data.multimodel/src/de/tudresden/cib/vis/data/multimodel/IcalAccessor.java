@@ -12,15 +12,14 @@ import net.fortuna.ical4j.model.component.VEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class IcalAccessor extends IndexedDataAccessor<VEvent, Condition<VEvent>> {
 
     private Calendar data;
     private Map<String, VEvent> index = new HashMap<String, VEvent>();
     private ConditionFilter<VEvent> filter = new ConditionFilter<VEvent>();
+    private List<VEvent> sorted = new LinkedList<VEvent>();
 
     @Override
     public void index() throws DataAccessException {
@@ -45,6 +44,17 @@ public class IcalAccessor extends IndexedDataAccessor<VEvent, Condition<VEvent>>
             throw new DataAccessException("error during ical parsing", e);
         }
         index();
+        sort(new Comparator<VEvent>() {
+            @Override
+            public int compare(VEvent o1, VEvent o2) {
+                return o1.getStartDate().getDate().compareTo(o2.getStartDate().getDate());
+            }
+        });
+    }
+
+    public void sort(Comparator<VEvent> comparator) {
+        sorted = new ArrayList<VEvent>(index.values());
+        Collections.sort(sorted, comparator);
     }
 
     @Override
@@ -67,8 +77,10 @@ public class IcalAccessor extends IndexedDataAccessor<VEvent, Condition<VEvent>>
         };
     }
 
+
+
     @Override
     public Iterator<VEvent> iterator() {
-        return index.values().iterator();
+        return sorted.iterator();
     }
 }

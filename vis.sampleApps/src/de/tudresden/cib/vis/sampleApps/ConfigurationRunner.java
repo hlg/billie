@@ -1,6 +1,7 @@
 package de.tudresden.cib.vis.sampleApps;
 
 import cib.mf.schedule.model.activity11.Activity;
+import cib.mmaa.multimodel.MetaDataEntry;
 import de.mefisto.model.container.Content;
 import de.mefisto.model.container.ElementaryModel;
 import de.mefisto.model.container.I;
@@ -89,7 +90,15 @@ public enum ConfigurationRunner {
             SimpleViewer viewer = new SimpleViewer();
             viewer.setPickingEnabled(false);
             String mmaa = args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\eworkBau\\mm", "mmaa").getCanonicalPath();
-            mmAccessor.read(new FileInputStream(mmaa), new File(mmaa).length(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.ICAL));
+            mmAccessor.read(new FileInputStream(mmaa), new File(mmaa).length(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMCondition(){
+                @Override
+                public boolean isValidFor(cib.mmaa.multimodel.ElementaryModel model) {
+                    for(MetaDataEntry metaDataEntry: model.getMetaDataEntries()){
+                        if(metaDataEntry.getKey().equals("mmaa.model.name") && metaDataEntry.getValue().contains("Grob")) return true;
+                    }
+                    return false;
+                }
+            });
             IfcIcal_Colored4D<BranchGroup> config = new IfcIcal_Colored4D<BranchGroup>(Java3dBuilder.createMapper(mmAccessor));
             config.config();
             SceneManager<LinkedObject<EMFIfcParser.EngineEObject>, BranchGroup> scene = config.execute();
