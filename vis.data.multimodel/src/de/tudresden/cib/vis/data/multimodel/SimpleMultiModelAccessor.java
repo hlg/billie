@@ -13,7 +13,6 @@ import de.tudresden.cib.vis.filter.Condition;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,12 +26,6 @@ public class SimpleMultiModelAccessor extends BaseMultiModelAccessor<LinkedObjec
         EMTypes.pm = pluginManager;
     }
 
-    @Override
-    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
-        readFromFolder(unzip(inputStream));
-    }
-
-    @Override
     public void readFromFolder(File directory) throws DataAccessException {
         Container container = readContainer(directory);
         for (ElementaryModel em : container.getElementaryModelGroup().getElementaryModels()) {

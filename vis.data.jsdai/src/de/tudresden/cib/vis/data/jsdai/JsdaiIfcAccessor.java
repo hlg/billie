@@ -12,7 +12,7 @@ import jsdai.lang.SdaiException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -62,17 +62,12 @@ public class JsdaiIfcAccessor extends IndexedDataAccessor<EEntity, BimfitFilter.
     }
 
     @Override
-    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
+    public void read(URL url) throws IOException, DataAccessException {
         try {
-            data = parser.loadStream(inputStream);
+            data = parser.loadStream(url.openStream());
         } catch (ParsingException e) {
             throw new DataAccessException(e);
         }
-    }
-
-    @Override
-    public void readFromFolder(File directory) throws DataAccessException {
-        throw new UnsupportedOperationException();
     }
 
     @Override

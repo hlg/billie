@@ -22,7 +22,7 @@ public class GenericMultiModelTests {
     @Test
     public void testKeyModelOnly() throws Exception {
         assertNotNull(data);
-        data.read(getClass().getResourceAsStream("/resources/carport.mmaa"),0, new GenericMultiModelAccessor.LMCondition.First(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC));
+        data.read(getClass().getResource("/resources/carport.mmaa"), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC));
         int objectCount = 0;
         for(Object object : data) objectCount++;
         assertEquals(5, objectCount);

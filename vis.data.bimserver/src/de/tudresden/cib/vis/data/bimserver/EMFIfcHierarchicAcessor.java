@@ -10,9 +10,9 @@ import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.*;
 import org.bimserver.plugins.PluginManager;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -28,18 +28,14 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
         filter = new ConditionFilter<Hierarchic<IdEObject>>();
     }
 
-    public EMFIfcHierarchicAcessor(SimplePluginManager simplePluginManager, InputStream input, long size) throws IOException, DataAccessException {
+    public EMFIfcHierarchicAcessor(PluginManager simplePluginManager, URL url) throws IOException, DataAccessException {
         this(simplePluginManager);
-        read(input, size);
+        read(url);
     }
 
-    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
-        parser.read(inputStream, size);
-    }
-
-    @Override
-    public void readFromFolder(File directory) {
-        throw new UnsupportedOperationException();
+    public void read(URL url) throws IOException, DataAccessException {
+        URLConnection connection = url.openConnection();
+        parser.read(connection.getInputStream(), connection.getContentLength());
     }
 
     @Override

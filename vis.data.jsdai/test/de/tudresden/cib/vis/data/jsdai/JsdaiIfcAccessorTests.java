@@ -10,29 +10,29 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 
 public class JsdaiIfcAccessorTests {
 
-    private InputStream resourceStream;
+    private URL resource;
     private JsdaiIfcAccessor accessor;
 
     @Before
     public void setup(){
-        resourceStream = this.getClass().getResourceAsStream("/resources/carport2.ifc");
+        resource = this.getClass().getResource("/resources/carport2.ifc");
         accessor = new JsdaiIfcAccessor();
     }
 
     @Test
     public void testAccessIfc() throws IOException, DataAccessException, SdaiException {
-        accessor.read(resourceStream,0);
+        accessor.read(resource);
         Assert.assertEquals(5,accessor.data.getEntitiesOf(EIfcbuildingelement.class).length);
         Assert.assertEquals(145,accessor.data.getEntities().length);
     }
 
     @Test
     public void testIndexIfc() throws DataAccessException, IOException {
-        accessor.read(resourceStream,0);
+        accessor.read(resource);
         accessor.index();
         Assert.assertTrue(accessor.getIndexed("1z174j70T5APfwnrpX_BVP") instanceof EIfcslab);
     }

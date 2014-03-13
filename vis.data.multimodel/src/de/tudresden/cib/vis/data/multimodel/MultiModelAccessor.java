@@ -15,9 +15,7 @@ import org.eclipse.emf.common.util.EList;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 
 public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K>> {
@@ -156,14 +154,6 @@ public class MultiModelAccessor<K> extends BaseMultiModelAccessor<LinkedObject<K
 
     public Iterator<LinkedObject<K>> iterator() {
         return groupedElements.iterator();
-    }
-
-    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
-        readFromFolder(unzip(inputStream));
-    }
-
-    public void read(URL resource) throws DataAccessException {
-        readFromFolder(new File(resource.getFile()));
     }
 
     public void addAcessor(String key, IndexedDataAccessor accessor) throws DataAccessException {

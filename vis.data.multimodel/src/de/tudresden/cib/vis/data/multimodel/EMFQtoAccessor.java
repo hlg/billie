@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,12 +16,12 @@ public class EMFQtoAccessor extends EMFGenericAccessor<AnsatzType> {
 
     public EMFQtoAccessor(){ super();}
 
-    public EMFQtoAccessor(InputStream inputStream) throws IOException {
-        super(inputStream);
+    public EMFQtoAccessor(URL url) throws IOException {
+        super(url);
     }
 
-    public EMFQtoAccessor(InputStream inputStream, String namespace) throws IOException {
-        super(inputStream, namespace);
+    public EMFQtoAccessor(URL url, String namespace) throws IOException {
+        super(url, namespace);
     }
 
     public EMFQtoAccessor(EObject data) {

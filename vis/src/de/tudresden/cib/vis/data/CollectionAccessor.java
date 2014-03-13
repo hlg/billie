@@ -3,9 +3,8 @@ package de.tudresden.cib.vis.data;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.filter.ConditionFilter;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -23,12 +22,7 @@ public class CollectionAccessor<T> extends DataAccessor<T, Condition<T>> {
         return data.iterator();
     }
 
-    public void read(InputStream inputStream, long size) throws IOException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void readFromFolder(File directory) {
+    public void read(URL url) throws IOException {
         throw new UnsupportedOperationException();
     }
 

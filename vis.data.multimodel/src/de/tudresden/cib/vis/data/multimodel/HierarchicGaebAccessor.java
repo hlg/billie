@@ -9,9 +9,8 @@ import de.tudresden.cib.vis.filter.ConditionFilter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -36,14 +35,9 @@ public class HierarchicGaebAccessor extends IndexedDataAccessor<Hierarchic<EObje
     }
 
     @Override
-    public void read(InputStream inputStream, long size) throws IOException {
-        baseAcessor.read(inputStream, size);
+    public void read(URL url) throws IOException {
+        baseAcessor.read(url);
         wrappedData = new HashMap<String, Hierarchic<EObject>>();
-    }
-
-    @Override
-    public void readFromFolder(File directory) {
-        throw new UnsupportedOperationException();
     }
 
     @Override

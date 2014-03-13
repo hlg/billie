@@ -1,23 +1,11 @@
 package de.tudresden.cib.vis.data;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 
 public abstract class DataAccessor<E, C> implements Iterable<E> {
 
-    public abstract void read(InputStream inputStream, long size) throws IOException, DataAccessException;
-
-    public void read(File file) throws IOException, DataAccessException {
-        if(!file.isDirectory()){
-            read(new FileInputStream(file), file.length());
-        } else {
-            readFromFolder(file);
-        }
-    }
-
-    public abstract void readFromFolder(File directory) throws DataAccessException; // TODO: implemented in one subclass only -> this smells
+    public abstract void read(URL url) throws IOException, DataAccessException;
 
     public abstract Iterable<? extends E> filter(C condition);
 

@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,12 +18,12 @@ public class EMFGaebAccessor extends EMFGenericAccessor<TgItem> {
         super();
     }
 
-    public EMFGaebAccessor(InputStream inputStream) throws IOException {
-        super(inputStream);
+    public EMFGaebAccessor(URL url) throws IOException {
+        super(url);
     }
 
-    public EMFGaebAccessor(InputStream stream, String nameSpace) throws IOException {
-        super(stream, nameSpace);
+    public EMFGaebAccessor(URL url, String nameSpace) throws IOException {
+        super(url, nameSpace);
     }
 
     public EMFGaebAccessor(EObject data) {

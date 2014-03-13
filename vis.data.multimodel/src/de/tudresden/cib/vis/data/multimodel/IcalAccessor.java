@@ -9,9 +9,8 @@ import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.component.VEvent;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.*;
 
 public class IcalAccessor extends IndexedDataAccessor<VEvent, Condition<VEvent>> {
@@ -37,9 +36,9 @@ public class IcalAccessor extends IndexedDataAccessor<VEvent, Condition<VEvent>>
     }
 
     @Override
-    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
+    public void read(URL url) throws IOException, DataAccessException {
         try {
-            data = new CalendarBuilder().build(inputStream);
+            data = new CalendarBuilder().build(url.openStream());
         } catch (ParserException e) {
             throw new DataAccessException("error during ical parsing", e);
         }
@@ -55,11 +54,6 @@ public class IcalAccessor extends IndexedDataAccessor<VEvent, Condition<VEvent>>
     public void sort(Comparator<VEvent> comparator) {
         sorted = new ArrayList<VEvent>(index.values());
         Collections.sort(sorted, comparator);
-    }
-
-    @Override
-    public void readFromFolder(File directory) throws DataAccessException {
-        throw new UnsupportedOperationException();
     }
 
     @Override

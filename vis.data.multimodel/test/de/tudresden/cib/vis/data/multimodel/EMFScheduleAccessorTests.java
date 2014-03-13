@@ -10,18 +10,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.Iterator;
 
 public class EMFScheduleAccessorTests {
 
-    private InputStream resource10;
-    private InputStream resource11;
+    private URL resource10;
+    private URL resource11;
 
     @Before
     public void setup(){
-        resource10 = this.getClass().getResourceAsStream("/resources/carport/Activity/xml/Vorgangsmodell_1.xml");
-        resource11 = this.getClass().getResourceAsStream("/resources/carport/Activity/xml/Vorgangsmodell_1-11.xml");
+        resource10 = this.getClass().getResource("/resources/carport/Activity/xml/Vorgangsmodell_1.xml");
+        resource11 = this.getClass().getResource("/resources/carport/Activity/xml/Vorgangsmodell_1-11.xml");
     }
 
     @Test

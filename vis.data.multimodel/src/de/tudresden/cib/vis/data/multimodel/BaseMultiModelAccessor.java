@@ -12,8 +12,13 @@ import de.tudresden.cib.vis.filter.ConditionFilter;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.emf.common.util.EList;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,11 +83,14 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K, Conditio
     protected void readEM(File mmFolder, Content content, IndexedDataAccessor accessor) throws DataAccessException {
         for (ContainerFile contentFile : content.getFiles()) {
             try {
-                File file = new File(mmFolder, new URL(contentFile.getValue()).getFile());
-                accessor.read(new FileInputStream(file), contentFile.getNamespace(), file.length()); // TODO: accessor should join multiple sucessively set/added files
+                URI uri = new URI(contentFile.getValue());
+                URL url = uri.isAbsolute() ? uri.toURL() : mmFolder.toURI().resolve(uri).toURL();
+                accessor.read(url, contentFile.getNamespace()); // TODO: accessor should join multiple sucessively set/added files
             } catch (MalformedURLException e) {
                 throw new DataAccessException(e);
             } catch (IOException e) {
+                throw new DataAccessException(e);
+            } catch (URISyntaxException e) {
                 throw new DataAccessException(e);
             }
         }
@@ -141,6 +149,20 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K, Conditio
             }
         };
     }
+
+    public void read(URL url) throws DataAccessException {
+        if(url.getProtocol().equals("file") && new File(url.getFile()).isDirectory()){
+            readFromFolder(new File(url.getFile()));
+        } else {
+            try {
+                readFromFolder(unzip(url.openStream()));
+            } catch (IOException e) {
+                throw new DataAccessException(e);
+            }
+        }
+    }
+
+    public abstract void readFromFolder(File folder) throws DataAccessException;
 
     public interface EMCondition {
         boolean isValidFor(ElementaryModel model);

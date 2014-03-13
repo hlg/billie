@@ -7,9 +7,9 @@ import de.tudresden.cib.vis.filter.ConditionFilter;
 import org.bimserver.models.ifc2x3tc1.IfcRoot;
 import org.bimserver.plugins.PluginManager;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -25,18 +25,14 @@ public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.En
         filter = new ConditionFilter<EMFIfcParser.EngineEObject>();
     }
 
-    public EMFIfcGeometricAccessor(PluginManager pluginManager, InputStream input, long size) throws IOException, DataAccessException {
+    public EMFIfcGeometricAccessor(PluginManager pluginManager, URL url) throws IOException, DataAccessException {
         this(pluginManager, true);
-        read(input, size);
+        read(url);
     }
 
-    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
-        parser.read(inputStream, size);
-    }
-
-    @Override
-    public void readFromFolder(File directory) {
-        throw new UnsupportedOperationException();
+    public void read(URL url) throws IOException, DataAccessException {
+        URLConnection connection = url.openConnection();
+        parser.read(connection.getInputStream(), connection.getContentLength());
     }
 
     @Override

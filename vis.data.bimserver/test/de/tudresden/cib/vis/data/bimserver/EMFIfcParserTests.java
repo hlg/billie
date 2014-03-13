@@ -41,7 +41,7 @@ public class EMFIfcParserTests {
         EMFIfcGeometricAccessor accessor = new EMFIfcGeometricAccessor(pm, true);
         String fileName = "/resources/carport2.ifc";
         long size = new File(getClass().getResource(fileName).getFile()).length();
-        accessor.read(getClass().getResourceAsStream(fileName), size);
+        accessor.read(getClass().getResource(fileName));
         accessor.index();
         assertNotNull(accessor.iterator());
         assertTrue(accessor.iterator().hasNext());

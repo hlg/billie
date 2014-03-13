@@ -13,7 +13,7 @@ import jsdai.lang.SdaiException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -35,10 +35,10 @@ public class JsdaiIfcGeometricAccessor extends IndexedDataAccessor<JsdaiIfcGeome
     }
 
     @Override
-    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
+    public void read(URL url) throws IOException, DataAccessException {
         try {
             wrapped.clear();
-            StepDataModel data = parser.loadStream(inputStream);
+            StepDataModel data = parser.loadStream(url.openStream());
             for(EIfcproduct product: data.getEntitiesOf(EIfcproduct.class)){
                 wrapped.put(product.getGlobalid(null), new GeomtricIfc(product));
             }
@@ -49,11 +49,6 @@ public class JsdaiIfcGeometricAccessor extends IndexedDataAccessor<JsdaiIfcGeome
             throw new DataAccessException(e);
         }
 
-    }
-
-    @Override
-    public void readFromFolder(File directory) throws DataAccessException {
-        throw new UnsupportedOperationException();
     }
 
     @Override

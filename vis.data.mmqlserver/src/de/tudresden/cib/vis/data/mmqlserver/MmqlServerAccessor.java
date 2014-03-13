@@ -5,8 +5,11 @@ import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.DataAccessor;
 import org.apache.commons.io.IOUtils;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -30,13 +33,8 @@ public class MmqlServerAccessor extends DataAccessor<MmqlServerAccessor.MMQLRow,
     }
 
     @Override
-    public void read(InputStream inputStream, long size) throws IOException, DataAccessException {
-        read(IOUtils.toString(inputStream, "UTF-8"));
-    }
-
-    @Override
-    public void readFromFolder(File directory) throws DataAccessException {
-        throw new UnsupportedOperationException();
+    public void read(URL url) throws IOException, DataAccessException {
+        read(IOUtils.toString(url, "UTF-8"));
     }
 
     @Override

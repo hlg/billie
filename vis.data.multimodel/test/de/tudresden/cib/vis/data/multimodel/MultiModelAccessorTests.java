@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
@@ -50,20 +49,19 @@ public class MultiModelAccessorTests {
     @Test
     public void testZipAccess() throws IOException, DataAccessException {
         String fileName = "/resources/carport.zip";
-        InputStream testFile = this.getClass().getResourceAsStream(fileName);
-        mma.read(testFile, getClass().getResource(fileName).getFile().length());
+        URL testFile = this.getClass().getResource(fileName);
+        mma.read(testFile);
         check(mma);
     }
 
     @Test
     public void testPreparsedAccess() throws IOException, DataAccessException {
-        EMFScheduleAccessor schedule = new EMFSchedule10Accessor(this.getClass().getResourceAsStream("/resources/carport/Activity/xml/Vorgangsmodell_1.xml"), "Activity1");
-        final EMFGaebAccessor gaeb = new EMFGaebAccessor(this.getClass().getResourceAsStream("/resources/carport/BoQ/gaebxml/LV_1.X81"), "BoQ1");
+        EMFScheduleAccessor schedule = new EMFSchedule10Accessor(this.getClass().getResource("/resources/carport/Activity/xml/Vorgangsmodell_1.xml"), "Activity1");
+        final EMFGaebAccessor gaeb = new EMFGaebAccessor(this.getClass().getResource("/resources/carport/BoQ/gaebxml/LV_1.X81"), "BoQ1");
         EMFIfcGeometricAccessor ifc = new EMFIfcGeometricAccessor(pm, true);
 
         String fileName = "/resources/carport/Object/ifc/carport2.ifc";
-        long size = new File(getClass().getResource(fileName).getFile()).length();
-        ifc.read(getClass().getResourceAsStream(fileName), size);
+        ifc.read(getClass().getResource(fileName));
         mma.addAcessor("M1", gaeb);
         mma.addAcessor("M3",ifc);
         mma.addAcessor("M4",schedule);

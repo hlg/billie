@@ -7,9 +7,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -28,21 +27,21 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
         filter = new ConditionFilter<EObject>();
     }
 
-    public EMFGenericAccessor(InputStream inputStream) throws IOException {
+    public EMFGenericAccessor(URL url) throws IOException {
         this();
-        setData(inputStream);
+        setData(url);
     }
 
-    public EMFGenericAccessor(InputStream stream, String namespace) throws IOException {
+    public EMFGenericAccessor(URL url, String namespace) throws IOException {
         this();
         this.namespace = namespace + "::";
-        setData(stream);
+        setData(url);
     }
 
-    private void setData(InputStream inputStream) throws IOException {
-        URI fakeUri = URI.createURI("inputstream://fake.resource.uri");
+    private void setData(URL url) throws IOException {
+        URI fakeUri = URI.createURI(url.toString());
         Resource resource = createResource(fakeUri);
-        resource.load(inputStream, null);
+        resource.load(null);
         data = resource.getContents().get(0);
     }
 
@@ -52,12 +51,8 @@ public abstract class EMFGenericAccessor<T extends EObject> extends IndexedDataA
         return data.eAllContents();
     }
 
-    public void read(InputStream inputStream, long size) throws IOException {
-        setData(inputStream);
-    }
-
-    public void readFromFolder(File directory){
-        throw new UnsupportedOperationException();
+    public void read(URL url) throws IOException {
+        setData(url);
     }
 
     @Override

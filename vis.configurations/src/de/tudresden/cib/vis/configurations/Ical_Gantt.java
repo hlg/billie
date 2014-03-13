@@ -94,7 +94,7 @@ public class Ical_Gantt<S> extends Configuration<VEvent, Condition<VEvent>, S> {
             protected void configure() {
                 graphObject.setLeft((int) ((data.getEndDate().getDate().getTime() - mapper.getStats("earliestStart").longValue()) / scale) + 5);
                 graphObject.setTop(index * 25 + 5);
-                graphObject.setText(data.getSummary() != null ? data.getSummary().getValue() : data.getName());
+                graphObject.setText((data.getSummary() != null ? data.getSummary().getValue() : data.getName()) + (data.getLocation() !=null ? (", " + data.getLocation().getValue()) : ""));
             }
         });
     }

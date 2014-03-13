@@ -38,7 +38,7 @@ public class MappedJ3DLoader<E> implements Loader {
 
     public Scene load(String s) throws FileNotFoundException, IncorrectFormatException, ParsingErrorException {
         try {
-            data.read(new File(s));
+            data.read(new File(s).toURI().toURL());
         } catch (IOException e) {
             throw new FileNotFoundException(e.getMessage());
         } catch (DataAccessException e) {
@@ -63,7 +63,7 @@ public class MappedJ3DLoader<E> implements Loader {
 
     public Scene load(URL url) throws FileNotFoundException, IncorrectFormatException, ParsingErrorException {
         try {
-            data.read(url.openStream(), url.getFile().length());
+            data.read(url);
             return loadScene();
         } catch (IOException e) {
             throw new FileNotFoundException(e.getMessage());

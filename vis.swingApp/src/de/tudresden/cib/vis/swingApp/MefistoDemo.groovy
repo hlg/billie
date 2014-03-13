@@ -124,7 +124,7 @@ public class MefistoDemo {
     private void load3dModel(JScrollPane panel) {
         try {
             MultiModelAccessor<EMFIfcParser.EngineEObject> accessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(pm);
-            accessor.read(folder)
+            accessor.read(folder.toURI().toURL())
             IfcSched_Colored4D<BranchGroup> config = new IfcSched_Colored4D<BranchGroup>(Java3dBuilder.createMapper(accessor));
             config.config()
             SceneManager<?, BranchGroup> scene = config.execute()

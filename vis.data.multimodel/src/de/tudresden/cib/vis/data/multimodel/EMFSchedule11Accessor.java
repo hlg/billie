@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,12 +16,12 @@ public class EMFSchedule11Accessor extends EMFScheduleAccessor<Activity> {
 
     public EMFSchedule11Accessor(){ super();}
 
-    public EMFSchedule11Accessor(InputStream stream) throws IOException {
-        super(stream);
+    public EMFSchedule11Accessor(URL url) throws IOException {
+        super(url);
     }
 
-    public EMFSchedule11Accessor(InputStream stream, String namespace) throws IOException {
-        super(stream, namespace);
+    public EMFSchedule11Accessor(URL url, String namespace) throws IOException {
+        super(url, namespace);
     }
 
     public EMFSchedule11Accessor(EObject data) {
