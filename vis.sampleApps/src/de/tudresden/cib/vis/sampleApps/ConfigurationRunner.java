@@ -41,7 +41,7 @@ import javax.media.j3d.BranchGroup;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import java.util.*;
 
 public enum ConfigurationRunner {
@@ -97,7 +97,7 @@ public enum ConfigurationRunner {
                 @Override
                 public boolean isValidFor(cib.mm.multimodel.ElementaryModel model) {
                     for(MetaDataEntry metaDataEntry: model.getMetaDataEntries()){
-                        if(metaDataEntry.getKey().equals("mmaa.model.name") && metaDataEntry.getValue().contains("Grob")) return true;
+                        if(metaDataEntry.getKey().equals("mmaa.model.name") && metaDataEntry.getValue().contains("Fein")) return true;
                     }
                     return false;
                 }
@@ -215,7 +215,7 @@ public enum ConfigurationRunner {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             Draw2DViewer viewer = new Draw2DViewer();
-            InputStream input = viewer.chooseStream(System.getProperty("user.dir"), "ics");
+            URL input = viewer.chooseFile(System.getProperty("user.dir"), "ics").toURI().toURL();
             IcalAccessor accessor = new IcalAccessor();
             accessor.read(input);
             Ical_Gantt<Panel> config = new Ical_Gantt<Panel>(Draw2dBuilder.createMapper(accessor, viewer.getDefaultFont()));

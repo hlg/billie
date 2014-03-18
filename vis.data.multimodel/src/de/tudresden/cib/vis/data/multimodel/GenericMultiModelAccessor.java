@@ -34,6 +34,7 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
 
     @Override
     public void read(URL url) throws IOException, DataAccessException {
+        this.mmUrl = url;
         MultiModel model = readMultiModelMeta(url);
         LinkModel firstLinkModel = model.getLinkModels().get(0);
         for (ElementaryModel elementaryModel : firstLinkModel.getLinkedModels()) readElementaryModel(elementaryModel);
@@ -42,6 +43,7 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
     }
 
     public void read(URL url, LMCondition linkModelCondition, EMCondition keyModelCondition, EMCondition... requiredModelConditions) throws IOException, DataAccessException {
+        this.mmUrl = url;
         MultiModel multiModel = readMultiModelMeta(url);
         LinkModel linkModel = getLinkModel(linkModelCondition, multiModel.getLinkModels());
         ElementaryModel keyModel = getElementaryModels(multiModel, keyModelCondition, requiredModelConditions);
@@ -91,6 +93,7 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
                 throw new DataAccessException("could not parse URI", e);
             }
         } else if (elementaryModel instanceof EmbeddedElementaryModel) {
+            final byte[] data = ((EmbeddedElementaryModel) elementaryModel).getData();
             return new URL("test","aadsf",23,"asdf", new URLStreamHandler(){
                 @Override
                 protected URLConnection openConnection(URL u) throws IOException {
@@ -102,12 +105,12 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
 
                         @Override
                         public InputStream getInputStream() throws IOException {
-                            return new ByteArrayInputStream(((EmbeddedElementaryModel) elementaryModel).getData());
+                            return new ByteArrayInputStream(data);
                         }
 
                         @Override
                         public int getContentLength() {
-                            return ((EmbeddedElementaryModel) elementaryModel).getData().length;
+                            return data.length;
                         }
                     };
                 }

@@ -19,41 +19,41 @@
                     <i k="unitrate" t="xs:boolean" v="1"/>
                     <i k="unitrate_breakdown" t="xs:boolean" v="1"/>
                 </contentOptions>
-                <file namespace="BoQ1">file:///BoQ/gaebxml/LV_1.X81</file>
+                <file namespace="BoQ1">BoQ/gaebxml/LV_1.X81</file>
             </content>
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
                type="QTO" id="M2">
             <content format="xml" id="1" formatVersion="1.0">
-                <file namespace="QTO1">file:///QTO/xml/1_LV_VA.xml</file>
+                <file namespace="QTO1">QTO/xml/1_LV_VA.xml</file>
             </content>
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
                type="Object" id="M3">
             <content format="cpixml" id="1" formatVersion="1.4">
-                <file>file:///Object/cpixml/carport2.cpixml</file>
-                <file>file:///Object/cpixml/buildingStructure.cpixml</file>
+                <file>Object/cpixml/carport2.cpixml</file>
+                <file>Object/cpixml/buildingStructure.cpixml</file>
             </content>
             <content format="ifc" id="2" formatVersion="2x3">
-                <file>file:///Object/ifc/carport2.ifc</file>
+                <file>Object/ifc/carport2.ifc</file>
             </content>
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
                type="Activity" id="M4">
             <content format="xml" id="1" formatVersion="1.1">
-                <file namespace="Activity1">file:///Activity/xml/Vorgangsmodell_1-11.xml</file>
+                <file namespace="Activity1">Activity/xml/Vorgangsmodell_1-11.xml</file>
             </content>
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
                type="Activity" id="M7">
             <content format="xml" id="1" formatVersion="1.0">
-                <file namespace="Activity2">file:///Activity/xml/Vorgangsmodell_2.xml</file>
+                <file namespace="Activity2">Activity/xml/Vorgangsmodell_2.xml</file>
             </content>
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"
                type="Plant" id="M5">
             <content format="xml" id="1" formatVersion="1.0">
-                <file>file:///Plant/xml/Geraete.xml</file>
+                <file>Plant/xml/Geraete.xml</file>
             </content>
         </model>
     </models>
@@ -66,7 +66,7 @@
                 <model id="M2"/>
                 <model id="M6"/>
             </models>
-            <file>file:///links/links.xml</file>
+            <file>links/links.xml</file>
         </linkModel>
         <linkModel id="L2">
             <models>
@@ -74,7 +74,7 @@
                 <model id="M2"/>
                 <model id="M4"/>
             </models>
-            <file>file:///links/links_2.xml</file>
+            <file>links/links_2.xml</file>
         </linkModel>
     </linkModels>
     <context>

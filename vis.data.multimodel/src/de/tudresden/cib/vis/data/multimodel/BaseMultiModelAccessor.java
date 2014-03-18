@@ -71,9 +71,14 @@ public abstract class BaseMultiModelAccessor<K> extends DataAccessor<K, Conditio
         return readLinkModel(folder, findLinkModel(container, linkModelId));
     }
 
-    private LinkModel readLinkModel(File folder, LinkModelDescriptor linkModelDesc) throws MalformedURLException {
-        File linkFile = new File(folder, new URL(linkModelDesc.getFile()).getFile());
-        return readLinkModel(linkFile);
+    private LinkModel readLinkModel(File folder, LinkModelDescriptor linkModelDesc) throws MalformedURLException, DataAccessException {
+        try {
+            URI uri = new URI(linkModelDesc.getFile());
+            URL url = uri.isAbsolute() ? uri.toURL() : folder.toURI().resolve(uri).toURL();
+            return readLinkModel(new File(url.getFile()));
+        } catch (URISyntaxException e) {
+            throw new DataAccessException(e);
+        }
     }
 
     protected LinkModel readLinkModel(File linkFile) {
