@@ -34,39 +34,39 @@ public class LinkedObject<T> {
         private HashMap<EMTypes, Map<String, List<?>>> linkedObjects = new HashMap<EMTypes, Map<String, List<?>>>();
 
         public Map<String, AnsatzType> getLinkedQto() {
-            return defaultEmptyList(linkedObjects.get(EMTypes.QTO));
+            return defaultEmptyFirstList(linkedObjects.get(EMTypes.QTO));
         }
 
         public Map<String, TgItem> getLinkedBoQ() {
-            return defaultEmptyList(linkedObjects.get(EMTypes.GAEB));
+            return defaultEmptyFirstList(linkedObjects.get(EMTypes.GAEB));
         }
 
         public Map<String, TgQtySplit> getLinkedBoQtySplit() {
-            return defaultEmptyList(linkedObjects.get(EMTypes.GAEBSPLIT));
+            return defaultEmptyFirstList(linkedObjects.get(EMTypes.GAEBSPLIT));
         }
 
 
         public Map<String, EMFIfcParser.EngineEObject> getLinkedObject() {
-            return defaultEmptyList(linkedObjects.get(EMTypes.IFC));
+            return defaultEmptyFirstList(linkedObjects.get(EMTypes.IFC));
         }
 
         public Map<String, Activity> getScheduleObject() {
-            return defaultEmptyList(linkedObjects.get(EMTypes.ACTIVITY11));
+            return defaultEmptyFirstList(linkedObjects.get(EMTypes.ACTIVITY11));
         }
 
         public Map<String, VEvent> getLinkedEvent(){
-            return defaultEmptyList(linkedObjects.get(EMTypes.ICAL));
+            return defaultEmptyFirstList(linkedObjects.get(EMTypes.ICAL));
         }
 
         public Map<String,EMFIfcHierarchicAcessor.HierarchicIfc> getLinkedHierarchicIfc(){
-            return defaultEmptyList(linkedObjects.get(EMTypes.IFCHIERARCHIC));
+            return defaultEmptyFirstList(linkedObjects.get(EMTypes.IFCHIERARCHIC));
         }
 
         public Map<String, HierarchicGaebAccessor.HierarchicTgItemBoQCtgy> getLinkedHierarchicGaeb(){
-            return defaultEmptyList(linkedObjects.get(EMTypes.GAEBHIERARCHIC));
+            return defaultEmptyFirstList(linkedObjects.get(EMTypes.GAEBHIERARCHIC));
         }
 
-        private <T> Map<String, T> defaultEmptyList(Map<String, List<?>> groupedMap) {
+        private <T> Map<String, T> defaultEmptyFirstList(Map<String, List<?>> groupedMap) {
             if (groupedMap == null) return  Collections.emptyMap();
             Map<String,T> firstElementMap = new HashMap<String, T>();
             for(Map.Entry<String, List<?>> entry : groupedMap.entrySet()){
@@ -76,39 +76,43 @@ public class LinkedObject<T> {
         }
 
         public Collection<AnsatzType> getAllLinkedQtos(String modelId) {
-            return defaultEmptyAllList(linkedObjects.get(EMTypes.QTO), modelId);
+            return defaultEmptyList(linkedObjects.get(EMTypes.QTO), modelId);
         }
 
         public Collection<TgItem> getAllLinkedBoQs(String modelId) {
-            return defaultEmptyAllList(linkedObjects.get(EMTypes.GAEB), modelId);
+            return defaultEmptyList(linkedObjects.get(EMTypes.GAEB), modelId);
         }
 
         public Collection<EMFIfcParser.EngineEObject> getAllLinkedObjects(String modelId) {
-            return defaultEmptyAllList(linkedObjects.get(EMTypes.IFC), modelId);
+            return defaultEmptyList(linkedObjects.get(EMTypes.IFC), modelId);
         }
 
         public Collection<Activity> getAllScheduleObjects(String modelId) {
-            return defaultEmptyAllList(linkedObjects.get(EMTypes.ACTIVITY11),modelId);
+            return defaultEmptyList(linkedObjects.get(EMTypes.ACTIVITY11), modelId);
         }
 
         public Collection<VEvent> getAllLinkedEvents(String modelId) {
-            return defaultEmptyAllList(linkedObjects.get(EMTypes.ICAL), modelId);
+            return defaultEmptyList(linkedObjects.get(EMTypes.ICAL), modelId);
         }
 
         public Collection<EMFIfcHierarchicAcessor.HierarchicIfc> getAllLinkedHierarchicIfcs(String modelId){
-            return defaultEmptyAllList(linkedObjects.get(EMTypes.IFCHIERARCHIC), modelId);
+            return defaultEmptyList(linkedObjects.get(EMTypes.IFCHIERARCHIC), modelId);
         }
 
         public Collection<HierarchicGaebAccessor.HierarchicTgItemBoQCtgy> getAllLinkedHierarchicGaebs(String modelId){
-            return defaultEmptyAllList(linkedObjects.get(EMTypes.GAEBHIERARCHIC), modelId);
+            return defaultEmptyList(linkedObjects.get(EMTypes.GAEBHIERARCHIC), modelId);
         }
 
         public Collection<TgQtySplit> getAllLinkedQtySplits(String modelId){
-            return defaultEmptyAllList(linkedObjects.get(EMTypes.GAEBSPLIT), modelId);
+            return defaultEmptyList(linkedObjects.get(EMTypes.GAEBSPLIT), modelId);
         }
 
-        private <T> List<T> defaultEmptyAllList(Map<String, List<?>> groupedMap, String modelId) {
+        private <T> List<T> defaultEmptyList(Map<String, List<?>> groupedMap, String modelId) {
             return groupedMap == null ? Collections.<T>emptyList() : (List<T>) groupedMap.get(modelId);
+        }
+
+        public Map<String, List<?>> getAllOfType(EMTypes type){
+            return linkedObjects.get(type);
         }
 
         public void addObject(String modelId, Object object) {

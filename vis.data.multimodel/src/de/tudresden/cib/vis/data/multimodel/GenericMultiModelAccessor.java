@@ -37,7 +37,7 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
         this.mmUrl = url;
         MultiModel model = readMultiModelMeta(url);
         LinkModel firstLinkModel = model.getLinkModels().get(0);
-        for (ElementaryModel elementaryModel : firstLinkModel.getLinkedModels()) readElementaryModel(elementaryModel);
+        for (ElementaryModel elementaryModel : firstLinkModel.getLinkedModels()) readElementaryModel(elementaryModel, null);
         ElementaryModel firstElementaryModel = model.getElementaryModels().get(0);
         groupBy(firstElementaryModel, firstLinkModel);
     }
@@ -72,13 +72,13 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
             if (keyModelCondition.isValidFor(elementaryModel)) keyModelCandidates.add(elementaryModel);
             for (EMCondition condition : requiredModelConditions) {
                 if (condition.isValidFor(elementaryModel)) {
-                    readElementaryModel(elementaryModel);
+                    readElementaryModel(elementaryModel, condition);
                 }
             }
         }
         if (keyModelCandidates.size() > 1) throw new DataAccessException("ambiguous key model conditions");
         if (keyModelCandidates.size() == 0) throw new DataAccessException("no key model found");
-        readElementaryModel(keyModelCandidates.get(0));
+        readElementaryModel(keyModelCandidates.get(0), keyModelCondition);
         return keyModelCandidates.get(0);
     }
 
@@ -120,10 +120,12 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
         }
     }
 
-    private void readElementaryModel(ElementaryModel elementaryModel) throws DataAccessException, IOException {
-        if (elementaryModels.containsKey(elementaryModel)) return;
+    private void readElementaryModel(ElementaryModel elementaryModel, EMCondition emCondition) throws DataAccessException, IOException {
+        if (elementaryModels.containsKey(elementaryModel)) return; // TODO: howto read one EM with multiple accessors?
         String typeCode = getMeta(elementaryModel,"mmaa.model.type");
-        EMTypes emType = EMTypes.find(typeCode);
+        EMTypes emType = (emCondition instanceof EMTypeCondition) ?
+                ((EMTypeCondition)emCondition).required :
+                EMTypes.find(typeCode);
         if (emType == null) throw new DataAccessException("no matching accessor found for " + typeCode);
         else {
             IndexedDataAccessor accessor = emType.createAccessor();
