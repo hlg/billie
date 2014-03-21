@@ -42,20 +42,21 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
         groupBy(firstElementaryModel, firstLinkModel);
     }
 
-    public void read(URL url, LMCondition linkModelCondition, EMCondition keyModelCondition, EMCondition... requiredModelConditions) throws IOException, DataAccessException {
+    public List<String> read(URL url, LMCondition linkModelCondition, EMCondition keyModelCondition, EMCondition... requiredModelConditions) throws IOException, DataAccessException {
         this.mmUrl = url;
         MultiModel multiModel = readMultiModelMeta(url);
         LinkModel linkModel = getLinkModel(linkModelCondition, multiModel.getLinkModels());
-        ElementaryModel keyModel = getElementaryModels(multiModel, keyModelCondition, requiredModelConditions);
-        groupBy(keyModel, linkModel);
+        List<ElementaryModel> models = getElementaryModels(multiModel, keyModelCondition, requiredModelConditions);
+        Map<ElementaryModel, String> generatedIds = groupBy(models.get(0), linkModel);
+        List<String> ids = new LinkedList<String>();
+        for(ElementaryModel model: models){
+            ids.add(generatedIds.get(model));
+        }
+        return ids;
     }
 
-    public void read(URL mmUrl, EMCondition keyModelCondition, EMCondition... requiredModelConditions) throws IOException, DataAccessException {
-        this.mmUrl = mmUrl;
-        MultiModel multiModel = readMultiModelMeta(mmUrl);
-        LinkModel firstLinkModel = multiModel.getLinkModels().get(0);
-        ElementaryModel keyModel = getElementaryModels(multiModel, keyModelCondition, requiredModelConditions);
-        groupBy(keyModel, firstLinkModel);
+    public List<String> read(URL mmUrl, EMCondition keyModelCondition, EMCondition... requiredModelConditions) throws IOException, DataAccessException {
+        return read(mmUrl, new LMCondition.First(), keyModelCondition, requiredModelConditions);
     }
 
     private MultiModel readMultiModelMeta(URL url) throws IOException {
@@ -66,20 +67,26 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
         return (MultiModel) resource.getContents().get(0);
     }
 
-    private ElementaryModel getElementaryModels(MultiModel multiModel, EMCondition keyModelCondition, EMCondition[] requiredModelConditions) throws DataAccessException, IOException {
-        List<ElementaryModel> keyModelCandidates = new LinkedList<ElementaryModel>();
-        for (ElementaryModel elementaryModel : multiModel.getElementaryModels()) {
-            if (keyModelCondition.isValidFor(elementaryModel)) keyModelCandidates.add(elementaryModel);
-            for (EMCondition condition : requiredModelConditions) {
-                if (condition.isValidFor(elementaryModel)) {
-                    readElementaryModel(elementaryModel, condition);
-                }
-            }
+    private List<ElementaryModel> getElementaryModels(MultiModel multiModel, EMCondition keyModelCondition, EMCondition[] requiredModelConditions) throws DataAccessException, IOException {
+        List<ElementaryModel> foundModels = new LinkedList<ElementaryModel>();
+        ElementaryModel keyModelCandidate = findAndReadElementaryModel(multiModel, keyModelCondition);
+        foundModels.add(keyModelCandidate);
+        for (EMCondition condition : requiredModelConditions) {
+            ElementaryModel required = findAndReadElementaryModel(multiModel, condition);
+            foundModels.add(required);
         }
-        if (keyModelCandidates.size() > 1) throw new DataAccessException("ambiguous key model conditions");
-        if (keyModelCandidates.size() == 0) throw new DataAccessException("no key model found");
-        readElementaryModel(keyModelCandidates.get(0), keyModelCondition);
-        return keyModelCandidates.get(0);
+        return foundModels;
+    }
+
+    private ElementaryModel findAndReadElementaryModel(MultiModel multiModel, EMCondition modelCondition) throws DataAccessException, IOException {
+        List<ElementaryModel> modelCandidates = new LinkedList<ElementaryModel>();
+        for(ElementaryModel elementaryModel: multiModel.getElementaryModels()){
+            if (modelCondition.isValidFor(elementaryModel)) modelCandidates.add(elementaryModel);
+        }
+        if (modelCandidates.size() > 1) throw new DataAccessException("ambiguous model conditions");
+        if (modelCandidates.size() == 0) throw new DataAccessException("no model found");
+        readElementaryModel(modelCandidates.get(0), modelCondition);
+        return modelCandidates.get(0);
     }
 
     private URL getElementaryModelUrl(final ElementaryModel elementaryModel) throws IOException, DataAccessException  {
@@ -146,7 +153,7 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
         return linkModelCandidates.get(0);
     }
 
-    private void groupBy(ElementaryModel keyModel, LinkModel linkModel) {
+    private Map<ElementaryModel, String> groupBy(ElementaryModel keyModel, LinkModel linkModel) {
         Map<ElementaryModel, String> generatedModelIds = new HashMap<ElementaryModel, String>();
         for (ElementaryModel elementaryModel : elementaryModels.keySet()) {
             generatedModelIds.put(elementaryModel, Integer.toString(elementaryModel.hashCode()));
@@ -169,6 +176,7 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
             trackMap.get(key).addLink(resolvedLink);
         }
         for (LinkedObject<K> linkedObject : trackMap.values()) groupedElements.add(linkedObject);
+        return generatedModelIds;
     }
 
     @Override
@@ -213,9 +221,12 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
         boolean isValidFor(LinkModel linkModel);
 
         class First implements LMCondition {
+            private boolean firstApplication = true;
             @Override
             public boolean isValidFor(LinkModel linkModel) {
-                return true;
+                boolean returnValue= firstApplication;
+                firstApplication = false;
+                return returnValue;
             }
         }
 
