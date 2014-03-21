@@ -1,7 +1,6 @@
 package de.tudresden.cib.vis.sampleApps;
 
 import cib.mf.schedule.model.activity11.Activity;
-import cib.mm.multimodel.MetaDataEntry;
 import de.mefisto.model.container.Content;
 import de.mefisto.model.container.ElementaryModel;
 import de.mefisto.model.container.I;
@@ -72,7 +71,7 @@ public enum ConfigurationRunner {
             viewer.setPickingEnabled(false);
             viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());  // or carport.zip
         }
-    }, IFC_4D_MMAA {
+    }, MMAA_4D {
         @Override
         void run(String[] args) throws IOException, DataAccessException, TargetCreationException {
             GenericMultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
@@ -93,15 +92,7 @@ public enum ConfigurationRunner {
             SimpleViewer viewer = new SimpleViewer();
             viewer.setPickingEnabled(false);
             String mmaa = args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\eworkBau\\mm", "mmaa").getCanonicalPath();
-            mmAccessor.read(new File(mmaa).toURI().toURL(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMCondition(){
-                @Override
-                public boolean isValidFor(cib.mm.multimodel.ElementaryModel model) {
-                    for(MetaDataEntry metaDataEntry: model.getMetaDataEntries()){
-                        if(metaDataEntry.getKey().equals("mmaa.model.name") && metaDataEntry.getValue().contains("Fein")) return true;
-                    }
-                    return false;
-                }
-            });
+            mmAccessor.read(new File(mmaa).toURI().toURL(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMByName("Fein"));
             IfcIcal_Colored4D<BranchGroup> config = new IfcIcal_Colored4D<BranchGroup>(Java3dBuilder.createMapper(mmAccessor));
             config.config();
             SceneManager<LinkedObject<EMFIfcParser.EngineEObject>, BranchGroup> scene = config.execute();
@@ -287,6 +278,15 @@ public enum ConfigurationRunner {
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.setPickingEnabled(false);
             viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\mefisto-container", "zip").getCanonicalPath());
+        }
+    }, MMAA_REPORTS_4D {
+        @Override
+        void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
+            GenericMultiModelAccessor<EMFIfcParser.EngineEObject> dataAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
+            SimpleViewer viewer = new SimpleViewer();
+            viewer.setPickingEnabled(false);
+            List<String> ids = dataAccessor.read(viewer.chooseFile(System.getProperty("user.dir"), "mmaa").toURI().toURL(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMByName("Fein"), new GenericMultiModelAccessor.EMByName("progress"));
+            Configuration  config = new Mmaa_Progress_Colored4D(Java3dBuilder.createMapper(dataAccessor), ids);
         }
     }, LINKS_HEB {
         @Override

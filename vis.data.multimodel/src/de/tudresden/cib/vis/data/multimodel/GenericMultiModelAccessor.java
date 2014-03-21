@@ -217,6 +217,20 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
         }
     }
 
+    public static class EMByName implements EMCondition {
+
+        private String name;
+
+        public EMByName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public boolean isValidFor(ElementaryModel model) {
+            return getMeta(model, "mmaa.model.name").contains(name);
+        }
+    }
+
     interface LMCondition {
         boolean isValidFor(LinkModel linkModel);
 
@@ -230,17 +244,17 @@ public class GenericMultiModelAccessor<K> extends DataAccessor<LinkedObject<K>, 
             }
         }
 
-        class ByName implements LMCondition {
+        class LMByName implements LMCondition {
 
             private String name;
 
-            public ByName(String name) {
+            public LMByName(String name) {
                 this.name = name;
             }
 
             @Override
             public boolean isValidFor(LinkModel linkModel) {
-                return name.equals(getMeta(linkModel,"mmaa.linkmodel.name"));
+                return getMeta(linkModel,"mmaa.linkmodel.name").contains(name);
             }
         }
     }
