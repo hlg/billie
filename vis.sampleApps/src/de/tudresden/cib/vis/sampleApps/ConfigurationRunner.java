@@ -21,6 +21,7 @@ import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.draw2d.Draw2DViewer;
+import de.tudresden.cib.vis.runtime.java3d.viewers.RotatingViewer;
 import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
 import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.SceneManager;
@@ -283,10 +284,20 @@ public enum ConfigurationRunner {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             GenericMultiModelAccessor<EMFIfcParser.EngineEObject> dataAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
-            SimpleViewer viewer = new SimpleViewer();
+            SimpleViewer viewer = new RotatingViewer();
             viewer.setPickingEnabled(false);
-            List<String> ids = dataAccessor.read(viewer.chooseFile(System.getProperty("user.dir"), "mmaa").toURI().toURL(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMByName("Fein"), new GenericMultiModelAccessor.EMByName("progress"));
-            Configuration  config = new Mmaa_Progress_Colored4D(Java3dBuilder.createMapper(dataAccessor), ids);
+            List<String> ids = dataAccessor.read(viewer.chooseFile(System.getProperty("user.dir"), "mmaa").toURI().toURL(),
+                    new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC),
+                    new GenericMultiModelAccessor.EMByName("Fein"),
+                    new GenericMultiModelAccessor.EMByName("progress"),
+                    new GenericMultiModelAccessor.EMTypeCondition(EMTypes.GAEBSPLIT)
+            );
+            Mmaa_Progress_Colored4D<BranchGroup> config = new Mmaa_Progress_Colored4D(Java3dBuilder.createMapper(dataAccessor), ids);
+            config.scale = (args.length > 1) ? Integer.valueOf(args[1]) : 3600000;
+            config.config();
+            SceneManager<?, BranchGroup> scene  = config.execute();
+            scene.animate();
+            viewer.run(scene.getScene());
         }
     }, LINKS_HEB {
         @Override

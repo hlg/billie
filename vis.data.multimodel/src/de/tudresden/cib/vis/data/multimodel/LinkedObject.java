@@ -108,7 +108,7 @@ public class LinkedObject<T> {
         }
 
         private <T> List<T> defaultEmptyList(Map<String, List<?>> groupedMap, String modelId) {
-            return groupedMap == null ? Collections.<T>emptyList() : (List<T>) groupedMap.get(modelId);
+            return (groupedMap == null || groupedMap.get(modelId)==null) ? Collections.<T>emptyList() : (List<T>) groupedMap.get(modelId);
         }
 
         public Map<String, List<?>> getAllOfType(EMTypes type){
