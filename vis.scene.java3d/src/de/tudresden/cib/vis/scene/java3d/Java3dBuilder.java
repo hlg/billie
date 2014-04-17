@@ -92,7 +92,6 @@ public class Java3dBuilder implements VisBuilder<Java3dFactory.Java3DGraphObject
             };
             pickMouseBehavior.setSchedulingBounds(new BoundingSphere(new Point3d(0, 0, 0), Double.MAX_VALUE));
             sceneManager.getScene().addChild(pickMouseBehavior);
-
         }
     }
 

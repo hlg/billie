@@ -53,7 +53,7 @@ public class SpatialHierarchyViewer extends SimpleViewer {
     @Override
     public void run(String input) throws FileNotFoundException {
         loadFile(input);
-        setupBehaviour();
+        setupBehaviour(scene.getSceneGroup());
         showScene();
     }
 
@@ -66,8 +66,7 @@ public class SpatialHierarchyViewer extends SimpleViewer {
         ifcViewer.run(file.getPath());
     }
 
-    public void setupBehaviour() {
-        BranchGroup mainScene = scene.getSceneGroup();
+    public void setupBehaviour(BranchGroup mainScene) {
         BranchGroup root = mainScene;
         while (root.getAllChildren().hasMoreElements() && !Iterators.any(Iterators.<Node>forEnumeration(root.getAllChildren()), new Predicate<Node>() {
             public boolean apply(Node o) {

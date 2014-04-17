@@ -51,7 +51,8 @@ public enum ConfigurationRunner {
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(createPluginManager(), true));
             new Ifc_3D<BranchGroup>(loader.getMapper()).config();
             SimpleViewer viewer = new SimpleViewer(loader);
-            viewer.setPickingEnabled(false);
+            viewer.setAxonometric(true);
+            viewer.setPickingEnabled(true);
             viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc").getPath());
         }
     }, IFC_3DSPACE {
@@ -91,7 +92,7 @@ public enum ConfigurationRunner {
         void run(String[] args) throws IOException, DataAccessException, TargetCreationException {
             GenericMultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
             SimpleViewer viewer = new SimpleViewer();
-            viewer.setPickingEnabled(false);
+            viewer.setPickingEnabled(true);
             String mmaa = args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\eworkBau\\mm", "mmaa").getCanonicalPath();
             mmAccessor.read(new File(mmaa).toURI().toURL(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMByName("Fein"));
             IfcIcal_Colored4D<BranchGroup> config = new IfcIcal_Colored4D<BranchGroup>(Java3dBuilder.createMapper(mmAccessor));

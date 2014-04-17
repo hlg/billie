@@ -6,10 +6,11 @@ import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
+import de.tudresden.cib.vis.scene.Change;
+import de.tudresden.cib.vis.scene.DefaultEvent;
+import de.tudresden.cib.vis.scene.Event;
 import de.tudresden.cib.vis.scene.VisFactory3D;
-import org.bimserver.models.ifc2x3tc1.IfcBuildingElement;
-import org.bimserver.models.ifc2x3tc1.IfcRelContainedInSpatialStructure;
-import org.bimserver.models.ifc2x3tc1.IfcRelDecomposes;
+import org.bimserver.models.ifc2x3tc1.*;
 import org.eclipse.emf.common.util.EList;
 
 public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, S> {
@@ -19,6 +20,18 @@ public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
     }
 
     public void config() {
+        final Change<VisFactory3D.Polyeder> hide = new Change<VisFactory3D.Polyeder>() {
+            @Override
+            protected void configure() {
+                graph.setColor(100, 100, 100, 255);
+            }
+        };
+        final Change<VisFactory3D.Polyeder> show = new Change<VisFactory3D.Polyeder>() {
+            @Override
+            protected void configure() {
+                graph.setColor(128,128,128,150);
+            }
+        };
         mapper.addMapping(new Condition<EMFIfcParser.EngineEObject>() {
             @Override
             public boolean matches(EMFIfcParser.EngineEObject data) {
@@ -29,7 +42,13 @@ public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
             protected void configure() {
                 Geometry geometry = data.getGeometry();
                 assert geometry != null;
-                graphObject.setColor(128,128,128,150);
+                if(data.getObject() instanceof IfcSlab || data.getObject() instanceof IfcRoof){
+                    // graphObject.setColor(128,128,128,0);
+                    graphObject.setColor(150,0,0,0);
+                } else {
+                    // graphObject.setColor(128,128,128,255);
+                    graphObject.setColor(128,128,128,150);
+                }
                 EList<IfcRelContainedInSpatialStructure> containedInStructure = ((IfcBuildingElement) data.getObject()).getContainedInStructure();
                 if (!containedInStructure.isEmpty()){
                     EList<IfcRelDecomposes> containedIn = containedInStructure.get(0).getRelatingStructure().getDecomposes();
@@ -41,6 +60,7 @@ public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
                 graphObject.setIndizes(geometry.indizes);
+                addChange(DefaultEvent.CLICK, hide);
             }
         });
     }

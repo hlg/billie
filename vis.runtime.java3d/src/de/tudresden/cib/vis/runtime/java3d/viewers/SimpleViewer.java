@@ -7,6 +7,7 @@ import com.sun.j3d.utils.picking.behaviors.PickMouseBehavior;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import de.tudresden.cib.vis.runtime.java3d.UniverseBuilder;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
+import de.tudresden.cib.vis.runtime.java3d.views.AxonometricView;
 import de.tudresden.cib.vis.runtime.java3d.views.OrbitalView;
 import org.slf4j.LoggerFactory;
 
@@ -34,9 +35,11 @@ public class SimpleViewer extends JFrame {
     Loader loader;
     private Set<Shape3D> selection = new HashSet<Shape3D>();
 
+    private boolean axonometric = false;
+
     public SimpleViewer() {
         logger = LoggerFactory.getLogger(this.getClass());
-        selectedAppearance = TypeAppearance.ACTIVATED.getAppearance();
+        selectedAppearance = TypeAppearance.IfcSpaceImpl.getAppearance();
         defaultAppearance = TypeAppearance.DEFAULT.getAppearance();
         noAppearance = TypeAppearance.OFF.getAppearance();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -49,6 +52,11 @@ public class SimpleViewer extends JFrame {
         this.pickingEnabled = pickingEnabled;
     }
 
+    public void setAxonometric(boolean axonometric) {
+        this.axonometric = axonometric;
+    }
+
+
     private boolean pickingEnabled = true;
 
     public SimpleViewer(Loader loader) {
@@ -60,7 +68,7 @@ public class SimpleViewer extends JFrame {
         setSize(800, 600);
         canvas = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
         universe = new UniverseBuilder();
-        universe.addView(new OrbitalView(canvas));
+        universe.addView(axonometric ? new AxonometricView(canvas) : new OrbitalView(canvas));
         canvas.setVisible(true);
         add(canvas);
         validate();
@@ -69,12 +77,13 @@ public class SimpleViewer extends JFrame {
     public void run(String path) throws FileNotFoundException {
         setupViews();
         loadFile(path);
-        if (pickingEnabled) setupBehaviour();
+        if (pickingEnabled) setupBehaviour(scene.getSceneGroup());
         showScene();
     }
 
     public void run(BranchGroup scene){
         setupViews();
+        if (pickingEnabled) setupBehaviour(scene);
         universe.addLights(scene);
         universe.showScene(scene);
     }
@@ -108,8 +117,7 @@ public class SimpleViewer extends JFrame {
         return (returnVal == JFileChooser.APPROVE_OPTION) ? chooser.getSelectedFile() : null;
     }
 
-    protected void setupBehaviour() {
-        BranchGroup mainScene = scene.getSceneGroup();
+    protected void setupBehaviour(BranchGroup mainScene) {
         PickMouseBehavior pickMouseBehavior = new PickMouseBehavior(canvas, mainScene, null) {
             @Override
             public void updateScene(int x, int y) {
