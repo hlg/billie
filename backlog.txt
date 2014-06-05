@@ -12,3 +12,4 @@
 * "map to component" configurations e.g. map to Gannntt chart?
 
 
+* bug: Simpleviewer initialized without loader, but invoked with path in stead of scene graph -> Nullpointer

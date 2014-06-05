@@ -21,7 +21,7 @@ import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.draw2d.Draw2DViewer;
-import de.tudresden.cib.vis.runtime.java3d.viewers.RotatingViewer;
+import de.tudresden.cib.vis.runtime.java3d.viewers.AxonometricViewer;
 import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
 import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.SceneManager;
@@ -38,11 +38,16 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 
 import javax.media.j3d.BranchGroup;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public enum ConfigurationRunner {
     IFC_3D {
@@ -54,6 +59,22 @@ public enum ConfigurationRunner {
             viewer.setAxonometric(true);
             viewer.setPickingEnabled(true);
             viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc").getPath());
+        }
+    }, IFC_3D_INTERACTIVE {
+        @Override
+        void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
+            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(createPluginManager(), true));
+            new Ifc_3D<BranchGroup>(loader.getMapper()).config();
+            SimpleViewer viewer = new SimpleViewer(loader);
+            final JTextField textField = new JTextField();
+            textField.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println (textField.getText());
+                }
+            });
+            viewer.add(textField, BorderLayout.PAGE_START); // TODO: try ConsoleTextEditor from groovy.ui
+            viewer.run(viewer.chooseFile(System.getProperty("user.dir"),"ifc").getPath());
         }
     }, IFC_3DSPACE {
         @Override
@@ -285,7 +306,7 @@ public enum ConfigurationRunner {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             GenericMultiModelAccessor<EMFIfcParser.EngineEObject> dataAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
-            SimpleViewer viewer = new RotatingViewer();
+            SimpleViewer viewer = new AxonometricViewer();
             viewer.setPickingEnabled(false);
             List<String> ids = dataAccessor.read(viewer.chooseFile(System.getProperty("user.dir"), "mmaa").toURI().toURL(),
                     new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC),
@@ -300,7 +321,25 @@ public enum ConfigurationRunner {
             scene.animate();
             viewer.run(scene.getScene());
         }
-    }, LINKS_HEB {
+    }, MMAA_REPORT_SNAPSHOT {
+        @Override
+        void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
+            GenericMultiModelAccessor<EMFIfcParser.EngineEObject> dataAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
+            SimpleViewer viewer = new AxonometricViewer(false);
+            viewer.setPickingEnabled(false);
+            List<String> ids = dataAccessor.read(viewer.chooseFile(System.getProperty("user.dir"), "mmaa").toURI().toURL(),
+                    new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC),
+                    new GenericMultiModelAccessor.EMByName("Fein"),
+                    new GenericMultiModelAccessor.EMByName("progressCalendar")
+            );
+            Mmaa_Progress_Colored<BranchGroup> config = new Mmaa_Progress_Colored<BranchGroup>(Java3dBuilder.createMapper(dataAccessor), ids, "2M6f_UD1nEkvEACW0qZrgl");
+            config.config();
+            SceneManager<?, BranchGroup> scene = config.execute();
+            scene.animate();
+            viewer.run(scene.getScene());
+
+        }
+    },  LINKS_HEB {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             EMFIfcHierarchicAcessor.SKIP_LAST_LEVEL = false;

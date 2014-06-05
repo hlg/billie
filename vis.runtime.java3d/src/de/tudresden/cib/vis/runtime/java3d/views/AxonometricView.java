@@ -3,6 +3,7 @@ package de.tudresden.cib.vis.runtime.java3d.views;
 import javax.media.j3d.*;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
+import java.awt.*;
 import java.util.Enumeration;
 
 /**
@@ -17,13 +18,17 @@ public class AxonometricView implements Camera {
     private Point3d center = new Point3d(0,0,0);
 
     public AxonometricView(Canvas3D canvas) {
+        this(canvas, true);
+    }
+
+    public AxonometricView(Canvas3D canvas, boolean rotating) {
         this.canvas = canvas;
-        createViewBranch();
+        createViewBranch(rotating);
     }
 
     // TODO: factor out common base implementation?
 
-    private void createViewBranch() {
+    private void createViewBranch(boolean rotating) {
         branchGroup = new BranchGroup();
         viewTG = new TransformGroup();
 
@@ -45,14 +50,17 @@ public class AxonometricView implements Camera {
         view.setScreenScalePolicy(View.SCALE_EXPLICIT);
         view.setFrontClipPolicy(View.VIRTUAL_SCREEN);
         view.setBackClipPolicy(View.VIRTUAL_SCREEN);
+        view.setTransparencySortingPolicy(View.TRANSPARENCY_SORT_GEOMETRY);
         view.setWindowResizePolicy(View.VIRTUAL_WORLD);
-        view.setDepthBufferFreezeTransparent(false);
+        // view.setDepthBufferFreezeTransparent(false);
         // view.setWindowMovementPolicy(View.RELATIVE_TO_WINDOW);
         viewTG.addChild(viewPlatform);
         branchGroup.addChild(viewTG);
-        NESWRotation neswRotation = new NESWRotation(viewTG);
-        neswRotation.setSchedulingBounds(new BoundingSphere());
-        branchGroup.addChild(neswRotation);
+        if(rotating){
+            NESWRotation neswRotation = new NESWRotation(viewTG);
+            neswRotation.setSchedulingBounds(new BoundingSphere());
+            branchGroup.addChild(neswRotation);
+        }
         branchGroup.compile();
     }
 
