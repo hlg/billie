@@ -11,5 +11,9 @@
 
 * "map to component" configurations e.g. map to Gannntt chart?
 
-
 * bug: Simpleviewer initialized without loader, but invoked with path in stead of scene graph -> Nullpointer
+
+* integration tests with existing visualizations (configurations)
+* mix different filter libraries?
+* make page for github (will be public though the repo is private)
+

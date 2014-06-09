@@ -14,6 +14,7 @@ import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcHierarchicAcessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager;
+import de.tudresden.cib.vis.data.jsdai.JsdaiIfcAccessor;
 import de.tudresden.cib.vis.data.mmqlserver.MmqlServerAccessor;
 import de.tudresden.cib.vis.data.multimodel.*;
 import de.tudresden.cib.vis.filter.Condition;
@@ -23,12 +24,12 @@ import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.draw2d.Draw2DViewer;
 import de.tudresden.cib.vis.runtime.java3d.viewers.AxonometricViewer;
 import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer;
-import de.tudresden.cib.vis.scene.DefaultEvent;
-import de.tudresden.cib.vis.scene.SceneManager;
+import de.tudresden.cib.vis.scene.*;
 import de.tudresden.cib.vis.scene.draw2d.Draw2dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 import de.tudresden.cib.vis.scene.text.TextBuilder;
+import groovy.lang.GroovyShell;
 import net.fortuna.ical4j.model.component.VEvent;
 import org.bimserver.emf.IdEObject;
 import org.eclipse.draw2d.GridLayout;
@@ -63,18 +64,36 @@ public enum ConfigurationRunner {
     }, IFC_3D_INTERACTIVE {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
-            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(createPluginManager(), true));
-            new Ifc_3D<BranchGroup>(loader.getMapper()).config();
-            SimpleViewer viewer = new SimpleViewer(loader);
-            final JTextField textField = new JTextField();
+            SimpleViewer viewer = new SimpleViewer();
+            File ifc = viewer.chooseFile(System.getProperty("user.dir"), "ifc");
+            final EMFIfcGeometricAccessor emf = new EMFIfcGeometricAccessor(createPluginManager(), true);
+            emf.read(ifc.toURI().toURL());
+            Ifc_3D<BranchGroup> config = new Ifc_3D<BranchGroup>(Java3dBuilder.createMapper(emf));
+            config.config();
+            final SceneManager<EMFIfcParser.EngineEObject, BranchGroup> scene = config.execute();
+            final JCheckBox checkBox = new JCheckBox("(un)highlight");
+            final JTextField textField = new JTextField("object.object instanceof org.bimserver.models.ifc2x3tc1.IfcSlab");
             textField.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println (textField.getText());
+                    System.out.println(textField.getText());
+                    final GroovyShell shell = new GroovyShell();
+                    for(EMFIfcParser.EngineEObject object : emf.filter(new Condition<EMFIfcParser.EngineEObject>() {
+                        @Override
+                        public boolean matches(EMFIfcParser.EngineEObject data) {
+                            shell.setVariable("object", data);
+                            return shell.evaluate(textField.getText()).equals(true);
+                        }
+                    })){
+                        scene.fire(checkBox.isSelected() ? Ifc_3D.EventX.HIGHLIGHT : Ifc_3D.EventX.UNHIGHLIGHT, object);
+                    }  // TODO: or pass iterable directly to scene#fire (change signatur Collection -> Iterable)
                 }
             });
-            viewer.add(textField, BorderLayout.PAGE_START); // TODO: try ConsoleTextEditor from groovy.ui
-            viewer.run(viewer.chooseFile(System.getProperty("user.dir"),"ifc").getPath());
+            JPanel topRow = new JPanel(new BorderLayout());
+            topRow.add(textField, BorderLayout.CENTER);
+            topRow.add(checkBox, BorderLayout.EAST);
+            viewer.add(topRow, BorderLayout.NORTH); // TODO: try ConsoleTextEditor from groovy.ui
+            viewer.run(scene.getScene());
         }
     }, IFC_3DSPACE {
         @Override
