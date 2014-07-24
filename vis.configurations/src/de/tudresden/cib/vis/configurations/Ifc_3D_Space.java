@@ -21,7 +21,7 @@ public class Ifc_3D_Space<S> extends Configuration<EMFIfcParser.EngineEObject, C
             public boolean matches(EMFIfcParser.EngineEObject data) {
                 return data.getObject() instanceof IfcSpace
                         && ((IfcSpace) data.getObject()).getRepresentation() != null
-                        && ((IfcSpace) data.getObject()).getDecomposes().get(0).getRelatingObject().getName().equals("20.OG")
+                        // && ((IfcSpace) data.getObject()).getDecomposes().get(0).getRelatingObject().getName().equals("20.OG")
                 ;
             }
         }, new PropertyMap<EMFIfcParser.EngineEObject, VisFactory3D.Polyeder>() {
