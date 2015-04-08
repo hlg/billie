@@ -1,19 +1,5 @@
-* generic multi model accessor: check required models and throw error if not fulfilled
 * ensure consistent filtering and checking on model level throughout all accessors
-* better exception handling e.g. file not found
-
 * generalize accessor conditions
 * tie configuration and model conditions in case of complex conditions (e.g. multi model) where type of data elements is not enough
-
-* make cost visualizations work with GAEB-split model instead of QTO & GAEB
-* make schedule visualizations work with ICAL instead of activity
-* make HEB work with GAEB-split instead of QTO&GAEB
-
 * "map to component" configurations e.g. map to Gannntt chart?
-
-* bug: Simpleviewer initialized without loader, but invoked with path in stead of scene graph -> Nullpointer
-
-* integration tests with existing visualizations (configurations)
 * mix different filter libraries?
-* make page for github (will be public though the repo is private)
-
