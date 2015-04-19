@@ -37,18 +37,6 @@
         <file name="vis.sampleApps/build.xml"/>
     </filelist>
 
-    <target name="test.all" depends="clean.all">
-        <subant target="test.module">
-            <filelist refid="projects.all" />
-        </subant>
-    </target>
-
-    <target name="dist.all" depends="clean.all">
-        <subant target="dist.module">
-            <filelist refid="projects.all" />
-        </subant>
-    </target>
-
     <target name="publish.config">
         <subant target="clean.module"><filelist refid="projects.config" /></subant>
         <subant target="publish.module"><filelist refid="projects.config" /></subant>
