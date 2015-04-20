@@ -12,6 +12,12 @@ public class CollectionAccessor<T> extends DataAccessor<T, Condition<T>> {
 
     private Collection<T> data;
     private ConditionFilter<T> filter;
+    private Condition<T> defaultCondition = new Condition<T>() {
+        @Override
+        public boolean matches(T data) {
+            return true;
+        }
+    };
 
     public CollectionAccessor(Collection<T> data) {
         this.data = data;
@@ -33,11 +39,6 @@ public class CollectionAccessor<T> extends DataAccessor<T, Condition<T>> {
 
     @Override
     public Condition<T> getDefaultCondition() {
-        return new Condition<T>() {
-            @Override
-            public boolean matches(T data) {
-                return true;
-            }
-        };
+        return defaultCondition;
     }
 }

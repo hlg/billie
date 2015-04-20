@@ -57,7 +57,7 @@ public class MultiModelAccessorTests {
     @Test
     public void testPreparsedAccess() throws IOException, DataAccessException {
         EMFScheduleAccessor schedule = new EMFSchedule10Accessor(this.getClass().getResource("/resources/carport/Activity/xml/Vorgangsmodell_1.xml"), "Activity1");
-        final EMFGaebAccessor gaeb = new EMFGaebAccessor(this.getClass().getResource("/resources/carport/BoQ/gaebxml/LV_1.X81"), "BoQ1");
+        final EMFGaebAccessor gaeb = new EMFGaebAccessor(this.getClass().getResource("/resources/carport/BoQ/gaebxml/LV_1.X84"), "BoQ1");
         EMFIfcGeometricAccessor ifc = new EMFIfcGeometricAccessor(pm, true);
 
         String fileName = "/resources/carport/Object/ifc/carport2.ifc";

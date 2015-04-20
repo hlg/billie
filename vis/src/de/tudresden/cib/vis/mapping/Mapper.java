@@ -8,10 +8,7 @@ import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Mapper<E, C, G extends VisFactory2D.GraphObject,S> {
     Map<C, ClassMap> propertyMapsByConditions = new HashMap<C, ClassMap>();
@@ -82,7 +79,7 @@ public class Mapper<E, C, G extends VisFactory2D.GraphObject,S> {
     }
 
     private boolean mapAndBuild(E source, int mappingIndex, ClassMap classMap) throws TargetCreationException {
-        Collection<PropertyMap<E, ?>> matchingPropMaps = classMap.getPropertyMaps(source);
+        List<PropertyMap<E, ?>> matchingPropMaps = classMap.getPropertyMaps(source);
         for (PropertyMap<? super E, ?> propertyMap : matchingPropMaps) {
                 propertyMap.map(source, mappingIndex);
                 visBuilder.addPart((G) propertyMap.graphObject); // TODO: make sure provider is the right one
@@ -107,7 +104,7 @@ public class Mapper<E, C, G extends VisFactory2D.GraphObject,S> {
         return globals.get(name).getEvaluatedResult();
     }
 
-    class ClassMap extends HashMap<Class, Collection<PropertyMap>> {
+    class ClassMap extends HashMap<Class, List<PropertyMap>> {
 
         public <S> void addPropertyMap(Class<S> sourceClass, PropertyMap<S, ?> propertyMap) {
             if (!containsKey(sourceClass)) {
@@ -116,9 +113,9 @@ public class Mapper<E, C, G extends VisFactory2D.GraphObject,S> {
             get(sourceClass).add(propertyMap);
         }
 
-        public <S> Collection<PropertyMap<S, ?>> getPropertyMaps(S source) {
-            Collection<PropertyMap<S, ?>> res = new ArrayList<PropertyMap<S, ?>>();
-            for(Map.Entry<Class, Collection<PropertyMap>> classMap : this.entrySet()){
+        public <S> List<PropertyMap<S, ?>> getPropertyMaps(S source) {
+            List<PropertyMap<S, ?>> res = new ArrayList<PropertyMap<S, ?>>();
+            for(Map.Entry<Class, List<PropertyMap>> classMap : this.entrySet()){
                 if(classMap.getKey().isInstance(source)) for (PropertyMap pm : classMap.getValue()) res.add(pm);
             }
             return res;

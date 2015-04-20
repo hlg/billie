@@ -68,13 +68,19 @@
                 <pathelement path="${module.output.dir}/classes" />
             </classpath>
         </javac>
+        <groovyc destdir="${module.output.dir}/testclasses" srcdir="${module.basedir}/test">
+            <classpath>
+                <path refid="ivy.classpath"/>
+                <pathelement location="${module.output.dir}/classes" />
+            </classpath>
+        </groovyc>
         <copy todir="${module.output.dir}/testclasses/resources" failonerror="false">
             <fileset dir="${module.basedir}/test/resources"/>
         </copy>
     </target>
 
 
-    <target name="dist.module" depends="compile.module, test.module">
+    <target name="dist.module" depends="clean.module, compile.module, test.module">
         <tstamp/>
         <property name="implversion" value="${DSTAMP}${TSTAMP}"/>
 
@@ -108,7 +114,7 @@
         </jar>
     </target>
 
-    <target name="test.module" depends="compile.module, compile.tests" if="tests.available">
+    <target name="test.module" depends="clean.module, compile.module, compile.tests" if="tests.available">
         <echo message="testing ${module.basedir}/test" />
         <mkdir dir="${module.output.dir}/testreports" />
         <junit printsummary="yes" haltonfailure="yes" fork="yes" dir="${module.output.dir}/testclasses">
@@ -117,10 +123,12 @@
                 <pathelement path="${module.output.dir}/classes" />
                 <pathelement path="${module.output.dir}/testclasses" />
             </classpath>
-            <formatter type="xml"/>
+            <formatter type="plain"/>
+            <formatter type="brief" usefile="no"/>
             <batchtest todir="${module.output.dir}/testreports">
                 <fileset dir="${module.basedir}/test">
                     <include name="**/*Tests.java" />
+                    <include name="**/*Tests.groovy" />
                     <type type="file"/>
                 </fileset>
             </batchtest>

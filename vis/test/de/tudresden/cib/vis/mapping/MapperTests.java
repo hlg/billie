@@ -12,10 +12,10 @@ import java.util.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
-public class MapperTest extends MappingTestCase {
+public class MapperTests extends MappingTestCase {
     @Before
     public void setUp() {
-        super.setUp();
+        super.createData();
     }
 
     @Test
@@ -51,7 +51,7 @@ public class MapperTest extends MappingTestCase {
     }
 
     private Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object> makeMapper(FakeVisBuilder<FakeRectangle> builder) {
-        DataAccessor<DataElement, Condition<DataElement>> data = new CollectionAccessor(Collections.singletonList(d));
+        DataAccessor<DataElement, Condition<DataElement>> data = new CollectionAccessor<DataElement>(Collections.singletonList(d));
         VisFactory2D factory = new FakeVisFactoy();
         return new Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object>(data, factory, builder);
     }
@@ -99,10 +99,11 @@ public class MapperTest extends MappingTestCase {
             }
         });
         SceneManager result = test.map();
-        FakeRectangle graph = builder.parts.get(0);
-        assertEquals(10, graph.a);
-        result.fire(EventX.CLICK, graph);
-        assertEquals(1000, graph.a);
+        assertEquals(1, builder.parts.size());
+        FakeRectangle receiving = builder.parts.get(0);
+        assertEquals(10, receiving.a);
+        result.fire(EventX.CLICK, receiving);
+        assertEquals(1000, receiving.a);
     }
 
     @Test
@@ -128,6 +129,7 @@ public class MapperTest extends MappingTestCase {
             }
         });
         SceneManager result = test.map();
+        assertEquals(2, builder.parts.size());
         FakeRectangle receiving = builder.parts.get(0);
         FakeRectangle triggering = builder.parts.get(1);
         assertEquals(10, receiving.a);

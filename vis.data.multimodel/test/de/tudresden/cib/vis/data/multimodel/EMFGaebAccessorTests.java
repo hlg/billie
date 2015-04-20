@@ -22,7 +22,7 @@ public class EMFGaebAccessorTests {
 
     @Before
     public void setup(){
-        resource = this.getClass().getResource("/resources/carport/BoQ/gaebxml/LV_1.X81");
+        resource = this.getClass().getResource("/resources/carport/BoQ/gaebxml/LV_1.X84");
     }
 
     @Test

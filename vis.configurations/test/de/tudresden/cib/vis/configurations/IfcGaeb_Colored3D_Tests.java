@@ -25,12 +25,12 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class IfcGaeb_Colored3D_Test {
+public class IfcGaeb_Colored3D_Tests {
     @Test
     public void testConfiguration() throws TargetCreationException, IOException, DataAccessException {
 
         MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
-        mmAccessor.read(new File(this.getClass().getResource("/resources/carport").getFile()),new EMTypeCondition(EMTypes.IFC), new EMTypeCondition(EMTypes.GAEB){
+        List<String> ids = mmAccessor.read(new File(this.getClass().getResource("/resources/carport").getFile()),new EMTypeCondition(EMTypes.IFC), new EMTypeCondition(EMTypes.GAEB){
             @Override
             public boolean isValidFor(Content alternative) {
                 for (I option : alternative.getContentOptions().getI()){
@@ -72,11 +72,13 @@ public class IfcGaeb_Colored3D_Test {
             }
         };
         FakeVisBuilder<FakePolyeder> visBuilder = new FakeVisBuilder<FakePolyeder>();
-        Configuration config = new IfcGaeb_Colored3D<Object>(new Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, FakePolyeder, Object>(
+        IfcGaeb_Colored3D config = new IfcGaeb_Colored3D<Object>(new Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, FakePolyeder, Object>(
                 mmAccessor,
                 visFactory,
                 visBuilder
         ));
+        config.gaebX84Id = ids.get(1);
+        config.gaebX83Id = ids.get(1);
         config.config();
         config.execute();
         assertEquals(5, visBuilder.parts.size());

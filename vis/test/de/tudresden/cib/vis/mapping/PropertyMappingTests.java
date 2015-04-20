@@ -1,17 +1,18 @@
 package de.tudresden.cib.vis.mapping;
 
+import de.tudresden.cib.vis.scene.SceneManager;
 import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 
-public class PropertyMappingTest extends MappingTestCase {
+public class PropertyMappingTests extends MappingTestCase {
     private PropertyMap<DataElement, VisElement> propertyMap;
 
     @Before
     public void setUp() {
-        super.setUp();
+        super.createData();
         propertyMap = new PropertyMap<DataElement, VisElement>() {
             @Override
             protected void configure() {
@@ -22,6 +23,7 @@ public class PropertyMappingTest extends MappingTestCase {
                 // this would create more than one element per mapping ???
             }
         };
+        propertyMap.with(new SceneManager<DataElement, Object>());
     }
 
     @Test

@@ -14,12 +14,12 @@
             <content format="gaebxml" id="1" formatVersion="3.1">
                 <contentOptions>
                     <i k="description" t="xs:boolean" v="1"/>
-                    <i k="extension" v="DA81"/>
+                    <i k="extension" v="DA84"/>
                     <i k="qtosplit" t="xs:boolean" v="0"/>
                     <i k="unitrate" t="xs:boolean" v="1"/>
                     <i k="unitrate_breakdown" t="xs:boolean" v="1"/>
                 </contentOptions>
-                <file namespace="BoQ1">BoQ/gaebxml/LV_1.X81</file>
+                <file namespace="BoQ1">BoQ/gaebxml/LV_1.X84</file>
             </content>
         </model>
         <model contextId="\Projekte\TUD\CIB\workshop_1211\demo-cp_TAU1 V1 (Angebot)\Projektvarianten\demo-cp_TAU1"

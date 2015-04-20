@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * @author helga
  */
-public class TimeLineTest {
+public class TimeLineTests {
 
     TimeLine timeLine;
     private IfcWall ifcWall;
