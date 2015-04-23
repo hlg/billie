@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/org.bimserver.ifcemf/org.bimserver.ifcemf.iml" filepath="$PROJECT_DIR$/org.bimserver.ifcemf/org.bimserver.ifcemf.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis/vis.iml" filepath="$PROJECT_DIR$/vis/vis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vis.DSL/vis.DSL.iml" filepath="$PROJECT_DIR$/vis.DSL/vis.DSL.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.configurations/vis.configurations.iml" filepath="$PROJECT_DIR$/vis.configurations/vis.configurations.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.data.bimserver/vis.data.bimserver.iml" filepath="$PROJECT_DIR$/vis.data.bimserver/vis.data.bimserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/vis.data.jsdai/vis.data.jsdai.iml" filepath="$PROJECT_DIR$/vis.data.jsdai/vis.data.jsdai.iml" />

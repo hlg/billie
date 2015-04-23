@@ -1,0 +1,28 @@
+space:
+  part: IfcObject > Polyeder
+    condition:
+      data.obj type IfcBuildingElement
+    initial:
+      graph.vert = data.geometry.vert
+      graph.norm = data.geometry.norm
+      graph.ind = data.geometry.ind
+      graph.color = rgba(128 ,128,128 ,150)
+      graph.click = HIGHLIGHT
+    update(HIGHLIGHT):
+      graph.color = rgba(200,0,0,0)
+    update(UNHIGHLIGHT):
+      graph.color = rgba(128 ,128,128 ,150)
+  part:
+    rule: GaebTgItem > Rectangle
+      initial:
+        graph.height = 15
+        graph.left = 400
+        graph.top = index*20
+        graph.width = data.IT
+        graph.click = HIGHLIGHT
+    rule: GaebTgItem > Label
+      initial:
+        graph.text = data.outlineText
+        graph.left = 0
+        graph.top = index*20
+

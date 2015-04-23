@@ -1,0 +1,20 @@
+rule: IfcObject > Polyeder
+  condition:
+    data.obj type IfcBuildingElement
+  initial:
+    graph.vert = data.geo.vert
+    graph.norm = data.geo.norm
+    graph.ind = data.geo.ind
+    graph.color = colorByType(data.obj.type)
+  update(HIGHLIGHT):
+    graph.color = rgba(255,0,0,0)
+  update(UNHIGHLIGHT):
+    graph.color = colorByType(data.obj.type)
+
+colorByType = scale(rgba)
+  IfcWall: (255,255,0,150)
+  IfcColumn: (127,255,0,150)
+  IfcSlab: (0,255,0,150)
+  IfcRoof: (0,255,127,150)
+  IfcWindow: (0,255,255,150)
+

@@ -126,9 +126,8 @@
             <formatter type="plain"/>
             <formatter type="brief" usefile="no"/>
             <batchtest todir="${module.output.dir}/testreports">
-                <fileset dir="${module.basedir}/test">
-                    <include name="**/*Tests.java" />
-                    <include name="**/*Tests.groovy" />
+                <fileset dir="${module.basedir}/out/testclasses">
+                    <include name="**/*Tests.class" />
                     <type type="file"/>
                 </fileset>
             </batchtest>

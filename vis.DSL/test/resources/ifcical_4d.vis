@@ -1,0 +1,23 @@
+view:
+  projection: isometric
+  direction: (-1,-1,-1)
+rule: ResLink <IfcObject > > Polyeder
+  condition:
+    data.key.obj type IfcBuildingElement
+  initial:
+    graph.vert = data.key.geo.vert
+    graph.norm = data.key.geo.norm
+    graph.ind = data.key.geo.ind
+    rep = data.link.report
+    sch = data.link.schedule
+    graph.color = scale(rgba)
+      rep.date < sch.start: (0,255,0,150)
+      rep.date > sch.end: (255,0,0,150)
+      else: (255,255,0,150)
+rule: ResLink <IfcObject > > Polyeder
+  condition:
+    data.key.obj type IfcBuildingElement
+         && data.object.guid == GUID
+  initial:
+    graph.color = rgba(0,0,255,0)
+

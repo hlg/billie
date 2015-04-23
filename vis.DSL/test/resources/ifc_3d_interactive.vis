@@ -1,0 +1,13 @@
+rule: IfcObject > Polyeder
+  condition:
+    data.obj type IfcBuildingElement
+  initial:
+    graph.vert = data.geo.vert
+    graph.norm = data.geo.norm
+    graph.ind = data.geo.ind
+    graph.color = rgba(128 ,128 ,128,150)
+  update(HIGHLIGHT):
+    graph.color = rgba(255,0,0,0)
+  update(UNHIGHLIGHT):
+    graph.color = rgba(128 ,128 ,128,150)
+

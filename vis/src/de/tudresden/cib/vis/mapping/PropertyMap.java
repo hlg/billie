@@ -18,6 +18,11 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
     private Provider<T> provider;
     private SceneManager<? super S, ?> sceneManager;
 
+    public PropertyMap(Class<S> data, Class<T> graph){
+        dataClass = data;
+        graphClass = graph;
+    }
+
     protected PropertyMap() {
         Type[] actualTypeArguments = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments();
         dataClass = (Class<S>) getRawType(actualTypeArguments[0]);

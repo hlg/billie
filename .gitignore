@@ -1,4 +1,6 @@
 */*.iml
 *.iml
 .idea/*.xml
+*/out
+*/lib
 
