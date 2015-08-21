@@ -1,5 +1,5 @@
 <ivy-module version="2.0">
-<info organisation="de.tudresden.cib" module="vis.sampleApps"/>
+<info organisation="de.tudresden.cib" module="vis.DSL"/>
 <configurations>
     <conf name="win" />
     <conf name="linux" />
@@ -8,5 +8,6 @@
     <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true"/>
     <dependency org="org.codehaus.groovy" name="groovy-all" rev="2.0.4" />
     <dependency org="de.tudresden.cib" name="vis.scene.java3d" rev="latest.integration" changing="true"/>
+    <dependency org="de.tudresden.cib" name="vis.data.bimserver" rev="latest.integration" changing="true"/>
 </dependencies>
 </ivy-module>

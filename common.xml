@@ -103,6 +103,7 @@
         <jar jarfile="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar"
              basedir="${module.output.dir}/classes"
              manifest="${module.basedir}/META-INF/MANIFEST.MF">
+            <!-- TODO: create manifest if it not there, check <MANIFEST> tag -->
             <manifest>
                 <attribute name="Specification-Vendor" value="TU Dresden, CIB"/>
                 <attribute name="Specification-Version" value="${version}"/>

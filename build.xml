@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+/<?xml version="1.0" encoding="UTF-8"?>
 <project name="vismapping.master" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <filelist id="projects.all" dir=".">
@@ -16,6 +16,7 @@
         <file name="vis.configurations/build.xml"/>
         <file name="vis.sampleApps/build.xml"/>
         <file name="vis.swingApp/build.xml"/>
+        <file name="vis.DSL"/>
     </filelist>
 
     <filelist id="projects.framework" dir=".">
@@ -30,6 +31,7 @@
         <file name="vis.scene.draw2d/build.xml"/>
         <file name="vis.runtime.java3d/build.xml"/>
         <file name="vis.scene.java3d/build.xml"/>
+        <file name="vis.DSL"/>
     </filelist>
 
     <filelist id="projects.config" dir=".">
