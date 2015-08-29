@@ -5,7 +5,7 @@ import org.junit.Test
 
 class VisDSLRunnerTests {
 
-    public void testDefaultSetup(){
+    public void testDefabultSetup(){
         // assumes default Accessor and Vismodel
         // otherwise "create Draw2d from EMFIfc"
 

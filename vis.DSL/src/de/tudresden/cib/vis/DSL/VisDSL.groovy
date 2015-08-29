@@ -1,12 +1,13 @@
 package de.tudresden.cib.vis.DSL
 
+import de.tudresden.cib.vis.mapping.Mapper
+
 class VisDSL {
 
-    VisTechnique vt(Closure closure) {
-        VisTechnique vt = new VisTechnique()
-        closure.delegate = vt
-        closure.resolveStrategy = Closure.DELEGATE_FIRST
-        closure()
+    VisTechnique vt(def mapper, Closure closure) {
+
+        VisTechnique vt = new VisTechnique(mapper)
+        vt.with(closure)
     }
 
 }

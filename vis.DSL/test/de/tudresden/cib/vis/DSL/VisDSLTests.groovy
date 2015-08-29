@@ -1,35 +1,51 @@
-package de.tudresden.cib.vis.DSL;
+package de.tudresden.cib.vis.DSL
 
-import de.tudresden.cib.vis.mapping.Configuration
+import de.tudresden.cib.vis.filter.Condition
+import de.tudresden.cib.vis.mapping.Mapper
+import de.tudresden.cib.vis.mapping.PropertyMap
+import de.tudresden.cib.vis.scene.SceneManager
+import de.tudresden.cib.vis.scene.VisFactory2D
 import de.tudresden.cib.vis.scene.VisFactory3D
-import org.bimserver.models.ifc2x3tc1.IfcObject;
-import org.junit.Before;
-import org.junit.Test;
 
-public class VisDSLTests {
+public class VisDSLTests extends GroovyTestCase {
 
-    @Before
-    public void setup(){
+    public void setUp(){
 
     }
 
-    @Test
     public void testSimpleMapping(){
-        VisTechnique visTechnique = new VisDSL().vt {
-            rule(IfcObject, VisFactory3D.Polyeder) {
+        def mapper = new FakeMapper()
+        VisTechnique visTechnique = new VisDSL().vt(mapper) {
+            rule(Number, VisFactory2D.GraphObject) {
                 condition {
-                    data.obj type IfcBuildingElement
+                    data == 3
                 }
                 initial {
-                    graph.vert = data.geo.vert
-                    graph.norm = data.geo.norm
-                    graph.ind = data.geo.ind
-                    graph.color = rgba(128,128,128,150)
+                    graphObject.setColor(data,0,0)
                 }
             }
         }
-        Configuration config = visTechnique.config;
-        config.mapper;   // TODO: check the config
+        assert visTechnique.mapper.mappingCount == 1;   // TODO: check the mapper
     }
 
+    class FakeMapper extends Mapper  {
+        def mappingCount = 0
+        void addMapping (Condition c, PropertyMap pm){
+            assert c.matches(3)
+            def target = new VisFactory2D.GraphObject(){
+                int n
+                @Override
+                void setColor(int r, int g, int b) {
+                    n=r
+                }
+            }
+            pm.with([addMapped:{d,g -> }] as SceneManager)
+            pm.map(3, target, 0)
+            assert target.n == 3
+            mappingCount++
+        }
+        FakeMapper() {
+            super(null, null, null)
+        }
+    }
 }
