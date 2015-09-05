@@ -26,12 +26,12 @@ public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParse
     public String gaebX83Id = "M3";
     public boolean absolute = true;
 
-    public IfcGaeb_Colored3D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, ?, S> mapper) {
-        super(mapper);
+    public IfcGaeb_Colored3D() {
+        super();
     }
 
-    public IfcGaeb_Colored3D(Mapper <LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, ?, S> mapper, File groovyColorScale) throws IllegalAccessException, InstantiationException, IOException {
-        this(mapper);
+    public IfcGaeb_Colored3D(File groovyColorScale) throws IllegalAccessException, InstantiationException, IOException {
+        this();
         GroovyClassLoader gcl = new GroovyClassLoader();
         Class clazz = gcl.parseClass(groovyColorScale);
         Object aScript = clazz.newInstance();
@@ -39,19 +39,19 @@ public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParse
     }
 
     public void config() {
-        mapper.addStatistics("maxTotal", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Double>((double) 0) {
+        this.addStatistics("maxTotal", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Double>((double) 0) {
             @Override
             public Double function(Double aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
                 return Math.max(colorScale.calculateValue(element), aggregator);
             }
         });
-        mapper.addGlobal("halfMaxTotal", new Mapper.PreProcessing<Double>() {
+        this.addGlobal("halfMaxTotal", new Mapper.PreProcessing<Double>() {
             @Override
             public Double getResult() {
-                return mapper.getStats("maxTotal").doubleValue() * 0.5;
+                return getStats("maxTotal").doubleValue() * 0.5;
             }
         });
-        mapper.addMapping(
+        this.addMapping(
             new Condition<LinkedObject<EMFIfcParser.EngineEObject>>(){
                 @Override
                 public boolean matches(LinkedObject<EMFIfcParser.EngineEObject> data) {
@@ -66,7 +66,7 @@ public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParse
                     graphObject.setNormals(geometry.normals);
                     graphObject.setIndizes(geometry.indizes);
                     Double value = colorScale.calculateValue(data);
-                    Double halfMaxTotal = mapper.getGlobal("halfMaxTotal");
+                    Double halfMaxTotal = getGlobal("halfMaxTotal");
                     int red = value <= halfMaxTotal ? (int) (value * 255 / halfMaxTotal) : 255;
                     int green = value > halfMaxTotal ? (int) (255 - (value - halfMaxTotal) * 255 / halfMaxTotal) : 255;
                     graphObject.setColor(red, green, 0, 0);     // 0 1 0 green, 1 1 0 yellow, 1 0 0 red

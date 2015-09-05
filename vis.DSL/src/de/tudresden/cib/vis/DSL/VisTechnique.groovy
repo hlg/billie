@@ -1,7 +1,7 @@
 package de.tudresden.cib.vis.DSL
 
 import de.tudresden.cib.vis.filter.Condition
-import de.tudresden.cib.vis.mapping.Mapper
+import de.tudresden.cib.vis.mapping.Configuration
 import de.tudresden.cib.vis.mapping.PropertyMap
 import de.tudresden.cib.vis.scene.VisFactory2D
 
@@ -9,17 +9,17 @@ class VisTechnique<S,T extends VisFactory2D.GraphObject> {   // TODO: consistent
     Condition condition
     Class<S> source
     Class<T> target
-    Mapper mapper; // TODO: replace by configuration only
+    Configuration config
 
-    VisTechnique(Mapper mapper){
-        this.mapper = mapper;
+    VisTechnique(Configuration config){
+        this.config = config
     }
 
     VisTechnique rule(Class<S> source, Class<T> target, Closure closure){   // "constructor" of the vis technique?
         this.source = source
         this.target = target
         this.with(closure)
-        return this;
+        return this
     }
 
     void condition(Closure closure){
@@ -40,7 +40,7 @@ class VisTechnique<S,T extends VisFactory2D.GraphObject> {   // TODO: consistent
                 this.with(closure)
             }
         }
-        mapper.addMapping(condition, mapping)
+        config.addMapping(condition, mapping)
     }
 
 }

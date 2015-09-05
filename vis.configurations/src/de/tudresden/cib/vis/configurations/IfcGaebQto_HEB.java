@@ -27,13 +27,9 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
     private static double BUNDLING = 0.5;
     private static boolean SKIP_LAST_LEVEL = false;
 
-    public IfcGaebQto_HEB(Mapper<LinkedObject.ResolvedLink, Condition<LinkedObject.ResolvedLink>, ?, S> mapper) {
-        super(mapper);
-    }
-
     @Override
     public void config() {
-        mapper.addStatistics("maxIfcPos", new DataAccessor.Folding<LinkedObject.ResolvedLink, Integer>(0) {
+        this.addStatistics("maxIfcPos", new DataAccessor.Folding<LinkedObject.ResolvedLink, Integer>(0) {
             @Override
             public Integer function(Integer number, LinkedObject.ResolvedLink link) {
                 Hierarchic ifc = link.getLinkedHierarchicIfc().values().iterator().next();
@@ -42,7 +38,7 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
                 return Math.max(number, ifcPos);
             }
         });
-        mapper.addStatistics("maxGaebPos", new DataAccessor.Folding<LinkedObject.ResolvedLink, Integer>(0) {
+        this.addStatistics("maxGaebPos", new DataAccessor.Folding<LinkedObject.ResolvedLink, Integer>(0) {
             @Override
             public Integer function(Integer integer, LinkedObject.ResolvedLink link) {
                 HierarchicGaebAccessor.HierarchicTgItemBoQCtgy gaeb = link.getLinkedHierarchicGaeb().values().iterator().next();
@@ -50,17 +46,17 @@ public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, 
                 return Math.max(integer, gaebPos);
             }
         });
-        mapper.addGlobal("icycleRatio", new Mapper.PreProcessing<Double>() {
+        this.addGlobal("icycleRatio", new Mapper.PreProcessing<Double>() {
             @Override
             public Double getResult() {
-                double ratio = Double.valueOf((Integer) mp.getStats("maxIfcPos")) / (Integer) mp.getStats("maxGaebPos");
+                double ratio = Double.valueOf((Integer) getStats("maxIfcPos")) / (Integer) getStats("maxGaebPos");
                 boolean topBigger = ratio > 1;
                 ifcScale = topBigger ? SMALLSIZE : (int) (1. / ratio * SMALLSIZE);
                 gaebScale = topBigger ? (int) (ratio * SMALLSIZE) : SMALLSIZE;
                 return ratio;
             }
         });
-        mapper.addMapping(new PropertyMap<LinkedObject.ResolvedLink, VisFactory2D.Bezier>() {
+        this.addMapping(new PropertyMap<LinkedObject.ResolvedLink, VisFactory2D.Bezier>() {
             @Override
             protected void configure() {
                 Hierarchic currentIfc = data.getLinkedHierarchicIfc().values().iterator().next();

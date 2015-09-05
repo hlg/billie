@@ -10,6 +10,7 @@ import de.tudresden.cib.vis.data.Hierarchic
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager
 import de.tudresden.cib.vis.data.multimodel.*
+import de.tudresden.cib.vis.filter.Condition
 import de.tudresden.cib.vis.mapping.Configuration
 import de.tudresden.cib.vis.runtime.java3d.UniverseBuilder
 import de.tudresden.cib.vis.runtime.java3d.views.OrbitalView
@@ -27,6 +28,7 @@ import javax.swing.filechooser.FileFilter
 import java.awt.*
 import java.awt.BorderLayout as BL
 import java.awt.FlowLayout as FL
+import java.util.List
 
 public class MefistoDemo {
 
@@ -68,9 +70,9 @@ public class MefistoDemo {
                 }
             });
             List<String> lm = modelIds.subList(2, modelIds.size());
-            QtoSched_GanttAnim<JPanel> config = new QtoSched_GanttAnim<JPanel>(Java2DBuilder.createMapper(dataAcessor), lm.toArray(new String[lm.size()]), modelIds.get(1));
+            QtoSched_GanttAnim<JPanel> config = new QtoSched_GanttAnim<JPanel>(lm.toArray(new String[lm.size()]), modelIds.get(1));
             config.config()
-            SceneManager<LinkedObject<Activity>, JPanel> scene = config.execute();
+            SceneManager<LinkedObject<Activity>, JPanel> scene = Java2DBuilder.createMapper(dataAcessor).map(config);
             scene.animate();
             swingBuilder.edt { panel.getViewport().add(scene.getScene()) }
         } catch (DataAccessException e) {
@@ -87,19 +89,19 @@ public class MefistoDemo {
                     return super.isValidFor(model) && model.getMeta().getPhase().getPhaseDesc().equals("Angebotserstellung");
                 }
             }, new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC));
-            DataAccessor<Hierarchic<IdEObject>> hierarchicIfc = dataAcessor.getAccessor(ids.get(1));
-            DataAccessor<Hierarchic<EObject>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(2));
+            DataAccessor<Hierarchic<IdEObject>,?> hierarchicIfc = dataAcessor.getAccessor(ids.get(1));
+            DataAccessor<Hierarchic<EObject>,?> hierarchicGaeb = dataAcessor.getAccessor(ids.get(2));
             JPanel container = swingBuilder.panel { boxLayout(axis: BoxLayout.Y_AXIS) };
-            IfcGaebQto_HEB<JPanel> hebConfig = new IfcGaebQto_HEB<JPanel>(Java2DBuilder.createMapper(dataAcessor));
+            IfcGaebQto_HEB<JPanel> hebConfig = new IfcGaebQto_HEB<JPanel>(null);
             hebConfig.config();
-            JPanel hebScene = hebConfig.execute().getScene();
-            Configuration<?, JPanel> ifcIcycle = new Ifc_Icycle<JPanel>(Java2DBuilder.createMapper(hierarchicIfc), hebConfig.getIfcScale());
+            JPanel hebScene = Java2DBuilder.createMapper(dataAcessor).map(hebConfig).getScene();
+            Configuration<?, ?, JPanel> ifcIcycle = new Ifc_Icycle<JPanel>(hebConfig.getIfcScale());
             ifcIcycle.config();
-            Configuration<?, JPanel> gaebIcycle = new Gaeb_Icycle<JPanel>(Java2DBuilder.createMapper(hierarchicGaeb), hebConfig.getGaebScale());
+            Configuration<?, ?, JPanel> gaebIcycle = new Gaeb_Icycle<JPanel>(hebConfig.getGaebScale());
             gaebIcycle.config();
-            container.add(ifcIcycle.execute().getScene());
+            container.add(Java2DBuilder.createMapper(hierarchicIfc).map(ifcIcycle).getScene());
             container.add(hebScene);
-            container.add(gaebIcycle.execute().getScene());
+            container.add(Java2DBuilder.createMapper(hierarchicGaeb).map(gaebIcycle).getScene());
             swingBuilder.edt { panel.getViewport().add(container); panel.revalidate(); panel.repaint(); }
         } catch (DataAccessException e) {
             showError(e, panel)
@@ -111,10 +113,10 @@ public class MefistoDemo {
             SimpleMultiModelAccessor data = new SimpleMultiModelAccessor(pm);
             if (!folder) new File(fileName.text).withInputStream { folder = data.unzip(it) }
             List<String> modelIds = data.read(folder, new EMTypeCondition(EMTypes.GAEB));
-            DataAccessor<EObject> gaeb = data.getAccessor(modelIds.get(0));
-            Gaeb_Barchart<JPanel> config = new Gaeb_Barchart<JPanel>(Java2DBuilder.createMapper(gaeb));
+            DataAccessor<EObject, Condition<EObject>> gaeb = data.getAccessor(modelIds.get(0));
+            Gaeb_Barchart<JPanel> config = new Gaeb_Barchart<JPanel>(null);
             config.config();
-            SceneManager<EObject, JPanel> scene = config.execute();
+            SceneManager<EObject, JPanel> scene = Java2DBuilder.createMapper(gaeb).map(config);
             swingBuilder.edt { panel.getViewport().add(scene.getScene()) }
         } catch (DataAccessException e) {
             showError(e, panel)
@@ -125,9 +127,9 @@ public class MefistoDemo {
         try {
             MultiModelAccessor<EMFIfcParser.EngineEObject> accessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(pm);
             accessor.read(folder.toURI().toURL())
-            IfcSched_Colored4D<BranchGroup> config = new IfcSched_Colored4D<BranchGroup>(Java3dBuilder.createMapper(accessor));
+            IfcSched_Colored4D<BranchGroup> config = new IfcSched_Colored4D<BranchGroup>(null);
             config.config()
-            SceneManager<?, BranchGroup> scene = config.execute()
+            SceneManager<?, BranchGroup> scene = Java3dBuilder.createMapper(accessor).map(config);
             Canvas3D canvas = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
             UniverseBuilder universe = new UniverseBuilder();
             universe.addView(new OrbitalView(canvas));

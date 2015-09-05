@@ -3,20 +3,14 @@ package de.tudresden.cib.vis.configurations;
 import cib.lib.gaeb.model.gaeb.TgQtySplit;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
-import de.tudresden.cib.vis.data.multimodel.EMTypes;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
-import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
-import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
 import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.VisFactory3D;
 import net.fortuna.ical4j.model.component.VEvent;
-import org.joda.time.DateTime;
-import org.joda.time.Days;
 
-import javax.media.j3d.Shape3D;
 import java.util.*;
 
 public class Mmaa_Progress_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, S> {
@@ -26,8 +20,7 @@ public class Mmaa_Progress_Colored4D<S> extends Configuration<LinkedObject<EMFIf
     private final String qtySplitId;
     public int scale = 3600000*5;
 
-    public Mmaa_Progress_Colored4D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, ?, S> mapper, List<String> ids) {
-        super(mapper);
+    public Mmaa_Progress_Colored4D(List<String> ids) {
         this.scheduleId = ids.get(1);
         this.reportId = ids.get(2);
         this.qtySplitId = ids.get(3);
@@ -35,7 +28,7 @@ public class Mmaa_Progress_Colored4D<S> extends Configuration<LinkedObject<EMFIf
 
     @Override
     public void config() {
-        mapper.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
+        this.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
             @Override
             public Long function(Long aLong, LinkedObject<EMFIfcParser.EngineEObject> engineEObjectLinkedObject) {
                 Collection<LinkedObject.ResolvedLink> links = engineEObjectLinkedObject.getResolvedLinks();
@@ -47,7 +40,7 @@ public class Mmaa_Progress_Colored4D<S> extends Configuration<LinkedObject<EMFIf
                 return aLong;
             }
         });
-        mapper.addStatistics("latestEnd", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MIN_VALUE) {
+        this.addStatistics("latestEnd", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MIN_VALUE) {
             @Override
             public Long function(Long aLong, LinkedObject<EMFIfcParser.EngineEObject> engineEObjectLinkedObject) {
                 Collection<LinkedObject.ResolvedLink> links = engineEObjectLinkedObject.getResolvedLinks();
@@ -65,7 +58,7 @@ public class Mmaa_Progress_Colored4D<S> extends Configuration<LinkedObject<EMFIf
                 graph.setColor(0,0,0,255);
             }
         };
-        mapper.addMapping(new Condition<LinkedObject<EMFIfcParser.EngineEObject>>() {
+        this.addMapping(new Condition<LinkedObject<EMFIfcParser.EngineEObject>>() {
             @Override
             public boolean matches(LinkedObject<EMFIfcParser.EngineEObject> data) {
                 return !data.getResolvedLinks().isEmpty();
@@ -76,8 +69,8 @@ public class Mmaa_Progress_Colored4D<S> extends Configuration<LinkedObject<EMFIf
                 graphObject.setNormals(data.getKeyObject().getGeometry().normals);
                 graphObject.setVertizes(data.getKeyObject().getGeometry().vertizes);
                 graphObject.setIndizes(data.getKeyObject().getGeometry().indizes);
-                long earliestStart = mapper.getStats("earliestStart").longValue();
-                long latestEnd = mapper.getStats("latestEnd").longValue();
+                long earliestStart = getStats("earliestStart").longValue();
+                long latestEnd = getStats("latestEnd").longValue();
                 long duration = latestEnd - earliestStart + scale;
                 addChange(0, reset);
                 addChange((int) (duration / scale), reset);

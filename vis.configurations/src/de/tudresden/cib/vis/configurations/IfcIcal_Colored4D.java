@@ -5,7 +5,6 @@ import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
-import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
 import de.tudresden.cib.vis.scene.Change;
@@ -23,12 +22,8 @@ import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
 public class IfcIcal_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, S> {
 
-    public IfcIcal_Colored4D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, ?, S> mapper) {
-        super(mapper);
-    }
-
     public void config() {
-        mapper.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
+        this.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
             @Override
             public Long function(Long aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
                 for (LinkedObject.ResolvedLink link : element.getResolvedLinks()) {
@@ -39,7 +34,7 @@ public class IfcIcal_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParse
                 return aggregator;
             }
         });
-        mapper.addStatistics("latestEnd", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MIN_VALUE) {
+        this.addStatistics("latestEnd", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MIN_VALUE) {
             @Override
             public Long function(Long aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
                 for (LinkedObject.ResolvedLink link : element.getResolvedLinks()) {
@@ -76,7 +71,7 @@ public class IfcIcal_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParse
                 graphObject.setVertizes(data.getKeyObject().getGeometry().vertizes);
                 graphObject.setIndizes(data.getKeyObject().getGeometry().indizes);
                 ((Shape3D) graphObject).setAppearance(inactive);
-                long earliestStart = mapper.getStats("earliestStart").longValue();
+                long earliestStart = getStats("earliestStart").longValue();
                 Map<Long, Integer> activityHistogram = getActivityHistogram(data.getResolvedLinks(), earliestStart);
                 if (!activityHistogram.isEmpty() && !activityHistogram.containsKey((long) 0)) addChange(0, reset);
                 for (Map.Entry<Long, Integer> histEntry : activityHistogram.entrySet()) {
@@ -86,7 +81,7 @@ public class IfcIcal_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParse
         };
 
 
-        mapper.addMapping(new Condition<LinkedObject<EMFIfcParser.EngineEObject>>() {
+        this.addMapping(new Condition<LinkedObject<EMFIfcParser.EngineEObject>>() {
             @Override
             public boolean matches(LinkedObject<EMFIfcParser.EngineEObject> data) {
                 EObject ifcObject = data.getKeyObject().getObject();

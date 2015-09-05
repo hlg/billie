@@ -14,12 +14,8 @@ import java.util.*;
 
 public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, S> {
 
-    public Ifc_2D(Mapper<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, ?, S> mapper) {
-        super(mapper);
-    }
-
     public void configSemantic() {
-        mapper.addMapping(new PropertyMap<EMFIfcParser.EngineEObject, VisFactory2D.Rectangle>() {
+        this.addMapping(new PropertyMap<EMFIfcParser.EngineEObject, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
                 final int scale = 10;
@@ -47,7 +43,7 @@ public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
 
     public void config() {
         final int level = 1; // 100;
-        mapper.addStatistics("minX",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MAX_VALUE) {
+        this.addStatistics("minX",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MAX_VALUE) {
             @Override
             public Double function(Double number, EMFIfcParser.EngineEObject engineEObject) {
                 if(!(engineEObject.getObject() instanceof IfcWall || engineEObject.getObject() instanceof IfcColumn)) return number;
@@ -58,7 +54,7 @@ public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
                 return result;
             }
         });
-        mapper.addStatistics("maxX",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MIN_VALUE) {
+        this.addStatistics("maxX",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MIN_VALUE) {
             @Override
             public Double function(Double number, EMFIfcParser.EngineEObject engineEObject) {
                 if(!(engineEObject.getObject() instanceof IfcWall || engineEObject.getObject() instanceof IfcColumn)) return number;
@@ -69,7 +65,7 @@ public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
                 return result;
             }
         });
-        mapper.addStatistics("minY",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MAX_VALUE) {
+        this.addStatistics("minY",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MAX_VALUE) {
             @Override
             public Double function(Double number, EMFIfcParser.EngineEObject engineEObject) {
                 if(!(engineEObject.getObject() instanceof IfcWall || engineEObject.getObject() instanceof IfcColumn)) return number;
@@ -80,7 +76,7 @@ public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
                 return result;
             }
         });
-        mapper.addStatistics("maxY",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MIN_VALUE) {
+        this.addStatistics("maxY",new DataAccessor.Folding<EMFIfcParser.EngineEObject, Double>(Double.MIN_VALUE) {
             @Override
             public Double function(Double number, EMFIfcParser.EngineEObject engineEObject) {
                 if(!(engineEObject.getObject() instanceof IfcWall || engineEObject.getObject() instanceof IfcColumn)) return number;
@@ -91,15 +87,15 @@ public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
                 return result;
             }
         });
-        mapper.addGlobal("scale", new Mapper.PreProcessing<Double>(){
+        this.addGlobal("scale", new Mapper.PreProcessing<Double>() {
             @Override
             public Double getResult() {
-                double xRatio = ((Double)mp.getStats("maxX") - (Double)mp.getStats("minX"))/1000;
-                double yRatio = ((Double)mp.getStats("maxY") - (Double)mp.getStats("minY"))/750;
-                return Math.min(xRatio,yRatio) * 1.1;
+                double xRatio = ((Double) getStats("maxX") - (Double) getStats("minX")) / 1000;
+                double yRatio = ((Double) getStats("maxY") - (Double) getStats("minY")) / 750;
+                return Math.min(xRatio, yRatio) * 1.1;
             }
         });
-        mapper.addMapping(new Condition<EMFIfcParser.EngineEObject>(){
+        this.addMapping(new Condition<EMFIfcParser.EngineEObject>(){
                               @Override
                               public boolean matches(EMFIfcParser.EngineEObject data) {
                                   return data.getObject() instanceof IfcWall || data.getObject() instanceof IfcColumn;
@@ -135,8 +131,8 @@ public class Ifc_2D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
                 while (current != null) {
                     double[] pt = interpolateXY(data.getGeometry().vertizes, current.get(0) * 3, current.get(1) * 3, level);
                     graphObject.addPoint(
-                            (int) ((pt[0] - (Double) mapper.getStats("minX")) / mapper.getGlobal("scale")),
-                            (int) ((pt[1] - (Double) mapper.getStats("minY")) / mapper.getGlobal("scale")));
+                            (int) ((pt[0] - (Double) getStats("minX")) / getGlobal("scale")),
+                            (int) ((pt[1] - (Double) getStats("minY")) / getGlobal("scale")));
                     List<Integer> newCurrent = null;
                     for (List<List<Integer>> edge : cuttingEdges) {
                         if (edge.get(0) != current && edge.get(0).equals(current)) {

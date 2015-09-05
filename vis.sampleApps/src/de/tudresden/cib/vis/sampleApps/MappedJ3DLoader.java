@@ -7,12 +7,11 @@ import com.sun.j3d.loaders.Scene;
 import de.tudresden.cib.vis.data.DataAccessException;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.filter.Condition;
+import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
-import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
 import de.tudresden.cib.vis.runtime.java3d.loaders.IfcScene;
 import de.tudresden.cib.vis.scene.SceneManager;
-import de.tudresden.cib.vis.scene.VisFactory2D;
 import de.tudresden.cib.vis.scene.java3d.Java3dBuilder;
 import de.tudresden.cib.vis.scene.java3d.Java3dFactory;
 
@@ -26,14 +25,12 @@ import java.net.URL;
 public class MappedJ3DLoader<E> implements Loader {
     protected Mapper<E, Condition<E>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper;
     protected DataAccessor<E, Condition<E>> data;
+    private Configuration<E, Condition<E>, BranchGroup> configuration;
 
-    public MappedJ3DLoader(DataAccessor<E, Condition<E>> data) {
+    public MappedJ3DLoader(DataAccessor<E, Condition<E>> data, Configuration<E, Condition<E>, BranchGroup> config) {
         this.data = data;
         this.mapper = Java3dBuilder.createMapper(data);
-    }
-
-    public <S extends E, T extends VisFactory2D.GraphObject> void addMapping(PropertyMap<S, T> propertyMap) {
-        mapper.addMapping(propertyMap);
+        this.configuration = config;
     }
 
     public Scene load(String s) throws FileNotFoundException, IncorrectFormatException, ParsingErrorException {
@@ -48,10 +45,10 @@ public class MappedJ3DLoader<E> implements Loader {
     }
 
     private Scene loadScene() throws FileNotFoundException {
-        IfcScene result = null;
+        IfcScene result;
         try {
             result = new IfcScene();
-            SceneManager<E,BranchGroup> sceneManager = mapper.map();
+            SceneManager<E,BranchGroup> sceneManager = mapper.map(configuration);
             mapper = null; // release resources
             result.setSceneGroup(sceneManager.getScene());
             sceneManager.animate();

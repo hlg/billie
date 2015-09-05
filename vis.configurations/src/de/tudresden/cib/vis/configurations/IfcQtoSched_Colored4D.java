@@ -7,7 +7,6 @@ import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
-import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance;
 import de.tudresden.cib.vis.scene.Change;
@@ -27,15 +26,15 @@ public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcP
     private String qtoid;
     private Map<Activity, Map<String, Double>> accumulatedQto = new HashMap<Activity, Map<String, Double>>();
 
-    public IfcQtoSched_Colored4D(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, ?, S> mapper, String[] lmids, String qtoid) {
-        super(mapper);
+    public IfcQtoSched_Colored4D(String[] lmids, String qtoid) {
+        super();
         this.lmids = lmids;
         this.qtoid = qtoid;
     }
 
     @Override
     public void config() {
-        mapper.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
+        this.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
             @Override
             public Long function(Long aggregator, LinkedObject<EMFIfcParser.EngineEObject> element) {
                 Collection<LinkedObject.ResolvedLink> resolvedLinks = element.getResolvedLinks();
@@ -47,7 +46,7 @@ public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcP
                 return aggregator;
             }
         });
-        mapper.addStatistics("accumulatedQto", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Double>(0d) {
+        this.addStatistics("accumulatedQto", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Double>(0d) {
             @Override
             public Double function(Double number, LinkedObject<EMFIfcParser.EngineEObject> object) {
                 if(!object.getResolvedLinks().isEmpty() && !object.getResolvedLinks().iterator().next().getScheduleObject().isEmpty()){
@@ -91,7 +90,7 @@ public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcP
                 graphObject.setIndizes(data.getKeyObject().getGeometry().indizes);
                 addChange(0, reset);
 
-                DateTime earliestStart = new DateTime(new Date(mapper.getStats("earliestStart").longValue()));
+                DateTime earliestStart = new DateTime(new Date(getStats("earliestStart").longValue()));
                 Activity activity = data.getResolvedLinks().iterator().next().getScheduleObject().values().iterator().next();
                 ActivityHelper activityHelper = new ActivityHelper(activity);
                 final DateTime end = activityHelper.getEndDate();
@@ -110,7 +109,7 @@ public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcP
             }
         };
 
-        mapper.addMapping(new Condition<LinkedObject<EMFIfcParser.EngineEObject>>() {
+        this.addMapping(new Condition<LinkedObject<EMFIfcParser.EngineEObject>>() {
             @Override
             public boolean matches(LinkedObject<EMFIfcParser.EngineEObject> data) {
                 return !data.getResolvedLinks().isEmpty() && !data.getResolvedLinks().iterator().next().getScheduleObject().isEmpty();

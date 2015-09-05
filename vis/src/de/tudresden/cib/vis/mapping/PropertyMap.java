@@ -15,7 +15,7 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
     Class<S> dataClass;
     Class<T> graphClass;
 
-    private Provider<T> provider;
+    private Provider<? extends T> provider;
     private SceneManager<? super S, ?> sceneManager;
 
     public PropertyMap(Class<S> data, Class<T> graph){
@@ -54,7 +54,7 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
         return map(source, provider.create(), i);
     }
 
-    public void with(Provider<T> provider) {
+    public void with(Provider<? extends T> provider) {
         this.provider = provider;
     }
 
@@ -70,7 +70,7 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
         sceneManager.addTrigger(event, graphObject);
     }
 
-    public void with(SceneManager<? super S, ?> sceneManager) {
+    public void with(SceneManager<S, ?> sceneManager) {
         this.sceneManager = sceneManager;
     }
 

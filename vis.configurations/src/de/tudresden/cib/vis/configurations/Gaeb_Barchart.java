@@ -18,36 +18,32 @@ public class Gaeb_Barchart<S> extends Configuration<EObject, Condition<EObject>,
 
     private List<String> highlightingIds = Arrays.asList("ILAFBAAA", "ILAFAGFA", "ILAFBFHA", "ILAFKNLA", "ILAFKIEA", "ILAFLDCA", "ILAFDAKA", "ILAFDGBA", "ILAFDLIA", "ILAFEAPA", "ILAFCLDA", "ILFCAGFA", "ILFCBFHA");
 
-    public Gaeb_Barchart(Mapper<EObject, Condition<EObject>, ?, S> mapper) {
-        super(mapper);
-    }
-
     public void config() {
-        mapper.addStatistics("ITmax", new DataAccessor.Folding<EObject, BigDecimal>(new BigDecimal(0)) {
+        this.addStatistics("ITmax", new DataAccessor.Folding<EObject, BigDecimal>(new BigDecimal(0)) {
             @Override
                 public BigDecimal function(BigDecimal aggregator, EObject elem) {
                 return elem instanceof TgItem ? aggregator.max(((TgItem) elem).getIT()) : aggregator;
             }
         });
-        mapper.addGlobal("widthFactor", new Mapper.PreProcessing<Double>() {
+        this.addGlobal("widthFactor", new Mapper.PreProcessing<Double>() {
             @Override
             public Double getResult() {
-                return 1000. / mp.getStats("ITmax").doubleValue();
+                return 1000. / getStats("ITmax").doubleValue();
             }
         });
-        mapper.addMapping(
+        this.addMapping(
                 new PropertyMap<TgItem, VisFactory2D.Rectangle>() {
                     @Override
                     protected void configure() {
                         graphObject.setHeight(15);
                         graphObject.setForeground();
-                        graphObject.setWidth((int) (data.getIT().intValue() * mapper.getGlobal("widthFactor")));
+                        graphObject.setWidth((int) (data.getIT().intValue() * getGlobal("widthFactor")));
                         graphObject.setLeft(400);
                         graphObject.setTop(index * 20); // TODO: alternative to iterator index ? Layoutmanager, dataacessor sorting parameters
                         if (highlightingIds.contains(data.getID())) graphObject.setColor(150, 0, 0);
                     }
                 });
-        mapper.addMapping(new PropertyMap<TgItem, VisFactory2D.Label>() {
+        this.addMapping(new PropertyMap<TgItem, VisFactory2D.Label>() {
             @Override
             protected void configure() {
                 EObject container = data.eContainer().eContainer().eContainer();

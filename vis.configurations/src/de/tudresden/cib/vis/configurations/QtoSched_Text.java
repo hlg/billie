@@ -4,7 +4,6 @@ import cib.mf.schedule.model.activity11.Activity;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
-import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 
@@ -15,15 +14,14 @@ public class QtoSched_Text<S> extends Configuration<LinkedObject<Activity>, Cond
     private final String[] LM_IDS;
     private final String QTO_ID;
 
-    public QtoSched_Text(Mapper<LinkedObject<Activity>, Condition<LinkedObject<Activity>>, ?, S> mapper, String[] LM_IDS, String QTO_ID) {
-        super(mapper);
+    public QtoSched_Text(String[] LM_IDS, String QTO_ID) {
         this.LM_IDS = LM_IDS;
         this.QTO_ID = QTO_ID;
     }
 
     @Override
     public void config() {
-        mapper.addMapping(new Condition<LinkedObject<Activity>>() {
+        this.addMapping(new Condition<LinkedObject<Activity>>() {
             @Override
             public boolean matches(LinkedObject<Activity> data) {
                 for (LinkedObject.ResolvedLink link : data.getResolvedLinks()) {

@@ -10,7 +10,6 @@ import de.tudresden.cib.vis.data.multimodel.EMTypes;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.data.multimodel.MultiModelAccessor;
 import de.tudresden.cib.vis.filter.Condition;
-import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.mapping.TargetCreationException;
@@ -19,6 +18,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.Object;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -72,15 +72,15 @@ public class IfcGaeb_Colored3D_Tests {
             }
         };
         FakeVisBuilder<FakePolyeder> visBuilder = new FakeVisBuilder<FakePolyeder>();
-        IfcGaeb_Colored3D config = new IfcGaeb_Colored3D<Object>(new Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, FakePolyeder, Object>(
-                mmAccessor,
-                visFactory,
-                visBuilder
-        ));
+        IfcGaeb_Colored3D config = new IfcGaeb_Colored3D<Object>();
         config.gaebX84Id = ids.get(1);
         config.gaebX83Id = ids.get(1);
         config.config();
-        config.execute();
+        new Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, FakePolyeder, Object>(
+                mmAccessor,
+                visFactory,
+                visBuilder
+        ).map(config);
         assertEquals(5, visBuilder.parts.size());
     }
 

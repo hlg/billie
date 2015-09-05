@@ -8,7 +8,6 @@ import de.tudresden.cib.vis.data.Hierarchic;
 import de.tudresden.cib.vis.data.multimodel.HierarchicGaebAccessor;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
-import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.DefaultEvent;
@@ -20,18 +19,17 @@ public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, Condition
     private int scale = 10;
     private boolean withLabels = true;
 
-    public Gaeb_Icycle(Mapper<Hierarchic<EObject>, Condition<Hierarchic<EObject>>, ?, S> mapper) {
-        super(mapper);
+    public Gaeb_Icycle(){
+
     }
 
-    public Gaeb_Icycle(Mapper<Hierarchic<EObject>, Condition<Hierarchic<EObject>>, ?, S> mapper, int scale) {
-        super(mapper);
+    public Gaeb_Icycle(int scale) {
         this.scale = scale;
     }
 
     @Override
     public void config() {
-        mapper.addMapping(new PropertyMap<HierarchicGaebAccessor.HierarchicTgItemBoQCtgy, VisFactory2D.Rectangle>() {
+        this.addMapping(new PropertyMap<HierarchicGaebAccessor.HierarchicTgItemBoQCtgy, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
                 graphObject.setLeft(data.getNodesBefore() * scale);
@@ -52,7 +50,7 @@ public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, Condition
             }
         });
         if (withLabels)
-            mapper.addMapping(new Condition<Hierarchic<EObject>>(){
+            this.addMapping(new Condition<Hierarchic<EObject>>(){
                                   @Override
                                   public boolean matches(Hierarchic<EObject> data) {
                                       return data.getChildren().isEmpty();
@@ -68,7 +66,7 @@ public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, Condition
                     graphObject.setVertical(true);
                 }
             });
-        mapper.addMapping(new Condition<Hierarchic<EObject>>(){
+        this.addMapping(new Condition<Hierarchic<EObject>>(){
             @Override
             public boolean matches(Hierarchic<EObject> data) {
                 return !data.getChildren().isEmpty();

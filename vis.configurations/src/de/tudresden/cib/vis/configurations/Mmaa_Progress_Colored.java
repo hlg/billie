@@ -5,7 +5,6 @@ import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
-import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.VisFactory3D;
@@ -21,8 +20,7 @@ public class Mmaa_Progress_Colored<S> extends Configuration<LinkedObject<EMFIfcP
     private final String guid;
     public int scale = 3600000*5;
 
-    public Mmaa_Progress_Colored(Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, ?, S> mapper, List<String> ids, String guid) {
-        super(mapper);
+    public Mmaa_Progress_Colored(List<String> ids, String guid) {
         this.scheduleId = ids.get(1);
         this.reportId = ids.get(2);
         this.guid = guid;
@@ -30,7 +28,7 @@ public class Mmaa_Progress_Colored<S> extends Configuration<LinkedObject<EMFIfcP
 
     @Override
     public void config() {
-        mapper.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
+        this.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {
             @Override
             public Long function(Long aLong, LinkedObject<EMFIfcParser.EngineEObject> engineEObjectLinkedObject) {
                 Collection<LinkedObject.ResolvedLink> links = engineEObjectLinkedObject.getResolvedLinks();
@@ -42,7 +40,7 @@ public class Mmaa_Progress_Colored<S> extends Configuration<LinkedObject<EMFIfcP
                 return aLong;
             }
         });
-        mapper.addStatistics("latestEnd", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MIN_VALUE) {
+        this.addStatistics("latestEnd", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MIN_VALUE) {
             @Override
             public Long function(Long aLong, LinkedObject<EMFIfcParser.EngineEObject> engineEObjectLinkedObject) {
                 Collection<LinkedObject.ResolvedLink> links = engineEObjectLinkedObject.getResolvedLinks();
@@ -78,7 +76,7 @@ public class Mmaa_Progress_Colored<S> extends Configuration<LinkedObject<EMFIfcP
                 graph.setColor(0,255,0,150);
             }
         };
-        mapper.addMapping(new Condition<LinkedObject<EMFIfcParser.EngineEObject>>() {
+        this.addMapping(new Condition<LinkedObject<EMFIfcParser.EngineEObject>>() {
                               @Override
                               public boolean matches(LinkedObject<EMFIfcParser.EngineEObject> data) {
                                   return !data.getResolvedLinks().isEmpty();
@@ -89,8 +87,8 @@ public class Mmaa_Progress_Colored<S> extends Configuration<LinkedObject<EMFIfcP
                                   graphObject.setNormals(data.getKeyObject().getGeometry().normals);
                                   graphObject.setVertizes(data.getKeyObject().getGeometry().vertizes);
                                   graphObject.setIndizes(data.getKeyObject().getGeometry().indizes);
-                                  long earliestStart = mapper.getStats("earliestStart").longValue();
-                                  long latestEnd = mapper.getStats("latestEnd").longValue();
+                                  long earliestStart = getStats("earliestStart").longValue();
+                                  long latestEnd = getStats("latestEnd").longValue();
                                   long duration = latestEnd - earliestStart + scale;
                                   graphObject.setColor(0, 0, 0, 255);
 /*

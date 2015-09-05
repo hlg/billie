@@ -4,7 +4,6 @@ import de.tudresden.cib.vis.data.Geometry;
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
-import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.Event;
@@ -13,10 +12,6 @@ import org.bimserver.models.ifc2x3tc1.*;
 import org.eclipse.emf.common.util.EList;
 
 public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, S> {
-
-    public Ifc_3D(Mapper<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, ?, S> mapper) {
-        super(mapper);
-    }
 
     public void config() {
         final Change<VisFactory3D.Polyeder> hide = new Change<VisFactory3D.Polyeder>() {
@@ -43,7 +38,7 @@ public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, Conditi
                 graph.setColor(128,128,128,150);
             }
         };
-        mapper.addMapping(new Condition<EMFIfcParser.EngineEObject>() {
+        this.addMapping(new Condition<EMFIfcParser.EngineEObject>() {
             @Override
             public boolean matches(EMFIfcParser.EngineEObject data) {
                 return data.getObject() instanceof IfcBuildingElement;

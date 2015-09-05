@@ -5,7 +5,6 @@ import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.data.multimodel.LinkedObject;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
-import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.VisFactory2D;
@@ -26,15 +25,14 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
     private boolean showAll = false;
     private Type type = Type.ACTUAL;
 
-    public QtoSched_GanttAnim(Mapper<LinkedObject<Activity>, Condition<LinkedObject<Activity>>, ?, S> mapper, String[] LM_IDS, String QTO_ID) {
-        super(mapper);
+    public QtoSched_GanttAnim(String[] LM_IDS, String QTO_ID) {
         this.LM_IDS = LM_IDS;
         this.QTO_ID = QTO_ID;
     }
 
     @Override
     public void config() {
-        mapper.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<Activity>, Long>(Long.MAX_VALUE) {
+        this.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<Activity>, Long>(Long.MAX_VALUE) {
             @Override
             public Long function(Long aggregator, LinkedObject<Activity> element) {
                 return Math.min(aggregator, new ActivityHelper(element.getKeyObject()).getStartDateInMillis());
@@ -46,13 +44,13 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
                 DateTime start = activityHelper.getStartDate();
                 DateTime end = activityHelper.getEndDate();
-                DateTime earliestStart = new DateTime(new Date(mapper.getStats("earliestStart").longValue()));
+                DateTime earliestStart = new DateTime(new Date(getStats("earliestStart").longValue()));
                 int startDays = Days.daysBetween(earliestStart, start).getDays();
                 int durationDays = Days.daysBetween(start, end).getDays();
                 graphObject.setTop(index * 25);
                 graphObject.setHeight(20);
-                graphObject.setLeft((int) (startDays * pxPerDay));
-                graphObject.setWidth((int) (durationDays * pxPerDay));
+                graphObject.setLeft(startDays * pxPerDay);
+                graphObject.setWidth(durationDays * pxPerDay);
             }
         };
         Condition<LinkedObject<Activity>> condition = new Condition<LinkedObject<Activity>>() {
@@ -61,7 +59,7 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 return showAll || billingPeriod.overlaps(new ActivityHelper(data.getKeyObject()).getInterval());
             }
         };
-        mapper.addMapping(condition, baseActivity);
+        this.addMapping(condition, baseActivity);
 
         PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> expected = new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
             @Override
@@ -73,7 +71,7 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 if(type == Type.COMPARISON) graphObject.setColor(255, 255, 0);
                 if(type == Type.EXPECTED) graphObject.setColor(255, 0, 0);
                 DateTime start = activityHelper.getStartDate();
-                DateTime earliestStart = new DateTime(new Date(mapper.getStats("earliestStart").longValue()));
+                DateTime earliestStart = new DateTime(new Date(getStats("earliestStart").longValue()));
                 int startDays = Days.daysBetween(earliestStart, start).getDays();
                 graphObject.setLeft(startDays * pxPerDay);
                 addChange(0, new Change<VisFactory2D.Rectangle>() {
@@ -100,7 +98,7 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 }
             }
         };
-        if(type==Type.COMPARISON ||type==Type.EXPECTED) mapper.addMapping(condition, expected);
+        if(type==Type.COMPARISON ||type==Type.EXPECTED) this.addMapping(condition, expected);
 
         PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> diff = new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
             @Override
@@ -109,7 +107,7 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 final Map<String, ActivityHelper.SetActualComparison> activityData = activityHelper.collectAmounts(LM_IDS, QTO_ID, data.getResolvedLinks());
                 graphObject.setHeight(20);
                 graphObject.setTop(25 * index);
-                DateTime earliestStart = new DateTime(new Date(mapper.getStats("earliestStart").longValue()));
+                DateTime earliestStart = new DateTime(new Date(getStats("earliestStart").longValue()));
                 DateTime start = activityHelper.getStartDate();
                 final DateTime end = activityHelper.getEndDate();
                 final int startDays = Days.daysBetween(earliestStart, start).getDays();
@@ -142,7 +140,7 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 }
             }
         };
-        if(type==Type.COMPARISON) mapper.addMapping(condition, diff);
+        if(type==Type.COMPARISON) this.addMapping(condition, diff);
 
 
         PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle> actual = new PropertyMap<LinkedObject<Activity>, VisFactory2D.Rectangle>() {
@@ -152,7 +150,7 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 final Map<String, ActivityHelper.SetActualComparison> activityData = activityHelper.collectAmounts(LM_IDS, QTO_ID, data.getResolvedLinks());
                 graphObject.setHeight(20);
                 graphObject.setTop(25 * index);
-                DateTime earliestStart = new DateTime(new Date(mapper.getStats("earliestStart").longValue()));
+                DateTime earliestStart = new DateTime(new Date(getStats("earliestStart").longValue()));
                 DateTime start = activityHelper.getStartDate();
                 final DateTime end = activityHelper.getEndDate();
                 final int startDays = Days.daysBetween(earliestStart, start).getDays();
@@ -178,14 +176,14 @@ public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>,
                 }
             }
         };
-        if(type==Type.ACTUAL) mapper.addMapping(condition, actual);
+        if(type==Type.ACTUAL) this.addMapping(condition, actual);
 
-        mapper.addMapping(condition, new PropertyMap<LinkedObject<Activity>, VisFactory2D.Label>() {
+        this.addMapping(condition, new PropertyMap<LinkedObject<Activity>, VisFactory2D.Label>() {
             @Override
             protected void configure() { // label
                 ActivityHelper activityHelper = new ActivityHelper(data.getKeyObject());
                 graphObject.setText(activityHelper.extractActivityDescription());
-                graphObject.setLeft((int) ((activityHelper.getStartDateInMillis() - mapper.getStats("earliestStart").longValue()) / scale + 5));
+                graphObject.setLeft((int) ((activityHelper.getStartDateInMillis() - getStats("earliestStart").longValue()) / scale + 5));
                 graphObject.setTop(index * 25);
             }
         });
