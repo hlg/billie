@@ -9,11 +9,7 @@ class VisTechnique<S,T extends VisFactory2D.GraphObject> {   // TODO: consistent
     Condition condition
     Class<S> source
     Class<T> target
-    Configuration config
-
-    VisTechnique(Configuration config){
-        this.config = config
-    }
+    Configuration config = new Configuration()
 
     VisTechnique rule(Class<S> source, Class<T> target, Closure closure){   // "constructor" of the vis technique?
         this.source = source
@@ -21,10 +17,10 @@ class VisTechnique<S,T extends VisFactory2D.GraphObject> {   // TODO: consistent
         this.with(closure)
         return this
     }
+            S data
 
     void condition(Closure closure){
         condition = new Condition<S>(){
-            S data
             @Override
             boolean matches(S data) {
                 this.data = data
@@ -41,6 +37,10 @@ class VisTechnique<S,T extends VisFactory2D.GraphObject> {   // TODO: consistent
             }
         }
         config.addMapping(condition, mapping)
+    }
+
+    Configuration getConfig() {
+        return config
     }
 
 }

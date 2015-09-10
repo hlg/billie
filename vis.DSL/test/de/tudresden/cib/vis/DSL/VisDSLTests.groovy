@@ -11,18 +11,16 @@ public class VisDSLTests extends GroovyTestCase {
     }
 
     public void testSimpleMapping(){
-        def configuration = new Configuration()
-        new VisDSL().vt(configuration) {
-            rule(Number, Object) {
+        VisTechnique vt = new VisTechnique()
+        vt.rule(Number, Object) {
                 condition {
                     data == 3
                 }
                 initial {
                     graphObject.setColor(data,0,0)
                 }
-            }
         }
-
+        Configuration configuration = vt.getConfig()
         Map<?,ClassMap> propMapsByConditions = configuration.getPropertyMapsByConditions()
         assert propMapsByConditions.size()==1
         ClassMap classMap = propMapsByConditions.values().first()
