@@ -29,7 +29,7 @@ public class IfcGaeb_Colored3D_Tests {
     @Test
     public void testConfiguration() throws TargetCreationException, IOException, DataAccessException {
 
-        MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(createPluginManager());
+        MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
         List<String> ids = mmAccessor.read(new File(this.getClass().getResource("/resources/carport").getFile()),new EMTypeCondition(EMTypes.IFC), new EMTypeCondition(EMTypes.GAEB){
             @Override
             public boolean isValidFor(Content alternative) {
@@ -82,13 +82,6 @@ public class IfcGaeb_Colored3D_Tests {
                 visBuilder
         ).map(config);
         assertEquals(5, visBuilder.parts.size());
-    }
-
-    private SimplePluginManager createPluginManager(){
-        SimplePluginManager pluginManager = new SimplePluginManager();
-        pluginManager.loadPluginsFromCurrentClassloader();
-        pluginManager.initAllLoadedPlugins();
-        return pluginManager;
     }
 
     private class FakePolyeder implements VisFactory3D.Polyeder {

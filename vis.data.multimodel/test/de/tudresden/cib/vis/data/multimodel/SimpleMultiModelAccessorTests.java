@@ -14,10 +14,6 @@ public class SimpleMultiModelAccessorTests {
     SimpleMultiModelAccessor mma;
     File testResource;
     private static SimplePluginManager pm = new SimplePluginManager();
-    static {
-        pm.loadPluginsFromCurrentClassloader();
-        pm.initAllLoadedPlugins();
-    }
 
     @Before
     public void setUp(){

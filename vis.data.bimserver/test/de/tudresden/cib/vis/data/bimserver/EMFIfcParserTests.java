@@ -13,10 +13,6 @@ import static org.junit.Assert.*;
 public class EMFIfcParserTests {
 
     private static SimplePluginManager pm = new SimplePluginManager();
-    static {
-        pm.loadPluginsFromCurrentClassloader();
-        pm.initAllLoadedPlugins();
-    }
 
     @Test
     public void testLazyLoad() throws DataAccessException {

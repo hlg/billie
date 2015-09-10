@@ -99,7 +99,6 @@ public class AnimatedViewer extends SimpleViewer {
 
     public static void main(String[] args) throws FileNotFoundException, PluginException {
         PluginManager pm = new SimplePluginManager();
-        pm.loadPluginsFromCurrentClassloader();
         AnimatedViewer ifcViewer = new AnimatedViewer(new BimserverJava3dLoader(pm));
         File file = ifcViewer.chooseFile(args.length > 0 ? args[0] : null, "ifc");
         ifcViewer.run(file.getPath());

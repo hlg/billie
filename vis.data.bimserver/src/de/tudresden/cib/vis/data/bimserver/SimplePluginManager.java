@@ -13,6 +13,11 @@ import java.net.URLClassLoader;
  */
 public class SimplePluginManager extends org.bimserver.plugins.PluginManager {
 
+    public SimplePluginManager(){
+        loadPluginsFromCurrentClassloader();
+        initAllLoadedPlugins();
+    }
+
     @Override
     public String getCompleteClassPath() {
         URL[] allUrls = ((URLClassLoader) getClass().getClassLoader()).getURLs();

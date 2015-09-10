@@ -14,8 +14,6 @@ public class GenericMultiModelTests {
     @Before
     public void setUp(){
         SimplePluginManager pm = new SimplePluginManager();
-        pm.loadPluginsFromCurrentClassloader();
-        pm.initAllLoadedPlugins();
         data = new GenericMultiModelAccessor(pm);
     }
 

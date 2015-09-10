@@ -19,7 +19,6 @@ public class TNOIFCParser {
     private EmfDeserializer deserializer;
 
     public TNOIFCParser(PluginManager pluginManager) throws PluginException, IOException {
-        pluginManager.initAllLoadedPlugins();
         ifcEnginePlugin = pluginManager.requireIfcEngine();
         deserializer = pluginManager.getFirstDeserializer("ifc", true).createDeserializer();
         deserializer.init(pluginManager.requireSchemaDefinition());

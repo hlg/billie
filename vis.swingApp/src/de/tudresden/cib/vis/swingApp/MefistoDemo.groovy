@@ -41,10 +41,6 @@ public class MefistoDemo {
     SwingBuilder swingBuilder
 
     private static SimplePluginManager pm = new SimplePluginManager();
-    static {
-        pm.loadPluginsFromCurrentClassloader();
-        pm.initAllLoadedPlugins();
-    }
 
     public void loadGantt(JScrollPane panel) {
         try {

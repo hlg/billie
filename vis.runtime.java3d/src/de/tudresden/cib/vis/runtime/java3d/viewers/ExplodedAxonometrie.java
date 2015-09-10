@@ -80,8 +80,6 @@ public class ExplodedAxonometrie extends SimpleViewer {
 
     public static void main(String[] args) throws FileNotFoundException, PluginException {
         SimplePluginManager pluginManager = new SimplePluginManager();
-        pluginManager.loadPluginsFromCurrentClassloader();
-        pluginManager.initAllLoadedPlugins();
         BimserverStoreyLoader loader = new BimserverStoreyLoader(pluginManager);
         Appearance noCullingAppearance = TypeAppearance.IfcWallImpl.createAppearance();
         PolygonAttributes pgonAttrs = new PolygonAttributes();

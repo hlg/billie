@@ -28,8 +28,6 @@ public class MultiModelAccessorTests {
     static {
         if(pm==null){
             pm = new SimplePluginManager();
-            pm.loadPluginsFromCurrentClassloader();
-            pm.initAllLoadedPlugins();
         }
     }
 

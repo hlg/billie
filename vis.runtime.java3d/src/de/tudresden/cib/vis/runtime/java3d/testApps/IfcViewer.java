@@ -10,7 +10,6 @@ public class IfcViewer {
 
     public static void main(String[] args) throws Exception {
         SimplePluginManager pm = new SimplePluginManager();
-        pm.loadPluginsFromCurrentClassloader();
         SimpleViewer ifcViewer = new SimpleViewer(new BimserverJava3dLoader(pm));
         File file = ifcViewer.chooseFile(args.length > 0 ? args[0] : null, "ifc");
         ifcViewer.run(file.getPath());

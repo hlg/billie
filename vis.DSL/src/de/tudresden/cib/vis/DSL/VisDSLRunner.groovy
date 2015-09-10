@@ -18,8 +18,6 @@ GroovyShell shell = new GroovyShell(binding)
 shell.evaluate(new File(args[0]))
 Configuration config = technique.config
 def pm = new SimplePluginManager()
-pm.loadPluginsFromCurrentClassloader();
-pm.initAllLoadedPlugins();
 MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(pm, true), config);
 
 SimpleViewer viewer = new SimpleViewer(loader);
