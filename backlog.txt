@@ -3,3 +3,30 @@
 * tie configuration and model conditions in case of complex conditions (e.g. multi model) where type of data elements is not enough
 * "map to component" configurations e.g. map to Gannntt chart?
 * mix different filter libraries?
+
+* refactor: rename Simpleviewer to something containing the fact that it is a Java3D viewer
+* refactor: extract common Viewer interface to allow for other viewers
+* or just stick with SimpleViewer (*renamed*) in oder to include view configuration in the DSL
+* refactor: unravel SimpleViewer to not use the loader stuff
+
+* DSL: option to get mapped visualization model only
+* refactor: configuration config/execute separation useful? execute could include calling config()?
+* refactor: MappedJ3DLoader knows only about the mapper, not about the config, is this useful? change!
+
+
+visualization model
+* viewer config (settings for rendering, animation et.al.) -> abstraction needed to make it replacable?
+* scene graph
+* use Java2d, Java3d, Draw2d -> different Viewers
+
+mapping
+* rule evaluation order with different conditions is currently indeterministic (move condition caching to filter?)
+
+distribution
+* Vis.DSL add bundle properties for reuse in Eclipse projects (test integration for other packages)
+
+refactoring
+* scene manager -> decouple from property map (testability)
+* Configuration -> check generics, something is wired
+* default condition with null key -> should be the default condition
+

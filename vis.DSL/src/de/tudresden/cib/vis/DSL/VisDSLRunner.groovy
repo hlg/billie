@@ -23,5 +23,5 @@ MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcP
 SimpleViewer viewer = new SimpleViewer(loader);
 viewer.setAxonometric(true);
 viewer.setPickingEnabled(true);
-viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc").getPath());
+viewer.chooseAndRun(args.length>1?args[1]:System.getProperty("user.dir"), "ifc",false);
 

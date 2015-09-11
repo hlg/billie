@@ -16,6 +16,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.vecmath.Point3d;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
@@ -81,7 +82,7 @@ public class SimpleViewer extends JFrame {
         showScene();
     }
 
-    public void run(BranchGroup scene){
+    public void run(BranchGroup scene) {
         setupViews();
         if (pickingEnabled) setupBehaviour(scene);
         universe.addLights(scene);
@@ -98,12 +99,27 @@ public class SimpleViewer extends JFrame {
         universe.showScene(scene.getSceneGroup());
     }
 
-    public File chooseFile(String directoryPath, final String fileType) throws FileNotFoundException {
+    public void chooseAndRun(String fileOrDirectoryPath, final String fileType, boolean directorySelection) throws FileNotFoundException {
+        File fileOrDirectory = new File(fileOrDirectoryPath);
+        if (fileOrDirectory.isDirectory()) {
+            File choice = chooseFile(fileOrDirectoryPath, fileType, directorySelection);
+            if (choice != null) {
+                run(choice.getPath());
+            } else {
+                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            }
+
+        } else {
+            run(fileOrDirectoryPath);
+        }
+    }
+
+    public File chooseFile(String directoryPath, final String fileType, final boolean directorySelection) {
         JFileChooser chooser = (directoryPath != null) ? new JFileChooser(directoryPath) : new JFileChooser();
         FileFilter filter = new FileFilter() {
             @Override
             public boolean accept(File f) {
-                return f.isDirectory() || f.getName().endsWith(fileType);
+                return (directorySelection && f.isDirectory()) || f.getName().endsWith(fileType);
             }
 
             @Override

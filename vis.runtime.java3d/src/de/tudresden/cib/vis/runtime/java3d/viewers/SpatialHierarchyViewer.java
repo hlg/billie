@@ -14,7 +14,6 @@ import de.tudresden.cib.vis.runtime.java3d.views.OrbitalView;
 
 import javax.media.j3d.*;
 import javax.vecmath.Point3d;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Enumeration;
 
@@ -62,8 +61,7 @@ public class SpatialHierarchyViewer extends SimpleViewer {
         loader.setDefaultAppearance(TypeAppearance.OFF.getAppearance());
         loader.setDefaultPickability(false);
         SpatialHierarchyViewer ifcViewer = new SpatialHierarchyViewer(loader);
-        File file = ifcViewer.chooseFile(args.length > 0 ? args[0] : null, "ifc");
-        ifcViewer.run(file.getPath());
+        ifcViewer.chooseAndRun(args.length > 0 ? args[0] : null, "ifc", false);
     }
 
     public void setupBehaviour(BranchGroup mainScene) {

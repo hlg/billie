@@ -65,13 +65,13 @@ public enum ConfigurationRunner {
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.setAxonometric(true);
             viewer.setPickingEnabled(true);
-            viewer.run(args.length > 1 ? args[1] : viewer.chooseFile("D:\\Nutzer\\helga\\div\\ifc-modelle", "ifc").getPath());
+            viewer.chooseAndRun(args.length > 1 ? args[1] : System.getProperty("user.dir"), "ifc", false); //D:\Nutzer\helga\div\ifc-modelle
         }
     }, IFC_3D_INTERACTIVE {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             SimpleViewer viewer = new SimpleViewer();
-            File ifc = viewer.chooseFile(System.getProperty("user.dir"), "ifc");
+            File ifc = viewer.chooseFile(args.length > 1 ? args[1] : System.getProperty("user.dir"), "ifc", false);
             final EMFIfcGeometricAccessor emf = new EMFIfcGeometricAccessor(new SimplePluginManager(), true);
             emf.read(ifc.toURI().toURL());
             Mapper<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper = Java3dBuilder.createMapper(emf);
@@ -110,7 +110,7 @@ public enum ConfigurationRunner {
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager(), true), config);
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.setPickingEnabled(false);
-            viewer.run(viewer.chooseFile(System.getProperty("user.dir"),"ifc").getPath()); //"D:\\Nutzer\\helga\\div\\ifc-modelle"
+            viewer.chooseAndRun(args.length > 1 ? args[1] : System.getProperty("user.dir"), "ifc", false);
         }
     }, IFC_4D {
         @Override
@@ -120,7 +120,7 @@ public enum ConfigurationRunner {
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager()), config);
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.setPickingEnabled(false);
-            viewer.run(args.length > 1 ? args[1] : viewer.chooseFile(System.getProperty("user.dir"), "zip").getCanonicalPath());  // "D:\\Nutzer\\helga\\div\\mefisto-container" or carport.zip
+            viewer.chooseAndRun(args.length > 1 ? args[1] : System.getProperty("user.dir"), "zip", true);  // "D:\\Nutzer\\helga\\div\\mefisto-container" or carport.zip
         }
     }, MMAA_4D {
         @Override
@@ -128,7 +128,7 @@ public enum ConfigurationRunner {
             GenericMultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
             SimpleViewer viewer = new SimpleViewer();
             viewer.setPickingEnabled(false);
-            String mmaa = args.length > 1 ? args[1] : viewer.chooseFile(System.getProperty("user.dir"), "mmaa").getCanonicalPath(); // "D:\\Nutzer\\helga\\div\\eworkBau\\mm"
+            String mmaa = viewer.chooseFile(args.length > 1 ? args[1] : System.getProperty("user.dir"), "mmaa", true).getCanonicalPath(); // "D:\\Nutzer\\helga\\div\\eworkBau\\mm"
             mmAccessor.read(new File(mmaa).toURI().toURL(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.ACTIVITY11));
             IfcSched_Colored4D<BranchGroup> config = new IfcSched_Colored4D<BranchGroup>();
             config.config();
@@ -142,7 +142,7 @@ public enum ConfigurationRunner {
             GenericMultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
             SimpleViewer viewer = new SimpleViewer();
             viewer.setPickingEnabled(true);
-            String mmaa = args.length > 1 ? args[1] : viewer.chooseFile(System.getProperty("user.dir"), "mmaa").getCanonicalPath(); //"D:\\Nutzer\\helga\\div\\eworkBau\\mm"
+            String mmaa = viewer.chooseFile(args.length > 1 ? args[1] : System.getProperty("user.dir"), "mmaa", true).getCanonicalPath(); //"D:\\Nutzer\\helga\\div\\eworkBau\\mm"
             mmAccessor.read(new File(mmaa).toURI().toURL(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMByName("Fein"));
             IfcIcal_Colored4D<BranchGroup> config = new IfcIcal_Colored4D<BranchGroup>();
             config.config();
@@ -156,7 +156,7 @@ public enum ConfigurationRunner {
             MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
             SimpleViewer viewer = new SimpleViewer();
             viewer.setPickingEnabled(false);
-            String zip = (args.length > 1 && !args[1].equals("-")) ? args[1] : viewer.chooseFile(System.getProperty("user.dir"), "zip").getCanonicalPath(); //"D:\\Nutzer\\helga\\div\\mefisto-container"
+            String zip = viewer.chooseFile((args.length > 1 && !args[1].equals("-")) ? args[1] : System.getProperty("user.dir"), "zip", true).getCanonicalPath(); //"D:\\Nutzer\\helga\\div\\mefisto-container"
             List<String> ids = mmAccessor.read(new File(zip),new EMTypeCondition(EMTypes.IFC), new EMTypeCondition(EMTypes.GAEB){
                 @Override
                 public boolean isValidFor(Content alternative) {
@@ -190,7 +190,7 @@ public enum ConfigurationRunner {
             MultiModelAccessor<EMFIfcParser.EngineEObject> mmAccessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
             SimpleViewer viewer = new SimpleViewer();
             viewer.setPickingEnabled(false);
-            String zip = (args.length > 1 && !args[1].equals("-")) ? args[1] : viewer.chooseFile(System.getProperty("user.dir"), "zip").getCanonicalPath(); // "D:\\Nutzer\\helga\\div"
+            String zip = viewer.chooseFile((args.length > 1 && !args[1].equals("-")) ? args[1] : System.getProperty("user.dir"), "zip", true).getCanonicalPath(); // "D:\\Nutzer\\helga\\div"
             List<String> ids = mmAccessor.read(new File(zip), new EMTypeCondition(EMTypes.IFC), new EMTypeCondition(EMTypes.GAEBSPLIT));
             Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper = Java3dBuilder.createMapper(mmAccessor);
             IfcGaebSplit_Colored3D<BranchGroup> config = new IfcGaebSplit_Colored3D<BranchGroup>();
@@ -207,7 +207,7 @@ public enum ConfigurationRunner {
             File input = args.length>1 ? new File(args[1]) : viewer.chooseFile(System.getProperty("user.dir"), "X8*"); //"D:\\Nutzer\\helga\\div\\mefisto-container"
             Gaeb_Barchart<Panel> gaebBarchartConfig = new Gaeb_Barchart<Panel>();
             gaebBarchartConfig.config();
-            viewer.setSnapShotParams("D:\\Nutzer\\helga\\pub\\graphic\\yes.png", SWT.IMAGE_PNG);
+            viewer.setSnapShotParams(new File(System.getProperty("user.dir", "yes.png")).getCanonicalPath(), SWT.IMAGE_PNG);
             viewer.showContent(Draw2dBuilder.createMapper(new EMFGaebAccessor(input.toURI().toURL()), normal).map(gaebBarchartConfig).getScene());
             big.dispose();
         }
@@ -330,7 +330,7 @@ public enum ConfigurationRunner {
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(dataAcessor, config);
             SimpleViewer viewer = new SimpleViewer(loader);
             viewer.setPickingEnabled(false);
-            viewer.run(args.length > 1 ? args[1] : viewer.chooseFile(System.getProperty("user.dir"), "zip").getCanonicalPath()); // "D:\\Nutzer\\helga\\div\\mefisto-container"
+            viewer.chooseAndRun(args.length > 1 ? args[1] : System.getProperty("user.dir"), "zip", true); // "D:\\Nutzer\\helga\\div\\mefisto-container"
         }
     }, MMAA_REPORTS_4D {
         @Override
@@ -338,7 +338,7 @@ public enum ConfigurationRunner {
             GenericMultiModelAccessor<EMFIfcParser.EngineEObject> dataAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
             SimpleViewer viewer = new AxonometricViewer();
             viewer.setPickingEnabled(false);
-            List<String> ids = dataAccessor.read(viewer.chooseFile(System.getProperty("user.dir"), "mmaa").toURI().toURL(),
+            List<String> ids = dataAccessor.read(viewer.chooseFile(System.getProperty("user.dir"), "mmaa", true).toURI().toURL(),
                     new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC),
                     new GenericMultiModelAccessor.EMByName("Fein"),
                     new GenericMultiModelAccessor.EMByName("progress"),
@@ -357,7 +357,7 @@ public enum ConfigurationRunner {
             GenericMultiModelAccessor<EMFIfcParser.EngineEObject> dataAccessor = new GenericMultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
             SimpleViewer viewer = new AxonometricViewer(false);
             viewer.setPickingEnabled(false);
-            List<String> ids = dataAccessor.read(viewer.chooseFile(System.getProperty("user.dir"), "mmaa").toURI().toURL(),
+            List<String> ids = dataAccessor.read(viewer.chooseFile(System.getProperty("user.dir"), "mmaa", true).toURI().toURL(),
                     new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC),
                     new GenericMultiModelAccessor.EMByName("Fein"),
                     new GenericMultiModelAccessor.EMByName("progressCalendar")
