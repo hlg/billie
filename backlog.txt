@@ -30,3 +30,16 @@ refactoring
 * Configuration -> check generics, something is wired
 * default condition with null key -> should be the default condition
 
+bugs
+* file names with spaces fail (IFC_3D config e.g.)
+* rotation in axonometric viewer unpredictable? carport2.ifc does not rotate
+* selecting directories is not possible?
+
+error handling
+* missing required model (conditional mm accessor) -> report details, which condition failed
+* error message: multi model required model missing versus no model found ???
+
+data
+* text handling in GAEB accessor
+
+

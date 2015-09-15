@@ -55,7 +55,7 @@ public class Gaeb_Barchart<S> extends Configuration<EObject, Condition<EObject>,
                 }
                 labelText.append(" ");
                 // TODO: helper function for GAEB
-                String label = data.getDescription().getCompleteText().getOutlineText().getOutlTxt().getTextOutlTxt().get(0).getSpan().get(0).getValue().replaceAll("\\s+"," ");
+                String label = data.getDescription().getCompleteText().getOutlineText().getOutlTxt().getTextOutlTxt().get(0).getP().get(0).getSpan().get(0).getValue().replaceAll("\\s+"," ");
                 labelText.append(label.substring(0,Math.min(label.length()-1,40)));
                 labelText.append(" ...");
                 graphObject.setText(labelText.toString());

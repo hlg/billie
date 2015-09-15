@@ -94,6 +94,7 @@ public class Draw2DViewer {
         }
         canvas.dispose();
         display.dispose();
+        System.exit(0);
     }
 
     class SnapShotParams {

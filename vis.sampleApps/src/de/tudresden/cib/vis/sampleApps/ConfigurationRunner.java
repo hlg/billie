@@ -161,7 +161,7 @@ public enum ConfigurationRunner {
                 @Override
                 public boolean isValidFor(Content alternative) {
                     for (I option : alternative.getContentOptions().getI()){
-                        if(option.getK().equals("extension") && option.getV().equals("DA84")) return true;
+                        if(option.getK().equals("extension") && (option.getV().equals("DA84")) || option.getV().equals("DA81")) return true;
                     }
                     return false;
                 }
@@ -207,7 +207,7 @@ public enum ConfigurationRunner {
             File input = args.length>1 ? new File(args[1]) : viewer.chooseFile(System.getProperty("user.dir"), "X8*"); //"D:\\Nutzer\\helga\\div\\mefisto-container"
             Gaeb_Barchart<Panel> gaebBarchartConfig = new Gaeb_Barchart<Panel>();
             gaebBarchartConfig.config();
-            viewer.setSnapShotParams(new File(System.getProperty("user.dir", "yes.png")).getCanonicalPath(), SWT.IMAGE_PNG);
+            viewer.setSnapShotParams(new File(System.getProperty("user.dir"), "yes.png").getCanonicalPath(), SWT.IMAGE_PNG);
             viewer.showContent(Draw2dBuilder.createMapper(new EMFGaebAccessor(input.toURI().toURL()), normal).map(gaebBarchartConfig).getScene());
             big.dispose();
         }
