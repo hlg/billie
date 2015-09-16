@@ -13,7 +13,7 @@ import net.fortuna.ical4j.model.component.VEvent;
 
 import java.util.*;
 
-public class Mmaa_Progress_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, S> {
+public class Mmaa_Progress_Colored4D extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>> {
 
     private final String scheduleId;
     private final String reportId;

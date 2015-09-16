@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Configuration<E, C, F> {
+public class Configuration<E, C> {
     public Collection<TriggerListener<E>> listeners = new ArrayList<TriggerListener<E>>();
     private Map<C, ClassMap> propertyMapsByConditions = new HashMap<C, ClassMap>();
     private Map<String, DataAccessor.Folding<E, ? extends Number>> statistics = new HashMap<String, DataAccessor.Folding<E, ? extends Number>>();

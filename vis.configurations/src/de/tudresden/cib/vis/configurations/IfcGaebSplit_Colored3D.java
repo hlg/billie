@@ -12,7 +12,7 @@ import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory3D;
 
-public class IfcGaebSplit_Colored3D<T> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, T> {
+public class IfcGaebSplit_Colored3D extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>> {
 
     public String gaebID;
 

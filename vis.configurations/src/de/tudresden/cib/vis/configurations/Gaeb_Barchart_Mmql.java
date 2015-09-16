@@ -11,7 +11,7 @@ import de.tudresden.cib.vis.scene.VisFactory2D;
 
 import java.math.BigDecimal;
 
-public class Gaeb_Barchart_Mmql<S> extends Configuration<MmqlServerAccessor.MMQLRow, String, S> {
+public class Gaeb_Barchart_Mmql extends Configuration<MmqlServerAccessor.MMQLRow, String> {
 
     public void config() {
         this.addStatistics("UPmax", new DataAccessor.Folding<MmqlServerAccessor.MMQLRow, BigDecimal>(new BigDecimal(0)) {

@@ -11,7 +11,7 @@ import de.tudresden.cib.vis.scene.VisFactory3D;
 import org.bimserver.models.ifc2x3tc1.*;
 import org.eclipse.emf.common.util.EList;
 
-public class Ifc_3D<S> extends Configuration<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, S> {
+public class Ifc_3D extends Configuration<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>> {
 
     public void config() {
         final Change<VisFactory3D.Polyeder> hide = new Change<VisFactory3D.Polyeder>() {

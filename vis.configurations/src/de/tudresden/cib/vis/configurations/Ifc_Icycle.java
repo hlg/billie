@@ -13,7 +13,7 @@ import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc2x3tc1.IfcRoot;
 import org.bimserver.models.ifc2x3tc1.IfcSpatialStructureElement;
 
-public class Ifc_Icycle<S> extends Configuration<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>, S> {
+public class Ifc_Icycle extends Configuration<Hierarchic<IdEObject>, Condition<Hierarchic<IdEObject>>> {
 
     private int scale = 13;
     private boolean WITH_LABELS = false;

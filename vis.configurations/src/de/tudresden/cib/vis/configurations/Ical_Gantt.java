@@ -8,7 +8,7 @@ import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import net.fortuna.ical4j.model.component.VEvent;
 
-public class Ical_Gantt<S> extends Configuration<VEvent, Condition<VEvent>, S> {
+public class Ical_Gantt extends Configuration<VEvent, Condition<VEvent>> {
 
     @Override
     public void config() {

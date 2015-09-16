@@ -58,7 +58,7 @@ public enum ConfigurationRunner {
     IFC_3D {
         @Override
         void run(String[] args) throws FileNotFoundException, DataAccessException {
-            Ifc_3D<BranchGroup> config = new Ifc_3D<BranchGroup>();
+            Ifc_3D config = new Ifc_3D();
             config.config();
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager(), true), config);
 
@@ -75,7 +75,7 @@ public enum ConfigurationRunner {
             final EMFIfcGeometricAccessor emf = new EMFIfcGeometricAccessor(new SimplePluginManager(), true);
             emf.read(ifc.toURI().toURL());
             Mapper<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper = Java3dBuilder.createMapper(emf);
-            Ifc_3D<BranchGroup> config = new Ifc_3D<BranchGroup>();
+            Ifc_3D config = new Ifc_3D();
             config.config();
             final SceneManager<EMFIfcParser.EngineEObject, BranchGroup> scene = mapper.map(config);
             final JCheckBox checkBox = new JCheckBox("(un)highlight");
@@ -105,7 +105,7 @@ public enum ConfigurationRunner {
     }, IFC_3DSPACE {
         @Override
         void run(String[] args) throws FileNotFoundException, DataAccessException {
-            Ifc_3D_Space<BranchGroup> config = new Ifc_3D_Space<BranchGroup>();
+            Ifc_3D_Space config = new Ifc_3D_Space();
             config.config();
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager(), true), config);
             SimpleViewer viewer = new SimpleViewer(loader);
@@ -115,7 +115,7 @@ public enum ConfigurationRunner {
     }, IFC_4D {
         @Override
         void run(String[] args) throws IOException {
-            IfcSched_Colored4D<BranchGroup> config = new IfcSched_Colored4D<BranchGroup>();
+            IfcSched_Colored4D config = new IfcSched_Colored4D();
             config.config();
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager()), config);
             SimpleViewer viewer = new SimpleViewer(loader);
@@ -130,7 +130,7 @@ public enum ConfigurationRunner {
             viewer.setPickingEnabled(false);
             String mmaa = viewer.chooseFile(args.length > 1 ? args[1] : System.getProperty("user.dir"), "mmaa", true).getCanonicalPath(); // "D:\\Nutzer\\helga\\div\\eworkBau\\mm"
             mmAccessor.read(new File(mmaa).toURI().toURL(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.ACTIVITY11));
-            IfcSched_Colored4D<BranchGroup> config = new IfcSched_Colored4D<BranchGroup>();
+            IfcSched_Colored4D config = new IfcSched_Colored4D();
             config.config();
             SceneManager<LinkedObject<EMFIfcParser.EngineEObject>, BranchGroup> scene = Java3dBuilder.createMapper(mmAccessor).map(config);
             scene.animate();
@@ -144,7 +144,7 @@ public enum ConfigurationRunner {
             viewer.setPickingEnabled(true);
             String mmaa = viewer.chooseFile(args.length > 1 ? args[1] : System.getProperty("user.dir"), "mmaa", true).getCanonicalPath(); //"D:\\Nutzer\\helga\\div\\eworkBau\\mm"
             mmAccessor.read(new File(mmaa).toURI().toURL(), new GenericMultiModelAccessor.EMTypeCondition(EMTypes.IFC), new GenericMultiModelAccessor.EMByName("Fein"));
-            IfcIcal_Colored4D<BranchGroup> config = new IfcIcal_Colored4D<BranchGroup>();
+            IfcIcal_Colored4D config = new IfcIcal_Colored4D();
             config.config();
             SceneManager<LinkedObject<EMFIfcParser.EngineEObject>, BranchGroup> scene = Java3dBuilder.createMapper(mmAccessor).map(config);
             scene.animate();
@@ -168,11 +168,11 @@ public enum ConfigurationRunner {
             }, new EMTypeCondition(EMTypes.QTO));
             // mmAccessor.setLinkModelId("L2"); // TODO: conditions!
             Mapper<LinkedObject<EMFIfcParser.EngineEObject>,Condition<LinkedObject<EMFIfcParser.EngineEObject>>, Java3dFactory.Java3DGraphObject,BranchGroup> mapper = Java3dBuilder.createMapper(mmAccessor);
-            IfcGaeb_Colored3D<BranchGroup> config = null;
+            IfcGaeb_Colored3D config = null;
             try {
                 config = args.length>2
-                        ? new IfcGaeb_Colored3D<BranchGroup>(new File(args[2]))
-                        : new IfcGaeb_Colored3D<BranchGroup>();
+                        ? new IfcGaeb_Colored3D(new File(args[2]))
+                        : new IfcGaeb_Colored3D();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             } catch (InstantiationException e) {
@@ -193,7 +193,7 @@ public enum ConfigurationRunner {
             String zip = viewer.chooseFile((args.length > 1 && !args[1].equals("-")) ? args[1] : System.getProperty("user.dir"), "zip", true).getCanonicalPath(); // "D:\\Nutzer\\helga\\div"
             List<String> ids = mmAccessor.read(new File(zip), new EMTypeCondition(EMTypes.IFC), new EMTypeCondition(EMTypes.GAEBSPLIT));
             Mapper<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper = Java3dBuilder.createMapper(mmAccessor);
-            IfcGaebSplit_Colored3D<BranchGroup> config = new IfcGaebSplit_Colored3D<BranchGroup>();
+            IfcGaebSplit_Colored3D config = new IfcGaebSplit_Colored3D();
             config.gaebID = ids.get(1);
             config.config();
             viewer.run(mapper.map(config).getScene());
@@ -205,7 +205,7 @@ public enum ConfigurationRunner {
             Font big = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 50, 0);
             Font normal = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 10, 0);
             File input = args.length>1 ? new File(args[1]) : viewer.chooseFile(System.getProperty("user.dir"), "X8*"); //"D:\\Nutzer\\helga\\div\\mefisto-container"
-            Gaeb_Barchart<Panel> gaebBarchartConfig = new Gaeb_Barchart<Panel>();
+            Gaeb_Barchart gaebBarchartConfig = new Gaeb_Barchart();
             gaebBarchartConfig.config();
             viewer.setSnapShotParams(new File(System.getProperty("user.dir"), "yes.png").getCanonicalPath(), SWT.IMAGE_PNG);
             viewer.showContent(Draw2dBuilder.createMapper(new EMFGaebAccessor(input.toURI().toURL()), normal).map(gaebBarchartConfig).getScene());
@@ -215,7 +215,6 @@ public enum ConfigurationRunner {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             Draw2DViewer viewer = new Draw2DViewer();
-            // Font big = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 50, 0);
             Font normal = new Font(viewer.getDefaultFont().getDevice(), "Times New Roman", 10, 0);
             File input = args.length>1 ? new File(args[1]) : viewer.chooseFile(System.getProperty("user.dir"), "mmaa"); //"D:\\Nutzer\\helga\\div\\mefisto-container"
             MmqlServerAccessor mmqlAccessor = new MmqlServerAccessor();
@@ -225,7 +224,7 @@ public enum ConfigurationRunner {
                     "\titem.\"uP\" as UP\n" +
                     "from\n" +
                     "\t\"LV_1.X81\".\"Item\" as item\n");
-            Gaeb_Barchart_Mmql<Panel> gaebBarchartConfig = new Gaeb_Barchart_Mmql<Panel>();
+            Gaeb_Barchart_Mmql gaebBarchartConfig = new Gaeb_Barchart_Mmql();
             gaebBarchartConfig.config();
             // viewer.setSnapShotParams("D:\\Nutzer\\helga\\pub\\graphic\\yes.png", SWT.IMAGE_PNG);
             viewer.showContent(Draw2dBuilder.createMapper(mmqlAccessor, normal).map(gaebBarchartConfig).getScene());
@@ -237,7 +236,7 @@ public enum ConfigurationRunner {
             Draw2DViewer viewer = new Draw2DViewer();
             File input = viewer.chooseFile(System.getProperty("user.dir"), "ifc"); // "D:\\Nutzer\\helga\\div\\mefisto-container"
             DataAccessor<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>> data = new EMFIfcGeometricAccessor(new SimplePluginManager(), input.toURI().toURL());
-            Ifc_2D<Panel> ifc2DConfiguration = new Ifc_2D<Panel>();
+            Ifc_2D ifc2DConfiguration = new Ifc_2D();
             ifc2DConfiguration.config();
             viewer.showContent(Draw2dBuilder.createMapper(data, viewer.getDefaultFont()).map(ifc2DConfiguration).getScene());
         }
@@ -246,7 +245,7 @@ public enum ConfigurationRunner {
         void run(String[] args) throws IOException, TargetCreationException {
             Draw2DViewer viewer = new Draw2DViewer();
             File input = viewer.chooseFile(System.getProperty("user.dir"), "xml");
-            Sched_Gantt<Panel> config = new Sched_Gantt<Panel>();
+            Sched_Gantt config = new Sched_Gantt();
             config.config();
             SceneManager<EObject,Panel> result = Draw2dBuilder.createMapper(new EMFSchedule11Accessor(input.toURI().toURL()), viewer.getDefaultFont()).map(config);
             result.animate();
@@ -260,7 +259,7 @@ public enum ConfigurationRunner {
             URL input = viewer.chooseFile(System.getProperty("user.dir"), "ics").toURI().toURL();
             IcalAccessor accessor = new IcalAccessor();
             accessor.read(input);
-            Ical_Gantt<Panel> config = new Ical_Gantt<Panel>();
+            Ical_Gantt config = new Ical_Gantt();
             config.config();
             SceneManager<VEvent,Panel> result = Draw2dBuilder.createMapper(accessor, viewer.getDefaultFont()).map(config);
             result.animate();
@@ -314,7 +313,7 @@ public enum ConfigurationRunner {
             });
             List<String> lm = modelIds.subList(2,modelIds.size()-1);
             Mapper<LinkedObject<Activity>, Condition<LinkedObject<Activity>>, Draw2dFactory.Draw2dObject, Panel> mapper = Draw2dBuilder.createMapper(dataAcessor, viewer.getDefaultFont());
-            QtoSched_GanttAnim<Panel> config = new QtoSched_GanttAnim<Panel>(lm.toArray(new String[lm.size()]), modelIds.get(1));
+            QtoSched_GanttAnim config = new QtoSched_GanttAnim(lm.toArray(new String[lm.size()]), modelIds.get(1));
             config.config();
             SceneManager<LinkedObject<Activity>, Panel> scene =  mapper.map(config);
             scene.animate();
@@ -325,7 +324,7 @@ public enum ConfigurationRunner {
         void run(String[] args) throws IOException, TargetCreationException {
             MultiModelAccessor<EMFIfcParser.EngineEObject> dataAcessor = new MultiModelAccessor<EMFIfcParser.EngineEObject>(new SimplePluginManager());
             String[] lm_ids = {"FM5", "FM6", "FM7", "FM8", "FM9"};
-            Configuration config = new IfcQtoSched_Colored4D<BranchGroup>(lm_ids, "FM3");
+            Configuration config = new IfcQtoSched_Colored4D(lm_ids, "FM3");
             config.config();
             MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>> loader = new MappedJ3DLoader<LinkedObject<EMFIfcParser.EngineEObject>>(dataAcessor, config);
             SimpleViewer viewer = new SimpleViewer(loader);
@@ -344,7 +343,7 @@ public enum ConfigurationRunner {
                     new GenericMultiModelAccessor.EMByName("progress"),
                     new GenericMultiModelAccessor.EMTypeCondition(EMTypes.GAEBSPLIT)
             );
-            Mmaa_Progress_Colored4D<BranchGroup> config = new Mmaa_Progress_Colored4D(ids);
+            Mmaa_Progress_Colored4D config = new Mmaa_Progress_Colored4D(ids);
             config.scale = (args.length > 1) ? Integer.valueOf(args[1]) : 3600000;
             config.config();
             SceneManager<?, BranchGroup> scene  = Java3dBuilder.createMapper(dataAccessor).map(config);
@@ -362,7 +361,7 @@ public enum ConfigurationRunner {
                     new GenericMultiModelAccessor.EMByName("Fein"),
                     new GenericMultiModelAccessor.EMByName("progressCalendar")
             );
-            Mmaa_Progress_Colored<BranchGroup> config = new Mmaa_Progress_Colored<BranchGroup>(ids, "2M6f_UD1nEkvEACW0qZrgl");
+            Mmaa_Progress_Colored config = new Mmaa_Progress_Colored(ids, "2M6f_UD1nEkvEACW0qZrgl");
             config.config();
             SceneManager<?, BranchGroup> scene = Java3dBuilder.createMapper(dataAccessor).map(config);
             scene.animate();
@@ -390,16 +389,16 @@ public enum ConfigurationRunner {
             GridLayout manager = new GridLayout(1, true);
             container.setLayoutManager(manager);
 
-            IfcGaebQto_HEB<Panel> hebConfig = new IfcGaebQto_HEB<Panel>();
+            IfcGaebQto_HEB hebConfig = new IfcGaebQto_HEB();
             hebConfig.config();
             SceneManager<LinkedObject.ResolvedLink, Panel> hebScene = Draw2dBuilder.createMapper(dataAcessor, viewer.getDefaultFont()).map(hebConfig);
 
-            Ifc_Icycle<Panel> ifcIcycle = new Ifc_Icycle<Panel>(hebConfig.getIfcScale());
+            Ifc_Icycle ifcIcycle = new Ifc_Icycle(hebConfig.getIfcScale());
             ifcIcycle.setSkipLastLevel(false);
             ifcIcycle.setWithLastLevelLabels(true);
             ifcIcycle.config();
 
-            final Configuration<Hierarchic<EObject>, Condition<Hierarchic<EObject>>, Panel> gaebIcycle = new Gaeb_Icycle<Panel>(hebConfig.getGaebScale());
+            final Configuration<Hierarchic<EObject>, Condition<Hierarchic<EObject>>> gaebIcycle = new Gaeb_Icycle(hebConfig.getGaebScale());
             gaebIcycle.config();
 
             final SceneManager<Hierarchic<IdEObject>, Panel> ifcIcycleScene = Draw2dBuilder.createMapper(hierarchicIfc, viewer.getDefaultFont()).map(ifcIcycle);
@@ -426,7 +425,7 @@ public enum ConfigurationRunner {
             Draw2DViewer viewer = new Draw2DViewer();
             data.read(viewer.chooseFile(System.getProperty("user.dir"), "ifc").toURI().toURL()); // "/home/dev/src"
             data.index();
-            Ifc_Icycle<Panel> config = new Ifc_Icycle<Panel>();
+            Ifc_Icycle config = new Ifc_Icycle();
             config.setSkipLastLevel(false);
             config.setWithLastLevelLabels(true);
             config.config();
@@ -439,7 +438,7 @@ public enum ConfigurationRunner {
             Draw2DViewer viewer = new Draw2DViewer();
             data.read(viewer.chooseFile(System.getProperty("user.dir"), "*").toURI().toURL()); // "/home/dev/src"
             data.index();
-            Gaeb_Icycle<Panel> config = new Gaeb_Icycle<Panel>();
+            Gaeb_Icycle config = new Gaeb_Icycle();
             config.config();
             viewer.showContent(Draw2dBuilder.createMapper(data, viewer.getDefaultFont()).map(config).getScene());
         }
@@ -453,7 +452,7 @@ public enum ConfigurationRunner {
             List<String> modelIds = byIfc.read(input, new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEB)); // check its the right GAEB
             IndexedDataAccessor ifc =  byIfc.getAccessor(modelIds.get(0));
             IndexedDataAccessor gaeb = byIfc.getAccessor(modelIds.get(1));
-            Gaeb_Barchart<Panel> gaebConfig = new Gaeb_Barchart<Panel>();
+            Gaeb_Barchart gaebConfig = new Gaeb_Barchart();
             gaebConfig.config();
             SceneManager<?,Panel> gaebScene = Draw2dBuilder.createMapper(gaeb, viewer.getDefaultFont()).map(gaebConfig);
             Panel container = new Panel();
@@ -468,7 +467,7 @@ public enum ConfigurationRunner {
         for(ConfigurationRunner conf: values()){
             names[conf.ordinal()] = conf.name();
         }
-        System.out.println("available configurations:");
+        System.out.println("Usage: configrunner <configuration> [<bim file>]\navailable configurations:");
         for(String name: names){
             System.out.println(name);
         }

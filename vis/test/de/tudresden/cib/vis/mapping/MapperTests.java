@@ -34,7 +34,7 @@ public class MapperTests extends MappingTestCase {
     public void testMapping() throws TargetCreationException {
         FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
         Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object> test = makeMapper(builder);
-        Configuration<DataElement, Condition<DataElement>, Object> config = makeConfig(test);
+        Configuration<DataElement, Condition<DataElement>> config = new Configuration<DataElement, Condition<DataElement>>();
         config.addMapping(
                 new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
                     @Override
@@ -68,7 +68,7 @@ public class MapperTests extends MappingTestCase {
                 graph.setWidth(100);
             }
         };
-        Configuration<DataElement, Condition<DataElement>, Object> config = makeConfig(test);
+        Configuration<DataElement, Condition<DataElement>> config = new Configuration<DataElement, Condition<DataElement>>();
         config.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
@@ -87,7 +87,7 @@ public class MapperTests extends MappingTestCase {
     public void testTriggerSelf() throws TargetCreationException {
         FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
         Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object> test = makeMapper(builder);
-        Configuration<DataElement, Condition<DataElement>, Object> config = makeConfig(test);
+        Configuration<DataElement, Condition<DataElement>> config = new Configuration<DataElement, Condition<DataElement>>();
         config.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
@@ -113,7 +113,7 @@ public class MapperTests extends MappingTestCase {
     public void testTriggerOther() throws TargetCreationException {
         FakeVisBuilder<FakeRectangle> builder = new FakeVisBuilder<FakeRectangle>();
         Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object> test = makeMapper(builder);
-        Configuration<DataElement, Condition<DataElement>, Object> config = makeConfig(test);
+        Configuration<DataElement, Condition<DataElement>> config = new Configuration<DataElement, Condition<DataElement>>();
         config.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
@@ -152,7 +152,7 @@ public class MapperTests extends MappingTestCase {
                graph.setWidth(100);
            }
        };
-        Configuration<DataElement, Condition<DataElement>, Object> config = makeConfig(test);
+        Configuration<DataElement, Condition<DataElement>> config = new Configuration<DataElement, Condition<DataElement>>();
         config.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
@@ -177,7 +177,7 @@ public class MapperTests extends MappingTestCase {
                 graph.setWidth(100);
             }
         };
-        Configuration<DataElement, Condition<DataElement>, Object> config = makeConfig(test);
+        Configuration<DataElement, Condition<DataElement>> config = new Configuration<DataElement, Condition<DataElement>>();
         config.addMapping(new PropertyMap<DataElement, VisFactory2D.Rectangle>() {
             @Override
             protected void configure() {
@@ -190,10 +190,6 @@ public class MapperTests extends MappingTestCase {
         assertEquals(5, generatedGraph.a);
         result.fire(EventX.HIGHLIGHT, d);
         assertEquals(100,generatedGraph.a);
-    }
-
-    private Configuration<DataElement, Condition<DataElement>, Object> makeConfig(Mapper<DataElement, Condition<DataElement>, FakeRectangle, Object> test) {
-        return new Configuration<DataElement, Condition<DataElement>, Object>();
     }
 
     public static class FakeVisFactoy extends VisFactory2D {

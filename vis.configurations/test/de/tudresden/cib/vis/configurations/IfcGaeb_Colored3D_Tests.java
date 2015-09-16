@@ -72,7 +72,7 @@ public class IfcGaeb_Colored3D_Tests {
             }
         };
         FakeVisBuilder<FakePolyeder> visBuilder = new FakeVisBuilder<FakePolyeder>();
-        IfcGaeb_Colored3D config = new IfcGaeb_Colored3D<Object>();
+        IfcGaeb_Colored3D config = new IfcGaeb_Colored3D();
         config.gaebX84Id = ids.get(1);
         config.gaebX83Id = ids.get(1);
         config.config();

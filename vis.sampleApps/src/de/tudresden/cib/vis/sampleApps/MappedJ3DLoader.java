@@ -25,9 +25,9 @@ import java.net.URL;
 public class MappedJ3DLoader<E> implements Loader {
     protected Mapper<E, Condition<E>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper;
     protected DataAccessor<E, Condition<E>> data;
-    private Configuration<E, Condition<E>, BranchGroup> configuration;
+    private Configuration<E, Condition<E>> configuration;
 
-    public MappedJ3DLoader(DataAccessor<E, Condition<E>> data, Configuration<E, Condition<E>, BranchGroup> config) {
+    public MappedJ3DLoader(DataAccessor<E, Condition<E>> data, Configuration<E, Condition<E>> config) {
         this.data = data;
         this.mapper = Java3dBuilder.createMapper(data);
         this.configuration = config;

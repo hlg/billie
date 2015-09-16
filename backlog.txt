@@ -29,6 +29,8 @@ refactoring
 * scene manager -> decouple from property map (testability)
 * Configuration -> check generics, something is wired
 * default condition with null key -> should be the default condition
+* configuration runner and mapped loader -> separate modules
+* simplify generics -> e.g. Condition?
 
 bugs
 * file names with spaces fail (IFC_3D config e.g.)
@@ -42,4 +44,7 @@ error handling
 data
 * text handling in GAEB accessor
 
+applications
+* DSL runner: make DSL file optional, provide a file selection dialog instead?
+* Configuration runner: make more generic, allow to find and load implementation classes at runtime
 

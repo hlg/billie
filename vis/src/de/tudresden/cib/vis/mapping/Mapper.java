@@ -26,7 +26,7 @@ public class Mapper<E, C, G extends VisFactory2D.GraphObject,S> {
         this.visBuilder = visBuilder;
     }
 
-    public SceneManager<E,S> map(Configuration<E,C,S> configuration) throws TargetCreationException {
+    public SceneManager<E,S> map(Configuration<E,C> configuration) throws TargetCreationException {
         this.propertyMapsByConditions = configuration.getPropertyMapsByConditions();
         logger.info("start mapping data to scenegraph");
         visBuilder.init();

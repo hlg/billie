@@ -14,7 +14,7 @@ import org.bimserver.models.ifc2x3tc1.IfcRoot;
 import java.util.Collection;
 import java.util.List;
 
-public class Mmaa_Progress_Colored<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, S> {
+public class Mmaa_Progress_Colored extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>> {
     private final String scheduleId;
     private final String reportId;
     private final String guid;

@@ -8,7 +8,7 @@ import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory3D;
 import org.bimserver.models.ifc2x3tc1.IfcSpace;
 
-public class Ifc_3D_Space<S> extends Configuration<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, S> {
+public class Ifc_3D_Space extends Configuration<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>> {
 
     public void config() {
         this.addMapping(new Condition<EMFIfcParser.EngineEObject>() {

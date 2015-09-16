@@ -22,5 +22,5 @@ if(args.length>0){
     viewer.setPickingEnabled(true);
     viewer.chooseAndRun(args.length>1?args[1]:System.getProperty("user.dir"), "ifc",false);
 } else {
-    println "Usage: dslrunner.sh <configuration file> [<bim file>]"
+    println "Usage: dslrunner <configuration file> [<bim file>]"
 }

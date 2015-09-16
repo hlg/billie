@@ -15,7 +15,7 @@ import org.joda.time.Interval;
 import java.util.Date;
 import java.util.Map;
 
-public class QtoSched_GanttAnim<S> extends Configuration<LinkedObject<Activity>, Condition<LinkedObject<Activity>>, S> {
+public class QtoSched_GanttAnim extends Configuration<LinkedObject<Activity>, Condition<LinkedObject<Activity>>> {
 
     private final String[] LM_IDS;
     private final String QTO_ID;

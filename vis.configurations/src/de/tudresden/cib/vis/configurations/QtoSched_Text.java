@@ -9,7 +9,7 @@ import de.tudresden.cib.vis.scene.VisFactory2D;
 
 import java.util.Map;
 
-public class QtoSched_Text<S> extends Configuration<LinkedObject<Activity>, Condition<LinkedObject<Activity>>, S> {
+public class QtoSched_Text extends Configuration<LinkedObject<Activity>, Condition<LinkedObject<Activity>>> {
 
     private final String[] LM_IDS;
     private final String QTO_ID;

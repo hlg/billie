@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
-public class Gaeb_Barchart<S> extends Configuration<EObject, Condition<EObject>, S> {
+public class Gaeb_Barchart extends Configuration<EObject, Condition<EObject>> {
 
     private List<String> highlightingIds = Arrays.asList("ILAFBAAA", "ILAFAGFA", "ILAFBFHA", "ILAFKNLA", "ILAFKIEA", "ILAFLDCA", "ILAFDAKA", "ILAFDGBA", "ILAFDLIA", "ILAFEAPA", "ILAFCLDA", "ILFCAGFA", "ILFCBFHA");
 

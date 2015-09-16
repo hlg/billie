@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class IfcGaebQto_HEB<S> extends Configuration<LinkedObject.ResolvedLink, Condition<LinkedObject.ResolvedLink>, S> {
+public class IfcGaebQto_HEB extends Configuration<LinkedObject.ResolvedLink, Condition<LinkedObject.ResolvedLink>> {
 
     private int ifcScale;
     private int gaebScale;

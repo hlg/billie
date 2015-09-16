@@ -14,7 +14,7 @@ import de.tudresden.cib.vis.scene.DefaultEvent;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.eclipse.emf.ecore.EObject;
 
-public class Gaeb_Icycle<S> extends Configuration<Hierarchic<EObject>, Condition<Hierarchic<EObject>>, S> {
+public class Gaeb_Icycle extends Configuration<Hierarchic<EObject>, Condition<Hierarchic<EObject>>> {
 
     private int scale = 10;
     private boolean withLabels = true;

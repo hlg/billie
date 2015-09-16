@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collection;
 
-public class IfcGaeb_Colored3D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, S> {
+public class IfcGaeb_Colored3D extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>> {
 
     private ColorScale colorScale = new DefaultColorScale();
     public String gaebX84Id = "M3"; // "FM1";

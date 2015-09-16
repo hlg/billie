@@ -12,7 +12,7 @@ import de.tudresden.cib.vis.scene.VisFactory2D;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-public class Sched_Gantt<S> extends Configuration<EObject, Condition<EObject>, S> {
+public class Sched_Gantt extends Configuration<EObject, Condition<EObject>> {
 
     @Override
     public void config() {

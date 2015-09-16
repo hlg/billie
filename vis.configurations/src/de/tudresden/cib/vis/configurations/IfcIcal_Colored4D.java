@@ -20,7 +20,7 @@ import java.util.TreeMap;
 
 import static de.tudresden.cib.vis.scene.VisFactory3D.Polyeder;
 
-public class IfcIcal_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, S> {
+public class IfcIcal_Colored4D extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>> {
 
     public void config() {
         this.addStatistics("earliestStart", new DataAccessor.Folding<LinkedObject<EMFIfcParser.EngineEObject>, Long>(Long.MAX_VALUE) {

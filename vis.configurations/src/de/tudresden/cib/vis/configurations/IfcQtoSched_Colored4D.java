@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IfcQtoSched_Colored4D<S> extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>, S> {
+public class IfcQtoSched_Colored4D extends Configuration<LinkedObject<EMFIfcParser.EngineEObject>, Condition<LinkedObject<EMFIfcParser.EngineEObject>>> {
 
     private String[] lmids;
     private String qtoid;
