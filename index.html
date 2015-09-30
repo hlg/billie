@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Helga Tauscher, TU Dresden" />
+  <title>Billie. A BIM stylesheet engine</title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">Billie. A BIM stylesheet engine</h1>
+<h2 class="author">Helga Tauscher, TU Dresden</h2>
+</div>
+<h1 id="installation"><span class="header-section-number">1</span> Installation</h1>
+<p>Download and unpack the archive of the appropriate release from <a href="http://github.com/hlg/billie/releases/">github</a>. The alpha releases contain all modules plus two sample applications. The final version will be released in smaller specific packages.</p>
+<h1 id="usage"><span class="header-section-number">2</span> Usage</h1>
+<p>There are two commandline applications to create visualizations: one uses precompiled configurations, the other loads configurations from visualization description files. Both commandline applications can be called with a script which comes as a Windows batch file and as a Unix shell script.</p>
+<h2 id="configuration-runner"><span class="header-section-number">2.1</span> Configuration runner</h2>
+<p>The configuration runner (<code>de.tudresden.cib.vis.sampleApps.ConfigurationRunner</code>) loads a selected precompiled visualization configuration CONFIGNAME and applies it to a building information model loaded from BIMFILE.</p>
+<pre><code>configurationrunner.bat [CONFIGNAME [BIMFILE]]
+./configurationrunner.sh [CONFIGNAME [BIMFILE]]</code></pre>
+<p>If no CONFIGNAME is given, all available configurations are listed. If no BIMFILE is given, a file selection dialog prompts for the respective input file or folder.</p>
+<p>The sample configurations included in the alpha release are listed and described in a separate document <strong>TODO</strong>. For the creation of custom configurations, see section <a href="#precompiled-configurations">Precompiled Configurations</a>.</p>
+<h2 id="dsl-runner"><span class="header-section-number">2.2</span> DSL runner</h2>
+<p>de.tudresden.cib.vis.DSL.VisDSLRunner</p>
+<pre><code>dslrunner.bat CONFIGFILE [BIMFILE]
+./dslrunner.sh CONFIGFILE [BIMFILE]</code></pre>
+<p>If no BIMFILE is given, a file selection dialog prompts for the respective input file or folder.</p>
+<p>The DSL version of the visualization description is only implemented as a very rough sketch in the alpha release and does not yet reflect the functionality of the precompiled visualization descriptions. Only simple mapping without animation and interaction is possible as demonstrated with <code>ifc_3d.vis</code>. For the description of the visualization DSL see section <a href="#DSL">DSL</a>.</p>
+<h1 id="precompiled-configurations"><span class="header-section-number">3</span> Precompiled Configurations</h1>
+<p>In order to create custom precompiled configurations, the class <code>de.tudresden.cib.vis.mapping.Configuration</code> has to be instantiated. It has a generified class signature to allow for the compile time compability check of the data accessor, mapper and scene graph. Due to type erasure, generics are useless in the case of configurations specified by a DSL (since this is only loaded at runtime), and thus the generic class signature should be replaced by some other mechanism in the future.</p>
+<p>The class signature <code>Configuration&lt;E, C&gt;</code> is generified with the type of the data elements (<code>E</code>) to be mapped to visualization objects and the type of the condition (<code>C</code>) used to specify filter specifications. The type of the condition depends on the filter library used. The default filter library uses a condition oject <code>Condition&lt;E&gt;</code>. Other libraries could use strings or custom types to specify conditions.</p>
+<p>A configuration holds the following entities: statistical functions to extract values by folding, globals to calculate and save general values, and mappings. These can be added by using the respective functions <code>addStatistics(String name, Folding function)</code>, <code>addGlobal(String name, Preprocessing function)</code> and <code>addMapping(Condition  condition, PropertyMap mapping)</code>.</p>
+<p>Examples of precompiled configurations can be found in the package <a href="https://github.com/hlg/billie/tree/master/vis.configurations/src/de/tudresden/cib/vis/configurations">de.tudresden.cib.vis.configurations</a>. They are accessible through the configuration runner described <a href="#configuration-runner">earlier</a>.</p>
+<h2 id="statistics-and-globals"><span class="header-section-number">3.1</span> Statistics and globals</h2>
+<p><strong>TODO</strong></p>
+<h2 id="mappings"><span class="header-section-number">3.2</span> Mappings</h2>
+<p>A mapping is specified by giving a condition and a property map. The condition is then later used by a filter library to determine a set of objects to apply the property map. The default filter liberary uses a <code>Condition</code> object with a <code>matches</code> method returning a boolean value that indicates whether a given object is to be considered for mapping. The <code>PropertyMap</code> is generified with the type of the source data elements and the type of the target visualization elements. Property maps must implement the abstract <code>configure</code> method where the properties of the visualization elements can be set depending on properties of the source element and additional values from data preprocessing. Inside the <code>configure</code> method the source object can be accessed as <code>data</code> and the target object as <code>graphObject</code>.</p>
+<p>TODO: example <code>addMapping...</code></p>
+<h2 id="updating-mappings"><span class="header-section-number">3.3</span> Updating mappings</h2>
+<p>Updating mappings change the properties of visualization objects created in advance. They can either be triggered by the advance of time to a specific point or by an event generated by user interaction. Accordingly, there are two different method signatures to add updates: <code>addChange(int time, de.tudresden.cib.vis.scene.Change&lt;T&gt; change)</code> and <code>addChange(Event event, de.tudresden.cib.vis.scene.Change&lt;T&gt; change)</code>.</p>
+<p>A <code>Change</code> is similar to a <code>PropertyMap</code> in that it has to implement a <code>configure</code> method in order to set properties of the visualization object. However, it does not create the object in question, but acts on an already existing object. The association of a change and the visualization object it operates on is currently created by defining the changes together with the initial visualization object setup in the property map.</p>
+<p><strong>TODO</strong>: example <code>addChange...</code></p>
+<h2 id="todo"><span class="header-section-number">3.4</span> TODO</h2>
+<ul>
+<li>complex configurations</li>
+<li>autodetecting config runner</li>
+</ul>
+<h1 id="dsl"><span class="header-section-number">4</span> DSL</h1>
+<p>The implementation status of the DSL is currently only partial. The documentation will grow as subsequent features are implemented.</p>
+<p>The DSL is based on Groovy, which is suitable for DSLs due to its concise character and features such as closures and functional programming constructs. Groovy is a language for the JVM. It extends Java and all Java constructs can be used. Further documentation can be found on <a href="http://groovy-lang.org/documentation.html">groovy-lang.org</a>. A production DSL would restrict the usable language constructs, but in favour of academic liberty no such restrictions are built into the prototypical DSL implementation.</p>
+<h2 id="basic-mapping"><span class="header-section-number">4.1</span> Basic mapping</h2>
+<p>A basic mapping rule is specified by giving the types of the source and target object, a condition and a mapping as follows:</p>
+<pre><code>vt.rule(EngineEObject, Polyeder){
+  condition {
+    data.object instanceof IfcBuildingElement
+  }
+  initial {
+    graphObject.vertizes = data.geometry.vertizes
+    graphObject.normals = data.geometry.normals
+    graphObject.indizes = data.geometry.indizes
+  }
+}</code></pre>
+<p>The closure following <code>condition</code> is evaluated and should return true if the mapping should be applied to the object, false otherwise. The closure following the keyword <code>initial</code> is evaluated for all matching data objects, after the creation of a respective visualization object.</p>
+<p><strong>TODO</strong></p>
+<ul>
+<li>updates, animated and event controlled</li>
+<li>complex config</li>
+<li>examples</li>
+</ul>
+<h1 id="embedding"><span class="header-section-number">5</span> Embedding</h1>
+<ul>
+<li>API</li>
+<li>with DSL</li>
+<li>with fixed configurations</li>
+</ul>
+<h1 id="extending"><span class="header-section-number">6</span> Extending</h1>
+<ul>
+<li>data access</li>
+<li>filter libraries</li>
+<li>visualization environments</li>
+</ul>
+<h1 id="theoretical-background"><span class="header-section-number">7</span> Theoretical background</h1>
+<p>The prototype is the result of the research carried out for my thesis with the working title &quot;Configurable nD-visualization for Building Information Models&quot;.</p>
+<p>In the architecture and construction sector, there is a strong tradition and a lot of competence in working with visual representations. With the rise of digital modelling, visual representations were decoupled from the information, which is now only an abstract mystic lump of data to most architects and engineers. Since visual representations are generated on the fly in dedicated software packages, architects and engineers have very few options to control visual representations. The work is based on the hypothesis that this is a conflict which constricts the creative work of architects and engineers and that the full potential of BIM can only be unlocked with accessible and configurable visual representations.</p>
+<p>I have talked and written about the idea from different perspectives and about potential use cases at conferences during the previous years. You can find details in the following articles from conference proceedings and journals.</p>
+<div class="references">
+<p>Tauscher H., Scherer R.J. (2015): <em>Specification of complex visualization configurations using hierarchically nested mapping rule sets</em>. ITcon 20, pp. 40–50.</p>
+<p>Tauscher H., Scherer R.J. (2014): <em>Use cases for configurable building information model visualization</em>. In: Fusion (ECAADe 32), Newcastle, UK, September 2014.</p>
+<p>Tauscher H., Scherer R.J. (2013): <em>Applied visualization methods for building information models with heterogeneous sources</em>. In: Envisioning Architecture: Design, Evaluation, Communication Conference (EAEA11), Milan, Italy, Septempber 2013.</p>
+<p>Tauscher H., Scherer R.J. (2013): <em>Utilizing hierarchical edge bundles in multi model visualization</em>. In: Suter G., Wilde P. de, Rafiq Y. (eds) EG-ICE 2013. 20th International Workshop: Intelligent Computing in Engineering, Vienna University of Technology, July 2013.</p>
+<p>Tauscher H., Scherer R.J. (2012): <em>Towards a configurable nD-viewer for building information models: A generic model for the description of visualization methods</em>. In: Proc. 9th European Conference on Product and Process Modelling (ECPPM), Reykjavik, Iceland, July 2012.</p>
+<p>Tauscher H., Scherer R.J. (2011): <em>Area cartograms in building product model visualization: A case study on the presentation of non-spatial object properties in spatial context with anamorphic maps</em>. In: Respecting Fragile Places (ECAADe 29), Ljubljana, Slovenia, September 2011.</p>
+<p>Tauscher H., Voigt M., Scherer R.J. (2011): <em>Integrating visual presentations of construction multi models: Visualization design space exploration</em>. In: Bargst<span>ä</span>dt H.-J., Ailland K. (eds) ConVR 2011. Proceedings of the 11th International Conference on Construction Applications of Virtual Reality 2011, Weimar, Germany, November 2011.</p>
+</div>
+</body>
+</html>

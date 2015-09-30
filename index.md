@@ -1,0 +1,143 @@
+---
+title: Billie. A BIM stylesheet engine
+author: Helga Tauscher, TU Dresden
+nocite: |
+  @Tauscher2011a, @Tauscher2011, @Tauscher2012, @Tauscher2013, @Tauscher2013a, @Tauscher2014a, @Tauscher2015
+...
+
+Installation
+==============
+
+Download and unpack the archive of the appropriate release from [github](http://github.com/hlg/billie/releases/). The alpha releases contain all modules plus two sample applications. The final version will be released in smaller specific packages. 
+
+Usage
+============
+
+There are two commandline applications to create visualizations: one uses precompiled configurations, the other loads configurations from visualization description files. Both commandline applications can be called with a script which comes as a Windows batch file and as a Unix shell script.
+
+Configuration runner
+--------------------
+
+The configuration runner (`de.tudresden.cib.vis.sampleApps.ConfigurationRunner`) loads a selected precompiled visualization configuration CONFIGNAME and applies it to a building information model loaded from BIMFILE.
+
+    configurationrunner.bat [CONFIGNAME [BIMFILE]]
+    ./configurationrunner.sh [CONFIGNAME [BIMFILE]]
+
+If no CONFIGNAME is given, all available configurations are listed. If no BIMFILE is given, a file selection dialog prompts for the respective input file or folder.
+
+The sample configurations included in the alpha release are listed and described in a separate document __TODO__. For the creation of custom configurations, see section [Precompiled Configurations](#precompiled-configurations). 
+
+
+DSL runner
+----------------
+
+de.tudresden.cib.vis.DSL.VisDSLRunner
+
+    dslrunner.bat CONFIGFILE [BIMFILE]
+    ./dslrunner.sh CONFIGFILE [BIMFILE]
+
+If no BIMFILE is given, a file selection dialog prompts for the respective input file or folder.
+
+The DSL version of the visualization description is only implemented as a very rough sketch in the alpha release and does not yet reflect the functionality of the precompiled visualization descriptions. Only simple mapping without animation and interaction is possible as demonstrated with `ifc_3d.vis`. For the description of the  visualization DSL see section [DSL](#DSL). 
+
+
+
+Precompiled Configurations
+===========================
+
+In order to create custom precompiled configurations, the class `de.tudresden.cib.vis.mapping.Configuration` has to be instantiated. It has a generified class signature to allow for the compile time compability check of the data accessor, mapper and scene graph. Due to type erasure, generics are useless in the case of configurations specified by a DSL (since this is only loaded at runtime), and thus the generic class signature should be replaced by some other mechanism in the future.
+
+The class signature `Configuration<E, C>` is generified with the type of the data elements (`E`) to be mapped to visualization objects and the type of the condition (`C`) used to specify filter specifications. The type of the condition depends on the filter library used. The default filter library uses a condition oject `Condition<E>`. Other libraries could use strings or custom types to specify conditions.
+  
+A configuration holds the following entities: statistical functions to extract values by folding, globals to calculate and save general values, and mappings. These can be added by using the respective functions `addStatistics(String name, Folding function)`, `addGlobal(String name, Preprocessing function)` and `addMapping(Condition  condition, PropertyMap mapping)`.
+
+Examples of precompiled configurations can be found in the package [de.tudresden.cib.vis.configurations](https://github.com/hlg/billie/tree/master/vis.configurations/src/de/tudresden/cib/vis/configurations). They are accessible through the configuration runner described [earlier](#configuration-runner).
+
+
+Statistics and globals
+----------------------
+__TODO__
+
+Mappings
+--------
+A mapping is specified by giving a condition and a property map. The condition is then later used by a filter library to determine a set of objects to apply the property map. The default filter liberary uses a `Condition` object with a `matches` method returning a boolean value that indicates whether a given object is to be considered for mapping. The `PropertyMap` is generified with the type of the source data elements and the type of the target visualization elements. Property maps must implement the abstract `configure` method where the properties of the visualization elements can be set depending on properties of the source element and additional values from data preprocessing. Inside the `configure` method the source object can be accessed as `data` and the target object as `graphObject`.
+
+TODO: example `addMapping...`
+
+
+Updating mappings
+-----------------
+
+Updating mappings change the properties of visualization objects created in advance. They can either be triggered by the advance of time to a specific point or by an event generated by user interaction. Accordingly, there are two different method signatures to add updates: `addChange(int time, de.tudresden.cib.vis.scene.Change<T> change)` and `addChange(Event event, de.tudresden.cib.vis.scene.Change<T> change)`.
+
+A `Change` is similar to a `PropertyMap` in that it has to implement a `configure` method in order to set properties of the visualization object. However, it does not create the object in question, but acts on an already existing object. The association of a change and the visualization object it operates on is currently created by defining the changes together with the initial visualization object setup in the property map.
+
+__TODO__: example `addChange...`
+
+
+TODO
+----
+* complex configurations
+* autodetecting config runner
+
+
+DSL
+==============
+
+The implementation status of the DSL is currently only partial. The documentation will grow as subsequent features are implemented.
+
+The DSL is based on Groovy, which is suitable for DSLs due to its concise character and features such as closures and functional programming constructs. Groovy is a language for the JVM. It extends Java and all Java constructs can be used. Further documentation can be found on [groovy-lang.org](http://groovy-lang.org/documentation.html). A production DSL would restrict the usable language constructs, but in favour of academic liberty no such restrictions are built into the prototypical DSL implementation.
+
+
+Basic mapping
+-------------
+
+A basic mapping rule is specified by giving the types of the source and target object, a condition and a mapping as follows:
+
+    vt.rule(EngineEObject, Polyeder){
+      condition {
+        data.object instanceof IfcBuildingElement
+      }
+      initial {
+        graphObject.vertizes = data.geometry.vertizes
+        graphObject.normals = data.geometry.normals
+        graphObject.indizes = data.geometry.indizes
+      }
+    }
+
+The closure following `condition` is evaluated and should return true if the mapping should be applied to the object, false otherwise. The closure following the keyword `initial` is evaluated for all matching data objects, after the creation of a respective visualization object.
+
+
+__TODO__
+
+* updates, animated and event controlled
+* complex config
+* examples
+
+
+
+Embedding
+==============
+
+* API
+* with DSL
+* with fixed configurations
+
+Extending
+==============
+
+* data access
+* filter libraries
+* visualization environments
+
+
+Theoretical background
+=========================
+
+The prototype is the result of the research carried out for my thesis with the working title "Configurable nD-visualization for Building Information Models".
+
+In the architecture and construction sector, there is a strong tradition and a lot of competence in working with visual representations. With the rise of digital modelling, visual representations were decoupled from the information, which is now only an abstract mystic lump of data to most architects and engineers. Since visual representations are generated on the fly in dedicated software packages, architects and engineers have very few options to control visual representations. The work is based on the hypothesis that this is a conflict which constricts the creative work of architects and engineers and that the full potential of BIM can only be unlocked with accessible and configurable visual representations.
+
+I have talked and written about the idea from different perspectives and about potential use cases at conferences during the previous years. You can find details in the following articles from conference proceedings and journals.
+
+
