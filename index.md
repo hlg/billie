@@ -130,6 +130,10 @@ Extending
 * filter libraries
 * visualization environments
 
+Contact and support
+====================
+
+For discussion, questions, and support please subscribe to [billie@listserv.dfn.de](http://www.listserv.dfn.de/cgi-bin/wa?SUBED1=billie&A=1).
 
 Theoretical background
 =========================
