@@ -38,7 +38,7 @@ de.tudresden.cib.vis.DSL.VisDSLRunner
 
 If no BIMFILE is given, a file selection dialog prompts for the respective input file or folder.
 
-The DSL version of the visualization description is only implemented as a very rough sketch in the alpha release and does not yet reflect the functionality of the precompiled visualization descriptions. Only simple mapping without animation and interaction is possible as demonstrated with `ifc_3d.vis`. For the description of the  visualization DSL see section [DSL](#DSL). 
+The DSL version of the visualization description is only implemented as a very rough sketch in the alpha release and does not yet reflect the functionality of the precompiled visualization descriptions. Only simple mapping without animation and interaction is possible as demonstrated with `ifc_3d.vis`. For the description of the  visualization DSL see section [DSL](#dsl). 
 
 
 
