@@ -61,10 +61,18 @@ public enum ConfigurationRunner {
             Ifc_3D config = new Ifc_3D();
             config.config();
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager(), true), config);
-
             SimpleViewer viewer = new SimpleViewer(loader);
-            viewer.setAxonometric(true);
-            viewer.setPickingEnabled(true);
+            viewer.chooseAndRun(args.length > 1 ? args[1] : System.getProperty("user.dir"), "ifc", false); //D:\Nutzer\helga\div\ifc-modelle
+        }
+    }, IFC_3D_AXONOMETRIC {
+        @Override
+        void run(String[] args) throws FileNotFoundException, DataAccessException {
+            Ifc_3D config = new Ifc_3D();
+            config.config();
+            MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager(), true), config);
+            SimpleViewer viewer = new SimpleViewer(loader);
+            viewer.setAxonometric(true);   // is also rotating by default, TODO: make rotation optional
+            viewer.setPickingEnabled(false); // true by default
             viewer.chooseAndRun(args.length > 1 ? args[1] : System.getProperty("user.dir"), "ifc", false); //D:\Nutzer\helga\div\ifc-modelle
         }
     }, IFC_3D_INTERACTIVE {
@@ -102,7 +110,7 @@ public enum ConfigurationRunner {
             viewer.add(topRow, BorderLayout.NORTH); // TODO: try ConsoleTextEditor from groovy.ui
             viewer.run(scene.getScene());
         }
-    }, IFC_3DSPACE {
+    }, IFCSPACE_3D {
         @Override
         void run(String[] args) throws FileNotFoundException, DataAccessException {
             Ifc_3D_Space config = new Ifc_3D_Space();

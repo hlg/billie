@@ -45,7 +45,7 @@ public class SimpleViewer extends JFrame {
         noAppearance = TypeAppearance.OFF.getAppearance();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE);
-        setTitle("IFC Visualiser");
+        setTitle("Simple Viewer für Java3D scenes");
         setVisible(true);
     }
 
@@ -56,7 +56,6 @@ public class SimpleViewer extends JFrame {
     public void setAxonometric(boolean axonometric) {
         this.axonometric = axonometric;
     }
-
 
     private boolean pickingEnabled = true;
 
@@ -115,6 +114,10 @@ public class SimpleViewer extends JFrame {
     }
 
     public File chooseFile(String directoryPath, final String fileType, final boolean directorySelection) {
+        if(directoryPath!=null){
+            File directory = new File(directoryPath);
+            if (directory.isFile()) return directory;
+        }
         JFileChooser chooser = (directoryPath != null) ? new JFileChooser(directoryPath) : new JFileChooser();
         FileFilter filter = new FileFilter() {
             @Override

@@ -38,6 +38,12 @@ public class Ifc_3D extends Configuration<EMFIfcParser.EngineEObject, Condition<
                 graph.setColor(128,128,128,150);
             }
         };
+        final Change<VisFactory3D.Polyeder> unhighlightRed = new Change<VisFactory3D.Polyeder>() {
+            @Override
+            protected void configure() {
+                graph.setColor(200,0,0,0);
+            }
+        };
         this.addMapping(new Condition<EMFIfcParser.EngineEObject>() {
             @Override
             public boolean matches(EMFIfcParser.EngineEObject data) {
@@ -49,10 +55,8 @@ public class Ifc_3D extends Configuration<EMFIfcParser.EngineEObject, Condition<
                 Geometry geometry = data.getGeometry();
                 assert geometry != null;
                 if(data.getObject() instanceof IfcSlab || data.getObject() instanceof IfcRoof){
-                    // graphObject.setColor(128,128,128,0);
                     graphObject.setColor(200,0,0,0);
                 } else {
-                    // graphObject.setColor(128,128,128,255);
                     graphObject.setColor(128,128,128,150);
                 }
                 EList<IfcRelContainedInSpatialStructure> containedInStructure = ((IfcBuildingElement) data.getObject()).getContainedInStructure();
@@ -66,8 +70,12 @@ public class Ifc_3D extends Configuration<EMFIfcParser.EngineEObject, Condition<
                 graphObject.setVertizes(geometry.vertizes);
                 graphObject.setNormals(geometry.normals);
                 graphObject.setIndizes(geometry.indizes);
-                addChange(EventX.HIGHLIGHT, highlight);
-                addChange(EventX.UNHIGHLIGHT, unhighlight);
+                addChange(EventX.HIGHLIGHT, highlight);       // these changes are currently not in effect, see backlog (picking is defined in viewer directly)
+                if(data.getObject() instanceof IfcSlab || data.getObject() instanceof IfcRoof) {
+                    addChange(EventX.UNHIGHLIGHT, unhighlightRed);
+                } else {
+                    addChange(EventX.UNHIGHLIGHT, unhighlight);
+                }
             }
         });
     }

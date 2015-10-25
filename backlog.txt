@@ -18,6 +18,7 @@ visualization model
 * viewer config (settings for rendering, animation et.al.) -> abstraction needed to make it replacable?
 * scene graph
 * use Java2d, Java3d, Draw2d -> different Viewers
+* make event triggered changes work (use ui context / canvas ...)
 
 mapping
 * rule evaluation order with different conditions is currently indeterministic (move condition caching to filter?)
@@ -25,17 +26,23 @@ mapping
 distribution
 * Vis.DSL add bundle properties for reuse in Eclipse projects (test integration for other packages)
 
+
 refactoring
 * scene manager -> decouple from property map (testability)
 * Configuration -> check generics, something is wired
 * default condition with null key -> should be the default condition
 * configuration runner and mapped loader -> separate modules
 * simplify generics -> e.g. Condition?
+* data/graph: unify terminology
+* PropertyMap/Change: unify class structure, unravel
+* Configuration: change config method to contructor?
+* DSL runner should go into module vis.sampleApps?
 
 bugs
 * file names with spaces fail (IFC_3D config e.g.)
 * rotation in axonometric viewer unpredictable? carport2.ifc does not rotate
 * selecting directories is not possible?
+* loading wrong file type fails (zip instead of ifc) - loads forever
 
 error handling
 * missing required model (conditional mm accessor) -> report details, which condition failed
@@ -48,3 +55,8 @@ applications
 * DSL runner: make DSL file optional, provide a file selection dialog instead?
 * Configuration runner: make more generic, allow to find and load implementation classes at runtime
 
+DSL
+* Filter libraries?
+
+build/release process
+* automate shell/batch script generation (dependencies)
