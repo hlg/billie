@@ -2,6 +2,8 @@ package de.tudresden.cib.vis.configurations;
 
 import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
 import cib.lib.gaeb.model.gaeb.TgItem;
+import cib.lib.gaeb.model.gaeb.TgMLText;
+import cib.lib.gaeb.model.gaeb.TgpMLText;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
@@ -55,13 +57,19 @@ public class Gaeb_Barchart extends Configuration<EObject, Condition<EObject>> {
                 }
                 labelText.append(" ");
                 // TODO: helper function for GAEB
-                String label = data.getDescription().getCompleteText().getOutlineText().getOutlTxt().getTextOutlTxt().get(0).getP().get(0).getSpan().get(0).getValue().replaceAll("\\s+"," ");
+                String label = extractText();
                 labelText.append(label.substring(0,Math.min(label.length()-1,40)));
                 labelText.append(" ...");
                 graphObject.setText(labelText.toString());
                 graphObject.setBackground();
                 graphObject.setLeft(0);
                 graphObject.setTop(index * 20);
+            }
+
+            private String extractText() {
+                TgMLText firstText = data.getDescription().getCompleteText().getOutlineText().getOutlTxt().getTextOutlTxt().get(0);
+                String txt = (!firstText.getP().isEmpty()) ? firstText.getP().get(0).getSpan().get(0).getValue() : firstText.getSpan().get(0).getValue();
+                return txt.replaceAll("\\s+"," ");
             }
         });
     }

@@ -13,6 +13,12 @@ import org.eclipse.emf.common.util.EList;
 
 public class Ifc_3D extends Configuration<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>> {
 
+    private boolean highlightRoofsAndSlabs;
+
+    public Ifc_3D(boolean highlightRoofsAndSlabs) {
+        this.highlightRoofsAndSlabs = highlightRoofsAndSlabs;
+    }
+
     public void config() {
         final Change<VisFactory3D.Polyeder> hide = new Change<VisFactory3D.Polyeder>() {
             @Override
@@ -54,7 +60,7 @@ public class Ifc_3D extends Configuration<EMFIfcParser.EngineEObject, Condition<
             protected void configure() {
                 Geometry geometry = data.getGeometry();
                 assert geometry != null;
-                if(data.getObject() instanceof IfcSlab || data.getObject() instanceof IfcRoof){
+                if(highlightRoofsAndSlabs && (data.getObject() instanceof IfcSlab || data.getObject() instanceof IfcRoof)){
                     graphObject.setColor(200,0,0,0);
                 } else {
                     graphObject.setColor(128,128,128,150);
@@ -71,7 +77,7 @@ public class Ifc_3D extends Configuration<EMFIfcParser.EngineEObject, Condition<
                 graphObject.setNormals(geometry.normals);
                 graphObject.setIndizes(geometry.indizes);
                 addChange(EventX.HIGHLIGHT, highlight);       // these changes are currently not in effect, see backlog (picking is defined in viewer directly)
-                if(data.getObject() instanceof IfcSlab || data.getObject() instanceof IfcRoof) {
+                if(highlightRoofsAndSlabs && (data.getObject() instanceof IfcSlab || data.getObject() instanceof IfcRoof)) {
                     addChange(EventX.UNHIGHLIGHT, unhighlightRed);
                 } else {
                     addChange(EventX.UNHIGHLIGHT, unhighlight);

@@ -58,7 +58,7 @@ public enum ConfigurationRunner {
     IFC_3D {
         @Override
         void run(String[] args) throws FileNotFoundException, DataAccessException {
-            Ifc_3D config = new Ifc_3D();
+            Ifc_3D config = new Ifc_3D(true);
             config.config();
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager(), true), config);
             SimpleViewer viewer = new SimpleViewer(loader);
@@ -67,7 +67,7 @@ public enum ConfigurationRunner {
     }, IFC_3D_AXONOMETRIC {
         @Override
         void run(String[] args) throws FileNotFoundException, DataAccessException {
-            Ifc_3D config = new Ifc_3D();
+            Ifc_3D config = new Ifc_3D(true);
             config.config();
             MappedJ3DLoader<EMFIfcParser.EngineEObject> loader = new MappedJ3DLoader<EMFIfcParser.EngineEObject>(new EMFIfcGeometricAccessor(new SimplePluginManager(), true), config);
             SimpleViewer viewer = new SimpleViewer(loader);
@@ -83,7 +83,7 @@ public enum ConfigurationRunner {
             final EMFIfcGeometricAccessor emf = new EMFIfcGeometricAccessor(new SimplePluginManager(), true);
             emf.read(ifc.toURI().toURL());
             Mapper<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>, Java3dFactory.Java3DGraphObject, BranchGroup> mapper = Java3dBuilder.createMapper(emf);
-            Ifc_3D config = new Ifc_3D();
+            Ifc_3D config = new Ifc_3D(false);
             config.config();
             final SceneManager<EMFIfcParser.EngineEObject, BranchGroup> scene = mapper.map(config);
             final JCheckBox checkBox = new JCheckBox("(un)highlight");
