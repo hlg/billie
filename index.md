@@ -1,9 +1,11 @@
 ---
 title: Billie. A BIM stylesheet engine
-author: Helga Tauscher, TU Dresden
+author: Helga Tauscher, TU Dresden, [CIB](http://tu-dresden.de/bau/cib)
 nocite: |
   @Tauscher2011a, @Tauscher2011, @Tauscher2012, @Tauscher2013, @Tauscher2013a, @Tauscher2014a, @Tauscher2015
 ...
+
+Billie is a mapping engine dedicated to generate visual representations from building information models based on a visualization description.
 
 Installation
 ==============
@@ -25,7 +27,7 @@ The configuration runner (`de.tudresden.cib.vis.sampleApps.ConfigurationRunner`)
 
 If no CONFIGNAME is given, all available configurations are listed. If no BIMFILE is given, a file selection dialog prompts for the respective input file or folder.
 
-The sample configurations included in the alpha release are listed and described in a separate document __TODO__. For the creation of custom configurations, see section [Precompiled Configurations](#precompiled-configurations). 
+The sample configurations included in the alpha release are listed and described in section [Sample configurations](#sample-configurations). For the creation of custom configurations, see section [Precompiled Configurations](#precompiled-configurations). 
 
 
 DSL runner
@@ -114,6 +116,49 @@ __TODO__
 * complex config
 * examples
 
+
+Sample Configurations
+=====================
+* IFC_3D: simple visualization of the 3D geometry of building elements in an IFC file, navigable with perspective projection
+* IFC_3D_AXONOMETRIC: same as IFC_3D, but with axonometric projection and rotated view
+* IFC_3D_INTERACTIVE: same as IFC_3D, but with an additional mini toolbar to select and hightlight objects
+* IFCSPACE_3D: same as IFC_3D, but visualizing spaces instead of building elements
+* GAEB_BARCHART: simple barchart visualizing the costs from a [GAEB](http://www.gaeb.de/en/products/gaeb-data-exchange/) file, with labels
+* IFC_4D: animated visualization of the construction proces of a building from multimodel data containing a schedule
+* IFCGAEBQTO_3D: 3D visualization with a colour scale based on the cost information in a multimodel with a GAEB file
+
+
+Sample Files
+===============
+
+We are currently providing sample files from two different projects:
+* _Carport_ is a very simple synthetic test file with four columns and a slab.
+* _EFH_ is a two-storey single family house.
+
+For each project there are two types of input files:
+* single BIM files in various formats such as IFC or GAEB
+* multi models combining multiple single BIM files in a container
+
+Sometimes the same contents can be expressed in different formats, e.g. schedule data in a multi model might either be present in the IFC, or as an ICAL, or as a custom XML file. Also, multi model containers exist in different versions --- as specific mefisto containers or as more general MMAA containers. Since Billie does not provide abstraction on the BIM input side, the different input formats require different visualization configurations. However, the sample files provided here cover only one specific of multiple potentially equivalent formats. Note that this has the effect, that for some visualization configurations there is no sample file provided, namely those which have an equivalent configuration with an equivalent input format.
+
+The sample files with their appropriate visualization configurations for their respective format are given below.
+
+Carport
+-------
+This sample project is a very simple synthetic project made for teaching purposes at [CIB](http://tu-dresden.de/bau/cib) consisting of a slab and four columns.
+
+* [carport.ifc](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/carport.ifc): IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE 
+* [carport.x81](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/carport.x81): GAEB_BARCHART 
+* [carport.zip](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/carport.zip): IFC_4D, IFCGAEBQTO_3D
+
+EFH
+----
+This sample project features a two-storey single family house. It is based on demo data from the research project [eWorkBau](http://ework-bau.de), the support of the German Federal Ministry of Education and Research [BMBF](https://www.bmbf.de/en/) is greatfully acknowledged.
+
+* [EFH.ifc](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH.ifc): IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE, IFCSPACE_3D
+* [EFH.x86](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH.x86): GAEB_BARCHART
+* [EFH_quantity.zip](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH_quantity.zip): IFCGAEBQTO_3D
+* [EFH_activity.zip](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH_activity.zip): IFC_4D
 
 
 Embedding

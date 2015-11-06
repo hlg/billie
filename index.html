@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="author" content="Helga Tauscher, TU Dresden" />
+  <meta name="author" content="Helga Tauscher, TU Dresden, CIB" />
   <title>Billie. A BIM stylesheet engine</title>
   <style type="text/css">code{white-space: pre;}</style>
   <link rel="stylesheet" href="style.css" type="text/css" />
@@ -12,8 +12,9 @@
 <body>
 <div id="header">
 <h1 class="title">Billie. A BIM stylesheet engine</h1>
-<h2 class="author">Helga Tauscher, TU Dresden</h2>
+<h2 class="author">Helga Tauscher, TU Dresden, <a href="http://tu-dresden.de/bau/cib">CIB</a></h2>
 </div>
+<p>Billie is a mapping engine dedicated to generate visual representations from building information models based on a visualization description.</p>
 <h1 id="installation"><span class="header-section-number">1</span> Installation</h1>
 <p>Download and unpack the archive of the appropriate release from <a href="http://github.com/hlg/billie/releases/">github</a>. The alpha releases contain all modules plus two sample applications. The final version will be released in smaller specific packages.</p>
 <h1 id="usage"><span class="header-section-number">2</span> Usage</h1>
@@ -23,7 +24,7 @@
 <pre><code>configurationrunner.bat [CONFIGNAME [BIMFILE]]
 ./configurationrunner.sh [CONFIGNAME [BIMFILE]]</code></pre>
 <p>If no CONFIGNAME is given, all available configurations are listed. If no BIMFILE is given, a file selection dialog prompts for the respective input file or folder.</p>
-<p>The sample configurations included in the alpha release are listed and described in a separate document <strong>TODO</strong>. For the creation of custom configurations, see section <a href="#precompiled-configurations">Precompiled Configurations</a>.</p>
+<p>The sample configurations included in the alpha release are listed and described in section <a href="#sample-configurations">Sample configurations</a>. For the creation of custom configurations, see section <a href="#precompiled-configurations">Precompiled Configurations</a>.</p>
 <h2 id="dsl-runner"><span class="header-section-number">2.2</span> DSL runner</h2>
 <p>de.tudresden.cib.vis.DSL.VisDSLRunner</p>
 <pre><code>dslrunner.bat CONFIGFILE [BIMFILE]
@@ -71,29 +72,59 @@
 <li>complex config</li>
 <li>examples</li>
 </ul>
-<h1 id="embedding"><span class="header-section-number">5</span> Embedding</h1>
+<h1 id="sample-configurations"><span class="header-section-number">5</span> Sample Configurations</h1>
+<ul>
+<li>IFC_3D: simple visualization of the 3D geometry of building elements in an IFC file, navigable with perspective projection</li>
+<li>IFC_3D_AXONOMETRIC: same as IFC_3D, but with axonometric projection and rotated view</li>
+<li>IFC_3D_INTERACTIVE: same as IFC_3D, but with an additional mini toolbar to select and hightlight objects</li>
+<li>IFCSPACE_3D: same as IFC_3D, but visualizing spaces instead of building elements</li>
+<li>GAEB_BARCHART: simple barchart visualizing the costs from a <a href="http://www.gaeb.de/en/products/gaeb-data-exchange/">GAEB</a> file, with labels</li>
+<li>IFC_4D: animated visualization of the construction proces of a building from multimodel data containing a schedule</li>
+<li>IFCGAEBQTO_3D: 3D visualization with a colour scale based on the cost information in a multimodel with a GAEB file</li>
+</ul>
+<h1 id="sample-files"><span class="header-section-number">6</span> Sample Files</h1>
+<p>We are currently providing sample files from two different projects: * <em>Carport</em> is a very simple synthetic test file with four columns and a slab. * <em>EFH</em> is a two-storey single family house.</p>
+<p>For each project there are two types of input files: * single BIM files in various formats such as IFC or GAEB * multi models combining multiple single BIM files in a container</p>
+<p>Sometimes the same contents can be expressed in different formats, e.g. schedule data in a multi model might either be present in the IFC, or as an ICAL, or as a custom XML file. Also, multi model containers exist in different versions --- as specific mefisto containers or as more general MMAA containers. Since Billie does not provide abstraction on the BIM input side, the different input formats require different visualization configurations. However, the sample files provided here cover only one specific of multiple potentially equivalent formats. Note that this has the effect, that for some visualization configurations there is no sample file provided, namely those which have an equivalent configuration with an equivalent input format.</p>
+<p>The sample files with their appropriate visualization configurations for their respective format are given below.</p>
+<h2 id="carport"><span class="header-section-number">6.1</span> Carport</h2>
+<p>This sample project is a very simple synthetic project made for teaching purposes at <a href="http://tu-dresden.de/bau/cib">CIB</a> consisting of a slab and four columns.</p>
+<ul>
+<li><a href="http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/carport.ifc">carport.ifc</a>: IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE</li>
+<li><a href="http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/carport.x81">carport.x81</a>: GAEB_BARCHART</li>
+<li><a href="http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/carport.zip">carport.zip</a>: IFC_4D, IFCGAEBQTO_3D</li>
+</ul>
+<h2 id="efh"><span class="header-section-number">6.2</span> EFH</h2>
+<p>This sample project features a two-storey single family house. It is based on demo data from the research project <a href="http://ework-bau.de">eWorkBau</a>, the support of the German Federal Ministry of Education and Research <a href="https://www.bmbf.de/en/">BMBF</a> is greatfully acknowledged.</p>
+<ul>
+<li><a href="http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH.ifc">EFH.ifc</a>: IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE, IFCSPACE_3D</li>
+<li><a href="http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH.x86">EFH.x86</a>: GAEB_BARCHART</li>
+<li><a href="http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH_quantity.zip">EFH_quantity.zip</a>: IFCGAEBQTO_3D</li>
+<li><a href="http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH_activity.zip">EFH_activity.zip</a>: IFC_4D</li>
+</ul>
+<h1 id="embedding"><span class="header-section-number">7</span> Embedding</h1>
 <ul>
 <li>API</li>
 <li>with DSL</li>
 <li>with fixed configurations</li>
 </ul>
-<h1 id="extending"><span class="header-section-number">6</span> Extending</h1>
+<h1 id="extending"><span class="header-section-number">8</span> Extending</h1>
 <ul>
 <li>data access</li>
 <li>filter libraries</li>
 <li>visualization environments</li>
 </ul>
-<h1 id="contact-and-support"><span class="header-section-number">7</span> Contact and support</h1>
+<h1 id="contact-and-support"><span class="header-section-number">9</span> Contact and support</h1>
 <p>For discussion, questions, and support please subscribe to <a href="http://www.listserv.dfn.de/cgi-bin/wa?SUBED1=billie&amp;A=1">billie@listserv.dfn.de</a>.</p>
-<h1 id="theoretical-background"><span class="header-section-number">8</span> Theoretical background</h1>
+<h1 id="theoretical-background"><span class="header-section-number">10</span> Theoretical background</h1>
 <p>The prototype is the result of the research carried out for my thesis with the working title &quot;Configurable nD-visualization for Building Information Models&quot;.</p>
 <p>In the architecture and construction sector, there is a strong tradition and a lot of competence in working with visual representations. With the rise of digital modelling, visual representations were decoupled from the information, which is now only an abstract mystic lump of data to most architects and engineers. Since visual representations are generated on the fly in dedicated software packages, architects and engineers have very few options to control visual representations. The work is based on the hypothesis that this is a conflict which constricts the creative work of architects and engineers and that the full potential of BIM can only be unlocked with accessible and configurable visual representations.</p>
 <p>I have talked and written about the idea from different perspectives and about potential use cases at conferences during the previous years. You can find details in the following articles from conference proceedings and journals.</p>
 <div class="references">
 <p>Tauscher H., Scherer R.J. (2015): <em>Specification of complex visualization configurations using hierarchically nested mapping rule sets</em>. ITcon 20, pp. 40–50.</p>
 <p>Tauscher H., Scherer R.J. (2014): <em>Use cases for configurable building information model visualization</em>. In: Fusion (ECAADe 32), Newcastle, UK, September 2014.</p>
-<p>Tauscher H., Scherer R.J. (2013): <em>Applied visualization methods for building information models with heterogeneous sources</em>. In: Envisioning Architecture: Design, Evaluation, Communication Conference (EAEA11), Milan, Italy, Septempber 2013.</p>
-<p>Tauscher H., Scherer R.J. (2013): <em>Utilizing hierarchical edge bundles in multi model visualization</em>. In: Suter G., Wilde P. de, Rafiq Y. (eds) EG-ICE 2013. 20th International Workshop: Intelligent Computing in Engineering, Vienna University of Technology, July 2013.</p>
+<p>Tauscher H., Scherer R.J. (2013a): <em>Applied visualization methods for building information models with heterogeneous sources</em>. In: Envisioning Architecture: Design, Evaluation, Communication Conference (EAEA11), Milan, Italy, Septempber 2013.</p>
+<p>Tauscher H., Scherer R.J. (2013b): <em>Utilizing hierarchical edge bundles in multi model visualization</em>. In: Suter G., Wilde P. de, Rafiq Y. (eds) EG-ICE 2013. 20th International Workshop: Intelligent Computing in Engineering, Vienna University of Technology, July 2013.</p>
 <p>Tauscher H., Scherer R.J. (2012): <em>Towards a configurable nD-viewer for building information models: A generic model for the description of visualization methods</em>. In: Proc. 9th European Conference on Product and Process Modelling (ECPPM), Reykjavik, Iceland, July 2012.</p>
 <p>Tauscher H., Scherer R.J. (2011): <em>Area cartograms in building product model visualization: A case study on the presentation of non-spatial object properties in spatial context with anamorphic maps</em>. In: Respecting Fragile Places (ECAADe 29), Ljubljana, Slovenia, September 2011.</p>
 <p>Tauscher H., Voigt M., Scherer R.J. (2011): <em>Integrating visual presentations of construction multi models: Visualization design space exploration</em>. In: Bargst<span>ä</span>dt H.-J., Ailland K. (eds) ConVR 2011. Proceedings of the 11th International Conference on Construction Applications of Virtual Reality 2011, Weimar, Germany, November 2011.</p>
