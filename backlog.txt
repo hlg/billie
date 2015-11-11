@@ -60,3 +60,4 @@ DSL
 
 build/release process
 * automate shell/batch script generation (dependencies)
+* config/DSL runner bundled distribution
