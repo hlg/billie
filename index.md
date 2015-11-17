@@ -119,6 +119,7 @@ __TODO__
 
 Sample Configurations
 =====================
+
 * IFC_3D: simple visualization of the 3D geometry of building elements in an IFC file, navigable with perspective projection
 * IFC_3D_AXONOMETRIC: same as IFC_3D, but with axonometric projection and rotated view
 * IFC_3D_INTERACTIVE: same as IFC_3D, but with an additional mini toolbar to select and hightlight objects
@@ -132,10 +133,12 @@ Sample Files
 ===============
 
 We are currently providing sample files from two different projects:
+
 * _Carport_ is a very simple synthetic test file with four columns and a slab.
 * _EFH_ is a two-storey single family house.
 
 For each project there are two types of input files:
+
 * single BIM files in various formats such as IFC or GAEB
 * multi models combining multiple single BIM files in a container
 
