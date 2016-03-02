@@ -9,6 +9,7 @@
     <dependency org="org.bimserver" name="bimserver-emf" rev="1.1.0"/>
     <dependency org="org.bimserver" name="bimserver-plugins" rev="1.1.0"/>
     <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true"/>
+    <dependency org="de.tudresden.cib" name="vis.DSL" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.configurations" rev="latest.integration" changing="true"/>
     <dependency org="de.tudresden.cib" name="vis.data.bimserver" rev="latest.integration" changing="true"/>
     <dependency org="org.codehaus.groovy" name="groovy-all" rev="2.0.4" />

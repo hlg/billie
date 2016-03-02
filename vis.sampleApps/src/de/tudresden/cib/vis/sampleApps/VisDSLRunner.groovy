@@ -1,11 +1,11 @@
-package de.tudresden.cib.vis.DSL
+package de.tudresden.cib.vis.sampleApps
 
+import de.tudresden.cib.vis.DSL.VisTechnique
 import de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor
 import de.tudresden.cib.vis.data.bimserver.EMFIfcParser
 import de.tudresden.cib.vis.data.bimserver.SimplePluginManager
 import de.tudresden.cib.vis.mapping.Configuration
 import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer
-import de.tudresden.cib.vis.sampleApps.MappedJ3DLoader
 
 if(args.length>0){
     def technique = new VisTechnique()

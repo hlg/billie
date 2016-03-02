@@ -7,9 +7,5 @@
 <dependencies>
     <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true"/>
     <dependency org="org.codehaus.groovy" name="groovy-all" rev="2.0.4" />
-    <dependency org="de.tudresden.cib" name="vis.scene.java3d" rev="latest.integration" changing="true"/>
-    <dependency org="de.tudresden.cib" name="vis.runtime.java3d" rev="latest.integration" changing="true"/>
-    <dependency org="de.tudresden.cib" name="vis.data.bimserver" rev="latest.integration" changing="true"/>
-    <dependency org="de.tudresden.cib" name="vis.sampleApps" rev="latest.integration" changing="true"/>
 </dependencies>
 </ivy-module>

@@ -1,4 +1,4 @@
-package de.tudresden.cib.vis.DSL
+package de.tudresden.cib.vis.sampleApps
 
 import de.tudresden.cib.vis.runtime.java3d.viewers.SimpleViewer
 import org.junit.Test
