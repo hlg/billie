@@ -14,9 +14,9 @@
         <file name="vis.runtime.java3d/build.xml"/>
         <file name="vis.scene.java3d/build.xml"/>
         <file name="vis.configurations/build.xml"/>
-        <file name="vis.sampleApps/build.xml"/>
         <file name="vis.swingApp/build.xml"/>
         <file name="vis.DSL"/>
+        <file name="vis.sampleApps/build.xml"/>
     </filelist>
 
     <filelist id="projects.framework" dir=".">

@@ -1,10 +1,7 @@
 package de.tudresden.cib.vis.mapping;
 
 import de.tudresden.cib.vis.data.DataAccessor;
-import de.tudresden.cib.vis.scene.Event;
-import de.tudresden.cib.vis.scene.SceneManager;
-import de.tudresden.cib.vis.scene.VisBuilder;
-import de.tudresden.cib.vis.scene.VisFactory2D;
+import de.tudresden.cib.vis.scene.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,10 +66,19 @@ public class Mapper<E, C, G extends VisFactory2D.GraphObject,S> {
     private boolean mapAndBuild(E source, int mappingIndex, ClassMap classMap) throws TargetCreationException {
         List<PropertyMap<E, G>> matchingPropMaps = classMap.getPropertyMaps(source);
         for (PropertyMap<E, G> propertyMap : matchingPropMaps) {
-                propertyMap.with(sceneManager);
-                propertyMap.with(visFactory.getProvider(propertyMap.graphClass));
-                propertyMap.map(source, mappingIndex);
-                visBuilder.addPart(propertyMap.graphObject); // TODO: make sure provider is the right one
+            PropertyMap.Provider<G> provider = visFactory.getProvider(propertyMap.graphClass);
+            G target = propertyMap.map(source, provider, mappingIndex);
+            sceneManager.addMapped(source, target);
+            for (Map.Entry<Integer, Change<G>> change: propertyMap.scheduledChanges.entrySet()){
+                sceneManager.addChange(change.getKey(), target, change.getValue());
+            }
+            for (Map.Entry<Event, Change<G>> change: propertyMap.triggeredChanges.entrySet()){
+                sceneManager.addChange(change.getKey(), target, change.getValue());
+            }
+            for (Event trigger : propertyMap.triggers){
+                sceneManager.addTrigger(trigger, target);
+            }
+                visBuilder.addPart(propertyMap.graphObject);
         }
         return !matchingPropMaps.isEmpty();
     }

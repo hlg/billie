@@ -42,14 +42,14 @@ class VisTechnique<S,T extends VisFactory2D.GraphObject> {   // TODO: consistent
     }
 
     void update(int time, Closure closure){
-        Change change = new Change() {
+        Change<T> change = new Change<T>() {
             @Override
             protected void configure() {
                 this.with(closure)
             }
         }
         config.getPropertyMapsByConditions().each { condition, ClassMap classMap ->
-            classMap.each { Class c, List<PropertyMap> pms ->
+            classMap.each { Class c, List<PropertyMap<S,T>> pms ->
                 pms.each{ pm -> pm.addChange(time, change) }
             }
         }

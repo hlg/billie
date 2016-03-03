@@ -1,11 +1,15 @@
 package de.tudresden.cib.vis.mapping;
 
+import de.tudresden.cib.vis.scene.Change;
 import de.tudresden.cib.vis.scene.Event;
-import de.tudresden.cib.vis.scene.SceneManager;
 import de.tudresden.cib.vis.scene.VisFactory2D;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
     protected S data;
@@ -15,8 +19,9 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
     Class<S> dataClass;
     Class<T> graphClass;
 
-    private Provider<? extends T> provider;
-    private SceneManager<? super S, ?> sceneManager;
+    Map<Integer, Change<T>> scheduledChanges = new HashMap<Integer, Change<T>>();
+    Map<Event, Change<T>> triggeredChanges = new HashMap<Event, Change<T>>();
+    Set<Event> triggers = new HashSet<Event>();
 
     public PropertyMap(Class<S> data, Class<T> graph){
         dataClass = data;
@@ -33,45 +38,31 @@ public abstract class PropertyMap<S, T extends VisFactory2D.GraphObject> {
         return (dataType instanceof ParameterizedType ? ((ParameterizedType) dataType).getRawType() : dataType);
     }
 
-    public T map(S source, T target, int i) {
+    protected T map(S source, T target, int i) {
         this.index = i;
         this.data = source;
         this.graphObject = target;
         configure();
-        sceneManager.addMapped(source, target);
         return graphObject;
     }
 
-    public T map(S source, Class<T> targetClass, int i) throws IllegalAccessException, InstantiationException {
-        T target = targetClass.newInstance();
-        return map(source, target, i);
-    }
-
-    public T map(S source, int i) throws TargetCreationException {
+    public T map(S source, Provider<T> provider, int i) throws TargetCreationException {
         if (provider == null) {
             throw new TargetCreationException("missing provider"); // TODO: how to handle or avoid?
         }
         return map(source, provider.create(), i);
     }
 
-    public void with(Provider<? extends T> provider) {
-        this.provider = provider;
-    }
-
     protected void addChange(int time, de.tudresden.cib.vis.scene.Change<T> change){
-        sceneManager.addChange(time, graphObject, change);
+        scheduledChanges.put(time, change);
     }
 
     protected void addChange(Event event, de.tudresden.cib.vis.scene.Change<T> change){
-        sceneManager.addChange(event, graphObject, change);
+        triggeredChanges.put(event, change);
     }
 
     protected void addTrigger(Event event){
-        sceneManager.addTrigger(event, graphObject);
-    }
-
-    public void with(SceneManager<S, ?> sceneManager) {
-        this.sceneManager = sceneManager;
+        triggers.add(event);
     }
 
     protected abstract void configure();

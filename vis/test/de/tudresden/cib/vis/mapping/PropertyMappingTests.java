@@ -1,11 +1,9 @@
 package de.tudresden.cib.vis.mapping;
 
-import de.tudresden.cib.vis.scene.SceneManager;
 import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
 
 public class PropertyMappingTests extends MappingTestCase {
     private PropertyMap<DataElement, VisElement> propertyMap;
@@ -23,7 +21,6 @@ public class PropertyMappingTests extends MappingTestCase {
                 // this would create more than one element per mapping ???
             }
         };
-        propertyMap.with(new SceneManager<DataElement, Object>());
     }
 
     @Test
@@ -35,32 +32,15 @@ public class PropertyMappingTests extends MappingTestCase {
     }
 
     @Test
-    public void testReflection() throws InstantiationException, IllegalAccessException {
-        VisElement result = propertyMap.map(d, VisElement.class, 0);
-        assertEquals(5, result.with);
-        assertEquals("hello", result.label);
-    }
-
-    @Test
     public void testProvide() throws TargetCreationException {
-        propertyMap.with(new PropertyMap.Provider<VisElement>() {
+        PropertyMap.Provider provider = new PropertyMap.Provider<VisElement>() {
             public VisElement create() {
                 return new VisElement();
             }
-        });
-        VisElement result = propertyMap.map(d, 0);
+        };
+        VisElement result = propertyMap.map(d, provider, 0);
         assertEquals(5, result.with);
         assertEquals("hello", result.label);
-    }
-
-    @Test
-    public void testProviderMissing() {
-        try {
-            propertyMap.map(d, 0);
-        } catch (TargetCreationException e) {
-            return;
-        }
-        fail();
     }
 
 }

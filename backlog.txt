@@ -28,7 +28,6 @@ distribution
 
 
 refactoring
-* scene manager -> decouple from property map (testability)
 * Configuration -> check generics, something is wired
 * default condition with null key -> should be the default condition
 * configuration runner and mapped loader -> separate modules
@@ -43,6 +42,7 @@ bugs
 * rotation in axonometric viewer unpredictable? carport2.ifc does not rotate
 * selecting directories is not possible?
 * loading wrong file type fails (zip instead of ifc) - loads forever
+* file not found throws unchecked and does not close window
 * last animation frame gets swallowed in repeated animation?
 
 error handling
