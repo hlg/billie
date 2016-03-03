@@ -19,7 +19,6 @@ class VisTechnique<S,T extends VisFactory2D.GraphObject> {   // TODO: consistent
         this.with(closure)
         return this
     }
-            S data
 
     void condition(Closure closure){
         condition = new Condition<S>(){

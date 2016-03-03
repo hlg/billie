@@ -34,10 +34,10 @@ public class Java3dBuilder implements VisBuilder<Java3dFactory.Java3DGraphObject
 
                 @Override
                 public void processStimulus(Enumeration enumeration) {
+                    frame = (frame == maxFrame) ? 0 : frame+1;
                     if(scheduledChanges.containsKey(frame)) {
                         scheduledChanges.get(frame).changeAll();
                     }
-                    frame = (frame+1 == maxFrame) ? 0 : frame+1;
                     wakeupOn(frameInterval);
                 }
             };
