@@ -37,7 +37,6 @@ import org.bimserver.emf.IdEObject;
 import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.Panel;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 
 import javax.media.j3d.BranchGroup;
@@ -242,7 +241,7 @@ public enum ConfigurationRunner {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             Draw2DViewer viewer = new Draw2DViewer();
-            File input = viewer.chooseFile(System.getProperty("user.dir"), "ifc"); // "D:\\Nutzer\\helga\\div\\mefisto-container"
+            File input = args.length>1 ? new File(args[1]) : viewer.chooseFile(System.getProperty("user.dir"), "ifc"); // "D:\\Nutzer\\helga\\div\\mefisto-container"
             DataAccessor<EMFIfcParser.EngineEObject, Condition<EMFIfcParser.EngineEObject>> data = new EMFIfcGeometricAccessor(new SimplePluginManager(), input.toURI().toURL());
             Ifc_2D ifc2DConfiguration = new Ifc_2D();
             ifc2DConfiguration.config();
@@ -252,7 +251,7 @@ public enum ConfigurationRunner {
         @Override
         void run(String[] args) throws IOException, TargetCreationException {
             Draw2DViewer viewer = new Draw2DViewer();
-            File input = viewer.chooseFile(System.getProperty("user.dir"), "xml");
+            File input =  args.length>1 ? new File(args[1]) : viewer.chooseFile(System.getProperty("user.dir"), "xml");
             Sched_Gantt config = new Sched_Gantt();
             config.config();
             SceneManager<EObject,Panel> result = Draw2dBuilder.createMapper(new EMFSchedule11Accessor(input.toURI().toURL()), viewer.getDefaultFont()).map(config);
@@ -264,7 +263,7 @@ public enum ConfigurationRunner {
         @Override
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             Draw2DViewer viewer = new Draw2DViewer();
-            URL input = viewer.chooseFile(System.getProperty("user.dir"), "ics").toURI().toURL();
+            URL input = (args.length>1 ? new File(args[1]) : viewer.chooseFile(System.getProperty("user.dir"), "ics")).toURI().toURL();
             IcalAccessor accessor = new IcalAccessor();
             accessor.read(input);
             Ical_Gantt config = new Ical_Gantt();
@@ -431,7 +430,7 @@ public enum ConfigurationRunner {
             EMFIfcHierarchicAcessor.SKIP_LAST_LEVEL = false;
             EMFIfcHierarchicAcessor data = new EMFIfcHierarchicAcessor(new SimplePluginManager());
             Draw2DViewer viewer = new Draw2DViewer();
-            data.read(viewer.chooseFile(System.getProperty("user.dir"), "ifc").toURI().toURL()); // "/home/dev/src"
+            data.read((args.length>1 ? new File(args[1]) : viewer.chooseFile(System.getProperty("user.dir"), "ifc")).toURI().toURL()); // "/home/dev/src"
             data.index();
             Ifc_Icycle config = new Ifc_Icycle();
             config.setSkipLastLevel(false);
@@ -444,7 +443,7 @@ public enum ConfigurationRunner {
         void run(String[] args) throws IOException, TargetCreationException, DataAccessException {
             IndexedDataAccessor<Hierarchic<EObject>, Condition<Hierarchic<EObject>>> data =new HierarchicGaebAccessor();
             Draw2DViewer viewer = new Draw2DViewer();
-            data.read(viewer.chooseFile(System.getProperty("user.dir"), "*").toURI().toURL()); // "/home/dev/src"
+            data.read((args.length>1 ? new File(args[1]) : viewer.chooseFile(System.getProperty("user.dir"), "*")).toURI().toURL()); // "/home/dev/src"
             data.index();
             Gaeb_Icycle config = new Gaeb_Icycle();
             config.config();
