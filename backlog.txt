@@ -43,6 +43,7 @@ bugs
 * rotation in axonometric viewer unpredictable? carport2.ifc does not rotate
 * selecting directories is not possible?
 * loading wrong file type fails (zip instead of ifc) - loads forever
+* last animation frame gets swallowed in repeated animation?
 
 error handling
 * missing required model (conditional mm accessor) -> report details, which condition failed
@@ -57,6 +58,7 @@ applications
 
 DSL
 * Filter libraries?
+* remove the imports
 
 build/release process
 * automate shell/batch script generation (dependencies)

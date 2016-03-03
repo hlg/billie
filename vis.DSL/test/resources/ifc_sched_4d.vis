@@ -1,0 +1,45 @@
+package resources
+
+import de.tudresden.cib.vis.data.bimserver.EMFIfcParser
+import de.tudresden.cib.vis.runtime.java3d.colorTime.TypeAppearance
+import de.tudresden.cib.vis.scene.Change
+import de.tudresden.cib.vis.scene.VisFactory3D.Polyeder
+import org.bimserver.models.ifc2x3tc1.IfcBuildingElement
+
+vt.rule(EMFIfcParser.EngineEObject, Polyeder){
+  condition {
+    data.object instanceof IfcBuildingElement
+  }
+  Change activate = new Change<Polyeder>(){
+    @Override
+    protected void configure() {
+      graph.appearance = TypeAppearance.ACTIVATED.appearance
+    }
+  }
+  Change deactivate = new Change<Polyeder>(){
+    @Override
+    protected void configure() {
+      graph.appearance = TypeAppearance.DEACTIVATED.appearance
+    }
+  }
+  initial {
+    graphObject.vertizes = data.geometry.vertizes
+    graphObject.normals = data.geometry.normals
+    graphObject.indizes = data.geometry.indizes
+    addChange(50, activate);
+    addChange(100, deactivate);
+    addChange(110, deactivate);
+  }
+  /*
+  update (50) {
+    graph.appearance = TypeAppearance.ACTIVATED.appearance
+  }
+  update(100) {
+    graph.appearance = TypeAppearance.DEACTIVATED.appearance
+  }
+  update(110) {
+    graph.appearance = TypeAppearance.DEACTIVATED.appearance
+  }
+  */
+}
+

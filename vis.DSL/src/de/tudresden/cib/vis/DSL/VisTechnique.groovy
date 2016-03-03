@@ -1,8 +1,10 @@
 package de.tudresden.cib.vis.DSL
 
 import de.tudresden.cib.vis.filter.Condition
+import de.tudresden.cib.vis.mapping.ClassMap
 import de.tudresden.cib.vis.mapping.Configuration
 import de.tudresden.cib.vis.mapping.PropertyMap
+import de.tudresden.cib.vis.scene.Change
 import de.tudresden.cib.vis.scene.VisFactory2D
 
 class VisTechnique<S,T extends VisFactory2D.GraphObject> {   // TODO: consistent naming - VisTechnique is currently the equivalent of Configuration, with DSL instead of subclassing
@@ -37,6 +39,20 @@ class VisTechnique<S,T extends VisFactory2D.GraphObject> {   // TODO: consistent
             }
         }
         config.addMapping(condition, mapping)
+    }
+
+    void update(int time, Closure closure){
+        Change change = new Change() {
+            @Override
+            protected void configure() {
+                this.with(closure)
+            }
+        }
+        config.getPropertyMapsByConditions().each { condition, ClassMap classMap ->
+            classMap.each { Class c, List<PropertyMap> pms ->
+                pms.each{ pm -> pm.addChange(time, change) }
+            }
+        }
     }
 
     Configuration getConfig() {

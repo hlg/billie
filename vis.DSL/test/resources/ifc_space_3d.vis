@@ -1,0 +1,17 @@
+package resources
+
+import de.tudresden.cib.vis.data.bimserver.EMFIfcParser.EngineEObject
+import de.tudresden.cib.vis.scene.VisFactory3D.Polyeder
+import org.bimserver.models.ifc2x3tc1.IfcSpace
+
+vt.rule(EngineEObject, Polyeder){
+  condition {
+    data.object instanceof IfcSpace && data.object.representation != null
+  }
+  initial {
+    graphObject.vertizes = data.geometry.vertizes
+    graphObject.normals = data.geometry.normals
+    graphObject.indizes = data.geometry.indizes
+  }
+}
+

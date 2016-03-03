@@ -12,3 +12,22 @@
 * support generic MMAA multi model format
 * default empty string namespace for indexed elementary model accessors
 
+0.8
+* interactive 3D viewer
+* fixes configrunner: remove absolute paths, sort configurations
+* vis.DSL first take
+* unified filechoosing
+* fix dependencies, jni
+
+0.9
+* barchart: remove automatic screenshots
+* fixed and enhanced startup scripts
+* configs: flexible demo highlighting, rudimentary GAEB text extraction
+* fixed viewer title, fixed zip file loading
+
+0.10
+* fixed startup scripts
+
+0.11
+* DSL for ifcspace-3d config
+*
