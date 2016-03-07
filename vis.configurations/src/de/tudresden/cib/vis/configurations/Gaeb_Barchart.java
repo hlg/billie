@@ -1,8 +1,6 @@
 package de.tudresden.cib.vis.configurations;
 
-import cib.lib.gaeb.model.gaeb.TgBoQCtgy;
-import cib.lib.gaeb.model.gaeb.TgItem;
-import cib.lib.gaeb.model.gaeb.TgMLText;
+import cib.lib.gaeb.model.gaeb.*;
 import de.tudresden.cib.vis.data.DataAccessor;
 import de.tudresden.cib.vis.filter.Condition;
 import de.tudresden.cib.vis.mapping.Configuration;
@@ -66,9 +64,16 @@ public class Gaeb_Barchart extends Configuration<EObject, Condition<EObject>> {
             }
 
             private String extractText() {
-                TgMLText firstText = data.getDescription().getCompleteText().getOutlineText().getOutlTxt().getTextOutlTxt().get(0);
-                String txt = (!firstText.getP().isEmpty()) ? firstText.getP().get(0).getSpan().get(0).getValue() : firstText.getSpan().get(0).getValue();
-                return txt.replaceAll("\\s+"," ");
+                TgDescription description = data.getDescription();
+                if(description!=null){
+                    TgOutlineText outlineText = description.getCompleteText().getOutlineText();
+                    if(outlineText!=null){
+                        TgMLText firstText = outlineText.getOutlTxt().getTextOutlTxt().get(0);
+                        String txt = (!firstText.getP().isEmpty()) ? firstText.getP().get(0).getSpan().get(0).getValue() : firstText.getSpan().get(0).getValue();
+                        return txt.replaceAll("\\s+"," ");
+                    }
+                }
+                return data.getID() + " - without outline text";
             }
         });
     }

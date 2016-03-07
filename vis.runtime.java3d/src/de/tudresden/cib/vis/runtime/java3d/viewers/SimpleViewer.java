@@ -45,7 +45,7 @@ public class SimpleViewer extends JFrame {
         noAppearance = TypeAppearance.OFF.getAppearance();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE);
-        setTitle("Simple Viewer für Java3D scenes");
+        setTitle("Simple Viewer for Java3D scenes");
         setVisible(true);
     }
 
