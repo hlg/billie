@@ -7,21 +7,42 @@ import de.tudresden.cib.vis.mapping.PropertyMap
 import de.tudresden.cib.vis.scene.Change
 import de.tudresden.cib.vis.scene.VisFactory2D
 
-class VisTechnique<S,T extends VisFactory2D.GraphObject> {   // TODO: consistent naming - VisTechnique is currently the equivalent of Configuration, with DSL instead of subclassing
+class VisTechnique {
+    // TODO: consistent naming - VisTechnique is currently the equivalent of Configuration, with DSL instead of subclassing
+
+    View view = new View()
+    List<Rule> rules = new ArrayList<Rule>()
+
+    String accessor = 'de.tudresden.cib.vis.data.bimserver.EMFIfcGeometricAccessor'
+
+    void rule(Class source, Class target, Closure closure){   // "constructor" of the vis technique?
+        Rule rule = new Rule()
+        rule.source = source
+        rule.target = target
+        rule.with(closure)
+        rules.add(rule)
+    }
+
+    void view(Closure closure){
+        view.with(closure)
+    }
+
+}
+
+class View {
+    Dimension dimension = Dimension.D3D
+    Projection projection = Projection.PERSPEKTIVE
+}
+
+class Rule<S,T extends VisFactory2D.GraphObject> {
     Condition condition
     Class<S> source
     Class<T> target
     Configuration config = new Configuration()
 
-    VisTechnique rule(Class<S> source, Class<T> target, Closure closure){   // "constructor" of the vis technique?
-        this.source = source
-        this.target = target
-        this.with(closure)
-        return this
-    }
-
     void condition(Closure closure){
         condition = new Condition<S>(){
+            def data;
             @Override
             boolean matches(S data) {
                 this.data = data
@@ -54,8 +75,12 @@ class VisTechnique<S,T extends VisFactory2D.GraphObject> {   // TODO: consistent
         }
     }
 
-    Configuration getConfig() {
-        return config
-    }
 
+}
+enum Dimension {
+    D2D, D3D
+}
+
+enum Projection {
+    PERSPEKTIVE, ISOMETRIC
 }
