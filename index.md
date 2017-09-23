@@ -158,10 +158,10 @@ EFH
 ----
 This sample project features a two-storey single family house. It is based on demo data from the research project [eWorkBau](http://ework-bau.de), the support of the German Federal Ministry of Education and Research [BMBF](https://www.bmbf.de/en/) is greatfully acknowledged.
 
-* [EFH.ifc](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH.ifc): IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE, IFCSPACE_3D
-* [EFH.x86](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH.x86): GAEB_BARCHART
-* [EFH_quantity.zip](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH_quantity.zip): IFCGAEBQTO_3D
-* [EFH_activity.zip](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/EFH_activity.zip): IFC_4D
+* [EFH.ifc](http://helgatauscher.de/billie/data/EFH.ifc): IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE, IFCSPACE_3D
+* [EFH.x86](http://helgatauscher.de/billie/data/EFH.x86): GAEB_BARCHART
+* [EFH_quantity.zip](http://helgatauscher.de/billie/data/EFH_quantity.zip): IFCGAEBQTO_3D
+* [EFH_activity.zip](http://helgatauscher.de/billie/data/EFH_activity.zip): IFC_4D
 
 
 Embedding
