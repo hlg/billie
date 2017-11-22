@@ -23,7 +23,7 @@ public class QtoSched_GanttAnim extends Configuration<LinkedObject<Activity>, Co
     private final int scale = 1000 * 3600 * 24 / pxPerDay;
     private Interval billingPeriod = new Interval(new DateTime(2012, 4, 1, 0, 0), new DateTime(2012, 9, 1, 0, 0));
     private boolean showAll = false;
-    private Type type = Type.ACTUAL;
+    private Type type = Type.COMPARISON;
 
     public QtoSched_GanttAnim(String[] LM_IDS, String QTO_ID) {
         this.LM_IDS = LM_IDS;

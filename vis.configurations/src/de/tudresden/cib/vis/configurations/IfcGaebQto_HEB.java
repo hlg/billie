@@ -25,7 +25,7 @@ public class IfcGaebQto_HEB extends Configuration<LinkedObject.ResolvedLink, Con
     private int gaebScale;
     private static int SMALLSIZE = 10;
     private static double BUNDLING = 0.5;
-    private static boolean SKIP_LAST_LEVEL = false;
+    private static boolean SKIP_LAST_LEVEL = false; // TODO: runtime argument, like scale in Gaeb_Icycle
 
     @Override
     public void config() {

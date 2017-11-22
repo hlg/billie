@@ -58,10 +58,9 @@ public class Gaeb_Icycle extends Configuration<Hierarchic<EObject>, Condition<Hi
                               }, new PropertyMap<HierarchicGaebAccessor.HierarchicTgItemBoQCtgy, VisFactory2D.Label>() {
                 @Override
                 protected void configure() {
-                    TgItem object = (TgItem) data.getObject();
                     graphObject.setLeft(data.getNodesBefore() * scale + 15);
                     graphObject.setTop(data.getDepth() * 25 + 40);
-                    String title = object.getDescription().getOutlineText() != null ? object.getDescription().getOutlineText().getOutlTxt().getTextOutlTxt().get(0).getSpan().get(0).getValue() : object.getID();
+                    String title = new GaebHelper(data.getObject()).safeExtractText();
                     graphObject.setText(title.length() <= 20 ? title : title.substring(0, 20) + " ..");
                     graphObject.setVertical(true);
                 }
@@ -76,7 +75,7 @@ public class Gaeb_Icycle extends Configuration<Hierarchic<EObject>, Condition<Hi
             protected void configure() {
                 graphObject.setLeft(data.getNodesBefore() * scale + 5);
                 graphObject.setTop(data.getDepth() * 25 + 5);
-                String title = data.getObject() instanceof TgBoQCtgy ? ((TgBoQCtgy) data.getObject()).getLblTx().getSpan().get(0).getValue(): ((TgBoQ)data.getObject()).getBoQInfo().getName(); // object.getID();
+                String title = new GaebHelper(data.getObject()).safeExtractText();
                 int nodeSize = data.getNodeSize();
                 graphObject.setText(title.length() <= nodeSize ? title : title.substring(0, nodeSize) + " ..");
                 graphObject.setForeground();

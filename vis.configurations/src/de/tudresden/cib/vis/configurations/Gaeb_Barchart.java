@@ -7,7 +7,9 @@ import de.tudresden.cib.vis.mapping.Configuration;
 import de.tudresden.cib.vis.mapping.Mapper;
 import de.tudresden.cib.vis.mapping.PropertyMap;
 import de.tudresden.cib.vis.scene.VisFactory2D;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -53,8 +55,7 @@ public class Gaeb_Barchart extends Configuration<EObject, Condition<EObject>> {
                     container = container.eContainer().eContainer();
                 }
                 labelText.append(" ");
-                // TODO: helper function for GAEB
-                String label = extractText();
+                String label = new GaebHelper(data).safeExtractText(); // TODO inject helper classes for respective data objects in configurations
                 labelText.append(label.substring(0,Math.min(label.length()-1,40)));
                 labelText.append(" ...");
                 graphObject.setText(labelText.toString());
@@ -63,19 +64,8 @@ public class Gaeb_Barchart extends Configuration<EObject, Condition<EObject>> {
                 graphObject.setTop(index * 20);
             }
 
-            private String extractText() {
-                TgDescription description = data.getDescription();
-                if(description!=null){
-                    TgOutlineText outlineText = description.getCompleteText().getOutlineText();
-                    if(outlineText!=null){
-                        TgMLText firstText = outlineText.getOutlTxt().getTextOutlTxt().get(0);
-                        String txt = (!firstText.getP().isEmpty()) ? firstText.getP().get(0).getSpan().get(0).getValue() : firstText.getSpan().get(0).getValue();
-                        return txt.replaceAll("\\s+"," ");
-                    }
-                }
-                return data.getID() + " - without outline text";
-            }
         });
     }
+
 
 }

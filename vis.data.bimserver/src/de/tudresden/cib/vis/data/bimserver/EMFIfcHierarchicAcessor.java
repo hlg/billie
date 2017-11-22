@@ -87,9 +87,11 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
         }
         if (object.isSetContainsElements()){
             for(IfcProduct contained: object.getContainsElements().iterator().next().getRelatedElements()){
-                Hierarchic<IdEObject> child = stepIn((IfcElement) contained, nodesBefore + size, depth + 1, node);
-                node.addChild(child);
-                if (! SKIP_LAST_LEVEL) size++;
+                if(contained instanceof IfcElement) {
+                    Hierarchic<IdEObject> child = stepIn((IfcElement) contained, nodesBefore + size, depth + 1, node);
+                    node.addChild(child);
+                    if (!SKIP_LAST_LEVEL) size++;
+                }
             }
         }
         if(size==0) size=1;

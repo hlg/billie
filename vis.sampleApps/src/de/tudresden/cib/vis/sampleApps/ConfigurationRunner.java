@@ -388,7 +388,7 @@ public enum ConfigurationRunner {
                     return super.isValidFor(model) && model.getMeta().getPhase().getPhaseDesc().equals("Angebotserstellung");
                 }
             };
-            final LinkedList<String> ids = dataAcessor.readFromFolder(input, "L1", new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC), new EMTypeCondition(EMTypes.QTO));
+            final LinkedList<String> ids = dataAcessor.read(input, "L1", new EMTypeCondition(EMTypes.IFCHIERARCHIC), new EMTypeCondition(EMTypes.GAEBHIERARCHIC), new EMTypeCondition(EMTypes.QTO));
             EMFIfcHierarchicAcessor hierarchicIfc = (EMFIfcHierarchicAcessor) dataAcessor.getAccessor(ids.get(0));
             hierarchicIfc.index();
             DataAccessor<Hierarchic<EObject>, Condition<Hierarchic<EObject>>> hierarchicGaeb = dataAcessor.getAccessor(ids.get(1));
@@ -445,7 +445,7 @@ public enum ConfigurationRunner {
             Draw2DViewer viewer = new Draw2DViewer();
             data.read((args.length>1 ? new File(args[1]) : viewer.chooseFile(System.getProperty("user.dir"), "*")).toURI().toURL()); // "/home/dev/src"
             data.index();
-            Gaeb_Icycle config = new Gaeb_Icycle();
+            Gaeb_Icycle config = new Gaeb_Icycle(40);
             config.config();
             viewer.showContent(Draw2dBuilder.createMapper(data, viewer.getDefaultFont()).map(config).getScene());
         }
