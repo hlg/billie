@@ -15,23 +15,23 @@ public class GaebHelper {
     }
 
     public String safeExtractText(){
-
-        String[] featureChain =
-                data instanceof TgItem ? new String[]{"description", "outlineText", "outlTxt", "txtOutlTxt"} :
-                data instanceof TgBoQCtgy ? new String[]{"lblTxt"} :
-                data instanceof TgBoQ ? new String[]{"boQInfo","name"}: null;
         String extractionResult = "";
-        if(featureChain!=null){
+        if(data instanceof TgBoQ && ((TgBoQ) data).getBoQInfo() != null)
+            extractionResult = ((TgBoQ) data).getBoQInfo().getName();
+        if (data instanceof TgBoQCtgy && ((TgBoQCtgy)data).getLblTx()!= null)
+            extractionResult = getText(((TgBoQCtgy)data).getLblTx());
+        if(data instanceof TgItem){
+            String[] featureChain = new String[]{"description", "outlineText", "outlTxt", "txtOutlTxt"};
             EObject currentObject = data;
             for(String featureName : featureChain) {
-                currentObject = (EObject) getFeature(currentObject, featureName);
                 if(currentObject==null) break;
+                currentObject = (EObject) getFeature(currentObject, featureName);
             }
             if(currentObject!=null){
-                extractionResult = getTextFromMLList((EList<TgMLText>) currentObject);
+                extractionResult =getTextFromMLList((EList<TgMLText>) currentObject);
             }
         }
-        return (extractionResult.isEmpty()) ? getId() + " - without outline text" : extractionResult;
+        return (extractionResult.isEmpty()) ? getId() : extractionResult;
 
     }
 
@@ -44,13 +44,16 @@ public class GaebHelper {
     }
 
     private String getText(TgMLText txt){
-        if(txt.getDiv()!=null) return getTextFromDivList(txt.getDiv());
-        if(txt.getBr()!=null) return getTextFromStringList(txt.getBr());
-        if(txt.getSpan()!=null) return getTextFromSpanList(txt.getSpan());
-        if(txt.getP()!=null) return getTextFromPList(txt.getP());
+        if(isListSet(txt.getDiv())) return getTextFromDivList(txt.getDiv());
+        if(isListSet(txt.getBr())) return getTextFromStringList(txt.getBr());
+        if(isListSet(txt.getSpan())) return getTextFromSpanList(txt.getSpan());
+        if(isListSet(txt.getP())) return getTextFromPList(txt.getP());
         return "";
     }
 
+    private boolean isListSet(EList eList){
+        return eList!=null && !eList.isEmpty();
+    }
     private String getTextFromPList(EList<TgpMLText> ps) {
         StringBuilder result = new StringBuilder();
         for(TgpMLText p : ps){
@@ -60,8 +63,8 @@ public class GaebHelper {
     }
 
     private String getText(TgpMLText p) {
-        if(p.getSpan()!=null)return getTextFromSpanList(p.getSpan());
-        if(p.getBr()!=null) return getTextFromStringList(p.getBr());
+        if(isListSet(p.getSpan()))return getTextFromSpanList(p.getSpan());
+        if(isListSet(p.getBr())) return getTextFromStringList(p.getBr());
         return "";
     }
 
@@ -94,8 +97,8 @@ public class GaebHelper {
     }
 
     private String getText(Tgdiv tgdiv) {
-        if(tgdiv.getSpan()!=null) return getText(tgdiv);
-        if(tgdiv.getBr()!=null) return getTextFromStringList(tgdiv.getBr());
+        if(isListSet(tgdiv.getSpan())) return getText(tgdiv);
+        if(isListSet(tgdiv.getBr())) return getTextFromStringList(tgdiv.getBr());
         return "";
     }
 
@@ -105,7 +108,7 @@ public class GaebHelper {
     }
 
     public String getId() {
-        EStructuralFeature idFeature = data.eClass().getEStructuralFeature("ID");
+        EStructuralFeature idFeature = data.eClass().getEStructuralFeature("iD");
         return (idFeature!=null) ? (String) data.eGet(idFeature, true) : null;
     }
 }
