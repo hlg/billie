@@ -26,6 +26,10 @@
                 <include name="dslrunner.*" />
                 <include name="integration.*" />
             </fileset>
+            <fileset dir="${module.basedir}/..">
+                <include name="LICENSE.md" />
+                <include name="thirdparty.md" />
+            </fileset>
         </copy>
         <chmod dir="${module.output.dir}/package" includes="*.sh" perm="+x"/>
         <copy todir="${module.output.dir}/package/lib">
