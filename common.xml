@@ -100,7 +100,7 @@
         <echo message="-cp ${run.classpath.lib}" />
 
         <mkdir dir="${module.output.dir}/jar"/>
-        <jar jarfile="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar"
+        <jar jarfile="${module.output.dir}/jar/${ant.project.name}-${version}.jar"
              basedir="${module.output.dir}/classes"
              manifest="${module.basedir}/META-INF/MANIFEST.MF">
             <!-- TODO: create manifest if it not there, check <MANIFEST> tag -->
@@ -136,13 +136,13 @@
     </target>
 
     <target name="publish.module" depends="dist.module">
-        <ivy:publish artifactspattern="${module.output.dir}/jar/[artifact]-[revision]-SNAPSHOT.[ext]" resolver="local"
+        <ivy:publish artifactspattern="${module.output.dir}/jar/[artifact]-[revision].[ext]" resolver="local"
                      overwrite="true" pubrevision="${version}" pubdate="now" status="integration" forcedeliver="true" replacedynamicrev="false"/>
     </target>
 
     <target name="publish.module.OSGI.fast" depends="config.module"> <!-- dependency is on master level -->
-        <echo message="from ${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar to ${osgi.target}/dropins/plugins/de.tudresden.cib.${ant.project.name}_${version}.jar" />
-        <copy verbose="true" includeEmptyDirs="true" failonerror="true" tofile="${osgi.target}/dropins/plugins/de.tudresden.cib.${ant.project.name}_${version}.jar" file="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar" />
+        <echo message="from ${module.output.dir}/jar/${ant.project.name}-${version}.jar to ${osgi.target}/dropins/plugins/de.tudresden.cib.${ant.project.name}_${version}.jar" />
+        <copy verbose="true" includeEmptyDirs="true" failonerror="true" tofile="${osgi.target}/dropins/plugins/de.tudresden.cib.${ant.project.name}_${version}.jar" file="${module.output.dir}/jar/${ant.project.name}-${version}.jar" />
     </target>
 
     <target name="publish.module.OSGI" depends="dist.module, publish.module.OSGI.fast" />

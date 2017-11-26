@@ -34,7 +34,7 @@
             <flattenmapper/>
         </pathconvert>
 
-        <jar jarfile="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar"
+        <jar jarfile="${module.output.dir}/jar/${ant.project.name}-${version}.jar"
              basedir="${module.output.dir}/classes"
              manifest="${module.basedir}/META-INF/MANIFEST.MF">
             <manifest>
@@ -50,10 +50,10 @@
     </target>
 
     <target name="publish.module.OSGI" depends="dist.module"> <!-- dependency is on master level -->
-        <echo message="exploding from ${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar to ${osgi.target}/dropins/plugins/de.tudresden.cib.${ant.project.name}_${version}" />
+        <echo message="exploding from ${module.output.dir}/jar/${ant.project.name}-${version}.jar to ${osgi.target}/dropins/plugins/de.tudresden.cib.${ant.project.name}_${version}" />
         <mkdir dir="${osgi.target}/dropins/plugins/${ant.project.name}_${version}"/>
-        <unzip src="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar" dest="${osgi.target}/dropins/plugins/${ant.project.name}_${version}" />
-        <!-- copy verbose="true" includeEmptyDirs="true" failonerror="true" tofile="${osgi.target}/dropins/plugins/${ant.project.name}_${version}.jar" file="${module.output.dir}/jar/${ant.project.name}-${version}-SNAPSHOT.jar" /-->
+        <unzip src="${module.output.dir}/jar/${ant.project.name}-${version}.jar" dest="${osgi.target}/dropins/plugins/${ant.project.name}_${version}" />
+        <!-- copy verbose="true" includeEmptyDirs="true" failonerror="true" tofile="${osgi.target}/dropins/plugins/${ant.project.name}_${version}.jar" file="${module.output.dir}/jar/${ant.project.name}-${version}.jar" /-->
     </target>
 
 

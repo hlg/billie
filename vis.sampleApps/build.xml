@@ -18,4 +18,31 @@
     </target>
 
     <target name="config.runner" depends="dist.module,config.runner.fast" />
+
+    <target name="billie" depends="dist.module">
+        <copy todir="${module.output.dir}/package">
+            <fileset dir="${module.basedir}">
+                <include name="configrunner.*" />
+                <include name="dslrunner.*" />
+                <include name="integration.*" />
+            </fileset>
+        </copy>
+        <chmod dir="${module.output.dir}/package" includes="*.sh" perm="+x"/>
+        <copy todir="${module.output.dir}/package/lib">
+            <fileset dir="${module.basedir}/lib" />
+        </copy>
+        <copy todir="${module.output.dir}/package/jni">
+            <fileset dir="${module.basedir}/jni" />
+        </copy>
+        <copy file="${module.output.dir}/jar/${ant.project.name}-${version}.jar"
+              tofile="${module.output.dir}/package/${ant.project.name}-${version}.jar"/>
+        <copy todir="${module.output.dir}/package/bisl" >
+            <fileset dir="${module.basedir}/../vis.DSL/test/resources">
+                <include name="ifc_3d.vis" />
+                <include name="ifc_space_3d.vis" />
+                <include name="ifc_sched_4d.vis" />
+            </fileset>
+        </copy>
+        <zip destfile="${module.output.dir}/billie-${version}.zip" basedir="${module.output.dir}/package" />
+    </target>
 </project>
