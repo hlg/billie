@@ -2,7 +2,7 @@
 title: Billie. A BIM stylesheet engine
 author: Helga Tauscher, TU Dresden, [CIB](http://tu-dresden.de/bau/cib)
 nocite: |
-  @Tauscher2011a, @Tauscher2011, @Tauscher2012, @Tauscher2013, @Tauscher2013a, @Tauscher2014a, @Tauscher2015
+  @Tauscher2011a, @Tauscher2011, @Tauscher2012, @Tauscher2013, @Tauscher2013a, @Tauscher2014a, @Tauscher2015, @Tauscher2015b, @Tauscher2016, @Tauscher2016a, @Tauscher2017
 ...
 
 Billie is a mapping engine dedicated to generate visual representations from building information models based on a visualization description.
@@ -132,10 +132,12 @@ Sample Configurations
 Sample Files
 ===============
 
-We are currently providing sample files from two different projects:
+We are providing sample files from four different projects:
 
 * _Carport_ is a very simple synthetic test file with four columns and a slab.
 * _EFH_ is a two-storey single family house.
+* _Highrise_ is an office tower
+* _Airport_ is an airport complex
 
 For each project there are two types of input files:
 
@@ -144,24 +146,44 @@ For each project there are two types of input files:
 
 Sometimes the same contents can be expressed in different formats, e.g. schedule data in a multi model might either be present in the IFC, or as an ICAL, or as a custom XML file. Also, multi model containers exist in different versions --- as specific mefisto containers or as more general MMAA containers. Since Billie does not provide abstraction on the BIM input side, the different input formats require different visualization configurations. However, the sample files provided here cover only one specific of multiple potentially equivalent formats. Note that this has the effect, that for some visualization configurations there is no sample file provided, namely those which have an equivalent configuration with an equivalent input format.
 
-The sample files with their appropriate visualization configurations for their respective format are given below.
+The sample files with their appropriate visualization configurations for their respective format are given below. There is also a script file containing a list of all combinations in the [Github repository](https://github.com/hlg/billie/blob/master/vis.sampleApps/integration.sh) and a [zip archive](http://helgatauscher.de/billie/data.zip) containing all data files neatly packaged. 
 
 Carport
 -------
 This sample project is a very simple synthetic project made for teaching purposes at [CIB](http://tu-dresden.de/bau/cib) consisting of a slab and four columns.
 
-* [carport.ifc](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/carport.ifc): IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE 
-* [carport.x81](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/carport.x81): GAEB_BARCHART 
-* [carport.zip](http://wwwpub.zih.tu-dresden.de/~htausch/billie/data/carport.zip): IFC_4D, IFCGAEBQTO_3D
+* [carport.ifc](http://helgatauscher.de/billie/data/carport.ifc): IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE, IFC_ICYCLE
+* [carport.x81](http://helgatauscher.de/billie/data/carport.x81): GAEB_BARCHART, GAEB_ICYCLE
+* [carport_activity.xml](http://helgatauscher.de/billie/data/carport_activity.xml): GANTT
+* [carport.zip](http://helgatauscher.de/billie/data/carport.zip): IFC_4D, IFCGAEBQTO_3D, LINKS_HEB
 
 EFH
 ----
-This sample project features a two-storey single family house. It is based on demo data from the research project [eWorkBau](http://ework-bau.de), the support of the German Federal Ministry of Education and Research [BMBF](https://www.bmbf.de/en/) is greatfully acknowledged.
+This sample project features a two-storey single family house. It is based on demo data from the research project [eWorkBau](http://ework-bau.de), the support of the German Federal Ministry of Education and Research [BMBF](https://www.bmbf.de/en/) (grant no. 01PF07045A) is gratefully acknowledged.
 
-* [EFH.ifc](http://helgatauscher.de/billie/data/EFH.ifc): IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE, IFCSPACE_3D
-* [EFH.x86](http://helgatauscher.de/billie/data/EFH.x86): GAEB_BARCHART
-* [EFH_quantity.zip](http://helgatauscher.de/billie/data/EFH_quantity.zip): IFCGAEBQTO_3D
+* [EFH.ifc](http://helgatauscher.de/billie/data/EFH.ifc): IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE, IFCSPACE_3D, IFC_ICYCLE
+* [EFH.x86](http://helgatauscher.de/billie/data/EFH.x86): GAEB_BARCHART, GAEB_ICYCLE
+* [EFH_activity.xml](http://helgatauscher.de/billie/data/EFH_activity.xml): GANTT
+* [EFH.ics](http://helgatauscher.de/billie/data/EFH.ics), [EFH_compressed.ics](http://helgatauscher.de/billie/data/EFH_compressed.ics): ICAL_GANTT
 * [EFH_activity.zip](http://helgatauscher.de/billie/data/EFH_activity.zip): IFC_4D
+* [EFH_quantity.zip](http://helgatauscher.de/billie/data/EFH_quantity.zip): IFCGAEBQTO_3D, LINKS_HEB
+
+Highrise
+-------------
+This sample project features a multistorey office building. Is is based on demo data from the research project [mefisto](http://mefisto-bau.de), the support of the German Federal Ministry of Education and Research [BMBF](https://www.bmbf.de/en/) (grant no. 01LA09001) is gratefully acknowledged.
+
+* [highrise.ifc](http://helgatauscher.de/billie/data/highrise.ifc): IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE, IFC_ICYCLE
+* [highrise.x81](http://helgatauscher.de/billie/data/highrise.x81): GAEB_BARCHART, GAEB_ICYCLE
+* [highrise_activity.xml](http://helgatauscher.de/billie/data/highrise_activity.xml), [highrise_activity_detailed.xml](http://helgatauscher.de/billie/data/highrise_activity_detailed.xml): GANTT
+
+Airport
+----------
+This sample project features a multistorey office building. Is is based on demo data from the research project [mefisto](http://mefisto-bau.de), the support of the German Federal Ministry of Education and Research [BMBF](https://www.bmbf.de/en/) (grant no. 01LA09001) is gratefully acknowledged.
+
+* [airport.ifc](http://helgatauscher.de/billie/data/airport.ifc), [airport_part.ifc](http://helgatauscher.de/billie/data/airport_part.ifc): IFC_3D, IFC_3D_AXONOMETRIC, IFC_3D_INTERACTIVE, IFC_ICYCLE
+* [airport.x81](http://helgatauscher.de/billie/data/airport.x81), [airport_part.x84](http://helgatauscher.de/billie/data/airport.x84): GAEB_BARCHART, GAEB_ICYCLE
+* [airport.zip](http://helgatauscher.de/billie/data/airport.zip): IFC_4D, IFCGAEBQTO_3D, LINKS_HEB
+
 
 
 Embedding
@@ -190,6 +212,6 @@ The prototype is the result of the research carried out for my thesis with the w
 
 In the architecture and construction sector, there is a strong tradition and a lot of competence in working with visual representations. With the rise of digital modelling, visual representations were decoupled from the information, which is now only an abstract mystic lump of data to most architects and engineers. Since visual representations are generated on the fly in dedicated software packages, architects and engineers have very few options to control visual representations. The work is based on the hypothesis that this is a conflict which constricts the creative work of architects and engineers and that the full potential of BIM can only be unlocked with accessible and configurable visual representations.
 
-I have talked and written about the idea from different perspectives and about potential use cases at conferences during the previous years. You can find details in the following articles from conference proceedings and journals.
+I have talked and written about the idea from different perspectives and about potential use cases at conferences during the previous years. You can find details in the following articles from conference proceedings and journals and in my thesis ([printed](https://tredition.de/autoren/helga-tauscher-yb5823/configurable-nd-visualization-for-complex-building-information-models-50551/) or [online](http://nbn-resolving.de/urn:nbn:de:bsz:14-qucosa-228894)).
 
 
