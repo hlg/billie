@@ -24,7 +24,7 @@
             <fileset dir="${module.basedir}">
                 <include name="configrunner.*" />
                 <include name="dslrunner.*" />
-                <include name="integration.*" />
+                <include name="functional.*" />
             </fileset>
             <fileset dir="${module.basedir}/..">
                 <include name="LICENSE.md" />
