@@ -1,7 +1,7 @@
 <ivy-module version="2.0">
     <info organisation="de.tudresden.cib" module="vis.runtime.java3d"/>
     <dependencies>
-        <dependency org="java3d" name="java3d" rev="1.5.2"/>
+        <dependency org="java3d" name="java3d" rev="1.6.0"/>
         <dependency org="junit" name="junit" rev="4.10"/>
         <dependency org="commons-io" name="commons-io" rev="2.1"/>
         <dependency org="org.bimserver" name="bimserver-ifcplugins" rev="1.1.0"/>

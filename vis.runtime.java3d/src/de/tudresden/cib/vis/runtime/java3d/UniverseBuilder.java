@@ -147,7 +147,6 @@ public class UniverseBuilder {
             view.getView().attachViewPlatform(null);
         }
         locale.getVirtualUniverse().removeAllLocales();
-        Viewer.clearViewerMap();
         Primitive.clearGeometryCache();
     }
 }

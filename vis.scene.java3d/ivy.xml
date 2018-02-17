@@ -2,7 +2,7 @@
 <info organisation="de.tudresden.cib" module="vis.scene.java3d"/>
 <dependencies>
     <dependency org="de.tudresden.cib" name="vis.runtime.java3d" rev="latest.integration" changing="true"/>
-    <dependency org="java3d" name="java3d" rev="1.5.2"/>
+    <dependency org="java3d" name="java3d" rev="1.6.0"/>
     <dependency org="de.tudresden.cib" name="vis" rev="latest.integration" changing="true"/>
     <dependency org="commons-lang" name="commons-lang" rev="2.4" />
 </dependencies>
