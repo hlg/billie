@@ -40,6 +40,7 @@
         <copy todir="${module.output.dir}/package/bisl" >
             <fileset dir="${module.basedir}/../vis.DSL/test/resources">
                 <include name="ifc_3d.vis" />
+                <include name="ifc_3d-color.vis" />
                 <include name="ifc_space_3d.vis" />
                 <include name="ifc_sched_4d.vis" />
             </fileset>
