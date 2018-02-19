@@ -23,6 +23,10 @@ public class EMFIfcHierarchicAcessor extends IndexedDataAccessor<Hierarchic<IdEO
     private HashMap<String, Hierarchic<IdEObject>> wrappedData;
     public static boolean SKIP_LAST_LEVEL = true;
 
+    public EMFIfcHierarchicAcessor() throws DataAccessException{
+        this(new SimplePluginManager());
+    }
+
     public EMFIfcHierarchicAcessor(PluginManager pluginManager) throws DataAccessException {
         parser = new EMFIfcPlainParser(pluginManager);
         filter = new ConditionFilter<Hierarchic<IdEObject>>();

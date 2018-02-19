@@ -20,6 +20,10 @@ public class EMFIfcGeometricAccessor extends IndexedDataAccessor<EMFIfcParser.En
     Map<String,EMFIfcParser.EngineEObject> indexedData;
     private EMFIfcParser parser;
 
+    public EMFIfcGeometricAccessor() throws DataAccessException {
+        this(new SimplePluginManager(), true);
+    }
+
     public EMFIfcGeometricAccessor(PluginManager pluginManager, boolean forkInput) throws DataAccessException {
         parser = new EMFIfcParser(pluginManager, forkInput);
         filter = new ConditionFilter<EMFIfcParser.EngineEObject>();
