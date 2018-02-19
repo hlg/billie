@@ -36,7 +36,7 @@
             <fileset dir="${module.basedir}/lib" />
         </copy>
         <copy file="${module.output.dir}/jar/${ant.project.name}-${version}.jar"
-              tofile="${module.output.dir}/package/${ant.project.name}-${version}.jar"/>
+              tofile="${module.output.dir}/package/lib/${ant.project.name}-${version}.jar"/>
         <copy todir="${module.output.dir}/package/bisl" >
             <fileset dir="${module.basedir}/../vis.DSL/test/resources">
                 <include name="ifc_3d.vis" />
